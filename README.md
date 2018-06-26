@@ -1,1 +1,1 @@
-# svg-inject
+# SvgInject
