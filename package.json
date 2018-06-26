@@ -1,0 +1,22 @@
+{
+  "name": "svg-inject",
+  "version": "0.1.0",
+  "description": "simple bulletproof svg injector",
+  "main": "dist/svg-inject.js",
+  "scripts": {
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/iconfu/svg-inject.git"
+  },
+  "keywords": [
+    "svg",
+    "inject",
+    "inline"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/iconfu/svg-inject/issues"
+  },
+  "homepage": "https://github.com/iconfu/svg-inject#readme"
+}
