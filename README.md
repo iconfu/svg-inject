@@ -40,9 +40,6 @@ Example:
 <img src="myimage.svg" width="300" height="200" onload="SVGInject.img(this)" />
 ```
 
-
-simply add 
-
 #### Yarn
 
 ```
