@@ -14,9 +14,7 @@ In order to apply CSS styles to SVG images, the SVG has to be inline in the DOM.
 
 ### Manually 
 
-Include the minified Javascript in the head of your HTML document
-
-<a href="https://raw.githubusercontent.com/iconfu/svg-inject/master/dist/svg-inject.js" download>Download</a>
+Include the SvgInject javasscript file in the head of your HTML document
 
 ```html
 <head>
@@ -25,6 +23,10 @@ Include the minified Javascript in the head of your HTML document
   ...
 </head>
 ```
+
+plain version: <a href="https://raw.githubusercontent.com/iconfu/svg-inject/master/dist/svg-inject.js" download>svg-inject.js</a>
+
+minified version: <a href="https://raw.githubusercontent.com/iconfu/svg-inject/master/dist/svg-inject.min.js" download>svg-inject.min.js</a>
 
 ### npm
 

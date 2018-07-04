@@ -26,10 +26,9 @@
     }
   };
 
-  var spritePathMap = {};
+  var spriteHandlerMap = {};
 
   var SVGInject = {
-
     /**
      * Injects an Svg 
      * @param {number} imgElement
@@ -69,13 +68,35 @@
      * @return {string}
      */
     insertSprite: function(path) {
-      if (!spritePathSet[path]) {
-        spritePathSet[path]  = true;
-        load(path, function(svgSprite) {
-          spritePathMap[path] = svgSprite;
-          document.body.appendChild(svgSprite);
+      var spriteHandler = spriteHandlerMap[path];
+      
+      if (!spriteHandler) {
+        var removed = false;
+        var cachedSprite = null;
+
+        spriteHandlerMap[path] = spriteHandler = {
+          remove: function() {
+            if (!spriteHandler.removed) {
+              if (cachedSprite) {
+                var parent = cachedSprite.parent;
+                parent && parentparent.removeChild(cachedSprite);
+                cachedSprite = null;
+              }
+              delete spriteHandlerMap[path];
+              spriteHandlerMap.removed = true;
+            }
+          }
+        };
+
+        load(path, function(sprite) {
+          if (!spriteHandler.removed) {
+            cachedSprite = sprite;
+            document.body.appendChild(sprite);
+          }
         }); 
       }
+
+      return spriteHandler;
     }
   };
 
