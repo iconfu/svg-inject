@@ -30,20 +30,20 @@ Include the minified Javascript in the head of your HTML document
 $ npm install @iconfu/svg-inject
 ```
 
-## usage
-
-put `onload="SVGInject.img(this)"` to any `<img>` tag where you want the SVG to be injected
-
-Example:
-
-```
-<img src="myimage.svg" width="300" height="200" onload="SVGInject.img(this)" />
-```
-
 #### Yarn
 
 ```
 $ yarn add @iconfu/svg-inject
+```
+
+## Usage
+
+add `onload="SVGInject.img(this)"` to any `<img>` tag where you want the SVG src to be injected
+
+Example:
+
+```
+<img src="myimage.svg" onload="SVGInject.img(this)" />
 ```
 
 ## How does it work?
