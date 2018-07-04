@@ -29,10 +29,11 @@ Include the minified Javascript in the head of your HTML document
 ```
 $ npm install @iconfu/svg-inject
 ```
+
 #### Yarn
 
 ```
-$ yarn add @fortawesome/fontawesome-svg-core
+$ yarn add @iconfu/svg-inject
 ```
 
 ## How does it work?
