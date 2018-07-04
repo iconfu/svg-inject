@@ -16,6 +16,8 @@ In order to apply CSS styles to SVG images, the SVG has to be inline in the DOM.
 
 Include the minified Javascript in the head of your HTML document
 
+[Test](http://www.spiegel.de)
+
 ```html
 <head>
   ...
@@ -92,3 +94,5 @@ Possible simple fallback solution for no SVG support
 Attributes ismap, usemap, srcset, x and y of the <img> element will be ignored
 No caching on older browsers and on [shift]-reload
 Does not work locally on Chrome (due to same origin policy)
+
+## 
