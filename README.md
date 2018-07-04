@@ -12,7 +12,7 @@ In order to apply CSS styles to SVG images, the SVG has to be inline in the DOM.
 
 ## Install
 
-# Manually 
+### Manually 
 
 Include the minified Javascript in the head of your HTML document
 
@@ -24,18 +24,16 @@ Include the minified Javascript in the head of your HTML document
 </head>
 ```
 
-# npm
+### npm
 
 ```
 $ npm install @iconfu/svg-inject
 ```
-
-# Yarn
+#### Yarn
 
 ```
 $ yarn add @fortawesome/fontawesome-svg-core
 ```
-
 
 ## How does it work?
 
@@ -46,7 +44,7 @@ Your code looks like this:
 ```html
 <html>
   ...
-  <img src="myimage.svg" width="300" height="200" onload="inject" />
+  <img src="myimage.svg" width="300" height="200" onload="SVGInject.img(this)" />
   ...
 </html>
 ```
