@@ -28,7 +28,7 @@
 
   var spritePathMap = {};
 
-  SVGInject = {
+  var SVGInject = {
 
     /**
      * Injects an Svg 
