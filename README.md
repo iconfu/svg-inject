@@ -8,7 +8,33 @@ The SVG Injector replaces an `<img>` element with an SVG element.
 
 ## Why should I use it?
 
-In order to apply CSS styles to SVG images, the SVG has to be inline in the DOM. With the SVG injector you can keep your SVGs as individual files, but you can still style the with CSS.
+In order to apply CSS styles to SVG images, the SVG has to be inline in the DOM. With the SVG injector you can keep your SVGs as individual files, but you can still style the SVG with CSS.
+
+## Install
+
+# Manually 
+
+Include the minified Javascript in the head of your HTML document
+
+```html
+<head>
+  ...
+  <script src="svg-inject.min.js">
+  ...
+</head>
+```
+
+# npm
+
+```
+$ npm install @iconfu/svg-inject
+```
+
+# Yarn
+
+```
+$ yarn add @fortawesome/fontawesome-svg-core
+```
 
 
 ## How does it work?
