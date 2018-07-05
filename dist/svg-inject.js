@@ -1,17 +1,21 @@
-'use strict';
+/**
+ * SVGInject - Simple 
+ * https://github.com/iconfu/svg-inject
+ *
+ * Copyright (c) 2018 Iconfu <info@iconfu.com>
+ * @license MIT
+ */
 
 (function(window, document) {
+
+  'use strict';
+
   var NOOP = function() {};
   var ATTRIBUTE_EXCLUSION_NAMES = ['src', 'alt', 'onload'];
   
   var svgLoadCache = {};
 
-  /**
-   * Injects an Svg 
-   * @param {number} imgElement
-   * @param {string} locale
-   * @return {string}
-   */
+  // load svg
   function load(path, callback, errorCallback) {
     if (path) {
       var req = new XMLHttpRequest();
@@ -20,7 +24,9 @@
         if(req.readyState == 4 && req.status == 200) {
           var div = document.createElement('div');
           div.innerHTML = req.responseText;
-          callback(div.childNodes[0]);
+          var svg = div.childNodes[0];
+          svg.insertBefore(document.createComment("SVG injected from '" + path + "'"), svg.firstChild);
+          callback(svg);
         } else {
           errorCallback(req.statusText);
         }
@@ -31,7 +37,8 @@
     }
   };
 
-  function inject(imgElement, svg, onLoaded, onInserted) {
+  // inject loaded svg
+  function inject(imgElement, svg, onLoaded, onInjected) {
     // onLoad handler may return false to skip any attribute manipulation
     if (onLoaded(svg) !== false) {
       var attributes = imgElement.attributes;
@@ -57,12 +64,28 @@
     
     var parentNode = imgElement.parentNode;
     parentNode && parentNode.replaceChild(svg, imgElement);
-    onInserted(svg);
+    imgElement.__injected = true;
+    onInjected(svg);
   };
 
 
-  var SVGInject = function(imgElement, options) {
-    if (imgElement) {
+  /**
+   * SVGInject
+   *
+   * Replaces the element(s) provided with their full inline SVG DOM markup which path is 
+   * given in the element(s) src attribute
+   *
+   * Options:
+   * cache: boolean if SVG should be cached (defaults false)
+   * onLoaded: callback after SVG is loaded
+   * onLoadFail: callback after SVG load fails
+   * onInjected: callback after SVG is injected
+   * 
+   * @param {HTMLElement} imgElement - an img element
+   * @param {Object} options.
+   */
+  function SVGInject(imgElement, options) {
+    if (imgElement && !imgElement.__injected) {
       var length = imgElement.length;
       var src = imgElement.src;
 
@@ -72,7 +95,7 @@
         var cache = options.cache || false;
         var onLoadFail = options.onLoadFail || NOOP;
         var onLoaded = options.onLoaded || NOOP;
-        var onInserted = options.onInserted || NOOP;
+        var onInjected = options.onInjected || NOOP;
 
         if (cache) {
           var svgLoad = svgLoadCache[src];
@@ -80,10 +103,10 @@
           if (svgLoad) {
             if (Array.isArray(svgLoad)) {
               svgLoad.push(function(svg) {
-                inject(imgElement, svg.cloneNode(true), onLoaded, onInserted);
+                inject(imgElement, svg.cloneNode(true), onLoaded, onInjected);
               });
             } else {
-              inject(imgElement, svgLoad.cloneNode(true), onLoaded, onInserted);
+              inject(imgElement, svgLoad.cloneNode(true), onLoaded, onInjected);
             }
             return;
           } else {
@@ -92,7 +115,7 @@
         }
 
         load(src, function(svg) {
-          inject(imgElement, svg, onLoaded, onInserted);
+          inject(imgElement, svg, onLoaded, onInjected);
 
           if (cache) {
             var svgLoad = svgLoadCache[src];
