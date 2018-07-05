@@ -14,7 +14,7 @@ In order to apply CSS styles to SVG images, the SVG has to be inline in the DOM.
 
 ### Manually 
 
-Include the SvgInject javasscript file in the head of your HTML document
+Include the SvgInject javascript file in the head of your HTML document
 
 ```html
 <head>
@@ -42,12 +42,12 @@ $ yarn add @iconfu/svg-inject
 
 ## Usage
 
-add `onload="SVGInject.img(this)"` to any `<img>` tag where you want the SVG src to be injected
+add `onload="SVGInject(this)"` to any `<img>` tag where you want the SVG src to be injected
 
 Example:
 
 ```
-<img src="myimage.svg" onload="SVGInject.img(this)" />
+<img src="myimage.svg" onload="SVGInject(this)" />
 ```
 
 ## How does it work?
@@ -59,7 +59,7 @@ Your code looks like this:
 ```html
 <html>
   ...
-  <img src="myimage.svg" width="300" height="200" onload="SVGInject.img(this)" />
+  <img src="myimage.svg" width="300" height="200" onload="SVGInject(this)" />
   ...
 </html>
 ```
