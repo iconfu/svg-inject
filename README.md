@@ -1,10 +1,9 @@
-# SvgInject
+# SVGInject
 
 
 ## What does is do
 
-The SVG Injector replaces an `<img>` element with an SVG element.
-
+SVGInject replaces an `<img>` element with an SVG element inline.
 
 ## Why should I use it?
 
@@ -19,7 +18,7 @@ Include the SvgInject javascript file in the head of your HTML document
 ```html
 <head>
   ...
-  <script src="svg-inject.min.js">
+  <script src="svg-inject.min.js"></script>
   ...
 </head>
 ```
@@ -47,7 +46,7 @@ add `onload="SVGInject(this)"` to any `<img>` tag where you want the SVG src to 
 Example:
 
 ```
-<img src="myimage.svg" onload="SVGInject(this)" />
+<img src="image.svg" onload="SVGInject(this)" />
 ```
 
 ## How does it work?
@@ -59,7 +58,7 @@ Your code looks like this:
 ```html
 <html>
   ...
-  <img src="myimage.svg" width="300" height="200" onload="SVGInject(this)" />
+  <img src="image.svg" width="200" height="200" onload="SVGInject(this)" />
   ...
 </html>
 ```
@@ -69,7 +68,7 @@ After injection, the DOM will look like this:
 ```html
 <html>
   ...
-  <svg width="300" height="200">
+  <svg width="200" height="200">
     ...
   </svg>
   ...
@@ -77,7 +76,6 @@ After injection, the DOM will look like this:
 ```
 
 The SVG data is loaded with an XMLHttpRequest.
-
 
 ## What are the advantages?
 
@@ -88,7 +86,7 @@ Works on all browsers that support SVG. Yes, including Internet Explorer 9!
 
 Possible simple fallback solution for no SVG support
 
-`<img src="image.svg" onerror="this.onload=null; this.onerror=null; this.src='image.png';">`
+`<img src="image.svg" onload="SVGInject(this)" onerror="this.onload=null;this.onerror=null;this.src='image.png';">`
 
 
 ## What are the Limitations?
@@ -96,5 +94,3 @@ Possible simple fallback solution for no SVG support
 Attributes ismap, usemap, srcset, x and y of the <img> element will be ignored
 No caching on older browsers and on [shift]-reload
 Does not work locally on Chrome (due to same origin policy)
-
-## 

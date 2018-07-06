@@ -3,7 +3,6 @@
   "version": "0.2.1",
   "description": "simple bulletproof svg injector",
   "main": "dist/svg-inject.js",
-  "scripts": {},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/iconfu/svg-inject.git"
@@ -14,6 +13,11 @@
     "inline"
   ],
   "license": "MIT",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-rename": "^1.3.0",
+    "gulp-uglify": "^3.0.0"
+  },
   "bugs": {
     "url": "https://github.com/iconfu/svg-inject/issues"
   },
