@@ -89,27 +89,15 @@ After injection, the DOM will look like this:
 
 ## What are the advantages?
 
-**Excellent Browser Support**
-Works on all browsers supporting SVG. Yes, this includes Internet Explorer 9 and higher! ([full list](http://svgtutorial.com/svg-browser-support/))
-
-**Native fallback without Javascript**
-
-If Javascript is not available the SVG will still show. It's just not styleable with CSS. 
-
-**Native fallback if image source is not available**
-
-Behaves like a normal `<img>` element if file not found or not available. If you specify an `alt` attribute the alternative text will show just like expected if the image can not be loaded.
+* **Excellent Browser Support**: Works on all browsers supporting SVG. Yes, this includes Internet Explorer 9 and higher! ([full list](http://svgtutorial.com/svg-browser-support/))
+* **Native fallback without Javascript**: If Javascript is not available the SVG will still show. It's just not styleable with CSS. 
+* **Native fallback if image source is not available**: Behaves like a normal `<img>` element if file not found or not available. If you specify an `alt` attribute the alternative text will show just like expected if the image can not be loaded.
 
 
 ## Why use the `onload` attribute?
 
-**Works with dynamic content**
-
-If you add `<img>` elements dynamically injection still works.   
-
-**Intuitive usage**
-
-Insert the SVG images into your HTML code just as PNG images, with only one additional instruction. It's very clear what it does looking at the pure HTML.
+* **Works with dynamic content**: If you add `<img>` elements dynamically injection still works.   
+* **Intuitive usage**: Insert the SVG images into your HTML code just as PNG images, with only one additional instruction. It's very clear what it does looking at the pure HTML.
 
 Instead of using the onload attribute you can use SVGInject within your Javascript code like this: `SVGInject(document.getElementsByClassName('myClassName'))`.
 
