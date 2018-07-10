@@ -27,9 +27,9 @@ Include the SVGInject javascript file in the head of your HTML document
 </head>
 ```
 
-plain version: [svg-inject.js](https://raw.githubusercontent.com/iconfu/svg-inject/master/dist/svg-inject.js)
+download plain version: [svg-inject.js](https://raw.githubusercontent.com/iconfu/svg-inject/master/dist/svg-inject.js)
 
-minified version: [svg-inject.min.js](https://raw.githubusercontent.com/iconfu/svg-inject/master/dist/svg-inject.min.js)
+download minified version: [svg-inject.min.js](https://raw.githubusercontent.com/iconfu/svg-inject/master/dist/svg-inject.min.js)
 
 ### npm
 
@@ -39,7 +39,7 @@ If you are using [npm](https://www.npmjs.com)
 $ npm install @iconfu/svg-inject
 ```
 
-#### Yarn
+### Yarn
 
 If you are using [Yarn](https://yarnpkg.com)
 
@@ -58,7 +58,7 @@ add `onload="SVGInject(this)"` to any `<img>` element where you want the SVG to 
 <img src="image.svg" onload="SVGInject(this)" />
 ```
 
-**The SVGs should be injected and stylable now!** :sparkles:
+**The SVG is injected and stylable now!** :sparkles:
 
 
 ## How does it work?
