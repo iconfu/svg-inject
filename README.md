@@ -10,14 +10,14 @@ SVGInject replaces an `<img>` element with an SVG element inline.
 
 ## Why should I use it?
 
-In order to apply CSS styles to SVG images, the SVG has to be inline in the DOM. With the SVGinject you can keep your SVGs as individual files, but you can still style the SVG with CSS.
+In order to apply CSS styles to SVG images, the SVG has to be inline in the DOM. With the SVGInject you can keep your SVGs as individual files, but you can still style the SVG with CSS.
 
 
 ## Install
 
 ### Manually 
 
-Include the SvgInject javascript file in the head of your HTML document
+Include the SVGInject javascript file in the head of your HTML document
 
 ```html
 <head>
@@ -104,7 +104,7 @@ Behaves like a normal `<img>` element if file not found or not available. If you
 
 ## Why use the `onload` attribute
 
-Also you can use SvgInject within your javascript code like `SvgInject(document.getElementsByClassName('myClassName'))` using the `onload` event listener directly on the `<img>` element is recommended:
+Also you can use SVGInject within your javascript code like `SVGInject(document.getElementsByClassName('myClassName'))` using the `onload` event listener directly on the `<img>` element is recommended:
 
 ### Works with dynamic content
 
