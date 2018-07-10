@@ -1,5 +1,6 @@
 # SVGInject
 
+**A tiny, intuitive, fast, caching SVG DOM injection solution**
 
 ## What does it do?
 
