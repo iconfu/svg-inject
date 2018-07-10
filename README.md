@@ -154,7 +154,7 @@ SVGInject.setOptions({
 
 SVGInject is intended to work in real world production envionnments but it has a few limitations:
 
-* The image src must apply to the [same-origin policy](https://en.wikipedia.org/wiki/Same-origin_policy), which basicly means the image must be hosted on the same side the website is running. You can bypass this by the [Cross-Origin Resource Sharing (CORS)mechanism](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS)
+* The image src must apply to the [same-origin policy](https://en.wikipedia.org/wiki/Same-origin_policy), which basicaly means your image origin must be were your website is running. You may bypass this using [Cross-Origin Resource Sharing (CORS) mechanism](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS)
 * Does not work when run from the local file system due to same origin policy in many browsers (Chrome, Safari), yet Firefox will work. You need to run
 
 
