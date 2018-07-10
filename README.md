@@ -89,7 +89,7 @@ After injection, the DOM will look like this:
 
 ## What are the advantages?
 
-### Excelent Browser Support
+### Excellent Browser Support
 
 Works on all browsers supporting SVG. Yes, this includes Internet Explorer 9 and higher! ([full list](http://svgtutorial.com/svg-browser-support/))
 
@@ -97,9 +97,9 @@ Works on all browsers supporting SVG. Yes, this includes Internet Explorer 9 and
 
 If Javascript is not available the SVG will still show. It's just not styleable with CSS. 
 
-### Native fallback if img source is not available
+### Native fallback if image source is not available
 
-Behaves like a normal `<img>` element if file not found or not available. If you specify an `alt` attribute the alternative text will show just like expected.
+Behaves like a normal `<img>` element if file not found or not available. If you specify an `alt` attribute the alternative text will show just like expected if the image can not be loaded.
 
 
 ## Why use the `onload` attribute?
@@ -164,7 +164,7 @@ SVGInject is designed to work in real world production environments but it has s
 * Does not work when run from the local file system due to same origin policy in many browsers (Chrome, Safari), yet Firefox will work. You need to run
 
 
-## What is a fallback strategy
+## Is there a fallback 
 
 A simple fallback solution for no SVG support
 
