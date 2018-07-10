@@ -152,23 +152,22 @@ SVGInject.setOptions({
 
 ## What are the limitations?
 
-SVGInject is designed to work in real world production environments but it has some limitations
+SVGInject is intended to work in real world production envionnments but it has a few limitations:
 
-* Attributes ismap, usemap, srcset, x and y of the <img> element will be ignored
-* No caching on older browsers and on [shift]-reload
+* The image src must apply to the [same-origin policy](https://en.wikipedia.org/wiki/Same-origin_policy), which basicly means the image must be hosted on the same side the website is running. You can bypass this by the [Cross-Origin Resource Sharing (CORS)mechanism](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS)
 * Does not work when run from the local file system due to same origin policy in many browsers (Chrome, Safari), yet Firefox will work. You need to run
 
 
-## Is there a fallback 
+## Fallback for no SVG support (IE < 9)
 
-A simple fallback solution for no SVG support
+SVG is widley supported by all major browsers for a very long time, still here is a simple fallback solution for no SVG support if you really need it:
 
 
 ```html
 <img src="image.svg" onload="SVGInject(this)" onerror="this.onload=null;this.onerror=null;this.src='image.png';">
 ```
 
-Here is a more generic method with a call to a global functions which replaces the file ending from svg to png
+A more generic method with a call to a global functions which replaces the file ending from svg to png:
 
 ```html
 <script>
