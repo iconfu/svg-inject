@@ -50,7 +50,7 @@ $ yarn add @iconfu/svg-inject
 
 ## Basic usage
 
-add `onload="SVGInject(this)"` to any `<img>` element where you want the SVG to be injected
+Add `onload="SVGInject(this)"` to any `<img>` element where you want the SVG to be injected
 
 **Example:**
 
@@ -102,17 +102,13 @@ If Javascript is not available the SVG will still show. It's just not styleable 
 Behaves like a normal `<img>` element if file not found or not available. If you specify an `alt` attribute the alternative text will show just like expected.
 
 
-## Why use the `onload` attribute
+## Why use the `onload` attribute?
 
 Also you can use SVGInject within your javascript code like `SVGInject(document.getElementsByClassName('myClassName'))` using the `onload` event listener directly on the `<img>` element is recommended:
 
-### Works with dynamic content
+* **Works with dynamic content**: If you add `<img>` elements dynamically injection still works.   
 
-If you add `<img>` elements dynamically injection still works.   
-
-### Intuitive usage
-
-Insert the SVG images into your HTML code just as PNG images, with only one additional instruction. It's very clear what it does looking at the pure HTML.
+* **Intuitive usage**: Insert the SVG images into your HTML code just as PNG images, with only one additional instruction. It's very clear what it does looking at the pure HTML.
 
 
 ## How are attributes handled
