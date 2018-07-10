@@ -17,7 +17,7 @@ In order to apply CSS styles to SVG images, the SVG has to be inline in the DOM.
 
 ### Manually 
 
-Include the SVGInject javascript file in the head of your HTML document
+Include the SVGInject Javascript file in the head of your HTML document
 
 ```html
 <head>
@@ -107,7 +107,7 @@ Behaves like a normal `<img>` element if file not found or not available. If you
 * **Works with dynamic content**: If you add `<img>` elements dynamically injection still works.   
 * **Intuitive usage**: Insert the SVG images into your HTML code just as PNG images, with only one additional instruction. It's very clear what it does looking at the pure HTML.
 
-Alternatively you can also use SVGInject within your javascript code like `SVGInject(document.getElementsByClassName('myClassName'))`.
+Alternatively you can use SVGInject within your Javascript code like this: `SVGInject(document.getElementsByClassName('myClassName'))`.
 
 
 ## How are attributes handled?
