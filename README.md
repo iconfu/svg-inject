@@ -90,7 +90,6 @@ After injection, the DOM will look like this:
 ## What are the advantages?
 
 **Excellent Browser Support**
-
 Works on all browsers supporting SVG. Yes, this includes Internet Explorer 9 and higher! ([full list](http://svgtutorial.com/svg-browser-support/))
 
 **Native fallback without Javascript**
