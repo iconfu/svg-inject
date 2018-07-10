@@ -8,7 +8,7 @@ SVGInject replaces an `<img>` element with an SVG element inline.
 
 ## Why should I use it?
 
-In order to apply CSS styles to SVG images, the SVG has to be inline in the DOM. With the SVG injector you can keep your SVGs as individual files, but you can still style the SVG with CSS.
+In order to apply CSS styles to SVG images, the SVG has to be inline in the DOM. With the SVGinject you can keep your SVGs as individual files, but you can still style the SVG with CSS.
 
 
 ## Install
@@ -46,7 +46,7 @@ $ yarn add @iconfu/svg-inject
 ```
 
 
-## Basic Usage
+## Basic usage
 
 add `onload="SVGInject(this)"` to any `<img>` element where you want the SVG to be injected
 
@@ -104,13 +104,14 @@ Behaves like a normal `<img>` element if file not found or not available. If you
 
 Also you can use SvgInject within your javascript code like `SvgInject(document.getElementsByClassName('myClassName'))` using the `onload` event listener directly on the `<img>` element is recommended:
 
-### works with dynamic content
+### Works with dynamic content
 
 If you add `<img>` elements dynamically injection still works.   
 
 ### Intuitive usage
 
 Insert the SVG images into your HTML code just as PNG images, with only one additional instruction. It's very clear what it does looking at the pure HTML.
+
 
 ## How are attributes handled
 
@@ -120,11 +121,11 @@ All attributes are copied from the `<img>` element to the injected `<svg>` eleme
 * the `title` attribute is transformed to a `<title>` element in the injected SVG 
 
 
-## Advanced Usage
+## Advanced usage
 
 ### Options
 
-You may pass an options object a second paramter to SVGInject `SVGInject(imgElement, options)` or you can assign options just once with `SVGInject.setOptions(options)`
+You may pass an options object as second paramter to SVGInject `SVGInject(imgElement, options)` or you can assign options just once with `SVGInject.setOptions(options)`
 
 | Property name | Type | Default | Description |
 | ------------- | ---- | ------- | ----------- |
@@ -157,8 +158,7 @@ SVGInject.setOptions({
 ```
 
 
-
-## What are the Limitations?
+## What are the limitations?
 
 SVGInject is designed to work in real world production environments but it has some limitations
 
@@ -167,7 +167,7 @@ SVGInject is designed to work in real world production environments but it has s
 * Does not work when run from the local file system due to same origin policy in many browsers (Chrome, Safari), yet Firefox will work. You need to run
 
 
-## What is a Fallback strategy
+## What is a fallback strategy
 
 A simple fallback solution for no SVG support
 
