@@ -89,15 +89,13 @@ After injection, the DOM will look like this:
 
 ## What are the advantages?
 
-### Excellent Browser Support
-
+**Excellent Browser Support**
 Works on all browsers supporting SVG. Yes, this includes Internet Explorer 9 and higher! ([full list](http://svgtutorial.com/svg-browser-support/))
 
 **Native fallback without Javascript**
 If Javascript is not available the SVG will still show. It's just not styleable with CSS. 
 
 **Native fallback if image source is not available**
-
 Behaves like a normal `<img>` element if file not found or not available. If you specify an `alt` attribute the alternative text will show just like expected if the image can not be loaded.
 
 
