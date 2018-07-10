@@ -1,6 +1,7 @@
 # SVGInject
 
-A tiny, intuitive, crossbrowser SVG inline injection solution
+A tiny intuitive solution for injecting SVG files inline into the DOM
+
 
 ## What does it do?
 
