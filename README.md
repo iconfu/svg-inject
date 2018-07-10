@@ -105,13 +105,12 @@ Behaves like a normal `<img>` element if file not found or not available. If you
 ## Why use the `onload` attribute?
 
 * **Works with dynamic content**: If you add `<img>` elements dynamically injection still works.   
-
 * **Intuitive usage**: Insert the SVG images into your HTML code just as PNG images, with only one additional instruction. It's very clear what it does looking at the pure HTML.
 
 Alternatively you can also use SVGInject within your javascript code like `SVGInject(document.getElementsByClassName('myClassName'))`.
 
 
-## How are attributes handled
+## How are attributes handled?
 
 All attributes are copied from the `<img>` element to the injected `<svg>` element with the following exceptions:
 
