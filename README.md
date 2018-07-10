@@ -128,10 +128,10 @@ You may pass an options object a second paramter to SVGInject `SVGInject(imgElem
 
 | Property name | Type | Default | Description |
 | ------------- | ---- | ------- | ----------- |
-| cache | boolean | `true` | Caches the SVG based on the absolute URL. Cache only persists for the lifetime of the page. |
-| onLoaded | function | `empty function` | Hook after SVG is loaded.   |
-| onLoadFail | function | `empty function` | Hook after SVG load fails |
-| onInjected | function | `empty function` | Hook after SVG is injected |
+| cache | boolean | `true` | Caches the SVG based on the absolute URL. The cache only persists for the lifetime of the page. |
+| onLoaded | function(svg, img) | `empty function` | Hook after SVG is loaded. The svg and img element are passed as arguments. This is useful to make custom changes to the svg element. If `false` the svg element will not get changed by IMGInject(). |
+| onLoadFail | function(img) | `empty function` | Hook after SVG load fails. The img element is passed as an argument. |
+| onInjected | function(svg, img) | `empty function` | Hook after SVG is injected. The svg and img element are passed as arguments. |
 
 ### Example
 
@@ -139,19 +139,17 @@ You may pass an options object a second paramter to SVGInject `SVGInject(imgElem
 // set options on SVGInject
 SVGInject.setOptions({
   cache: false, // disable caching
-  onLoaded: function(svgElement, imgElement) {
-    // copy the style element
-
-
-    // by returning false no attributes will bes copied from imgElement to svgElement
+  onLoaded: function(svg, img) {
+    // by returning false the svg element will be injected unchanged. No attributes of the img tag will get copied to the svg element
     return false;
   },
 
-  onInjected: function(svgElement, imgElement) {
-    injectionCounter++; // count injected SVGs
+  onInjected: function(svg, img) {
+    // set a class to the svg element
+    svg.classList.add('injected-svg');
   }
 
-  onLoadFail: function(imgElement) {
+  onLoadFail: function(img) {
     // do some error handling
   }
 });
@@ -166,7 +164,7 @@ SVGInject is designed to work in real world production environments but it has s
 
 * Attributes ismap, usemap, srcset, x and y of the <img> element will be ignored
 * No caching on older browsers and on [shift]-reload
-* Does not work when run from the local file system due to same origin policy in many browsers (Chrome, Safari), yet Firefox will work.
+* Does not work when run from the local file system due to same origin policy in many browsers (Chrome, Safari), yet Firefox will work. You need to run
 
 
 ## What is a Fallback strategy

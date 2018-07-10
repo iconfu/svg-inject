@@ -20,6 +20,11 @@
     onInjected: NOOP
   };
 
+  var a = document.createElement('a');
+  function getAbsoluteUrl(url) {
+    return a.href = url;
+  };
+
   // load svg
   function load(path, callback, errorCallback) {
     if (path) {
@@ -43,11 +48,11 @@
   };
 
   // inject loaded svg
-  function inject(imgElement, svg, options) {
+  function inject(img, svg, options) {
     svg = svg.cloneNode(true);
     // onLoad handler may return false to skip any attribute manipulation
-    if (options.onLoaded(svg, imgElement) !== false) {
-      var attributes = imgElement.attributes;
+    if (options.onLoaded(svg, img) !== false) {
+      var attributes = img.attributes;
 
       for(var i = 0; i < attributes.length; ++i) {
         var attribute = attributes[i];
@@ -68,10 +73,10 @@
       }
     }
     
-    var parentNode = imgElement.parentNode;
-    parentNode && parentNode.replaceChild(svg, imgElement);
-    imgElement.__injected = true;
-    options.onInjected(svg, imgElement);
+    var parentNode = img.parentNode;
+    parentNode && parentNode.replaceChild(svg, img);
+    img.__injected = true;
+    options.onInjected(svg, img);
   };
 
   function extendOptions() {
@@ -103,15 +108,17 @@
      * onLoadFail: callback after SVG load fails
      * onInjected: callback after SVG is injected
      * 
-     * @param {HTMLElement} imgElement - an img element
+     * @param {HTMLElement} img - an img element
      * @param {Object} options.
      */
-    function SVGInject(imgElement, options) {
-      if (imgElement && !imgElement.__injected) {
-        var length = imgElement.length;
-        var src = imgElement.src;
-
+    function SVGInject(img, options) {
+      if (img && !img.__injected) {
+        var length = img.length;
+        var src = img.src;
+        
         if (src) {
+          var absUrl = getAbsoluteUrl(img.src);
+          console.info(absUrl)
           // Options
           options = extendOptions(defaultOptions, options);
           var cache = options.cache;
@@ -122,44 +129,44 @@
             if (svgLoad) {
               if (Array.isArray(svgLoad)) {
                 svgLoad.push(function(svg) {
-                  inject(imgElement, svg, options);
+                  inject(img, svg, options);
                 });
               } else {
-                inject(imgElement, svgLoad, options);
+                inject(img, svgLoad, options);
               }
               return;
             } else {
-              svgLoadCache[src] = [];
+              svgLoadCache[absUrl] = [];
             }
           }
 
           var loadFail = function() {
-            options.onLoadFail(imgElement);
+            options.onLoadFail(img);
           };
 
           var afterImageComplete = function() {
-            load(src, function(svg) {
-              inject(imgElement, svg, options);
+            load(absUrl, function(svg) {
+              inject(img, svg, options);
 
               if (cache) {
-                var svgLoad = svgLoadCache[src];
+                var svgLoad = svgLoadCache[absUrl];
                 for (var i = 0; i < svgLoad.length; ++i) {
                   svgLoad[i](svg);
                 }
-                svgLoadCache[src] = svgLoad;
+                svgLoadCache[absUrl] = svgLoad;
               };
             }, loadFail);
           };
 
-          if (imgElement.complete) {
+          if (img.complete) {
             afterImageComplete();
           } else {
-            imgElement.onerror = loadFail;
-            imgElement.onload = afterImageComplete;
+            img.onerror = loadFail;
+            img.onload = afterImageComplete;
           }
         } else if (length) {
-          for (var i = 0; i < imgElement.length; ++i) {
-            SVGInject(imgElement[i], options);
+          for (var i = 0; i < img.length; ++i) {
+            SVGInject(img[i], options);
           };
         }    
       }    

@@ -5,20 +5,16 @@
   <title>SVGInject Simple Demo</title>
 
   <!-- Include the SvgInject javascript file -->
-  <script src="svg-inject.min.js"></script>
+  <script src="svg-inject.js"></script>
 
   <script>
     SVGInject.setOptions({ 
-      cache: false,
-      onLoaded: function(svg, imgElement) {
+      cache: true,
+      onLoaded: function(svg, img) {
         console.info('loaded');
-        console.info(svg);
-        console.info(imgElement);
       },
-      onInjected: function(svg, imgElement) {
+      onInjected: function(svg, img) {
         console.info('injected');
-        console.info(svg);
-        console.info(imgElement);
       }
     });
   </script>
@@ -42,21 +38,21 @@
   <h3>Not styled SVG (default SVG colors):</h3>
 
   <!-- Insert not styled SVG image -->
-  <img src="svgs/businesspeoples.svg" xonload="SVGInject(this)" width="128" height="128" />
+  <img src="svgs/businesspeople.svg" onload="SVGInject(this)" width="128" height="128" style="width: 128px; height: 128px;" />
   
   <h3>The same SVG image styled with CSS in two different color schemes:</h3>
 
   <!-- Insert the same SVG image styled with CSS in two different color schemes -->
-  <img src="svgs/businesspeople.svg" xonload="SVGInject(this)" alt="businesspeople" width="128" height="128" id="businesspeople-variation-1" />
-  <img src="svgs/businesspeople.svg" xonload="SVGInject(this)" width="128" height="128" id="businesspeople-variation-2" />
+  <img src="svgs/businesspeople.svg" onload="SVGInject(this)" alt="businesspeople" width="128" height="128" id="businesspeople-variation-1" />
+  <img src="svgs/businesspeople.svg" onload="SVGInject(this)" width="128" height="128" id="businesspeople-variation-2" />
 </body>
 
 <script>
-  SVGInject(document.getElementsByTagName('img'), {
+  /*SVGInject(document.getElementsByTagName('img'), {
     onLoadFail: function(imgElement) {
       console.error(imgElement)
     }
-  });
+  });*/
 </script>
 
 <!-- Don't worry about this script. It's used to provide feedback if the demo is not running correctly. -->
