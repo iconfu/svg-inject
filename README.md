@@ -152,10 +152,10 @@ SVGInject.setOptions({
 
 ## What are the limitations?
 
-SVGInject is intended to work in real world production envionnments but it has a few limitations:
+SVGInject is intended to work in production envionnments but it has a few limitations:
 
-* The image src must apply to the [same-origin policy](https://en.wikipedia.org/wiki/Same-origin_policy), which basicaly means your image origin must be were your website is running. You may bypass this using [Cross-Origin Resource Sharing (CORS) mechanism](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS)
-* Does not work when run from the local file system due to same origin policy in many browsers (Chrome, Safari), yet Firefox will work. You need to run
+* The image src must apply to the [same-origin policy](https://en.wikipedia.org/wiki/Same-origin_policy), which basically means the image origin must be were the website is running. This may be bypassed using the [Cross-Origin Resource Sharing (CORS) mechanism](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS).
+* Due to same-origin policy SVGInject does not work when run from the local file system in many browsers (Chrome, Safari), yet Firefox will work.
 
 
 ## Fallback for no SVG support (IE < 9)
