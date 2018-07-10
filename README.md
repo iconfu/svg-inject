@@ -89,7 +89,7 @@ After injection, the DOM will look like this:
 
 ## What are the advantages?
 
-* **Excellent Browser Support**: Works on all browsers supporting SVG. Yes, this includes Internet Explorer 9 and higher! ([full list](http://svgtutorial.com/svg-browser-support/))
+* **Wide browser support**: Works on all browsers supporting SVG. Yes, this includes Internet Explorer 9 and higher! ([full list](https://caniuse.com/#feat=svg))
 
 * **Native fallback without Javascript**: If Javascript is not available the SVG will still show. It's just not styleable with CSS. 
 
@@ -157,6 +157,10 @@ SVGInject is intended to work in production envionnments but it has a few limita
 * The image src must apply to the [same-origin policy](https://en.wikipedia.org/wiki/Same-origin_policy), which basically means the image origin must be were the website is running. This may be bypassed using the [Cross-Origin Resource Sharing (CORS) mechanism](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS).
 * Due to same-origin policy SVGInject does not work when run from the local file system in many browsers (Chrome, Safari), yet Firefox will work.
 
+
+## Browser support
+
+Full support for all browsers supporting SVGs, including IE >= 9 ([full list](https://caniuse.com/#feat=svg/))
 
 ## Fallback for no SVG support (IE < 9)
 
