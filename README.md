@@ -1,13 +1,15 @@
 # SVGInject
 
 
-## What does is do
+## What does it do?
 
 SVGInject replaces an `<img>` element with an SVG element inline.
+
 
 ## Why should I use it?
 
 In order to apply CSS styles to SVG images, the SVG has to be inline in the DOM. With the SVG injector you can keep your SVGs as individual files, but you can still style the SVG with CSS.
+
 
 ## Install
 
@@ -23,37 +25,42 @@ Include the SvgInject javascript file in the head of your HTML document
 </head>
 ```
 
-plain version: <a href="https://raw.githubusercontent.com/iconfu/svg-inject/master/dist/svg-inject.js" download>svg-inject.js</a>
+plain version: [svg-inject.js](https://raw.githubusercontent.com/iconfu/svg-inject/master/dist/svg-inject.js)
 
-minified version: <a href="https://raw.githubusercontent.com/iconfu/svg-inject/master/dist/svg-inject.min.js" download>svg-inject.min.js</a>
+minified version: [svg-inject.min.js](https://raw.githubusercontent.com/iconfu/svg-inject/master/dist/svg-inject.min.js)
 
 ### npm
 
-```
+If you are using [npm](https://www.npmjs.com)
+
+```console
 $ npm install @iconfu/svg-inject
 ```
 
 #### Yarn
 
-```
+If you are using [Yarn](https://yarnpkg.com)
+
+```console
 $ yarn add @iconfu/svg-inject
 ```
 
+
 ## Usage
 
-add `onload="SVGInject(this)"` to any `<img>` tag where you want the SVG src to be injected
+add `onload="SVGInject(this)"` to any `<img>` element where you want the SVG to be injected
 
-Example:
+### Example:
 
-```
+```html
 <img src="image.svg" onload="SVGInject(this)" />
 ```
 
 ## How does it work?
 
-The SVG injector replaces an image element in the DOM with the SVG that is specified in its "src" attribute.
+The SVG injector replaces an image element in the DOM with the SVG which is specified in its "src" attribute.
 
-Your code looks like this:
+If your code looks like this:
 
 ```html
 <html>
@@ -75,22 +82,112 @@ After injection, the DOM will look like this:
 </html>
 ```
 
-The SVG data is loaded with an XMLHttpRequest.
-
 ## What are the advantages?
 
-Works on all browsers that support SVG. Yes, including Internet Explorer 9!
-* Intuitive usage. Insert the SVG images into your HTML code just as PNG images, with only one additional instruction.
-* Behaves like a normal <img> element if file not found or not available.
-* Native fallback for no Javascript
+### Excelent Browser Support
 
-Possible simple fallback solution for no SVG support
+Works on all browsers supporting SVG. Yes, this includes Internet Explorer 9 and higher! ([full list](http://svgtutorial.com/svg-browser-support/))
 
-`<img src="image.svg" onload="SVGInject(this)" onerror="this.onload=null;this.onerror=null;this.src='image.png';">`
+### Native fallback without Javascript
+
+If Javascript is not available the SVG will still show. It's just not styleable with CSS. 
+
+### Native fallback if img source is not available
+
+Behaves like a normal `<img>` element if file not found or not available. If you specify an `alt` attribute the alternative text will show just like expected.
+
+
+## Why use the `onload` attribute
+
+Also you can use SvgInject within your javascript code like `SvgInject(document.getElementsByClassName('myClassName'))` using the `onload` event listener directly on the `<img>` element is recommended:
+
+### works with dynamic content
+
+If you add `<img>` elements dynamically injection still works.   
+
+### Intuitive usage
+
+Insert the SVG images into your HTML code just as PNG images, with only one additional instruction. It's very clear what it does looking at the pure HTML.
+
+## How are attributes handled
+
+All attributes are copied from the `<img>` element to the injected `<svg>` element with the following exceptions:
+
+* `src`, `alt`, and `onload` attributes are not copied
+* the `title` attribute is transformed to a `<title>` element in the injected SVG 
+
+
+## Advanced Usage
+
+### Options
+
+You may pass an options object a second paramter to SVGInject `SVGInject(imgElement, options)` or you can assign options just once with `SVGInject.setOptions(options)`
+
+| Property name | Type | Default | Description |
+| ------------- | ---- | ------- | ----------- |
+| cache | boolean | `true` | Caches the SVG based on the absolute URL. Cache only persists for the lifetime of the page. |
+| onLoaded | function | `empty function` | Hook after SVG is loaded.   |
+| onLoadFail | function | `empty function` | Hook after SVG load fails |
+| onInjected | function | `empty function` | Hook after SVG is injected |
+
+### Example
+
+```javascript
+// set options on SVGInject
+SVGInject.setOptions({
+  cache: false, // disable caching
+  onLoaded: function(svgElement, imgElement) {
+    // copy the style element
+
+
+    // by returning false no attributes will bes copied from imgElement to svgElement
+    return false;
+  },
+
+  onInjected: function(svgElement, imgElement) {
+    injectionCounter++; // count injected SVGs
+  }
+
+  onLoadFail: function(imgElement) {
+    // do some error handling
+  }
+});
+
+```
+
 
 
 ## What are the Limitations?
 
-Attributes ismap, usemap, srcset, x and y of the <img> element will be ignored
-No caching on older browsers and on [shift]-reload
-Does not work locally on Chrome (due to same origin policy)
+SVGInject is designed to work in real world production environments but it has some limitations
+
+* Attributes ismap, usemap, srcset, x and y of the <img> element will be ignored
+* No caching on older browsers and on [shift]-reload
+* Does not work when run from the local file system due to same origin policy in many browsers (Chrome, Safari), yet Firefox will work.
+
+
+## What is a Fallback strategy
+
+A simple fallback solution for no SVG support
+
+
+```html
+<img src="image.svg" onload="SVGInject(this)" onerror="this.onload=null;this.onerror=null;this.src='image.png';">
+```
+
+Here is a more generic method with a call to a global functions which replaces the file ending from svg to png
+
+```html
+<script>
+  pngFallback = function(img) {
+    img.onload = null;
+    img.onerror = null;
+    img.src = img.src.slice(0, -3) + 'png';
+  };
+</script>
+
+...
+
+<img src="image.svg" onload="SVGInject(this)" onerror="pngFallback(this)">
+```
+

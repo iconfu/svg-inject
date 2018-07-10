@@ -7,12 +7,34 @@
   <!-- Include the SvgInject javascript file -->
   <script src="svg-inject.min.js"></script>
 
+  <script>
+    SVGInject.setOptions({ 
+      cache: false,
+      onLoaded: function(svg, imgElement) {
+        console.info('loaded');
+        console.info(svg);
+        console.info(imgElement);
+      },
+      onInjected: function(svg, imgElement) {
+        console.info('injected');
+        console.info(svg);
+        console.info(imgElement);
+      }
+    });
+  </script>
+
+
   <style>
     /* Apply colors to injected SVG with id #businesspeople-variation */
-    #businesspeople-variation .color-1 { color: #68C4B5; }
-    #businesspeople-variation .color-2 { color: #FBCA61; }
-    #businesspeople-variation .color-3 { color: #DD7378; }
-    #businesspeople-variation .color-4 { color: #8B959D; }
+    #businesspeople-variation-1 .color-1 { color: #68C4B5; }
+    #businesspeople-variation-1 .color-2 { color: #FBCA61; }
+    #businesspeople-variation-1 .color-3 { color: #DD7378; }
+    #businesspeople-variation-1 .color-4 { color: #8B959D; }
+
+    #businesspeople-variation-2 .color-1 { color: #607D8B; }
+    #businesspeople-variation-2 .color-2 { color: #EC407A; }
+    #businesspeople-variation-2 .color-3 { color: #C2185B; }
+    #businesspeople-variation-2 .color-4 { color: #90A4AE; }
   </style>
 </head>
 <body>
@@ -20,15 +42,24 @@
   <h3>Not styled SVG (default SVG colors):</h3>
 
   <!-- Insert not styled SVG image -->
-  <img src="svgs/businesspeople.svg" onload="SVGInject(this)" width="128" height="128" />
+  <img src="svgs/businesspeoples.svg" xonload="SVGInject(this)" width="128" height="128" />
   
-  <h3>The same SVG styled with CSS:</h3>
+  <h3>The same SVG image styled with CSS in two different color schemes:</h3>
 
-  <!-- Insert a styled SVG image -->
-  <img src="svgs/businesspeople.svg" onload="SVGInject(this)" width="128" height="128" id="businesspeople-variation" />
-
+  <!-- Insert the same SVG image styled with CSS in two different color schemes -->
+  <img src="svgs/businesspeople.svg" xonload="SVGInject(this)" alt="businesspeople" width="128" height="128" id="businesspeople-variation-1" />
+  <img src="svgs/businesspeople.svg" xonload="SVGInject(this)" width="128" height="128" id="businesspeople-variation-2" />
 </body>
+
+<script>
+  SVGInject(document.getElementsByTagName('img'), {
+    onLoadFail: function(imgElement) {
+      console.error(imgElement)
+    }
+  });
+</script>
 
 <!-- Don't worry about this script. It's used to provide feedback if the demo is not running correctly. -->
 <script src="_example_helpers/xhr-check.js"></script>
+
 </html>
