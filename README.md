@@ -160,7 +160,7 @@ SVGInject is intended to work in production envionnments but it has a few limita
 
 ## Browser support
 
-Full support for all browsers supporting SVGs, including IE >= 9 ([full list](https://caniuse.com/#feat=svg/))
+Full support for all browsers supporting SVGs, including IE >= 9 ([full list](https://caniuse.com/#feat=svg))
 
 ## Fallback for no SVG support (IE < 9)
 
