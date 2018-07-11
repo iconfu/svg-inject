@@ -110,7 +110,9 @@ Instead of using the onload attribute you can use SVGInject within your Javascri
 All attributes are copied from the `<img>` element to the injected `<svg>` element with the following exceptions:
 
 * `src`, `alt`, and `onload` attributes are not copied
-* the `title` attribute is transformed to a `<title>` element in the injected SVG 
+* the `title` attribute is transformed to a `<title>` element in the injected SVG
+
+You may implement a different attribute handling in `onLoaded` options hook.
 
 
 ## API
@@ -159,7 +161,7 @@ SVGInject.setOptions({
 SVGInject is intended to work in production environments but it has a few limitations:
 
 * The image src must apply to the [same-origin policy](https://en.wikipedia.org/wiki/Same-origin_policy), which basically means the image origin must be were the website is running. This may be bypassed using the [Cross-Origin Resource Sharing (CORS) mechanism](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS).
-* Due to same-origin policy SVGInject does not work when run from the local file system in many browsers (Chrome, Safari), yet Firefox will work.
+* Due to the same-origin policy SVGInject does not work when run from the local file system in many browsers (Chrome, Safari), yet Firefox will work.
 
 
 ## Browser support
