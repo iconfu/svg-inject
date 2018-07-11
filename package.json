@@ -21,5 +21,8 @@
   "bugs": {
     "url": "https://github.com/iconfu/svg-inject/issues"
   },
-  "homepage": "https://github.com/iconfu/svg-inject#readme"
+  "homepage": "https://github.com/iconfu/svg-inject#readme",
+  "dependencies": {
+    "mocha": "^5.2.0"
+  }
 }

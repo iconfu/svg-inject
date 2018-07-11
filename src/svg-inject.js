@@ -23,7 +23,7 @@
   var a = document.createElement('a');
   function getAbsoluteUrl(url) {
     return a.href = url;
-  };
+  }
 
   // load svg
   function load(path, callback, errorCallback) {
@@ -45,7 +45,7 @@
       req.open('GET', path, true);
       req.send();
     }
-  };
+  }
 
   // inject loaded svg
   function inject(img, svg, options) {
@@ -77,7 +77,7 @@
     parentNode && parentNode.replaceChild(svg, img);
     img.__injected = true;
     options.onInjected(svg, img);
-  };
+  }
 
   function extendOptions() {
     var newOptions = {};
@@ -90,7 +90,7 @@
       }
     }
     return newOptions;
-  };
+  }
 
   var newSVGInject = function(options) {
     var defaultOptions = extendOptions(DEFAULT_OPTIONS, options);
@@ -157,7 +157,7 @@
                   svgLoad[i](svg);
                 }
                 svgLoadCache[absUrl] = svgLoad;
-              };
+              }
             }, loadFail);
           };
 
@@ -170,10 +170,10 @@
         } else if (length) {
           for (var i = 0; i < img.length; ++i) {
             SVGInject(img[i], options);
-          };
+          }
         }    
       }    
-    };
+    }
 
     SVGInject.setOptions = function(options) {
       defaultOptions = extendOptions(defaultOptions, options);
