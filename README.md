@@ -7,14 +7,14 @@ Developed and maintained by [Iconfu](https://www.iconfu.com).
 
 ## What does it do?
 
-SVGInject replaces an `<img>` element with an inline SVG. The SVG is loaded from the `src` attribute location of the `<img>` element.
+SVGInject replaces an `<img>` element with an inline SVG. The SVG is loaded from the `src attribute location of the `<img>` element.
 
 before injection:
-```
+```html
 <img src="image.svg" onload="SVGInject(this)" />
 ````
 after injection (SVG loaded from image.svg):
-```
+```html
 <svg version="1.1" ...> ... </svg>
 ```
 
@@ -122,7 +122,7 @@ You may implement a different attribute handling in the `beforeInjected` options
 | onLoadFail | function(img) | `empty function` | Hook after SVG load fails. The img element is passed as an argument. |
 
 
-## Full Example using Options
+### Full Example using Options
 
 ```html
 <html>
