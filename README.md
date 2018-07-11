@@ -58,7 +58,7 @@ Add `onload="SVGInject(this)"` to any `<img>` element where you want the SVG to 
 <img src="image.svg" onload="SVGInject(this)" />
 ```
 
-**The SVG is injected and stylable now!** :sparkles:
+**The SVG is injected and styleable now!!!** :sparkles::sparkles::sparkles:
 
 
 ## How does it work?
@@ -119,7 +119,7 @@ All attributes are copied from the `<img>` element to the injected `<svg>` eleme
 |----------|-------------|
 | SVGInject(img, options) | Inject the SVG specified in the src attribute of the passed `img` element. |
 | SVGInject.setOptions(options) | Sets the default options for SVGInject. |
-| SVGInject.new(options) | Create a new instance of SVGInject to give you different inject functionality across your side. Example: if you define `window.SVGInjectNoCache = SVGInject.new({ cache: false });` you can easliy use no caching injecting anywhere in your HTML `<img ... onload="SVGInjectNoCache(this)">`  |
+| SVGInject.new(options) | Create a new instance of SVGInject to give you different inject functionality across your side. Example: if you define `window.SVGInjectNoCache = SVGInject.new({ cache: false });` you can easily use no caching injecting anywhere in your HTML `<img ... onload="SVGInjectNoCache(this)">`  |
 
 ### Options
 
@@ -156,7 +156,7 @@ SVGInject.setOptions({
 
 ## What are the limitations?
 
-SVGInject is intended to work in production envionnments but it has a few limitations:
+SVGInject is intended to work in production environments but it has a few limitations:
 
 * The image src must apply to the [same-origin policy](https://en.wikipedia.org/wiki/Same-origin_policy), which basically means the image origin must be were the website is running. This may be bypassed using the [Cross-Origin Resource Sharing (CORS) mechanism](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS).
 * Due to same-origin policy SVGInject does not work when run from the local file system in many browsers (Chrome, Safari), yet Firefox will work.
@@ -169,7 +169,7 @@ Full support for all browsers supporting SVGs, including IE >= 9 ([full list](ht
 
 ## Fallback for no SVG support (IE < 9)
 
-SVG is widley supported by all major browsers for a very long time, still here is a simple fallback solution for no SVG support if you really need it:
+SVG is widly supported by all major browsers for a very long time, still here is a simple fallback solution for no SVG support if you really need it:
 
 
 ```html
