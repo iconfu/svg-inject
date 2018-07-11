@@ -1,11 +1,13 @@
 # SVGInject
 
-A tiny, intuitive, robust solution for injecting SVG files inline into the DOM
+A tiny, intuitive, robust, caching solution for injecting SVG files inline into the DOM.
+
+Developed and maintained by [Iconfu](https://www.iconfu.com).
 
 
 ## What does it do?
 
-SVGInject replaces an `<img>` element with an SVG element inline.
+SVGInject loads the SVG source of an `<img>` element and replaces the `<img>` element with the loaded `<svg>` element. In other words the SVG gets injected!
 
 
 ## Why should I use it?
@@ -78,7 +80,7 @@ If your code looks like this:
 </html>
 ```
 
-After injection, the DOM will look like this:
+The SVG from the src `image.svg` will be loaded and injected (replace the `<img>` element.
 
 ```html
 <html>
@@ -89,6 +91,8 @@ After injection, the DOM will look like this:
   ...
 </html>
 ```
+
+All attributes except `src`, `alt`, and `onload` are copied from the `<img>` to the `<svg>` element (See "How are attributes handled?" section). 
 
 ## What are the advantages?
 
@@ -135,27 +139,38 @@ You may implement a different attribute handling in `onLoaded` options hook.
 | onLoadFail | function(img) | `empty function` | Hook after SVG load fails. The img element is passed as an argument. |
 | onInjected | function(svg, img) | `empty function` | Hook after SVG is injected. The svg and img element are passed as arguments. |
 
-**Example using options:**
 
-```javascript
-// set options on SVGInject
-SVGInject.setOptions({
-  cache: false, // disable caching
-  onLoaded: function(svg, img) {
-    // by returning false the svg element will be injected unchanged. No attributes of the img tag will get copied to the svg element
-    return false;
-  },
+## Full Example using Options
 
-  onInjected: function(svg, img) {
-    // set a class to the svg element
-    svg.classList.add('injected-svg');
-  }
+```html
+<html>
+<head>
+  <script src="svg-inject.min.js"></script>
 
-  onLoadFail: function(img) {
-    // do some error handling
-  }
-});
+  <script>
+    // set options on SVGInject
+    SVGInject.setOptions({
+      cache: false, // disable caching
+      onLoaded: function(svg, img) {
+        // by returning false the svg element will be injected unchanged. No attributes of the img tag will get copied to the svg element
+        return false;
+      },
 
+      onInjected: function(svg, img) {
+        // set a class to the svg element
+        svg.classList.add('injected-svg');
+      }
+
+      onLoadFail: function(img) {
+        // do some error handling
+      }
+    });
+  </script>
+</head>
+<body>
+  <img src="test_image.svg" onload="SVGInject(this)" />
+</body>
+</html>
 ```
 
 
