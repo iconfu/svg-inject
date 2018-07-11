@@ -1,6 +1,6 @@
 # SVGInject
 
-A tiny intuitive solution for injecting SVG files inline into the DOM
+A tiny, intuitive, robust solution for injecting SVG files inline into the DOM
 
 
 ## What does it do?
@@ -194,3 +194,13 @@ A more generic method with a call to a global functions which replaces the file 
 <img src="image.svg" onload="SVGInject(this)" onerror="pngFallback(this)">
 ```
 
+If you are doing injection without `onload` attribute
+
+```javascript
+IMGInject.setOptions({
+  onLoadFail: function(img) {
+    img.src = img.src.slice(0, -3) + 'png';
+  }
+});
+
+```
