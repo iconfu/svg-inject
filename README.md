@@ -115,11 +115,9 @@ All attributes are copied from the `<img>` element to the injected `<svg>` eleme
 
 ## API
 
-### Functions
-
 | Function | Description |
 |----------|-------------|
-| SVGInject(img, [options](###Options)) | Inject the SVG specified in the src attribute of the passed `img` element. |
+| SVGInject(img, options) | Inject the SVG specified in the src attribute of the passed `img` element. |
 | SVGInject.setOptions(options) | Sets the default options for SVGInject. |
 | SVGInject.new(options) | Create a new instance of SVGInject to give you different inject functionality across your side. Example: if you define `window.SVGInjectNoCache = SVGInject.new({ cache: false });` you can easliy use no caching injecting anywhere in your HTML `<img ... onload="SVGInjectNoCache(this)">`  |
 
