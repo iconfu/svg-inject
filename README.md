@@ -7,7 +7,16 @@ Developed and maintained by [Iconfu](https://www.iconfu.com).
 
 ## What does it do?
 
-SVGInject replaces an <img> element with inline SVG. The SVG is loaded from the <img> src attribute location.
+SVGInject replaces an <img> element with an inline SVG. The SVG is loaded from the <img> src attribute location.
+
+before injection:
+```
+<img src="image.svg" width="200" height="200" onload="SVGInject(this)" />
+````
+after injection (SVG from image.svg):
+```
+<svg width="200" height="200"> ... </svg>
+```
 
 
 ## Why should I use it?
