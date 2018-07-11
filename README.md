@@ -62,6 +62,8 @@ Add `onload="SVGInject(this)"` to any `<img>` element where you want the SVG to 
 
 <hr>
 
+<hr>
+
 ## How does it work?
 
 The SVG injector replaces an image element in the DOM with the SVG which is specified in its "src" attribute.
@@ -186,7 +188,7 @@ A more generic method with a call to a global functions which replaces the file 
   pngFallback = function(img) {
     img.onload = null;
     img.onerror = null;
-    img.src = img.src.replace(/svg$/, 'png');
+    img.src = img.slice(0, -3) + ".png";
   };
 </script>
 
@@ -200,7 +202,7 @@ If you are doing injection without `onload` attribute
 ```javascript
 IMGInject.setOptions({
   onLoadFail: function(img) {
-    img.src = img.src.replace(/svg$/, 'png');  
+    img.src = img.slice(0, -3) + ".png";
   }
 });
 
