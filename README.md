@@ -203,7 +203,7 @@ A more generic method with a call to a global functions which replaces the file 
   pngFallback = function(img) {
     img.onload = null;
     img.onerror = null;
-    img.src = img.slice(0, -3) + ".png";
+    img.src = img.slice(0, -4) + ".png";
   };
 </script>
 
@@ -215,9 +215,9 @@ A more generic method with a call to a global functions which replaces the file 
 If you are doing injection without `onload` attribute
 
 ```javascript
-IMGInject.setOptions({
+SVGInject.setOptions({
   onLoadFail: function(img) {
-    img.src = img.slice(0, -3) + ".png";
+    img.src = img.slice(0, -4) + ".png";
   }
 });
 
