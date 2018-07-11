@@ -60,6 +60,7 @@ Add `onload="SVGInject(this)"` to any `<img>` element where you want the SVG to 
 
 **The SVG is injected and styleable now!!!** :sparkles::sparkles::sparkles:
 
+<hr>
 
 ## How does it work?
 
@@ -185,7 +186,7 @@ A more generic method with a call to a global functions which replaces the file 
   pngFallback = function(img) {
     img.onload = null;
     img.onerror = null;
-    img.src = img.src.slice(0, -3) + 'png';
+    img.src = img.src.replace(/svg$/, 'png');
   };
 </script>
 
@@ -199,7 +200,7 @@ If you are doing injection without `onload` attribute
 ```javascript
 IMGInject.setOptions({
   onLoadFail: function(img) {
-    img.src = img.src.slice(0, -3) + 'png';
+    img.src = img.src.replace(/svg$/, 'png');  
   }
 });
 

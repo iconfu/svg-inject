@@ -118,7 +118,6 @@
         
         if (src) {
           var absUrl = getAbsoluteUrl(img.src);
-          console.info(absUrl)
           // Options
           options = extendOptions(defaultOptions, options);
           var cache = options.cache;
@@ -141,10 +140,14 @@
           }
 
           var loadFail = function() {
+            img.onerror = null;
+            img.onload = null;
             options.onLoadFail(img);
           };
 
           var afterImageComplete = function() {
+            img.onerror = null;
+            img.onload = null;
             load(absUrl, function(svg) {
               inject(img, svg, options);
 

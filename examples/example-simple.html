@@ -17,6 +17,12 @@
         console.info('injected');
       }
     });
+
+    window.pngFallback = function(img) {
+      img.onload = null;
+      img.onerror = null;
+      img.src = img.src.slice(0, -3) + 'png';
+    };
   </script>
 
 
@@ -49,8 +55,9 @@
 
 <script>
   /*SVGInject(document.getElementsByTagName('img'), {
-    onLoadFail: function(imgElement) {
-      console.error(imgElement)
+    onLoadFail: function(img) {
+      console.error(img)
+      img.src = img.src.replace(/svg$/, 'png');  
     }
   });*/
 </script>
