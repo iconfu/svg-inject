@@ -15,9 +15,10 @@
 
   var DEFAULT_OPTIONS = {
     cache: true,
-    onLoaded: NOOP,
-    onLoadFail: NOOP,
-    onInjected: NOOP
+    beforeInjected: NOOP,
+    afterInjected: NOOP,
+    onLoad: NOOP,
+    onLoadFail: NOOP
   };
 
   var a = document.createElement('a');
@@ -50,8 +51,8 @@
   // inject loaded svg
   function inject(img, svg, options) {
     svg = svg.cloneNode(true);
-    // onLoad handler may return false to skip any attribute manipulation
-    if (options.onLoaded(svg, img) !== false) {
+    // beforeInjected handler may return false to skip any attribute manipulation
+    if (options.beforeInjected(svg, img) !== false) {
       var attributes = img.attributes;
 
       for(var i = 0; i < attributes.length; ++i) {
@@ -76,7 +77,7 @@
     var parentNode = img.parentNode;
     parentNode && parentNode.replaceChild(svg, img);
     img.__injected = true;
-    options.onInjected(svg, img);
+    options.afterInjected(svg, img);
   }
 
   function extendOptions() {
@@ -104,9 +105,9 @@
      *
      * Options:
      * cache: boolean if SVG should be cached (defaults false)
-     * onLoaded: callback after SVG is loaded
+     * beforeInjected: callback after SVG is loaded
      * onLoadFail: callback after SVG load fails
-     * onInjected: callback after SVG is injected
+     * afterInjected: callback after SVG is injected
      * 
      * @param {HTMLElement} img - an img element
      * @param {Object} options.
@@ -149,6 +150,7 @@
             img.onerror = null;
             img.onload = null;
             load(absUrl, function(svg) {
+              options.onLoad(svg, img);
               inject(img, svg, options);
 
               if (cache) {

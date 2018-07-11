@@ -100,7 +100,7 @@ All attributes are copied from the `<img>` element to the injected `<svg>` eleme
 * `src`, `alt`, and `onload` attributes are not copied
 * the `title` attribute is transformed to a `<title>` element in the injected SVG
 
-You may implement a different attribute handling in `onLoaded` options hook.
+You may implement a different attribute handling in the `beforeInjected` options hook.
 
 
 ## API
@@ -116,9 +116,10 @@ You may implement a different attribute handling in `onLoaded` options hook.
 | Property name | Type | Default | Description |
 | ------------- | ---- | ------- | ----------- |
 | cache | boolean | `true` | Caches the SVG based on the absolute URL. The cache only persists for the lifetime of the page. Without caching images with the same absolute URL will trigger a new XMLHttpRequest but browser caching will still apply. |
-| onLoaded | function(svg, img) | `empty function` | Hook after SVG is loaded. The svg and img element are passed as arguments. This is useful to make custom changes to the svg element. If `false` the svg element will not get changed by IMGInject(). |
+| beforeInjected | function(svg, img) | `empty function` | Hook after SVG is loaded. The svg and img elements are passed as arguments. This is useful to make custom changes to the svg element. If `false` the svg element will not get changed by IMGInject(). |
+| afterInjected | function(svg, img) | `empty function` | Hook after SVG is injected. The svg and img elements are passed as arguments. |
+| onLoad | function(svg, img) | `empty function` | Hook after SVG loaded. The svg and img elements is passed as an argument.  |
 | onLoadFail | function(img) | `empty function` | Hook after SVG load fails. The img element is passed as an argument. |
-| onInjected | function(svg, img) | `empty function` | Hook after SVG is injected. The svg and img element are passed as arguments. |
 
 
 ## Full Example using Options
@@ -132,12 +133,12 @@ You may implement a different attribute handling in `onLoaded` options hook.
     // set options on SVGInject
     SVGInject.setOptions({
       cache: false, // disable caching
-      onLoaded: function(svg, img) {
+      beforeInjected: function(svg, img) {
         // by returning false the svg element will be injected unchanged.
         // No attributes of the img element will get copied to the svg element.
         return false;
       },
-      onInjected: function(svg, img) {
+      afterInjected: function(svg, img) {
         // set a class to the svg element
         svg.classList.add('injected-svg');
       }

@@ -15,15 +15,16 @@
 
   var DEFAULT_OPTIONS = {
     cache: true,
-    onLoaded: NOOP,
-    onLoadFail: NOOP,
-    onInjected: NOOP
+    beforeInjected: NOOP,
+    afterInjected: NOOP,
+    onLoad: NOOP,
+    onLoadFail: NOOP
   };
 
   var a = document.createElement('a');
   function getAbsoluteUrl(url) {
     return a.href = url;
-  };
+  }
 
   // load svg
   function load(path, callback, errorCallback) {
@@ -45,13 +46,13 @@
       req.open('GET', path, true);
       req.send();
     }
-  };
+  }
 
   // inject loaded svg
   function inject(img, svg, options) {
     svg = svg.cloneNode(true);
-    // onLoad handler may return false to skip any attribute manipulation
-    if (options.onLoaded(svg, img) !== false) {
+    // beforeInjected handler may return false to skip any attribute manipulation
+    if (options.beforeInjected(svg, img) !== false) {
       var attributes = img.attributes;
 
       for(var i = 0; i < attributes.length; ++i) {
@@ -76,8 +77,8 @@
     var parentNode = img.parentNode;
     parentNode && parentNode.replaceChild(svg, img);
     img.__injected = true;
-    options.onInjected(svg, img);
-  };
+    options.afterInjected(svg, img);
+  }
 
   function extendOptions() {
     var newOptions = {};
@@ -90,7 +91,7 @@
       }
     }
     return newOptions;
-  };
+  }
 
   var newSVGInject = function(options) {
     var defaultOptions = extendOptions(DEFAULT_OPTIONS, options);
@@ -104,9 +105,9 @@
      *
      * Options:
      * cache: boolean if SVG should be cached (defaults false)
-     * onLoaded: callback after SVG is loaded
+     * beforeInjected: callback after SVG is loaded
      * onLoadFail: callback after SVG load fails
-     * onInjected: callback after SVG is injected
+     * afterInjected: callback after SVG is injected
      * 
      * @param {HTMLElement} img - an img element
      * @param {Object} options.
@@ -149,6 +150,7 @@
             img.onerror = null;
             img.onload = null;
             load(absUrl, function(svg) {
+              options.onLoad(svg, img);
               inject(img, svg, options);
 
               if (cache) {
@@ -157,7 +159,7 @@
                   svgLoad[i](svg);
                 }
                 svgLoadCache[absUrl] = svgLoad;
-              };
+              }
             }, loadFail);
           };
 
@@ -170,10 +172,10 @@
         } else if (length) {
           for (var i = 0; i < img.length; ++i) {
             SVGInject(img[i], options);
-          };
+          }
         }    
       }    
-    };
+    }
 
     SVGInject.setOptions = function(options) {
       defaultOptions = extendOptions(defaultOptions, options);

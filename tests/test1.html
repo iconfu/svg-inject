@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <title>SVGInject Test 1</title>
+
+  <script src="svg-inject.min.js"></script>
+
+  <script>
+    SVGInjectMultiple = SVGInject.new({
+      beforeInjected: function(svg, img) {
+        console.info('beforeInjected');
+      },
+
+      afterInjected: function(svg, img) {
+        console.info('afterInjected');
+      },
+
+      onLoad: function(svg, img) {
+        console.info('onLoad');
+      }
+    });
+
+  </script>
+
+</head>
+<body>
+  <!-- same images -->
+  <img src="svgs/businesspeople.svg" onload="SVGInjectMultiple(this)" />
+  <img src="svgs/businesspeople.svg" onload="SVGInjectMultiple(this)" />
+
+  <!-- load fail -->
+  <img src="svgs/businesspeoplex.svg" onload="SVGInject(this)" alt="businesspeople" title="businesspeople"/>
+
+</body>
+</html>
