@@ -7,25 +7,6 @@
   <!-- Include the SvgInject javascript file -->
   <script src="svg-inject.min.js"></script>
 
-  <script>
-    SVGInject.setOptions({ 
-      cache: true,
-      onLoaded: function(svg, img) {
-        console.info('loaded');
-      },
-      onInjected: function(svg, img) {
-        console.info('injected');
-      }
-    });
-
-    window.pngFallback = function(img) {
-      img.onload = null;
-      img.onerror = null;
-      img.src = img.src.slice(0, -3) + 'png';
-    };
-  </script>
-
-
   <style>
     /* Apply colors to injected SVG with id #businesspeople-variation */
     #businesspeople-variation-1 .color-1 { color: #68C4B5; }
@@ -52,15 +33,6 @@
   <img src="svgs/businesspeople.svg" onload="SVGInject(this)" alt="businesspeople" width="128" height="128" id="businesspeople-variation-1" />
   <img src="svgs/businesspeople.svg" onload="SVGInject(this)" width="128" height="128" id="businesspeople-variation-2" />
 </body>
-
-<script>
-  /*SVGInject(document.getElementsByTagName('img'), {
-    onLoadFail: function(img) {
-      console.error(img)
-      img.src = img.src.replace(/svg$/, 'png');  
-    }
-  });*/
-</script>
 
 <!-- Don't worry about this script. It's used to provide feedback if the demo is not running correctly. -->
 <script src="_example_helpers/xhr-check.js"></script>

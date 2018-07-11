@@ -7,15 +7,15 @@ Developed and maintained by [Iconfu](https://www.iconfu.com).
 
 ## What does it do?
 
-SVGInject replaces an `<img>` element with an inline SVG. The SVG is loaded from the `<img>` src attribute location.
+SVGInject replaces an `<img>` element with an inline SVG. The SVG is loaded from the `<img> src attribute location.
 
 before injection:
 ```
-<img src="image.svg" width="200" height="200" onload="SVGInject(this)" />
+<img src="image.svg" onload="SVGInject(this)" />
 ````
-after injection (SVG from image.svg):
+after injection (SVG loaded from image.svg):
 ```
-<svg width="200" height="200"> ... </svg>
+<svg version="1.1" ...> ... </svg>
 ```
 
 
@@ -73,35 +73,7 @@ Add `onload="SVGInject(this)"` to any `<img>` element where you want the SVG to 
 
 <hr>
 
-<hr>
-
-## How does it work?
-
-The SVG injector replaces an image element in the DOM with the SVG which is specified in its "src" attribute.
-
-If your code looks like this:
-
-```html
-<html>
-  ...
-  <img src="image.svg" width="200" height="200" onload="SVGInject(this)" />
-  ...
-</html>
-```
-
-The SVG from the src `image.svg` will be loaded and injected (replace the `<img>` element.
-
-```html
-<html>
-  ...
-  <svg width="200" height="200">
-    ...
-  </svg>
-  ...
-</html>
-```
-
-All attributes except `src`, `alt`, and `onload` are copied from the `<img>` to the `<svg>` element (See "How are attributes handled?" section). 
+<hr> 
 
 ## What are the advantages?
 
