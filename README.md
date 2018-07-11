@@ -113,11 +113,17 @@ All attributes are copied from the `<img>` element to the injected `<svg>` eleme
 * the `title` attribute is transformed to a `<title>` element in the injected SVG 
 
 
-## Advanced usage
+## API
+
+### Functions
+
+| Function | Description |
+|----------|-------------|
+| SVGInject(img, [options](###Options)) | Inject the SVG specified in the src attribute of the passed `img` element. |
+| SVGInject.setOptions(options) | Sets the default options for SVGInject. |
+| SVGInject.new(options) | Create a new instance of SVGInject to give you different inject functionality across your side. Example: if you define `window.SVGInjectNoCache = SVGInject.new({ cache: false });` you can easliy use no caching injecting anywhere in your HTML `<img ... onload="SVGInjectNoCache(this)">`  |
 
 ### Options
-
-You may pass an options object as second paramter to SVGInject `SVGInject(imgElement, options)` or you can assign options just once with `SVGInject.setOptions(options)`
 
 | Property name | Type | Default | Description |
 | ------------- | ---- | ------- | ----------- |
@@ -126,7 +132,7 @@ You may pass an options object as second paramter to SVGInject `SVGInject(imgEle
 | onLoadFail | function(img) | `empty function` | Hook after SVG load fails. The img element is passed as an argument. |
 | onInjected | function(svg, img) | `empty function` | Hook after SVG is injected. The svg and img element are passed as arguments. |
 
-### Example
+**Example using options:**
 
 ```javascript
 // set options on SVGInject
@@ -161,6 +167,7 @@ SVGInject is intended to work in production envionnments but it has a few limita
 ## Browser support
 
 Full support for all browsers supporting SVGs, including IE >= 9 ([full list](https://caniuse.com/#feat=svg))
+
 
 ## Fallback for no SVG support (IE < 9)
 
