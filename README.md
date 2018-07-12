@@ -1,5 +1,9 @@
 # SVGInject
 
+
+![npm](https://img.shields.io/npm/dw/localeval.svg)
+
+
 A tiny, intuitive, robust, caching solution for injecting SVG files inline into the DOM.
 
 Developed and maintained by [Iconfu](https://www.iconfu.com).
