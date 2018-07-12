@@ -12,7 +12,7 @@
 
   var NOOP = function() {};
   var ATTRIBUTE_EXCLUSION_NAMES = ['src', 'alt', 'onload'];
-
+  var a = document.createElement('a');
   var DEFAULT_OPTIONS = {
     cache: true,
     beforeInjected: NOOP,
@@ -21,9 +21,16 @@
     onLoadFail: NOOP
   };
 
-  var a = document.createElement('a');
   function getAbsoluteUrl(url) {
     return a.href = url;
+  }
+
+  function buildSvg(svgString, absUrl) {
+    var div = document.createElement('div');
+    div.innerHTML = svgString;
+    var svg = div.firstChild;
+    svg.insertBefore(document.createComment("SVG injected from '" + absUrl + "'"), svg.firstChild);
+    return svg;
   }
 
   // load svg
@@ -33,16 +40,11 @@
 
       req.onreadystatechange = function() {
         if(req.readyState == 4 && req.status == 200) {
-          var div = document.createElement('div');
-          div.innerHTML = req.responseText;
-          var svg = div.childNodes[0];
-          svg.insertBefore(document.createComment("SVG injected from '" + path + "'"), svg.firstChild);
-          callback(svg);
+          callback(req.responseText);
         }
       };
 
       req.onerror = errorCallback;
-
       req.open('GET', path, true);
       req.send();
     }
@@ -50,7 +52,6 @@
 
   // inject loaded svg
   function inject(img, svg, options) {
-    svg = svg.cloneNode(true);
     // beforeInjected handler may return false to skip any attribute manipulation
     if (options.beforeInjected(svg, img) !== false) {
       var attributes = img.attributes;
@@ -93,7 +94,7 @@
     return newOptions;
   }
 
-  var newSVGInject = function(options) {
+  function newSVGInject(options) {
     var defaultOptions = extendOptions(DEFAULT_OPTIONS, options);
     var svgLoadCache = {};
 
@@ -128,11 +129,11 @@
 
             if (svgLoad) {
               if (Array.isArray(svgLoad)) {
-                svgLoad.push(function(svg) {
-                  inject(img, svg, options);
+                svgLoad.push(function(svgString) {
+                  inject(img, buildSvg(svgString, absUrl), options);
                 });
               } else {
-                inject(img, svgLoad, options);
+                inject(img, buildSvg(svgLoad, absUrl), options);
               }
               return;
             } else {
@@ -149,15 +150,19 @@
           var afterImageComplete = function() {
             img.onerror = null;
             img.onload = null;
-            load(absUrl, function(svg) {
+            load(absUrl, function(svgString) {
+              var svg = buildSvg(svgString, absUrl);
+
               options.onLoad(svg, img);
               inject(img, svg, options);
 
               if (cache) {
                 var svgLoad = svgLoadCache[absUrl];
+                
                 for (var i = 0; i < svgLoad.length; ++i) {
-                  svgLoad[i](svg);
+                  svgLoad[i](svgString);
                 }
+                
                 svgLoadCache[absUrl] = svgLoad;
               }
             }, loadFail);

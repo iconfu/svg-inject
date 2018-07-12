@@ -9,7 +9,7 @@ gulp.task('default', function() {
     .pipe(gulp.dest('dist/'))
     .pipe(uglify())
     .pipe(rename({ extname: '.min.js' }))
-    .pipe(gulp.dest('tests/'))
+    .pipe(gulp.dest('test/'))
     .pipe(gulp.dest('examples/'))
     .pipe(gulp.dest('dist/'));
 });

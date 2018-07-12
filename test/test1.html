@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <title>SVGInject Test 1</title>
+
+  <script src="svg-inject.min.js"></script>
+
+  <script>
+    var fail = function() {
+      document.getElementById('failed').style.display = 'block';
+      throw new Error();
+    };
+
+    var success = function() {
+      document.getElementById('success').style.display = 'block';
+      throw new Error();
+    };
+
+    // multiple same images test
+    !function() {
+      var sequenceNum = 0;
+      var sequence = ['onLoad', 'beforeInjected', 'afterInjected', 'beforeInjected', 'afterInjected', 'beforeInjected', 'afterInjected'];
+
+      var testSequence = function(eventName) {
+        console.info(eventName)
+        if (sequenceNum === sequence.length || sequence[sequenceNum++] !== eventName) {
+
+          fail();
+        }
+      };
+      
+      SVGInjectMultiple = SVGInject.new({
+        beforeInjected: function(svg, img) {
+          testSequence('beforeInjected');
+        },
+
+        afterInjected: function(svg, img) {
+          testSequence('afterInjected');
+        },
+
+        onLoad: function(svg, img) {
+          testSequence('onLoad');
+        },
+
+        onLoadFail: fail
+      });  
+    }();
+  </script>
+
+  <style>
+    #failed, #success {
+      font-size: 50px;
+      display: none;
+    }
+    #failed {
+      color: red;
+    }
+
+    #success {
+      color: green;
+    }
+  </style>
+
+</head>
+<body>
+  <div id="failed">TESTS FAILED</div>
+  <div id="success">ALL TESTS PASSED</div>
+
+  <!-- multiple same images test -->
+  <img src="svgs/businesspeople.svg" onload="SVGInjectMultiple(this)" id="multiple_1" />
+  <img src="svgs/businesspeople.svg" onload="SVGInjectMultiple(this)" id="multiple_2" />
+  <img src="svgs/businesspeople.svg" onload="SVGInjectMultiple(this)" id="multiple_3" />
+
+  <!-- copy attribute test -->
+  <img src="svgs/businesspeople.svg" onload="SVGInjectMultiple(this)" id="copy_attribute" alt="businesspeople" title="businesspeople" class="my-class" data-test="test" />
+
+  <!-- load fail test -->
+  <img src="svgs/businesspeoplex.svg" onload="SVGInject(this)" alt="businesspeople" title="businesspeople"/>
+
+</body>
+</html>
