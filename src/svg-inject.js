@@ -42,7 +42,6 @@
       };
 
       req.onerror = errorCallback;
-
       req.open('GET', path, true);
       req.send();
     }

@@ -73,11 +73,12 @@ Add `onload="SVGInject(this)"` to any `<img>` element where you want the SVG to 
 <img src="image.svg" onload="SVGInject(this)" />
 ```
 
-**The SVG is injected and styleable now!!!** :sparkles::sparkles::sparkles:
+**The SVG is injected and styleable now!!!** :sparkles: :sparkles: :sparkles:
 
 <hr>
 
-<hr> 
+<hr>
+
 
 ## What are the advantages?
 
@@ -88,11 +89,21 @@ Add `onload="SVGInject(this)"` to any `<img>` element where you want the SVG to 
 * **Native fallback if image source is not available**: Behaves like a normal `<img>` element if file not found or not available. If you specify an `alt` attribute the alternative text will show just like expected if the image can not be loaded.
 
 
+## What are the limitations?
+
+SVGInject is intended to work in production environments but it has a few limitations:
+
+* The image src must apply to the [same-origin policy](https://en.wikipedia.org/wiki/Same-origin_policy), which basically means the image origin must be were the website is running. This may be bypassed using the [Cross-Origin Resource Sharing (CORS) mechanism](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS).
+* Due to the same-origin policy SVGInject does not work when run from the local file system in many browsers (Chrome, Safari), yet Firefox will work.
+
+
 ## Why use the `onload` attribute?
 
-* **Works with dynamic content**: If you add `<img>` elements dynamically injection still works.
+* **Works with dynamic content and JS frameworks**: If you add the `<img>` elements dynamically injection still works. You can use it inside a JavaScript frameworks like Angluar, ReactJS, VueJS, ... without a specific solution. 
 
 * **Intuitive usage**: Insert the SVG images into your HTML code just as PNG images, with only one additional instruction. It's very clear what it does looking at the pure HTML.
+
+* **Standard conform**: The `onload` event handler on `<img>` elements has long been supported by all browsers and is part of the W3C specification since [HTML5.0](https://www.w3.org/TR/html50/webappapis.html#event-handler-attributes).
 
 Instead of using the onload attribute you can use SVGInject within your Javascript code like this: `SVGInject(document.getElementsByClassName('myClassName'))`.
 
@@ -159,22 +170,9 @@ You may implement a different attribute handling in the `beforeInjected` options
 ```
 
 
-## What are the limitations?
-
-SVGInject is intended to work in production environments but it has a few limitations:
-
-* The image src must apply to the [same-origin policy](https://en.wikipedia.org/wiki/Same-origin_policy), which basically means the image origin must be were the website is running. This may be bypassed using the [Cross-Origin Resource Sharing (CORS) mechanism](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS).
-* Due to the same-origin policy SVGInject does not work when run from the local file system in many browsers (Chrome, Safari), yet Firefox will work.
-
-
-## Browser support
-
-Full support for all browsers supporting SVGs, including IE >= 9 ([full list](https://caniuse.com/#feat=svg))
-
-
 ## Fallback for no SVG support (IE < 9)
 
-SVG is widly supported by all major browsers for a very long time, still here is a simple fallback solution for no SVG support if you really need it:
+Here is a simple fallback solution for no SVG support if you really need it:
 
 
 ```html
@@ -197,7 +195,7 @@ A more generic method with a call to a global functions which replaces the file 
 <img src="image.svg" onload="SVGInject(this)" onerror="pngFallback(this)">
 ```
 
-If you are doing injection without `onload` attribute
+If you are doing injection without `onload` attribute:
 
 ```javascript
 SVGInject.setOptions({
@@ -207,3 +205,8 @@ SVGInject.setOptions({
 });
 
 ```
+
+
+## Browser support
+
+All modern browsers, and IE9+ ([full list](https://caniuse.com/#feat=svg))
