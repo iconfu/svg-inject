@@ -234,7 +234,9 @@
 
     SVGInject.err = function(img, fallbackSrc) {
       injectFail(img);
-      img.src = fallbackSrc;
+      if (fallbackSrc) {
+        img.src = fallbackSrc;
+      }
     };
 
     window[globalName] = SVGInject;

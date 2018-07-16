@@ -128,25 +128,25 @@ You may implement a different attribute handling in the `beforeInject` options h
 
 | Function | Description |
 |----------|-------------|
-| SVGInject(img, options) | Injects the SVG specified in the `src` attribute of specified `img` element or array of `img` elements. The optional second paramater sets the [options](#options) for this injection. |
+| SVGInject(img, options) | Injects the SVG specified in the `src` attribute of the specified `img` element or array of `img` elements. The optional second paramater sets the [options](#options) for this injection. |
 | SVGInject.setOptions(options) | Sets the default [options](#options) for SVGInject. |
-| SVGInject.err(img, fallbackSrc) | Used in onerror Event of an `<img>` element to trigger an injection fail. |
+| SVGInject.err(img, fallbackSrc) | which triggers a call to onInjectFail specified in options. Used in onerror event of an `<img>` element to trigger an injection fail. |
 
 
 ### Options
 
 | Property name | Type | Default | Description |
 | ------------- | ---- | ------- | ----------- |
-| cache | boolean | `true` | If `true` caches the SVG based on the absolute URL. The cache only persists for the lifetime of the page. Without caching images with the same absolute URL will trigger a new XMLHttpRequest but browser caching will still apply. |
-| copyAttributes | boolean | `true` | If `true` copies attributes from img to svg. See [How are attributes handled?](#how-are-attributes-handled). You may implement your own method to copy attributes in the beforeInject hook. |
-| beforeInject | function(svg, img) | `empty function` | Hook before SVG is injected. The svg and img elements are passed as arguments. You may return any html element and the returned element will get injected instead of the default SVG injection. |
-| afterInject | function(svg, img) | `empty function` | Hook after SVG is injected. The svg and img elements are passed as arguments. |
+| cache | boolean | `true` | If set to `true` the SVG will be cached using the absolute URL. The cache only persists for the lifetime of the page. Without caching images with the same absolute URL will trigger a new XMLHttpRequest but browser caching will still apply. |
+| copyAttributes | boolean | `true` | If set to `true` the attributes will be copied from `img` to `svg`. See [How are attributes handled?](#how-are-attributes-handled) for details. You may implement your own method to copy attributes in the beforeInject options hook. |
+| beforeInject | function(svg, img) | `empty function` | Hook before SVG is injected. The svg and img elements are passed as arguments. If any html element is returned it gets injected instead of applying the default SVG injection. |
+| afterInject | function(svg, img) | `empty function` | Hook after SVG is injected. The `svg` and `img` elements are passed as arguments. |
 | onInjectFail | function(img) | `empty function` | Hook after SVG load fails. The img element is passed as an argument. |
 
 
 ## How to use SVGInject directly from Javascript?
 
-Instead of using the `onload attribute on the `<img>` element you can also use SVGInject with pure Javascript.
+Instead of using the `onload` attribute on the `<img>` element you can also use SVGInject with pure Javascript.
 
 **Examples:**
 ```javascript
@@ -157,7 +157,7 @@ SVGInject(document.getElementsByClassName('myClassName'));
 SVGInject(document.getElementById('myId'));
 ```
 
-You need to make sure the images are already inside the DOM like this:
+You need to make sure the images are already inside the DOM before injection like this:
 
 ```javascript
 document.addEventListener("DOMContentLoaded", function() {
@@ -165,7 +165,7 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 ```
 
-If you dynamically insert `<img>` elements you need to make sure SVGInject() is called. 
+If you dynamically insert `<img>` elements you need to make sure SVGInject() is called after that. 
 
 
 ## How does SVGInject prevent unstyled "Image Flash"
