@@ -109,7 +109,7 @@ SVGInject is intended to work in production environments but it has a few limita
 
 * **Standard-conform**: The `onload` event handler on `<img>` elements has long been supported by all browsers and is officially part of the W3C specification since [HTML5.0](https://www.w3.org/TR/html50/webappapis.html#event-handler-attributes).
 
-If you do not want to use the onload attribute but prefer to inject SVGs directly from Javascript, you can do this, too. You can find more information [here](#).
+If you do not want to use the onload attribute but prefer to inject SVGs directly from Javascript, you can do this, too. You can find more information [here](#how-to-use-svginject-directly-from-javascript).
 
 
 ## How are attributes handled?
@@ -144,7 +144,7 @@ You may implement a different attribute handling in the `beforeInject` options h
 
 ## How to use SVGInject directly from Javascript?
 
-Instead of using the onload attribute on the `<img>` element you can also use SVGInject with pure Javascript.
+Instead of using the `onload attribute on the `<img>` element you can also use SVGInject with pure Javascript.
 
 **Examples:**
 ```javascript
@@ -168,17 +168,7 @@ If you dynamically insert `<img>` elements you need to make sure SVGInject() is 
 
 ## How does SVGInject prevent unstyled "Image Flash"
 
-
-
 SVGInject is designed to work out of the box and without any "Image Flash"
-
-
-
-Before the SVG is injected the original `<img>` element may be already loaded and rendered for a glimpse, causing a flicker.
-
-One technic to prevent this is to hide the `<img>` element with a ´visibilty: hidden´ style. T 
-
-
 
 
 ## Fallback for no SVG support (IE <= 8)
