@@ -128,8 +128,8 @@ You may implement a different attribute handling in the `beforeInject` options h
 
 | Function | Description |
 |----------|-------------|
-| SVGInject(img, options) | Inject the SVG specified in the src attribute of the passed in `img` element or array of `img` elements. |
-| SVGInject.setOptions(options) | Sets the default options for SVGInject. |
+| SVGInject(img, options) | Injects the SVG specified in the `src` attribute of specified `img` element or array of `img` elements. The optional second paramater sets the [options](#options) for this injection. |
+| SVGInject.setOptions(options) | Sets the default [options](#options) for SVGInject. |
 | SVGInject.err(img, fallbackSrc) | Used in onerror Event of an `<img>` element to trigger an injection fail. |
 
 
