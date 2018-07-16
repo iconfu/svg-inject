@@ -128,9 +128,9 @@ You may implement a different attribute handling in the `beforeInject` options h
 
 | Function | Description |
 |----------|-------------|
-| SVGInject(img, options) | Injects the SVG specified in the `src` attribute of the specified `img` element or array of `img` elements. The optional second paramater sets the [options](#options) for this injection. |
+| SVGInject(img, options) | Injects the SVG specified in the `src` attribute of the specified `img` element or array of `img` elements. The optional second parameter sets the [options](#options) for this injection. |
 | SVGInject.setOptions(options) | Sets the default [options](#options) for SVGInject. |
-| SVGInject.err(img, fallbackSrc) | Used in onerror Event of an `<img>` element to handle cases when the loading the original src fails (for example if file is not found or if the browser does not support SVG). This triggers a call to the options onLoadFail hook if available. The optional second argument will be set as the new src argument for the img element. |
+| SVGInject.err(img, fallbackSrc) | Used in `onerror Event of an `<img>` element to handle cases when the loading the original src fails (for example if file is not found or if the browser does not support SVG). This triggers a call to the options onLoadFail hook if available. The optional second parameter will be set as the new src attribute for the img element. |
 
 
 ### Options
@@ -139,9 +139,9 @@ You may implement a different attribute handling in the `beforeInject` options h
 | ------------- | ---- | ------- | ----------- |
 | cache | boolean | `true` | If set to `true` the SVG will be cached using the absolute URL. The cache only persists for the lifetime of the page. Without caching images with the same absolute URL will trigger a new XMLHttpRequest but browser caching will still apply. |
 | copyAttributes | boolean | `true` | If set to `true` the attributes will be copied from `img` to `svg`. See [How are attributes handled?](#how-are-attributes-handled) for details. You may implement your own method to copy attributes in the beforeInject options hook. |
-| beforeInject | function(svg, img) | `empty function` | Hook before SVG is injected. The svg and img elements are passed as arguments. If any html element is returned it gets injected instead of applying the default SVG injection. |
-| afterInject | function(svg, img) | `empty function` | Hook after SVG is injected. The `svg` and `img` elements are passed as arguments. |
-| onInjectFail | function(img) | `empty function` | Hook after SVG load fails. The img element is passed as an argument. |
+| beforeInject | function(svg, img) | `empty function` | Hook before SVG is injected. The `svg` and `img` elements are passed as parameters. If any html element is returned it gets injected instead of applying the default SVG injection. |
+| afterInject | function(svg, img) | `empty function` | Hook after SVG is injected. The `svg` and `img` elements are passed as parameters. |
+| onInjectFail | function(img) | `empty function` | Hook after SVG load fails. The `img` element is passed as an parameter. |
 
 
 ## How to use SVGInject directly from Javascript?
