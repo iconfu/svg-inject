@@ -3,21 +3,21 @@
 
 A tiny, intuitive, robust, caching solution for injecting SVG files inline into the DOM.
 
-Developed and maintained by [INCORS](https://www.incors.com) the creators of [Iconfu](https://www.iconfu.com).
+Developed and maintained by [INCORS](https://www.incors.com), the creators of [Iconfu](https://www.iconfu.com).
 
 
 ## What does it do?
 
 SVGInject replaces an `<img>` element with an inline SVG. The SVG is loaded from the `src` attribute location of the `<img>` element.
 
-before injection:
+Before injection:
 
 ```html
 <img src="image.svg" onload="SVGInject(this)" />
 
 ```
 
-after injection (SVG loaded from image.svg):
+After injection (SVG loaded from image.svg):
 
 ```html
 <svg version="1.1" ...> ... </svg>
@@ -74,7 +74,9 @@ Add `onload="SVGInject(this)"` to any `<img>` element where you want the SVG to 
 <img src="image.svg" onload="SVGInject(this)" />
 ```
 
-**The SVG is injected and styleable now!!!** :sparkles: :sparkles: :sparkles:
+**The SVG is injected and styleable now!!!**
+
+:sparkles: :sparkles: :sparkles:
 
 
 <hr>
