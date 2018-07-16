@@ -130,7 +130,8 @@ You may implement a different attribute handling in the `beforeInject` options h
 |----------|-------------|
 | SVGInject(img, options) | Injects the SVG specified in the `src` attribute of the specified `img` element or array of `img` elements. The optional second paramater sets the [options](#options) for this injection. |
 | SVGInject.setOptions(options) | Sets the default [options](#options) for SVGInject. |
-| SVGInject.err(img, fallbackSrc) | which triggers a call to onInjectFail specified in options. Used in onerror event of an `<img>` element to trigger an injection fail. |
+| SVGInject.err(img, fallbackSrc) | Used in onerror Event of an `<img>` element to handle cases when the loading the original src fails (for example if file is not found or if the browser does not support SVG). This triggers a call to the options onLoadFail hook if available.
+The optional second argument will be set as the new src argument for the img element. |
 
 
 ### Options
