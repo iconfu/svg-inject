@@ -297,13 +297,4 @@ Support for IE8 with optional PNG Fallback method
 
 ## License
 
-[MIT](https://github.com/iconfu/svg-inject/blob/master/LICENSE)
-
-
-SVGInject.setOptions({
-  beforeLoad: function(img) {
-    if (ie9()) {
-      return false;
-    }
-  }
-})
+[MIT License](https://github.com/iconfu/svg-inject/blob/master/LICENSE)
