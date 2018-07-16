@@ -90,9 +90,9 @@ Add `onload="SVGInject(this)"` to any `<img>` element where you want the SVG to 
 
 * **Native fallback without Javascript**: If Javascript is not available the SVG will still show. It's just not styleable with CSS. 
 
-* **No image flickering**: SVGInject effectively prevents the unstyled image to show, causing a flicker (Also called Image Flash) by setting it's visible to hidden until the SVG is injected.
-
 * **Native fallback if image source is not available**: Behaves like a normal `<img>` element if file not found or not available.
+
+* **No image flickering**: SVGInject effectively prevents the unstyled image to show, causing a flicker (Also called Image Flash) by setting it's visible to hidden until the SVG is injected.
 
 
 ## What are the limitations?
@@ -105,13 +105,13 @@ SVGInject is intended to work in production environments but it has a few limita
 
 ## Why use the `onload` attribute?
 
-* **Works with dynamic content and JS frameworks**: If you add `<img>` elements dynamically injection still works. It also works in JS frameworks like Angular ReactJS or Vue.js, also some limitation apply.
+* **Works with dynamic content and JS frameworks**: If `<img>` elements are added dynamically injection still works. It should also works in JS frameworks like Angular, ReactJS or Vue.js, also some limitation may apply.
 
 * **Intuitive usage**: Insert the SVG images into your HTML code just as PNG images, with only one additional instruction. It's very clear to understand what it does looking at the pure HTML.
 
 * **Standard-conform**: The `onload` event handler on `<img>` elements has long been supported by all browsers and is officially part of the W3C specification since [HTML5.0](https://www.w3.org/TR/html50/webappapis.html#event-handler-attributes).
 
-If you do not want to use the onload attribute but prefer to inject SVGs directly from Javascript, you can do this, too. You can find more information [here](#how-to-use-svginject-directly-from-javascript).
+If you do not want to use the `onload attribute but prefer to inject SVGs directly from Javascript, you can do this, too. You can find more information [here](#how-to-use-svginject-directly-from-javascript).
 
 
 ## How are attributes handled?
