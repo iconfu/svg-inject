@@ -7,36 +7,44 @@
   <script src="svg-inject.min.js"></script>
 
   <script>
+    var failed = false;
+    var successCount = 0;
+    var SUCCESS_NUM = 1;
+
     var fail = function() {
+      failed = true;
+      document.getElementById('success').style.display = 'none';
       document.getElementById('failed').style.display = 'block';
       throw new Error();
     };
 
     var success = function() {
-      document.getElementById('success').style.display = 'block';
-      throw new Error();
+      if (!failed && ++successCount == SUCCESS_NUM) {
+        document.getElementById('success').style.display = 'block';
+      }
     };
 
     // multiple same images test
     !function() {
       var sequenceNum = 0;
-      var sequence = ['onLoad', 'beforeInjected', 'afterInjected', 'beforeInjected', 'afterInjected', 'beforeInjected', 'afterInjected'];
+      var sequence = ['onLoad', 'beforeInject', 'afterInject', 'beforeInject', 'afterInject', 'beforeInject', 'afterInject'];
 
       var testSequence = function(eventName) {
         console.info(eventName)
         if (sequenceNum === sequence.length || sequence[sequenceNum++] !== eventName) {
-
           fail();
+        } else if (sequenceNum === sequence.length) {
+          success();
         }
       };
       
       SVGInjectMultiple = SVGInject.new({
-        beforeInjected: function(svg, img) {
-          testSequence('beforeInjected');
+        beforeInject: function(svg, img) {
+          testSequence('beforeInject');
         },
 
-        afterInjected: function(svg, img) {
-          testSequence('afterInjected');
+        afterInject: function(svg, img) {
+          testSequence('afterInject');
         },
 
         onLoad: function(svg, img) {
@@ -73,7 +81,7 @@
   <img src="svgs/businesspeople.svg" onload="SVGInjectMultiple(this)" id="multiple_3" />
 
   <!-- copy attribute test -->
-  <img src="svgs/businesspeople.svg" onload="SVGInjectMultiple(this)" id="copy_attribute" alt="businesspeople" title="businesspeople" class="my-class" data-test="test" />
+  <img src="svgs/businesspeople.svg" onload="SVGInject(this)" id="copy_attribute" alt="businesspeople" title="businesspeople" class="my-class" data-test="test" />
 
   <!-- load fail test -->
   <img src="svgs/businesspeoplex.svg" onload="SVGInject(this)" alt="businesspeople" title="businesspeople"/>
