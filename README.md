@@ -146,7 +146,7 @@ You may implement a different attribute handling in the `beforeInject` options h
 
 ## How to use SVGInject directly from Javascript?
 
-Instead of using the `onload` attribute on the `<img>` element you can also use SVGInject with pure Javascript.
+Instead of using the `onload` attribute on the `<img>` element you can also call SVGInject directly from Javascript.
 
 **Examples:**
 ```javascript
@@ -168,7 +168,7 @@ document.addEventListener("DOMContentLoaded", function() {
 If you dynamically insert `<img>` elements you need to make sure SVGInject() is called after that. 
 
 
-## How does SVGInject prevent unstyled "Image Flash"
+## How does SVGInject prevent "unstyled image flash"
 
 SVGInject is designed to work out of the box and without any "Image Flash"
 

@@ -15,9 +15,9 @@
   var a = document.createElement('a');
   var DEFAULT_OPTIONS = {
     cache: true,
+    copyAttributes: true,
     beforeInject: NOOP,
     afterInject: NOOP,
-    onLoad: NOOP,
     onInjectFail: NOOP
   };
 
@@ -58,10 +58,14 @@
 
   // inject loaded svg
   function inject(img, svgString, absUrl, options) {
+    if (img.__injectFailed) {
+      return;
+    }
+
     var svg = buildSvg(svgString, absUrl);
 
-    // beforeInject handler may return false to skip any attribute manipulation
-    if (options.beforeInject(svg, img) !== false) {
+    if (options.copyAttributes) {
+      injectElem = svg;
       var attributes = img.attributes;
 
       for (var i = 0; i < attributes.length; ++i) {
@@ -82,14 +86,16 @@
         }
       }
     }
+
+    var injectElem = options.beforeInject(svg, img) || svg;
     
     var parentNode = img.parentNode;
     if (parentNode) {
-      parentNode.replaceChild(svg, img);
+      parentNode.replaceChild(injectElem, img);
     }
     img.__injected = true;
     img.removeAttribute('onload');
-    options.afterInject(svg, img);
+    options.afterInject(injectElem, img);
   }
 
   function extendOptions() {
@@ -127,7 +133,8 @@
 
     var injectFail = function(img, options) {
       img.removeAttribute('onload');
-      options.onInjectFail(img);
+      img.__injectFailed = true;
+      options && options.onInjectFail(img);
     };
 
     /**
@@ -146,7 +153,7 @@
      * @param {Object} [options] - an optional specifying the options for SVG injection
      */
     function SVGInject(img, options) {
-      if (img && !img.__injected) {
+      if (img && !img.__injected && !img.__injectFailed) {
         var length = img.length;
         var src = img.src;
         
@@ -160,7 +167,6 @@
             removeEventListeners();
 
             load(absUrl, function(svgString) {
-              options.onLoad(svgString, img);
               inject(img, svgString, absUrl, options);
 
               if (cache) {
@@ -173,7 +179,7 @@
                 svgLoadCache[absUrl] = svgString;
               }
             }, function() {
-              injectFail(img);
+              injectFail(img, options);
             });
           };
 
@@ -181,7 +187,6 @@
             img.removeEventListener('load', afterImageComplete);
             img.removeEventListener('error', onError);
           };
-
 
           var absUrl = getAbsoluteUrl(src);
           options = extendOptions(defaultOptions, options);
@@ -225,10 +230,13 @@
     };
 
     // Create a new instance of SVGInject
-    SVGInject.new = newSVGInject;
+    SVGInject['new'] = newSVGInject;
 
-    SVGInject.err = function(img) {
+    SVGInject.err = function(img, fallbackSrc) {
       injectFail(img);
+      if (fallbackSrc) {
+        img.src = fallbackSrc;
+      }
     };
 
     window[globalName] = SVGInject;
@@ -236,9 +244,9 @@
     return SVGInject;
   }
 
+  var SVGInjectInstance = newSVGInject('SVGInject')
+
   if (typeof module == 'object' && typeof module.exports == 'object') {
-    module.exports = newSVGInject('SVGInject');
-  } else if (typeof window == 'object') {
-    newSVGInject('SVGInject');
+    module.exports = SVGInjectInstance;
   }
 })(window, document);

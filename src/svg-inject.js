@@ -134,7 +134,7 @@
     var injectFail = function(img, options) {
       img.removeAttribute('onload');
       img.__injectFailed = true;
-      options.onInjectFail(img);
+      options && options.onInjectFail(img);
     };
 
     /**
@@ -179,7 +179,7 @@
                 svgLoadCache[absUrl] = svgString;
               }
             }, function() {
-              injectFail(img);
+              injectFail(img, options);
             });
           };
 
@@ -230,7 +230,7 @@
     };
 
     // Create a new instance of SVGInject
-    SVGInject.new = newSVGInject;
+    SVGInject['new'] = newSVGInject;
 
     SVGInject.err = function(img, fallbackSrc) {
       injectFail(img);
