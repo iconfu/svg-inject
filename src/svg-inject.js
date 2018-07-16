@@ -158,6 +158,11 @@
         var src = img.src;
         
         if (src) {
+          var absUrl = getAbsoluteUrl(src);
+          options = extendOptions(defaultOptions, options);
+          var cache = options.cache;
+
+
           var onError = function() {
             removeEventListeners();
             injectFail(img, options);
@@ -187,11 +192,7 @@
             img.removeEventListener('load', afterImageComplete);
             img.removeEventListener('error', onError);
           };
-
-          var absUrl = getAbsoluteUrl(src);
-          options = extendOptions(defaultOptions, options);
-          var cache = options.cache;
-
+          
           if (cache) {
             var svgLoad = svgLoadCache[src];
 
@@ -233,7 +234,7 @@
     SVGInject['new'] = newSVGInject;
 
     SVGInject.err = function(img, fallbackSrc) {
-      injectFail(img);
+      injectFail(img, options);
       if (fallbackSrc) {
         img.src = fallbackSrc;
       }
