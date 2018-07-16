@@ -77,8 +77,6 @@ Add `onload="SVGInject(this)"` to any `<img>` element where you want the SVG to 
 **The SVG is injected and styleable now!!!** :sparkles: :sparkles: :sparkles:
 
 
-
-
 <hr>
 
 <hr>
@@ -90,9 +88,9 @@ Add `onload="SVGInject(this)"` to any `<img>` element where you want the SVG to 
 
 * **Native fallback without Javascript**: If Javascript is not available the SVG will still show. It's just not styleable with CSS. 
 
-* **Native fallback if image source is not available**: Behaves like a normal `<img>` element if file not found or not available. If you specify an `alt` attribute the alternative text will show just like expected if the image can not be loaded.
+* **No image flickering**: SVGInject effectively prevents the unstyled image to show, causing a flicker (Also called Image Flash) by setting it's visible to hidden until the SVG is injected.
 
-
+* **Native fallback if image source is not available**: Behaves like a normal `<img>` element if file not found or not available.
 
 
 ## What are the limitations?
@@ -105,7 +103,7 @@ SVGInject is intended to work in production environments but it has a few limita
 
 ## Why use the `onload` attribute?
 
-* **Works with dynamic content and JS frameworks**: If you add `<img>` elements dynamically injection still works. 
+* **Works with dynamic content and JS frameworks**: If you add `<img>` elements dynamically injection still works. It also works in JS frameworks like Angular ReactJS or Vue.js, also some limitation apply.
 
 * **Intuitive usage**: Insert the SVG images into your HTML code just as PNG images, with only one additional instruction. It's very clear to understand what it does looking at the pure HTML.
 
@@ -131,17 +129,18 @@ You may implement a different attribute handling in the `beforeInject` options h
 | SVGInject(img, options) | Inject the SVG specified in the src attribute of the passed in `img` element or array of `img` elements. |
 | SVGInject.setOptions(options) | Sets the default options for SVGInject. |
 | SVGInject.err(img, fallbackSrc) | Used in onerror Event of an `<img>` element to trigger an injection fail. |
-| SVGInject.new(options) | Create a new instance of SVGInject to give you different inject functionality across your side. Example: if you define `window.SVGInjectNoCache = SVGInject.new({ cache: false });` you can easily use no caching injecting anywhere in your HTML `<img ... onload="SVGInjectNoCache(this)">`  |
+
 
 ### Options
 
 | Property name | Type | Default | Description |
 | ------------- | ---- | ------- | ----------- |
 | cache | boolean | `true` | If `true` caches the SVG based on the absolute URL. The cache only persists for the lifetime of the page. Without caching images with the same absolute URL will trigger a new XMLHttpRequest but browser caching will still apply. |
-| copyAttributes | boolean | `true` | If `true` applies copies attributes from img to svg. See [How are attributes handled?](#how-are-attributes-handled). You may implement your own method to copy attributes in the beforeInject hook. |
+| copyAttributes | boolean | `true` | If `true` copies attributes from img to svg. See [How are attributes handled?](#how-are-attributes-handled). You may implement your own method to copy attributes in the beforeInject hook. |
 | beforeInject | function(svg, img) | `empty function` | Hook before SVG is injected. The svg and img elements are passed as arguments. You may return any html element and the returned element will get injected instead of the default SVG injection. |
 | afterInject | function(svg, img) | `empty function` | Hook after SVG is injected. The svg and img elements are passed as arguments. |
 | onInjectFail | function(img) | `empty function` | Hook after SVG load fails. The img element is passed as an argument. |
+
 
 ## How to use SVGInject directly from Javascript?
 
