@@ -216,7 +216,6 @@ This is a standard way working on all modern browsers (incl. IE9+)
   <script src="svg-inject.min.js"></script>
 </head>
 <body>
-  <!-- the extra onerror="SVGInject(this)" is needed to trigger the onInjectFail callback and  -->
   <img src="test_image.svg" onload="SVGInject(this)" onerror="SVGInject(this, 'test_image.png')" />
 </body>
 </html>
