@@ -88,8 +88,6 @@ Add `onload="SVGInject(this)"` to any `<img>` element where you want the SVG to 
 
 <hr>
 
-<hr>
-
 
 ## What are the advantages?
 
