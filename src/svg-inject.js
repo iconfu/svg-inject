@@ -173,33 +173,25 @@
             injectFail(img, options);
           };
 
+          var runCacheCallbacks = function(val) {
+            if (cache) {
+              var svgLoad = svgLoadCache[absUrl];
+              for (var i = 0; i < svgLoad.length; ++i) {
+                svgLoad[i](val);
+              }
+              svgLoadCache[absUrl] = val;
+            }
+          };
+
           var afterImageComplete = function() {
             removeEventListeners(img);
 
             load(absUrl, function(svgString) {
               inject(img, svgString, absUrl, options);
-
-              if (cache) {
-                var svgLoad = svgLoadCache[absUrl];
-  
-                for (var i = 0; i < svgLoad.length; ++i) {
-                  svgLoad[i](svgString);
-                }
-                
-                svgLoadCache[absUrl] = svgString;
-              }
+              runCacheCallbacks(svgString);
             }, function() {
               injectFail(img, options);
-
-              if (cache) {
-                var svgLoad = svgLoadCache[absUrl];
-
-                for (var i = 0; i < svgLoad.length; ++i) {
-                  svgLoad[i](null);
-                }
-
-                svgLoadCache[absUrl] = null;
-              }              
+              runCacheCallbacks(null);
             });
           };
           
