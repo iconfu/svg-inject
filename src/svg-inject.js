@@ -126,7 +126,7 @@
     head.appendChild(style);
   }
 
-   function injectFail(img, options) {
+  function injectFail(img, options) {
     img.removeAttribute('onload');
     img.__injectFailed = true;
     options.onInjectFail(img);
@@ -194,7 +194,7 @@
           };
           
           if (cache) {
-            var svgLoad = svgLoadCache[src];
+            var svgLoad = svgLoadCache[absUrl];
 
             if (svgLoad) {
               if (Array.isArray(svgLoad)) {

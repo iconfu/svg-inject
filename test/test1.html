@@ -48,7 +48,11 @@
           testSequence('afterInject');
         },
 
-        onInjectFail: function(img) { img.src = img.src.slice(0, -4) + ".png"; }
+        onInjectFail: function(img) {
+          console.info('onInjectFail')
+          console.info(new Error())
+          img.src = img.src.slice(0, -4) + ".png";
+        }
       });  
     }();
   </script>
