@@ -81,7 +81,7 @@ Add `onload="SVGInject(this)"` to any `<img>` element where you want the SVG to 
 </html>
 ```
 
-**The SVG is injected and styleable now!!!**
+**That's all: The SVG gets injected and is styleable!!!**
 
 :sparkles: :sparkles: :sparkles:
 
