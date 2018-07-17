@@ -7,14 +7,6 @@
   <!-- Include the SvgInject javascript file -->
   <script src="svg-inject.min.js"></script>
 
-  <script>
-    SVGInject.new('TestFoo', { onInject: function(img, svg) {
-      console.info(svg)
-    }})
-
-  </script>
-
-  
   <style>
     /* Apply colors to injected SVG with id #businesspeople-variation */
     #businesspeople-variation-1 .color-1 { color: #68C4B5; }
@@ -36,23 +28,24 @@
 </head>
 <body>
   <h1>SVGInject Simple Demo</h1>
-  <h3>Not styled SVG (default SVG colors):</h3>
+  
+  <h3>Not inject SVG:</h3>
 
   <!-- Insert not styled SVG image -->
-  <img src="svgs/businesspeople.svg" onloadx="TestFoo(this)" class="size-128" />
+  <img src="svgs/businesspeople.svg" class="size-128" />
+
+  <h3>Injected SVG with no style (default SVG colors):</h3>
+
+  <!-- Insert not styled SVG image -->
+  <img src="svgs/businesspeople.svg" onload="SVGInject(this)" class="size-128" />
   
-  <h3>The same SVG image styled with CSS in two different color schemes:</h3>
+  <h3>Injected SVGs styled with CSS in two different color schemes:</h3>
 
   <!-- Insert the same SVG image styled with CSS in two different color schemes -->
-  <img src="svgs/businesspeopled.svg" onload="TestFoo(this)" alt="foo" class="size-128" id="businesspeople-variation-1" />
-  <img src="svgs/businesspeople.svg" onloadx="TestFoo(this)" class="size-128" id="businesspeople-variation-2" />
+  <img src="svgs/businesspeople.svg" onload="SVGInject(this)" class="size-128" id="businesspeople-variation-1" />
+  <img src="svgs/businesspeople.svg" onload="SVGInject(this)" class="size-128" id="businesspeople-variation-2" />
 </body>
-
-<script>
-  //TestFoo(document.getElementsByClassName('size-128'));
-</script>
 
 <!-- Don't worry about this script. It's used to provide feedback if the example is not running correctly. -->
 <script src="_example_helpers/xhr-check.js"></script>
-
 </html>

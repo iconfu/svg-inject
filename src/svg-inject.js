@@ -29,9 +29,7 @@
   function buildSvg(svgString, absUrl) {
     var div = document.createElement('div');
     div.innerHTML = svgString;
-    var svg = div.firstChild;
-    svg.insertBefore(document.createComment("SVG injected from '" + absUrl + "'"), svg.firstChild);
-    return svg;
+    return div.firstChild;
   }
 
   // load svg
@@ -134,7 +132,7 @@
     var injectFail = function(img, options) {
       img.removeAttribute('onload');
       img.__injectFailed = true;
-      options && options.onInjectFail(img);
+      options.onInjectFail(img);
     };
 
     /**
@@ -161,7 +159,6 @@
           var absUrl = getAbsoluteUrl(src);
           options = extendOptions(defaultOptions, options);
           var cache = options.cache;
-
 
           var onError = function() {
             removeEventListeners();
@@ -234,7 +231,7 @@
     SVGInject['new'] = newSVGInject;
 
     SVGInject.err = function(img, fallbackSrc) {
-      injectFail(img, options);
+      injectFail(img, defaultOptions);
       if (fallbackSrc) {
         img.src = fallbackSrc;
       }
