@@ -32,7 +32,6 @@
       var sequence = ['beforeInject', 'afterInject', 'beforeInject', 'afterInject', 'beforeInject', 'afterInject'];
 
       var testSequence = function(eventName) {
-        console.info(eventName)
         if (sequenceNum === sequence.length || sequence[sequenceNum++] !== eventName) {
           fail();
         } else if (sequenceNum === sequence.length) {
@@ -40,7 +39,7 @@
         }
       };
       
-       SVGInject.new('SVGInjectMultiple', {
+       SVGInject.create('SVGInjectMultiple', {
         beforeInject: function(svg, img) {
           testSequence('beforeInject');
         },

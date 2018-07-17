@@ -155,7 +155,7 @@
      * afterInject: Hook after SVG is injected. The `svg` and `img` elements are passed as parameters.
      * onInjectFail: Hook after SVG load fails. The `img` element is passed as an parameter.
      * 
-     * @param {HTMLElement} img - an img element or an array of img elements
+     * @param {HTMLImageElement} img - an img element or an array of img elements
      * @param {Object} [options] - optional parameter with [options](#options) for this injection.
      */
     function SVGInject(img, options) {
@@ -241,7 +241,7 @@
     /**
      * Used in `onerror Event of an `<img>` element to handle cases when the loading the original src fails (for example if file is not found or if the browser does not support SVG). This triggers a call to the options onLoadFail hook if available. The optional second parameter will be set as the new src attribute for the img element.
      *
-     * @param {HTMLElement} img - an img element
+     * @param {HTMLImageElement} img - an img element
      * @param {String} [fallbackSrc] - optional parameter fallback src
      */
     SVGInject.err = function(img, fallbackSrc) {
