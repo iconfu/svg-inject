@@ -167,12 +167,12 @@
           var cache = options.cache;
 
           var onError = function() {
-            removeEventListeners();
+            removeEventListeners(img);
             injectFail(img, options);
           };
 
           var afterImageComplete = function() {
-            removeEventListeners();
+            removeEventListeners(img);
 
             load(absUrl, function(svgString) {
               inject(img, svgString, absUrl, options);
@@ -245,7 +245,7 @@
      * @param {Object} [options] - default [options](#options) for an injection.
      */
     SVGInject.err = function(img, fallbackSrc) {
-      removeEventListeners();
+      removeEventListeners(img);
       injectFail(img, defaultOptions);
       if (fallbackSrc) {
         img.src = fallbackSrc;
