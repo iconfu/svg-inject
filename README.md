@@ -177,7 +177,7 @@ If you dynamically insert `<img>` elements you need to make sure `SVGInject()` i
 
 Before an SVG is injected the original unstyled SVG may be displayed for a brief moment by the browser. If a style is already applied to the SVG at runtime, the styled SVG will looks differently from the unstyled SVG, causing a “flashing” of the unstyled SVG before injection occurs. We call this effect “unstyled image flash”.
 
-To prevent this SVGInject adds a tiny stylesheet to the document which hides all injectable `<img>` elements until injection is complete.
+To prevent this SVGInject adds a tiny stylesheet to the document which hides all injecting `<img>` elements until injection is complete.
 
 The method works for both the `onload` methods and using SVGInject directly from Javascript.
 
