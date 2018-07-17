@@ -175,7 +175,11 @@ If you dynamically insert `<img>` elements you need to make sure `SVGInject()` i
 
 ## How does SVGInject prevent "unstyled image flash"
 
-SVGInject is designed to work out of the box and without any "Image Flash"
+Before an SVG is injected the original unstyled SVG may be displayed for a brief moment by the browser. If a style is already applied to the SVG at runtime, the styled SVG will looks differently from the unstyled SVG, causing a “flashing” of the unstyled SVG before injection occurs. We call this effect “unstyled image flash”.
+
+To prevent this SVGInject adds a tiny stylesheet to the document which hides all injectable `<img>` elements until injection is complete.
+
+The method works for both the `onload` methods and using SVGInject directly from Javascript.
 
 
 ## Fallback for no SVG support (IE <= 8)
@@ -208,7 +212,7 @@ This is a standard way working on all modern browsers (incl. IE9+)
   <script src="svg-inject.min.js"></script>
 </head>
 <body>
-  <img src="test_image.svg" onload="SVGInject(this)" />
+  <img src="image.svg" onload="SVGInject(this)" />
 </body>
 </html>
 ```
@@ -221,7 +225,7 @@ This is a standard way working on all modern browsers (incl. IE9+)
   <script src="svg-inject.min.js"></script>
 </head>
 <body>
-  <img src="test_image.svg" onload="SVGInject(this)" onerror="SVGInject(this, 'test_image.png')" />
+  <img src="image.svg" onload="SVGInject(this)" onerror="SVGInject(this, 'image.png')" />
 </body>
 </html>
 ```
@@ -236,12 +240,12 @@ This is a standard way working on all modern browsers (incl. IE9+)
 </head>
 <body>
   <!-- the extra onerror="SVGInject(this)" is needed to trigger the onInjectFail callback and  -->
-  <img src="test_image.svg" onload="SVGInject(this)" onerror="SVGInject(this)" />
+  <img src="image.svg" onload="SVGInject(this)" onerror="SVGInject(this)" />
 </body>
 </html>
 ```
 
-### Example using all options
+### Example using `options`
 
 ```html
 <html>
@@ -268,7 +272,7 @@ This is a standard way working on all modern browsers (incl. IE9+)
   </script>
 </head>
 <body>
-  <img src="test_image.svg" onload="SVGInject(this)" onerror="SVGInject(this)" />
+  <img src="image.svg" onload="SVGInject(this)" onerror="SVGInject(this)" />
 </body>
 </html>
 ```
@@ -287,8 +291,8 @@ This is a standard way working on all modern browsers (incl. IE9+)
   </script>
 </head>
 <body>
-  <img src="test_image_1.svg" class="img-inject" />
-  <img src="test_image_2.svg" class="img-inject" />
+  <img src="image_1.svg" class="img-inject" />
+  <img src="image_2.svg" class="img-inject" />
 </body>
 </html>
 ```
