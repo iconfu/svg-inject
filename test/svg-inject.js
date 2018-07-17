@@ -1,5 +1,7 @@
 /**
- * SVGInject - Simple 
+ * SVGInject
+ * A tiny, intuitive, robust, caching solution for injecting SVG files inline into the DOM.
+ *
  * https://github.com/iconfu/svg-inject
  *
  * Copyright (c) 2018 Iconfu <info@iconfu.com>
@@ -124,27 +126,27 @@
     head.appendChild(style);
   }
 
-  function newSVGInject(globalName, options) {
+   function injectFail(img, options) {
+    img.removeAttribute('onload');
+    img.__injectFailed = true;
+    options.onInjectFail(img);
+  }
+
+  function removeEventListeners(img) {
+    img.onload = null;
+    img.onerror = null;
+  }
+
+  function createSVGInject(globalName, options) {
     var defaultOptions = extendOptions(DEFAULT_OPTIONS, options);
     var svgLoadCache = {};
 
     insertStyleInHead('img[onload*="' + globalName + '"]{visibility:hidden;}');
 
-    var injectFail = function(img, options) {
-      img.removeAttribute('onload');
-      img.__injectFailed = true;
-      options.onInjectFail(img);
-    };
-
-    var removeEventListeners = function(img) {
-      img.onload = null;
-      img.onerror = null;  
-    };
-
     /**
      * SVGInject
      *
-     * Injects the SVG specified in the `src` attribute of the specified `img` element or array of `img` elements.
+     * Injects the SVG specified in he `src` attribute of the specified `img` element or array of `img` elements.
      *
      * Options:
      * cache: If set to `true` the SVG will be cached using the absolute URL. Default value is `true`.
@@ -224,7 +226,6 @@
       }
     }
 
-
     /**
      * Sets the default [options](#options) for SVGInject.
      *
@@ -235,14 +236,13 @@
     };
 
     // Create a new instance of SVGInject
-
-    SVGInject['new'] = newSVGInject;
+    SVGInject.create = createSVGInject;
 
     /**
      * Used in `onerror Event of an `<img>` element to handle cases when the loading the original src fails (for example if file is not found or if the browser does not support SVG). This triggers a call to the options onLoadFail hook if available. The optional second parameter will be set as the new src attribute for the img element.
      *
-     * @param {Object} [options] - default [options](#options) for an injection.
-     * @param {Object} [options] - default [options](#options) for an injection.
+     * @param {HTMLElement} img - an img element
+     * @param {String} [fallbackSrc] - optional parameter fallback src
      */
     SVGInject.err = function(img, fallbackSrc) {
       removeEventListeners(img);
@@ -257,7 +257,7 @@
     return SVGInject;
   }
 
-  var SVGInjectInstance = newSVGInject('SVGInject');
+  var SVGInjectInstance = createSVGInject('SVGInject');
 
   if (typeof module == 'object' && typeof module.exports == 'object') {
     module.exports = SVGInjectInstance;
