@@ -4,7 +4,7 @@
   <meta charset="utf-8"/>
   <title>SVGInject Test 1</title>
 
-  <script src="svg-inject.min.js"></script>
+  <script src="svg-inject.js"></script>
 
   <script>
     var failed = false;
@@ -27,7 +27,7 @@
     // multiple same images test
     !function() {
       var sequenceNum = 0;
-      var sequence = ['onLoad', 'beforeInject', 'afterInject', 'beforeInject', 'afterInject', 'beforeInject', 'afterInject'];
+      var sequence = ['beforeInject', 'afterInject', 'beforeInject', 'afterInject', 'beforeInject', 'afterInject'];
 
       var testSequence = function(eventName) {
         console.info(eventName)
@@ -38,17 +38,13 @@
         }
       };
       
-      SVGInjectMultiple = SVGInject.new({
+       SVGInject.new('SVGInjectMultiple', {
         beforeInject: function(svg, img) {
           testSequence('beforeInject');
         },
 
         afterInject: function(svg, img) {
           testSequence('afterInject');
-        },
-
-        onLoad: function(svg, img) {
-          testSequence('onLoad');
         },
 
         onLoadFail: fail
