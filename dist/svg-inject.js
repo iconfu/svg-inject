@@ -126,7 +126,7 @@
     head.appendChild(style);
   }
 
-   function injectFail(img, options) {
+  function injectFail(img, options) {
     img.removeAttribute('onload');
     img.__injectFailed = true;
     options.onInjectFail(img);
@@ -181,7 +181,7 @@
 
               if (cache) {
                 var svgLoad = svgLoadCache[absUrl];
-                
+  
                 for (var i = 0; i < svgLoad.length; ++i) {
                   svgLoad[i](svgString);
                 }
@@ -190,17 +190,33 @@
               }
             }, function() {
               injectFail(img, options);
+
+              if (cache) {
+                var svgLoad = svgLoadCache[absUrl];
+
+                for (var i = 0; i < svgLoad.length; ++i) {
+                  svgLoad[i](null);
+                }
+
+                svgLoadCache[absUrl] = null;
+              }              
             });
           };
           
           if (cache) {
-            var svgLoad = svgLoadCache[src];
+            var svgLoad = svgLoadCache[absUrl];
 
-            if (svgLoad) {
+            if (typeof svgLoad != 'undefined') {
               if (Array.isArray(svgLoad)) {
                 svgLoad.push(function(svgString) {
-                  inject(img, svgString, absUrl, options);
+                  if (svgString === null) {
+                    injectFail(img, options);
+                  } else {
+                    inject(img, svgString, absUrl, options);
+                  }
                 });
+              } else if (svgLoad === null) {
+                injectFail(img, options);
               } else {
                 inject(img, svgLoad, absUrl, options);
               }

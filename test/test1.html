@@ -49,9 +49,9 @@
         },
 
         onInjectFail: function(img) {
-          console.info('onInjectFail')
-          console.info(new Error())
-          img.src = img.src.slice(0, -4) + ".png";
+          if (!img.complete) {
+            img.src = img.src.slice(0, -4) + ".png";
+          }
         }
       });  
     }();

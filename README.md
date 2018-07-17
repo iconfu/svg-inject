@@ -130,7 +130,7 @@ You may implement a different attribute handling in the `beforeInject` options h
 |----------|-------------|
 | SVGInject(img, options) | Injects the SVG specified in the `src` attribute of the specified `img` element or array of `img` elements. The optional second parameter sets the [options](#options) for this injection. |
 | SVGInject.setOptions(options) | Sets the default [options](#options) for SVGInject. |
-| SVGInject.err(img, fallbackSrc) | Used in `onerror Event of an `<img>` element to handle cases when the loading the original src fails (for example if file is not found or if the browser does not support SVG). This triggers a call to the options onLoadFail hook if available. The optional second parameter will be set as the new src attribute for the img element. |
+| SVGInject.err(img, fallbackSrc) | Used in `onerror` Event of an `<img>` element to handle cases when loading of the original source fails (for example if the file is corrupt or not found or if the browser does not support SVG). This triggers a call to the option's `onInjectFail` hook if available. The optional second parameter will be set as the new `src` attribute for the `img` element. |
 
 
 ### Options
@@ -138,7 +138,7 @@ You may implement a different attribute handling in the `beforeInject` options h
 | Property name | Type | Default | Description |
 | ------------- | ---- | ------- | ----------- |
 | cache | boolean | `true` | If set to `true` the SVG will be cached using the absolute URL. The cache only persists for the lifetime of the page. Without caching images with the same absolute URL will trigger a new XMLHttpRequest but browser caching will still apply. |
-| copyAttributes | boolean | `true` | If set to `true` the attributes will be copied from `img` to `svg`. See [How are attributes handled?](#how-are-attributes-handled) for details. You may implement your own method to copy attributes in the beforeInject options hook. |
+| copyAttributes | boolean | `true` | If set to `true` the attributes will be copied from `img` to `svg`. See [How are attributes handled?](#how-are-attributes-handled) for details. You may implement your own method to copy attributes in the `beforeInject` options hook. |
 | beforeInject | function(svg, img) | `empty function` | Hook before SVG is injected. The `svg` and `img` elements are passed as parameters. If any html element is returned it gets injected instead of applying the default SVG injection. |
 | afterInject | function(svg, img) | `empty function` | Hook after SVG is injected. The `svg` and `img` elements are passed as parameters. |
 | onInjectFail | function(img) | `empty function` | Hook after SVG load fails. The `img` element is passed as an parameter. |
@@ -165,7 +165,7 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 ```
 
-If you dynamically insert `<img>` elements you need to make sure SVGInject() is called after that. 
+If you dynamically insert `<img>` elements you need to make sure `SVGInject()` is called after that. 
 
 
 ## How does SVGInject prevent "unstyled image flash"
@@ -191,11 +191,11 @@ If you are using the `onload` method you also need to add `onerror="SVGInject.er
 
 ## What about some examples?
 
-Here are some basic examples which should cover most basic use case.
+Here are some examples which should cover most use case.
 
-### Example without fallbacks 
+### Basic Example
 
-We recommend going with this solution
+This is a standard way working on all modern browsers (incl. IE9+)
 
 ```html
 <html>
@@ -210,7 +210,17 @@ We recommend going with this solution
 
 ### Example with fallbacks
 
-If you really need to support IE8 you can provide an alternative PNG image. With this fallback solution make sure the PNG image is named the same as the SVG image and is inside the same folder.
+```html
+<html>
+<head>
+  <script src="svg-inject.min.js"></script>
+</head>
+<body>
+  <!-- the extra onerror="SVGInject(this)" is needed to trigger the onInjectFail callback and  -->
+  <img src="test_image.svg" onload="SVGInject(this)" onerror="SVGInject(this, 'test_image.png')" />
+</body>
+</html>
+```
 
 ```html
 <html>
@@ -223,25 +233,6 @@ If you really need to support IE8 you can provide an alternative PNG image. With
 <body>
   <!-- the extra onerror="SVGInject(this)" is needed to trigger the onInjectFail callback and  -->
   <img src="test_image.svg" onload="SVGInject(this)" onerror="SVGInject(this)" />
-</body>
-</html>
-```
-
-### Example without using the `onload` function
-
-```html
-<html>
-<head>
-  <script src="svg-inject.min.js"></script>
-
-  <script>
-    document.addEventListener("DOMContentLoaded", function() {
-      SVGInject(document.getElementsByClassName('img-inject'));
-    });
-  </script>
-</head>
-<body>
-  <img src="test_image.svg" class="img-inject" />
 </body>
 </html>
 ```
@@ -274,6 +265,26 @@ If you really need to support IE8 you can provide an alternative PNG image. With
 </head>
 <body>
   <img src="test_image.svg" onload="SVGInject(this)" onerror="SVGInject(this)" />
+</body>
+</html>
+```
+
+### Example without using the `onload` function
+
+```html
+<html>
+<head>
+  <script src="svg-inject.min.js"></script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      SVGInject(document.getElementsByClassName('img-inject'));
+    });
+  </script>
+</head>
+<body>
+  <img src="test_image_1.svg" class="img-inject" />
+  <img src="test_image_2.svg" class="img-inject" />
 </body>
 </html>
 ```
