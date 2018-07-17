@@ -68,7 +68,7 @@ $ yarn add @iconfu/svg-inject
 
 Add `onload="SVGInject(this)"` to any `<img>` element where you want the SVG to be injected
 
-### Basic Example:
+### Example:
 
 ```html
 <html>
