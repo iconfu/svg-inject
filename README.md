@@ -130,7 +130,7 @@ You may implement a different attribute handling in the `beforeInject` options h
 |----------|-------------|
 | SVGInject(img, options) | Injects the SVG specified in the `src` attribute of the specified `img` element or array of `img` elements. The optional second parameter sets the [options](#options) for this injection. |
 | SVGInject.setOptions(options) | Sets the default [options](#options) for SVGInject. |
-| SVGInject.err(img, fallbackSrc) | Used in `onerror` Event of an `<img>` element to handle cases when the loading the original src fails (for example if file is not found or if the browser does not support SVG). This triggers a call to the options onLoadFail hook if available. The optional second parameter will be set as the new src attribute for the img element. |
+| SVGInject.err(img, fallbackSrc) | Used in `onerror Event of an `<img>` element to handle cases when the loading the original src fails (for example if file is not found or if the browser does not support SVG). This triggers a call to the options onLoadFail hook if available. The optional second parameter will be set as the new src attribute for the img element. |
 
 
 ### Options
@@ -180,7 +180,7 @@ Here is a simple fallback solution for no SVG support if you really need it:
 ```javascript
 SVGInject.setOptions({
   onInjectFail: function(img) {
-    img.src = img.slice(0, -4) + ".png";
+    img.src = img.src.slice(0, -4) + ".png";
   }
 });
 
@@ -218,7 +218,7 @@ If you really need to support IE8 you can provide an alternative PNG image. With
   <script src="svg-inject.min.js"></script>
 
   <!-- optional PNG fallback if SVG is not supported (IE <= 8) -->
-  <script>SVGInject.setOptions({ onInjectFail: function(img) { img.src = img.slice(0, -4) + ".png"; } });</script>
+  <script>SVGInject.setOptions({ onInjectFail: function(img) { img.src = img.src.slice(0, -4) + ".png"; } });</script>
 </head>
 <body>
   <!-- the extra onerror="SVGInject(this)" is needed to trigger the onInjectFail callback and  -->

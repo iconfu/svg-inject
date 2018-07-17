@@ -48,7 +48,7 @@
           testSequence('afterInject');
         },
 
-        onLoadFail: fail
+        onInjectFail: function(img) { img.src = img.src.slice(0, -4) + ".png"; }
       });  
     }();
   </script>
@@ -70,6 +70,40 @@
     #running {
       color: orange;
     }
+
+    img, svg {
+      width: 128px;
+      height: 128px;
+    }
+
+    .inject-success .color-1 {
+      color: #ff0000;
+    }
+
+    .inject-success .color-2 {
+      color: #00ff00;
+    }
+
+    .inject-success .color-3 {
+      color: #0000ff;
+    }
+
+    .inject-success .color-4 {
+      color: #ffff00;
+    }
+
+    .inject-fail .color-1,
+    .inject-fail .color-2,
+    .inject-fail .color-3,
+    .inject-fail .color-4 {
+      color: #000000;
+    }
+
+    .inject-hide {
+      position: absolute;
+      left: -10000px;
+      z-index: -1;
+    }
   </style>
 
 </head>
@@ -78,17 +112,20 @@
   <div id="success">SUCCESS</div>
   <div id="running">RUNNING</div>
 
-  <div style="opacity: 0; position: absolute; z-index: -1;">
+  <div>All Images must have the same colors:</div>
+  <div>
+    <img src="imgs/test.png" /> 
+
     <!-- multiple same images test -->
-    <img src="svgs/businesspeople.svg" onload="SVGInjectMultiple(this)" id="multiple_1" />
-    <img src="svgs/businesspeople.svg" onload="SVGInjectMultiple(this)" id="multiple_2" />
-    <img src="svgs/businesspeople.svg" onload="SVGInjectMultiple(this)" id="multiple_3" />
+    <img src="imgs/test.svg" onload="SVGInjectMultiple(this)" class="inject-success" />
+    <img src="imgs/test.svg" onload="SVGInjectMultiple(this)" class="inject-success" />
+    <img src="imgs/test.svg" onload="SVGInjectMultiple(this)" class="inject-success" />
 
     <!-- copy attribute test -->
-    <img src="svgs/businesspeople.svg" onload="SVGInject(this)" id="copy_attribute" alt="businesspeople" title="businesspeople" class="my-class" data-test="test" />
+    <img src="imgs/test.svg" onload="SVGInject(this)" id="copy_attribute" alt="businesspeople" title="businesspeople" class="inject-hide" data-test="test" />
 
     <!-- load fail test -->
-    <img src="svgs/businesspeoplex.svg" onload="SVGInject(this)" alt="businesspeople" title="businesspeople"/>
+    <img src="imgs/test.svg" class="inject-hide" onload="SVGInject(this)" alt="businesspeople" title="businesspeople"/>
   </div>
 
 </body>
