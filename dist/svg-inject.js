@@ -138,22 +138,23 @@
     /**
      * SVGInject
      *
-     * Replaces the specified element(s) provided with their full inline SVG DOM markup which path is 
-     * given in the element(s) src attribute
+     * Injects the SVG specified in the `src` attribute of the specified `img` element or array of `img` elements.
      *
      * Options:
-     * cache: boolean if SVG should be cached (defaults false)
-     * beforeInject: callback before SVG is injected
-     * afterInject: callback after SVG is injected
-     * onInjectFail: callback after SVG inject fails
+     * cache: If set to `true` the SVG will be cached using the absolute URL. Default value is `true`.
+     * copyAttributes: If set to `true` the attributes will be copied from `img` to `svg`. Dfault value is `true.
+     * beforeInject: Hook before SVG is injected. The `svg` and `img` elements are passed as parameters. If any html element is returned it gets injected instead of applying the default SVG injection.
+     * afterInject: Hook after SVG is injected. The `svg` and `img` elements are passed as parameters.
+     * onInjectFail: Hook after SVG load fails. The `img` element is passed as an parameter.
      * 
      * @param {HTMLElement} img - an img element or an array of img elements
-     * @param {Object} [options] - an optional specifying the options for SVG injection
+     * @param {Object} [options] - optional parameter with [options](#options) for this injection.
      */
     function SVGInject(img, options) {
       if (img && !img.__injected && !img.__injectFailed) {
         var length = img.length;
         var src = img.src;
+        var imageCompleteOnInject = false;
         
         if (src) {
           var absUrl = getAbsoluteUrl(src);
@@ -186,8 +187,13 @@
           };
 
           var removeEventListeners = function() {
-            img.removeEventListener('load', afterImageComplete);
-            img.removeEventListener('error', onError);
+            if (imageCompleteOnInject) {
+              img.onload = null;
+              img.onerror = null;  
+            } else {
+              img.removeEventListener('load', afterImageComplete);
+              img.removeEventListener('error', onError);
+            }    
           };
           
           if (cache) {
@@ -208,6 +214,7 @@
           }
 
           if (img.complete) {
+            imageCompleteOnInject = true;
             afterImageComplete();
           } else {
             img.addEventListener('load', afterImageComplete);
@@ -223,14 +230,27 @@
       }
     }
 
+
+    /**
+     * Sets the default [options](#options) for SVGInject.
+     *
+     * @param {Object} [options] - default [options](#options) for an injection.
+     */
     SVGInject.setOptions = function(options) {
       defaultOptions = extendOptions(defaultOptions, options);
     };
 
     // Create a new instance of SVGInject
+
     SVGInject['new'] = newSVGInject;
 
+    /**
+     * Used in `onerror Event of an `<img>` element to handle cases when the loading the original src fails (for example if file is not found or if the browser does not support SVG). This triggers a call to the options onLoadFail hook if available. The optional second parameter will be set as the new src attribute for the img element.
+     *
+     * @param {Object} [options] - default [options](#options) for an injection.
+     */
     SVGInject.err = function(img, fallbackSrc) {
+      removeEventListeners();
       injectFail(img, defaultOptions);
       if (fallbackSrc) {
         img.src = fallbackSrc;
