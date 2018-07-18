@@ -1,7 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
-<script src="svg-inject.min.js"></script>
-<style>
+<head>
+  <meta charset="utf-8"/>
+  <title>SVGInject Simple Demo</title>
+
+  <!-- Include the SvgInject javascript file -->
+  <script src="svg-inject.min.js"></script>
+
+  <script>
+    SVGInject(document.getElementsByTagName('img'));
+  </script>
+
+  <style>
     /* Apply colors to injected SVG with id #businesspeople-variation */
     #businesspeople-variation-1 .color-1 { color: #68C4B5; }
     #businesspeople-variation-1 .color-2 { color: #FBCA61; }
@@ -19,6 +29,7 @@
       height: 128px;
     }
   </style>
+</head>
 <body>
   <h1>SVGInject Simple Demo</h1>
   
@@ -35,7 +46,7 @@
   <h3>Injected SVGs styled with CSS in two different color schemes:</h3>
 
   <!-- Insert the same SVG image styled with CSS in two different color schemes -->
-  <img src="svgs/businesspeople.svg" onload="SVGInject(this)" class="size-128" id="businesspeople-variation-1" />
+  <img src="svgs/businesspeoplex.svg" onload="SVGInject(this)" class="size-128" id="businesspeople-variation-1" />
   <img src="svgs/businesspeople.svg" onload="SVGInject(this)" class="size-128" id="businesspeople-variation-2" />
 </body>
 

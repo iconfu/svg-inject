@@ -85,7 +85,7 @@
       if (parentNode) {
         parentNode.replaceChild(injectElem, img);
       }
-      
+
       img.__injected = true;
       img.removeAttribute('onload');
       options.afterInject(injectElem, img);
@@ -155,7 +155,7 @@
      * copyAttributes: If set to `true` the attributes will be copied from `img` to `svg`. Dfault value is `true.
      * beforeInject: Hook before SVG is injected. The `svg` and `img` elements are passed as parameters. If any html element is returned it gets injected instead of applying the default SVG injection.
      * afterInject: Hook after SVG is injected. The `svg` and `img` elements are passed as parameters.
-     * onInjectFail: Hook after SVG load fails. The `img` element is passed as an parameter.
+     * onInjectFail: Hook after injection fails. The `img` element is passed as an parameter.
      * 
      * @param {HTMLImageElement} img - an img element or an array of img elements
      * @param {Object} [options] - optional parameter with [options](#options) for this injection.
@@ -225,8 +225,6 @@
           } else {
             img.onload = afterImageComplete;
             img.onerror = onError;
-            // set onload attribute to hide visibility with css selector
-            img.setAttribute('onload', 'SVGInject');
           }
         } else if (length) {
           for (var i = 0; i < length; ++i) {
@@ -241,12 +239,12 @@
      *
      * @param {Object} [options] - default [options](#options) for an injection.
      */
-    SVGInject.setOptions = function(options) {
+    SVGInject['setOptions'] = function(options) {
       defaultOptions = extendOptions(defaultOptions, options);
     };
 
     // Create a new instance of SVGInject
-    SVGInject.create = createSVGInject;
+    SVGInject['create'] = createSVGInject;
 
     /**
      * Used in `onerror Event of an `<img>` element to handle cases when the loading the original src fails (for example if file is not found or if the browser does not support SVG). This triggers a call to the options onLoadFail hook if available. The optional second parameter will be set as the new src attribute for the img element.
@@ -254,7 +252,7 @@
      * @param {HTMLImageElement} img - an img element
      * @param {String} [fallbackSrc] - optional parameter fallback src
      */
-    SVGInject.err = function(img, fallbackSrc) {
+    SVGInject['err'] = function(img, fallbackSrc) {
       removeEventListeners(img);
       injectFail(img, defaultOptions);
       if (fallbackSrc) {

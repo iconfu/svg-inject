@@ -69,7 +69,7 @@ $ yarn add @iconfu/svg-inject
 
 Add `onload="SVGInject(this)"` to any `<img>` element where you want the SVG to be injected
 
-### Example:
+**Example:**
 
 ```html
 <html>
@@ -99,16 +99,7 @@ Add `onload="SVGInject(this)"` to any `<img>` element where you want the SVG to 
 * **Fallback if image source is not available**: Behaves like a normal `<img>` element if file not found or not available.
 
 
-## What are the limitations?
-
-SVGInject is intended to work in production environments but it has a few limitations:
-
-* The image src must conform to the [same-origin policy](https://en.wikipedia.org/wiki/Same-origin_policy), which basically means the image origin must be were the website is running. This may be bypassed using the [Cross-Origin Resource Sharing (CORS) mechanism](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS).
-* Due to the same-origin policy SVGInject does not work when run from the local file system in many browsers (Chrome, Safari), yet in Firefox it works.
-* The SVGs are are injected as they are. Except for copying the element attributes no pre- or post-processing is done (for example to ensure uniqueness of ids). However, if required the provided hooks can be used to add custom processing.
-
-
-## Why use the `onload` attribute?
+## What are additional advantages when using `onload`?
 
 The recommended way to trigger injection is to call `SVGInject(this)` inside the `onload` attribute:
 
@@ -116,7 +107,7 @@ The recommended way to trigger injection is to call `SVGInject(this)` inside the
 <img ... onload="SVGInject(this)" /> 
 ```
 
-**Advantages:**
+This provides additional advantages:
 
 * **Intuitive usage**: Insert the SVG images into your HTML code just as PNG images, with only one additional instruction. It's very clear to understand what it does looking at the pure HTML.
 
@@ -132,6 +123,18 @@ The recommended way to trigger injection is to call `SVGInject(this)` inside the
 
 
 If you do not want to use the `onload` attribute but prefer to inject SVGs directly from Javascript, you can do this, too. You can find more information [here](#how-to-use-svginject-directly-from-javascript).
+
+
+## What are the limitations?
+
+SVGInject is intended to work in production environments but it has a few limitations:
+
+* The image src must conform to the [same-origin policy](https://en.wikipedia.org/wiki/Same-origin_policy), which basically means the image origin must be were the website is running. This may be bypassed using the [Cross-Origin Resource Sharing (CORS) mechanism](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS).
+* Due to the same-origin policy SVGInject does not work when run from the local file system in many browsers (Chrome, Safari), yet in Firefox it works.
+* The SVGs are are injected as they are. Except for copying the element attributes no pre- or post-processing is done (for example to ensure uniqueness of ids). However, if required the provided hooks can be used to add custom processing.
+
+
+
 
 
 ## How are attributes handled?
@@ -265,7 +268,11 @@ Another, more generic way of providing a fallback image source is using the `onI
   <script src="svg-inject.min.js"></script>
 
   <!-- optional PNG fallback if SVG is not supported (IE <= 8) -->
-  <script>SVGInject.setOptions({ onInjectFail: function(img) { img.src = img.src.slice(0, -4) + ".png"; } });</script>
+  <script>
+    SVGInject.setOptions({
+      onInjectFail: function(img) { img.src = img.src.slice(0, -4) + ".png"; }
+    });
+  </script>
 </head>
 <body>
   <!-- the onerror="SVGInject.err(this)" is needed to trigger the onInjectFail callback -->

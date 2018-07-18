@@ -239,12 +239,12 @@
      *
      * @param {Object} [options] - default [options](#options) for an injection.
      */
-    SVGInject.setOptions = function(options) {
+    SVGInject['setOptions'] = function(options) {
       defaultOptions = extendOptions(defaultOptions, options);
     };
 
     // Create a new instance of SVGInject
-    SVGInject.create = createSVGInject;
+    SVGInject['create'] = createSVGInject;
 
     /**
      * Used in `onerror Event of an `<img>` element to handle cases when the loading the original src fails (for example if file is not found or if the browser does not support SVG). This triggers a call to the options onLoadFail hook if available. The optional second parameter will be set as the new src attribute for the img element.
@@ -252,7 +252,7 @@
      * @param {HTMLImageElement} img - an img element
      * @param {String} [fallbackSrc] - optional parameter fallback src
      */
-    SVGInject.err = function(img, fallbackSrc) {
+    SVGInject['err'] = function(img, fallbackSrc) {
       removeEventListeners(img);
       injectFail(img, defaultOptions);
       if (fallbackSrc) {
