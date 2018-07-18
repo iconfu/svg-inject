@@ -162,7 +162,7 @@ You may implement a different attribute handling in the `beforeInject` options h
 | copyAttributes | boolean | `true` | If set to `true` the attributes will be copied from `img` to `svg`. See [How are attributes handled?](#how-are-attributes-handled) for details. You may implement your own method to copy attributes in the `beforeInject` options hook. |
 | beforeInject | function(svg, img) | `empty function` | Hook before SVG is injected. The `svg` and `img` elements are passed as parameters. If any html element is returned it gets injected instead of applying the default SVG injection. |
 | afterInject | function(svg, img) | `empty function` | Hook after SVG is injected. The `svg` and `img` elements are passed as parameters. |
-| onInjectFail | function(img) | `empty function` | Hook after injection fails. The `img` element is passed as an parameter.  <br> <br> If SVGInject is used with the `onload` attribute, `onerror=”SVGinject.err(this);”` must be added to the `<img>` element to make sure `onInjectFail` is called. |
+| onInjectFail | function(img) | `empty function` | Hook after injection fails. The `img` element is passed as an parameter.  <br> <br> If SVGInject is used with the `onload` attribute, `onerror="SVGinject.err(this);"` must be added to the `<img>` element to make sure `onInjectFail` is called. |
 
 
 ## How does SVGInject prevent "unstyled image flash"
@@ -199,7 +199,8 @@ document.addEventListener("DOMContentLoaded", function() {
 
 If you dynamically insert `<img>` elements you need to call `SVGInject()` after insertion.
 
-The build in method to prevent [unstyle image flash](#how-does-svginject-prevent-unstyled-image-flash) does not work when directly using Javascript, but you could implement your own.
+Note that the build in method to prevent [unstyled image flash](#how-does-svginject-prevent-unstyled-image-flash) does not work when directly using Javascript. You can find an example how to prevent "unstyled image flash" with directly using javascript here.
+
 
 
 ## Fallback for no SVG support (IE <= 8)
@@ -304,15 +305,28 @@ This is a standard way working on all modern browsers (incl. IE9+)
 <head>
   <script src="svg-inject.min.js"></script>
 
+  <!-- hide images until injection has completed or failed -->
+  <style>
+    img.inject:not(.inject-failed) {
+      visibility: hidden;
+    }
+  </style>
+
   <script>
+    SVGInject.setOptions({
+      onInjectFail: function(img) {
+        img.classList.addClass('inject-failed');
+      }
+    });
+
     document.addEventListener("DOMContentLoaded", function() {
-      SVGInject(document.getElementsByClassName('img-inject'));
+      SVGInject(document.getElementsByClassName('inject'));
     });
   </script>
 </head>
 <body>
-  <img src="image_1.svg" class="img-inject" />
-  <img src="image_2.svg" class="img-inject" />
+  <img src="image_1.svg" class="inject" />
+  <img src="image_2.svg" class="inject" />
 </body>
 </html>
 ```
