@@ -276,6 +276,8 @@ Another, more generic way of providing a fallback image source is using the `onI
 
 ### Example using `options`
 
+This example shows how to use SVGInject with all available options.
+
 ```html
 <html>
 <head>
