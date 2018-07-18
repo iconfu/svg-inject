@@ -1,4 +1,4 @@
-![min size](http://img.badgesize.io/iconfu/svg-inject/master/dist/svg-inject.min.js?label=min%20size) ![gzip size](http://img.badgesize.io/iconfu/svg-inject/master/dist/svg-inject.min.js?compression=gzip)
+![minified size](http://img.badgesize.io/iconfu/svg-inject/master/dist/svg-inject.min.js?label=min%20size) ![gzip size](http://img.badgesize.io/iconfu/svg-inject/master/dist/svg-inject.min.js?compression=gzip)
 
 # SVGInject
 
