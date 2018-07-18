@@ -5,7 +5,7 @@
  * https://github.com/iconfu/svg-inject
  *
  * Copyright (c) 2018 Iconfu <info@iconfu.com>
- * @license MIT
+ * @license MIT License - https://github.com/iconfu/svg-inject/blob/master/LICENSE
  */
 
 (function(window, document) {
@@ -61,7 +61,7 @@
 
           if (attributeName == 'title') {
             // if a title attribute exists insert it as the title tag in SVG
-            var title = document.createElementNS("http://www.w3.org/2000/svg", "title");
+            var title = document.createElementNS('http://www.w3.org/2000/svg', 'title');
             title.textContent = attributeValue;
             svg.insertBefore(title, svg.firstChild);
           } else {
@@ -74,7 +74,7 @@
 
   // inject loaded svg
   function inject(img, svgString, absUrl, options) {
-    if (!img.__injectFailed) {
+    if (!img.__injectFailed && !img.__injected) {
       var svg = buildSvg(svgString, absUrl);
 
       copyAttributes(img, svg, options);
@@ -85,6 +85,7 @@
       if (parentNode) {
         parentNode.replaceChild(injectElem, img);
       }
+      
       img.__injected = true;
       img.removeAttribute('onload');
       options.afterInject(injectElem, img);
@@ -108,7 +109,6 @@
     var head = document.getElementsByTagName('head')[0];
     if (head) {
       var style = document.createElement('style');
-
       style.type = 'text/css';
       if (style.styleSheet){
         // This is required for IE8 and below.
@@ -124,7 +124,7 @@
     var div = document.createElement('div');
     div.innerHTML = svgString;
     var svg = div.firstChild;
-    svg.insertBefore(document.createComment("SVG injected from '" + absUrl + "'"), svg.firstChild);
+    svg.insertBefore(document.createComment('SVG injected from "' + absUrl + '"'), svg.firstChild);
     return svg;
   }
 
