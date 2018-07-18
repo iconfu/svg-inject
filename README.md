@@ -268,7 +268,7 @@ Another, more generic way of providing a fallback image source is using the `onI
   <script>SVGInject.setOptions({ onInjectFail: function(img) { img.src = img.src.slice(0, -4) + ".png"; } });</script>
 </head>
 <body>
-  <!-- the onerror="SVGInject(this)" is needed to trigger the onInjectFail callback -->
+  <!-- the onerror="SVGInject.err(this)" is needed to trigger the onInjectFail callback -->
   <img src="image.svg" onload="SVGInject(this)" onerror="SVGInject.err(this)" />
 </body>
 </html>
@@ -310,7 +310,7 @@ This example shows how to use SVGInject with all available options.
 
 ### Example without using the `onload` function
 
-This example shows how to use SVGInject directly from Javascript without the onload attribute. After the DOM content has loaded, all elements with class 'img-inject' are replaced by the SVG specified in their src element. It also implements a method to prevent [unstyled image flash](#how-does-svginject-prevent-unstyled-image-flash).
+This example shows how to use SVGInject directly from Javascript without the onload attribute. After the DOM content has loaded, all elements with class `img-inject` are replaced by the SVG specified in their src element. It also implements a method to prevent [unstyled image flash](#how-does-svginject-prevent-unstyled-image-flash).
 
 
 ```html
@@ -349,7 +349,7 @@ This example shows how to use SVGInject directly from Javascript without the onl
 
 Full support for all modern browsers, and IE9+ ([full list](https://caniuse.com/#feat=svg))
 
-Support for IE8 with optional PNG Fallback method
+Support for IE8,IE7 with optional [PNG fallback method](#fallback-for-no-svg-support-ie--8)
 
 
 ## License
