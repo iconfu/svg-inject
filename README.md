@@ -115,11 +115,15 @@ The recommended way to trigger injection is to call `SVGInject(this)` inside the
 ```html
 <img ... onload="SVGInject(this)" /> 
 ```
+
+**Advantages:**
+
 * **Intuitive usage**: Insert the SVG images into your HTML code just as PNG images, with only one additional instruction. It's very clear to understand what it does looking at the pure HTML.
 
 * **Works with dynamic content**: If `<img>` elements are added dynamically injection still works.
 
-* **No image flickering**: SVGInject effectively prevents the unstyled image to show, causing a flicker by setting it's visible to hidden until the SVG is injected ().
+* **Built-in prevention of unstyled image flash**: SVGInject hides img elements until
+injection is complete, thus preventing a brief flicker of the unstyled image called “unstyled image flash”.
 
 * **Early injection**: The injection can already start before the DOM content is fully loaded.
 
