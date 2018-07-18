@@ -179,7 +179,7 @@ Before an SVG is injected the original unstyled SVG may be displayed for a brief
 
 To prevent this SVGInject adds a tiny `<style>` element to the html document which hides all injecting `<img>` elements until injection is complete.
 
-The `<style>` element has only one CSS rule `img[onload*="SVGInject"] { visibility: hidden; }` which effectevly prevents the unstyled image to show until the `onload` attribute gets removed by SVGInject when injection succeeds or fails. If the `onload` attribute is not set according to this rule on an `<img>` element it is automatically added when `SVGInject()`. 
+The `<style>` element has only one CSS rule `img[onload*="SVGInject"] { visibility: hidden; }` which effectevly prevents the unstyled image to show until the `onload` attribute gets removed by SVGInject when injection succeeds or fails. If the `onload` attribute is not set according to this rule on an `<img>` element it is automatically added when `SVGInject()` is called. 
 
 The method works for both the `onload` methods and using SVGInject directly from Javascript.
 
