@@ -199,7 +199,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 If you dynamically insert `<img>` elements you need to call `SVGInject()` after insertion.
 
-Note that the build in method to prevent [unstyled image flash](#how-does-svginject-prevent-unstyled-image-flash) does not work when directly using Javascript. You can find an example how to prevent "unstyled image flash" with directly using javascript here.
+Note that the build in method to prevent [unstyled image flash](#how-does-svginject-prevent-unstyled-image-flash) does not work when directly using Javascript. You can see how unstyled image flash can be prevented in the [example for using SVGInject without the `onload` function](#example-without-using-the-onload-function)
 
 
 
