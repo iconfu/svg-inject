@@ -12,7 +12,7 @@ gulp.task('default', function () {
         compilation_level: 'ADVANCED',
         warning_level: 'VERBOSE',
         language_in: 'ECMASCRIPT6_STRICT',
-        language_out: 'ECMASCRIPT5_STRICT',
+        language_out: 'ECMASCRIPT5',
         //output_wrapper: '(function(){\n%output%\n}).call(this)',
         js_output_file: 'svg-inject.min.js'
       }, {
