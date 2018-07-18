@@ -122,8 +122,7 @@ The recommended way to trigger injection is to call `SVGInject(this)` inside the
 
 * **Works with dynamic content**: If `<img>` elements are added dynamically injection still works.
 
-* **Built-in prevention of unstyled image flash**: SVGInject hides img elements until
-injection is complete, thus preventing a brief flicker of the unstyled image called “unstyled image flash”.
+* **Built-in prevention of unstyled image flash**: SVGInject hides img elements until injection is complete, thus preventing a brief flicker of the unstyled image called [unstyled image flash](#how-does-svginject-prevent-unstyled-image-flash).
 
 * **Early injection**: The injection can already start before the DOM content is fully loaded.
 
@@ -167,7 +166,7 @@ You may implement a different attribute handling in the `beforeInject` options h
 
 ## How does SVGInject prevent "unstyled image flash"
 
-Before an SVG is injected the original unstyled SVG may be displayed for a brief moment by the browser. If a style is already applied to the SVG at runtime, the styled SVG will look different from the unstyled SVG, causing a brief “flashing” of the unstyled SVG before injection occurs. We call this effect “unstyled image flash”.
+Before an SVG is injected the original unstyled SVG may be displayed for a brief moment by the browser. If a style is already applied to the SVG at runtime, the styled SVG will look different from the unstyled SVG, causing a brief “flashing” of the unstyled SVG before injection occurs. We call this effect unstyled image flash.
 
 
 If SVGInject is used with the `onload` attribute, SVGInject has a built-in functionality to prevent unstyled image flash. A `<style>` element with one CSS rule is added to the document to hide all injectable `<img>` elements until injection is complete.
@@ -226,11 +225,11 @@ Note that the `onerror="SVGInject.err(this)"` is necessary if SVGInject is used 
 
 ## What about some examples?
 
-Here are some examples which should cover most use case.
+Here are some examples which cover the most common use cases.
 
 ### Basic Example
 
-This is a standard way working on all modern browsers (incl. IE9+)
+This is the standard usage of SVGInject which works on all modern browsers, and IE9+.
 
 ```html
 <html>
@@ -243,7 +242,9 @@ This is a standard way working on all modern browsers (incl. IE9+)
 </html>
 ```
 
-### Example with fallbacks
+### Example with fallback for IE8 & IE7
+
+This example shows how to add a fallback for browsers not supporting SVGs. For these browsers an alternative PNG source is used to display the image.
 
 ```html
 <html>
@@ -251,10 +252,12 @@ This is a standard way working on all modern browsers (incl. IE9+)
   <script src="svg-inject.min.js"></script>
 </head>
 <body>
-  <img src="image.svg" onload="SVGInject(this)" onerror="SVGInject(this, 'image.png')" />
+  <img src="image.svg" onload="SVGInject(this)" onerror="SVGInject.err(this, 'image.png')" />
 </body>
 </html>
 ```
+
+Another, more generic way of providing a fallback image source is using the `onInjectFail` hook. If loading the SVG fails, this will try to load a file with the same name except “png” instead of “svg” for the file ending.
 
 ```html
 <html>
@@ -265,8 +268,8 @@ This is a standard way working on all modern browsers (incl. IE9+)
   <script>SVGInject.setOptions({ onInjectFail: function(img) { img.src = img.src.slice(0, -4) + ".png"; } });</script>
 </head>
 <body>
-  <!-- the extra onerror="SVGInject(this)" is needed to trigger the onInjectFail callback and  -->
-  <img src="image.svg" onload="SVGInject(this)" onerror="SVGInject(this)" />
+  <!-- the onerror="SVGInject(this)" is needed to trigger the onInjectFail callback -->
+  <img src="image.svg" onload="SVGInject(this)" onerror="SVGInject.err(this)" />
 </body>
 </html>
 ```
@@ -298,12 +301,15 @@ This is a standard way working on all modern browsers (incl. IE9+)
   </script>
 </head>
 <body>
-  <img src="image.svg" onload="SVGInject(this)" onerror="SVGInject(this)" />
+  <img src="image.svg" onload="SVGInject(this)" onerror="SVGInject.err(this)" />
 </body>
 </html>
 ```
 
 ### Example without using the `onload` function
+
+This example shows how to use SVGInject directly from Javascript without the onload attribute. After the DOM content has loaded, all elements with class ‘img-inject’ are replaced by the SVG specified in their src element. It also implements a method to prevent [unstyled image flash](#how-does-svginject-prevent-unstyled-image-flash).
+
 
 ```html
 <html>
