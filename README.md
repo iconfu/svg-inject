@@ -167,13 +167,14 @@ You may implement a different attribute handling in the `beforeInject` options h
 
 ## How does SVGInject prevent "unstyled image flash"
 
-Before an SVG is injected the original unstyled SVG may be displayed for a brief moment by the browser. If a style is already applied to the SVG at runtime, the styled SVG looks differently from the unstyled SVG, causing a “flashing” of the unstyled SVG before injection occurs. We call this effect “unstyled image flash”.
+Before an SVG is injected the original unstyled SVG may be displayed for a brief moment by the browser. If a style is already applied to the SVG at runtime, the styled SVG will look different from the unstyled SVG, causing a brief “flashing” of the unstyled SVG before injection occurs. We call this effect “unstyled image flash”.
 
-To prevent this SVGInject adds a tiny `<style>` element to the html document which hides all injecting `<img>` elements until injection is complete.
 
-The `<style>` element has only one CSS rule `img[onload*="SVGInject"] { visibility: hidden; }` which prevents the unstyled image to show until the `onload` attribute gets removed by SVGInject when injection succeeds or fails. If the `onload` attribute is not set according to this rule on an `<img>` element it is automatically added when `SVGInject()` is called.
+If SVGInject is used with the `onload` attribute, SVGInject has a built-in functionality to prevent unstyled image flash.
 
-The method works for both the `onload` methods and using SVGInject directly from Javascript.
+A `<style>` element with one CSS rule is added to the document to hide all injectable `<img>` elements until injection is complete.
+
+When using Javscript directly SVGInject has no build in functionality to prevent [unstyled image flash](#how-does-svginject-prevent-unstyled-image-flash). You can see a custom solution for this in the [example for using SVGInject without the `onload` function](#example-without-using-the-onload-function).
 
 
 ## How to use SVGInject directly from Javascript?
@@ -198,9 +199,6 @@ document.addEventListener("DOMContentLoaded", function() {
 ```
 
 If you dynamically insert `<img>` elements you need to call `SVGInject()` after insertion.
-
-Note that the build in method to prevent [unstyled image flash](#how-does-svginject-prevent-unstyled-image-flash) does not work when directly using Javascript. You can see how unstyled image flash can be prevented in the [example for using SVGInject without the `onload` function](#example-without-using-the-onload-function)
-
 
 
 ## Fallback for no SVG support (IE <= 8)
