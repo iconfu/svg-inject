@@ -132,7 +132,7 @@ injection is complete, thus preventing a brief flicker of the unstyled image cal
 * **Standard-conform**: The `onload` event handler on `<img>` elements has long been supported by all browsers and is officially part of the W3C specification since [HTML5.0](https://www.w3.org/TR/html50/webappapis.html#event-handler-attributes).
 
 
-If you do not want to use the `onload attribute but prefer to inject SVGs directly from Javascript, you can do this, too. You can find more information [here](#how-to-use-svginject-directly-from-javascript).
+If you do not want to use the `onload` attribute but prefer to inject SVGs directly from Javascript, you can do this, too. You can find more information [here](#how-to-use-svginject-directly-from-javascript).
 
 
 ## How are attributes handled?
@@ -162,7 +162,7 @@ You may implement a different attribute handling in the `beforeInject` options h
 | copyAttributes | boolean | `true` | If set to `true` the attributes will be copied from `img` to `svg`. See [How are attributes handled?](#how-are-attributes-handled) for details. You may implement your own method to copy attributes in the `beforeInject` options hook. |
 | beforeInject | function(svg, img) | `empty function` | Hook before SVG is injected. The `svg` and `img` elements are passed as parameters. If any html element is returned it gets injected instead of applying the default SVG injection. |
 | afterInject | function(svg, img) | `empty function` | Hook after SVG is injected. The `svg` and `img` elements are passed as parameters. |
-| onInjectFail | function(img) | `empty function` | Hook after SVG load fails. The `img` element is passed as an parameter. |
+| onInjectFail | function(img) | `empty function` | Hook after injection fails. The `img` element is passed as an parameter.  <br> If SVGInject is used with the onload attribute, onerror=”SVGinject.err(this);” must be added to the img element to make sure onInjectFail is called. |
 
 
 ## How does SVGInject prevent "unstyled image flash"

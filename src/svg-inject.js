@@ -155,7 +155,7 @@
      * copyAttributes: If set to `true` the attributes will be copied from `img` to `svg`. Dfault value is `true.
      * beforeInject: Hook before SVG is injected. The `svg` and `img` elements are passed as parameters. If any html element is returned it gets injected instead of applying the default SVG injection.
      * afterInject: Hook after SVG is injected. The `svg` and `img` elements are passed as parameters.
-     * onInjectFail: Hook after SVG load fails. The `img` element is passed as an parameter.
+     * onInjectFail: Hook after injection fails. The `img` element is passed as an parameter.
      * 
      * @param {HTMLImageElement} img - an img element or an array of img elements
      * @param {Object} [options] - optional parameter with [options](#options) for this injection.
