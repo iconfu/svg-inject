@@ -85,7 +85,7 @@
       if (parentNode) {
         parentNode.replaceChild(injectElem, img);
       }
-      
+
       img.__injected = true;
       img.removeAttribute('onload');
       options.afterInject(injectElem, img);
@@ -225,8 +225,6 @@
           } else {
             img.onload = afterImageComplete;
             img.onerror = onError;
-            // set onload attribute to hide visibility with css selector
-            img.setAttribute('onload', 'SVGInject');
           }
         } else if (length) {
           for (var i = 0; i < length; ++i) {

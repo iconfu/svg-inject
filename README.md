@@ -11,14 +11,14 @@ Developed and maintained by [INCORS](https://www.incors.com), the creators of [I
 
 SVGInject replaces an `<img>` element with an inline SVG. The SVG is loaded from the `src` attribute location of the `<img>` element.
 
-Before injection:
+Element b​efore injection:
 
 ```html
 <img src="image.svg" onload="SVGInject(this)" />
 
 ```
 
-After injection (SVG loaded from image.svg):
+Element after injection (SVG loaded from image.svg):
 
 ```html
 <svg version="1.1" ...> ... </svg>
@@ -94,7 +94,7 @@ Add `onload="SVGInject(this)"` to any `<img>` element where you want the SVG to 
 
 * **Wide browser support**: Works on all browsers supporting SVG. Yes, this includes Internet Explorer 9 and higher! ([full list](https://caniuse.com/#feat=svg))
 
-* **Native fallback without Javascript**: If Javascript is not available the SVG will still show. It's just not styleable with CSS. 
+* **Fallback without Javascript**: If Javascript is not available the SVG will still show. It's just not styleable with CSS. 
 
 * **Fallback if image source is not available**: Behaves like a normal `<img>` element if file not found or not available.
 
@@ -105,17 +105,28 @@ SVGInject is intended to work in production environments but it has a few limita
 
 * The image src must conform to the [same-origin policy](https://en.wikipedia.org/wiki/Same-origin_policy), which basically means the image origin must be were the website is running. This may be bypassed using the [Cross-Origin Resource Sharing (CORS) mechanism](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS).
 * Due to the same-origin policy SVGInject does not work when run from the local file system in many browsers (Chrome, Safari), yet in Firefox it works.
+* The SVGs are are injected as they are. Except for copying the element attributes no pre- or post-processing is done (for example to ensure uniqueness of ids). However, if required the provided hooks can be used to add custom processing.
 
 
 ## Why use the `onload` attribute?
 
-* **Works with dynamic content and JS frameworks**: If `<img>` elements are added dynamically injection still works. It should also works in JS frameworks like Angular, ReactJS or Vue.js, also some limitation may apply.
+The recommended way to trigger injection is to call `SVGInject(this)` inside the `onload` attribute:
 
+```html
+<img ... onload="SVGInject(this)" /> 
+```
 * **Intuitive usage**: Insert the SVG images into your HTML code just as PNG images, with only one additional instruction. It's very clear to understand what it does looking at the pure HTML.
 
-* **No image flickering**: SVGInject effectively prevents the unstyled image to show, causing a flicker (Also called Image Flash) by setting it's visible to hidden until the SVG is injected.
+* **Works with dynamic content**: If `<img>` elements are added dynamically injection still works.
+
+* **No image flickering**: SVGInject effectively prevents the unstyled image to show, causing a flicker by setting it's visible to hidden until the SVG is injected ().
+
+* **Early injection**: The injection can already start before the DOM content is fully loaded.
+
+* **Optimized image loading**: The images load in the same order as the browser loads the SVGS without injection.
 
 * **Standard-conform**: The `onload` event handler on `<img>` elements has long been supported by all browsers and is officially part of the W3C specification since [HTML5.0](https://www.w3.org/TR/html50/webappapis.html#event-handler-attributes).
+
 
 If you do not want to use the `onload attribute but prefer to inject SVGs directly from Javascript, you can do this, too. You can find more information [here](#how-to-use-svginject-directly-from-javascript).
 
@@ -150,6 +161,17 @@ You may implement a different attribute handling in the `beforeInject` options h
 | onInjectFail | function(img) | `empty function` | Hook after SVG load fails. The `img` element is passed as an parameter. |
 
 
+## How does SVGInject prevent "unstyled image flash"
+
+Before an SVG is injected the original unstyled SVG may be displayed for a brief moment by the browser. If a style is already applied to the SVG at runtime, the styled SVG looks differently from the unstyled SVG, causing a “flashing” of the unstyled SVG before injection occurs. We call this effect “unstyled image flash”.
+
+To prevent this SVGInject adds a tiny `<style>` element to the html document which hides all injecting `<img>` elements until injection is complete.
+
+The `<style>` element has only one CSS rule `img[onload*="SVGInject"] { visibility: hidden; }` which prevents the unstyled image to show until the `onload` attribute gets removed by SVGInject when injection succeeds or fails. If the `onload` attribute is not set according to this rule on an `<img>` element it is automatically added when `SVGInject()` is called.
+
+The method works for both the `onload` methods and using SVGInject directly from Javascript.
+
+
 ## How to use SVGInject directly from Javascript?
 
 Instead of using the `onload` attribute on the `<img>` element you can also call SVGInject directly from Javascript.
@@ -171,20 +193,9 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 ```
 
-If you dynamically insert `<img>` elements you need to make sure `SVGInject()` is called after that. 
+If you dynamically insert `<img>` elements you need to call `SVGInject()` after insertion.
 
-
-## How does SVGInject prevent "unstyled image flash"
-
-
-
-Before an SVG is injected the original unstyled SVG may be displayed for a brief moment by the browser. If a style is already applied to the SVG at runtime, the styled SVG looks differently from the unstyled SVG, causing a “flashing” of the unstyled SVG before injection occurs. We call this effect “unstyled image flash”.
-
-To prevent this SVGInject adds a tiny `<style>` element to the html document which hides all injecting `<img>` elements until injection is complete.
-
-The `<style>` element has only one CSS rule `img[onload*="SVGInject"] { visibility: hidden; }` which prevents the unstyled image to show until the `onload` attribute gets removed by SVGInject when injection succeeds or fails. If the `onload` attribute is not set according to this rule on an `<img>` element it is automatically added when `SVGInject()` is called.
-
-The method works for both the `onload` methods and using SVGInject directly from Javascript.
+The build in method to prevent [unstyle image flash](#how-does-svginject-prevent-unstyled-image-flash) does not work when directly using Javascript, but you could implement your own.
 
 
 ## Fallback for no SVG support (IE <= 8)
