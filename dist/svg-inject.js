@@ -9,12 +9,8 @@
  */
 
 (function(window, document) {
-
-  'use strict';
-
-  var NOOP = function() {};
   var ATTRIBUTE_EXCLUSION_NAMES = ['src', 'alt', 'onload'];
-  var a = document.createElement('a');
+  var A_ELEMENT = document.createElement('a');
   var DEFAULT_OPTIONS = {
     cache: true,
     copyAttributes: true,
@@ -23,17 +19,11 @@
     onInjectFail: NOOP
   };
 
-  function getAbsoluteUrl(url) {
-    a.href = url;
-    return a.href;
-  }
+  function NOOP() {};
 
-  function buildSvg(svgString, absUrl) {
-    var div = document.createElement('div');
-    div.innerHTML = svgString;
-    var svg = div.firstChild;
-    svg.insertBefore(document.createComment("SVG injected from '" + absUrl + "'"), svg.firstChild);
-    return svg;
+  function getAbsoluteUrl(url) {
+    A_ELEMENT.href = url;
+    return A_ELEMENT.href;
   }
 
   // load svg
@@ -84,23 +74,21 @@
 
   // inject loaded svg
   function inject(img, svgString, absUrl, options) {
-    if (img.__injectFailed) {
-      return;
+    if (!img.__injectFailed) {
+      var svg = buildSvg(svgString, absUrl);
+
+      copyAttributes(img, svg, options);
+
+      var injectElem = options.beforeInject(svg, img) || svg;
+      var parentNode = img.parentNode;
+      
+      if (parentNode) {
+        parentNode.replaceChild(injectElem, img);
+      }
+      img.__injected = true;
+      img.removeAttribute('onload');
+      options.afterInject(injectElem, img);
     }
-
-    var svg = buildSvg(svgString, absUrl);
-
-    copyAttributes(img, svg, options);
-
-    var injectElem = options.beforeInject(svg, img) || svg;
-    var parentNode = img.parentNode;
-    
-    if (parentNode) {
-      parentNode.replaceChild(injectElem, img);
-    }
-    img.__injected = true;
-    img.removeAttribute('onload');
-    options.afterInject(injectElem, img);
   }
 
   function extendOptions() {
@@ -117,17 +105,27 @@
   }
 
   function addStyleToHead(css) {
-    var head = document.head || document.getElementsByTagName('head')[0];
-    var style = document.createElement('style');
+    var head = document.getElementsByTagName('head')[0];
+    if (head) {
+      var style = document.createElement('style');
 
-    style.type = 'text/css';
-    if (style.styleSheet){
-      // This is required for IE8 and below.
-      style.styleSheet.cssText = css;
-    } else {
-      style.appendChild(document.createTextNode(css));
+      style.type = 'text/css';
+      if (style.styleSheet){
+        // This is required for IE8 and below.
+        style.styleSheet.cssText = css;
+      } else {
+        style.appendChild(document.createTextNode(css));
+      }
+      head.appendChild(style);
     }
-    head.appendChild(style);
+  }
+
+  function buildSvg(svgString, absUrl) {
+    var div = document.createElement('div');
+    div.innerHTML = svgString;
+    var svg = div.firstChild;
+    svg.insertBefore(document.createComment("SVG injected from '" + absUrl + "'"), svg.firstChild);
+    return svg;
   }
 
   function injectFail(img, options) {

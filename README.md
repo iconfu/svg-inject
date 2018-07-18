@@ -95,9 +95,7 @@ Add `onload="SVGInject(this)"` to any `<img>` element where you want the SVG to 
 
 * **Native fallback without Javascript**: If Javascript is not available the SVG will still show. It's just not styleable with CSS. 
 
-* **Native fallback if image source is not available**: Behaves like a normal `<img>` element if file not found or not available.
-
-* **No image flickering**: SVGInject effectively prevents the unstyled image to show, causing a flicker (Also called Image Flash) by setting it's visible to hidden until the SVG is injected.
+* **Fallback if image source is not available**: Behaves like a normal `<img>` element if file not found or not available.
 
 
 ## What are the limitations?
@@ -113,6 +111,8 @@ SVGInject is intended to work in production environments but it has a few limita
 * **Works with dynamic content and JS frameworks**: If `<img>` elements are added dynamically injection still works. It should also works in JS frameworks like Angular, ReactJS or Vue.js, also some limitation may apply.
 
 * **Intuitive usage**: Insert the SVG images into your HTML code just as PNG images, with only one additional instruction. It's very clear to understand what it does looking at the pure HTML.
+
+* **No image flickering**: SVGInject effectively prevents the unstyled image to show, causing a flicker (Also called Image Flash) by setting it's visible to hidden until the SVG is injected.
 
 * **Standard-conform**: The `onload` event handler on `<img>` elements has long been supported by all browsers and is officially part of the W3C specification since [HTML5.0](https://www.w3.org/TR/html50/webappapis.html#event-handler-attributes).
 
@@ -175,11 +175,13 @@ If you dynamically insert `<img>` elements you need to make sure `SVGInject()` i
 
 ## How does SVGInject prevent "unstyled image flash"
 
+
+
 Before an SVG is injected the original unstyled SVG may be displayed for a brief moment by the browser. If a style is already applied to the SVG at runtime, the styled SVG looks differently from the unstyled SVG, causing a “flashing” of the unstyled SVG before injection occurs. We call this effect “unstyled image flash”.
 
 To prevent this SVGInject adds a tiny `<style>` element to the html document which hides all injecting `<img>` elements until injection is complete.
 
-The `<style>` element has only one CSS rule `img[onload*="SVGInject"] { visibility: hidden; }` which prevents the unstyled image to show until the `onload` attribute gets removed by SVGInject when injection succeeds or fails. If the `onload` attribute is not set according to this rule on an `<img>` element it is automatically added when `SVGInject()` is called. 
+The `<style>` element has only one CSS rule `img[onload*="SVGInject"] { visibility: hidden; }` which prevents the unstyled image to show until the `onload` attribute gets removed by SVGInject when injection succeeds or fails. If the `onload` attribute is not set according to this rule on an `<img>` element it is automatically added when `SVGInject()` is called.
 
 The method works for both the `onload` methods and using SVGInject directly from Javascript.
 
