@@ -1,7 +1,6 @@
-# SVGInject
-
 ![min size](http://img.badgesize.io/iconfu/svg-inject/master/dist/svg-inject.min.js?label=min%20size) ![gzip size](http://img.badgesize.io/iconfu/svg-inject/master/dist/svg-inject.min.js?compression=gzip)
 
+# SVGInject
 
 A tiny, intuitive, robust, caching solution for injecting SVG files inline into the DOM.
 
