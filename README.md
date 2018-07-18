@@ -1,4 +1,8 @@
 # SVGInject
+
+
+![npm bundle size (minified + gzip)](https://img.shields.io/bundlephobia/minzip/react.svg)
+
  
 
 A tiny, intuitive, robust, caching solution for injecting SVG files inline into the DOM.
