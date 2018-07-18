@@ -170,11 +170,9 @@ You may implement a different attribute handling in the `beforeInject` options h
 Before an SVG is injected the original unstyled SVG may be displayed for a brief moment by the browser. If a style is already applied to the SVG at runtime, the styled SVG will look different from the unstyled SVG, causing a brief “flashing” of the unstyled SVG before injection occurs. We call this effect “unstyled image flash”.
 
 
-If SVGInject is used with the `onload` attribute, SVGInject has a built-in functionality to prevent unstyled image flash.
+If SVGInject is used with the `onload` attribute, SVGInject has a built-in functionality to prevent unstyled image flash. A `<style>` element with one CSS rule is added to the document to hide all injectable `<img>` elements until injection is complete.
 
-A `<style>` element with one CSS rule is added to the document to hide all injectable `<img>` elements until injection is complete.
-
-When using Javscript directly SVGInject has no build in functionality to prevent [unstyled image flash](#how-does-svginject-prevent-unstyled-image-flash). You can find a custom solution for this in the [example for using SVGInject without the `onload` function](#example-without-using-the-onload-function).
+When [using Javscript directly](https://github.com/iconfu/svg-inject#how-to-use-svginject-directly-from-javascript) SVGInject has no build in functionality to prevent unstyled image flash. You can find a custom solution for this in the [example for using SVGInject without the `onload` function](#example-without-using-the-onload-function).
 
 
 ## How to use SVGInject directly from Javascript?
