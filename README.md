@@ -174,7 +174,7 @@ If SVGInject is used with the `onload` attribute, SVGInject has a built-in funct
 
 A `<style>` element with one CSS rule is added to the document to hide all injectable `<img>` elements until injection is complete.
 
-When using Javscript directly SVGInject has no build in functionality to prevent [unstyled image flash](#how-does-svginject-prevent-unstyled-image-flash). You can see a custom solution for this in the [example for using SVGInject without the `onload` function](#example-without-using-the-onload-function).
+When using Javscript directly SVGInject has no build in functionality to prevent [unstyled image flash](#how-does-svginject-prevent-unstyled-image-flash). You can find a custom solution for this in the [example for using SVGInject without the `onload` function](#example-without-using-the-onload-function).
 
 
 ## How to use SVGInject directly from Javascript?
