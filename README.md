@@ -310,7 +310,7 @@ This example shows how to use SVGInject with all available options.
 
 ### Example without using the `onload` function
 
-This example shows how to use SVGInject directly from Javascript without the onload attribute. After the DOM content has loaded, all elements with class ‘img-inject’ are replaced by the SVG specified in their src element. It also implements a method to prevent [unstyled image flash](#how-does-svginject-prevent-unstyled-image-flash).
+This example shows how to use SVGInject directly from Javascript without the onload attribute. After the DOM content has loaded, all elements with class 'img-inject' are replaced by the SVG specified in their src element. It also implements a method to prevent [unstyled image flash](#how-does-svginject-prevent-unstyled-image-flash).
 
 
 ```html
