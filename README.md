@@ -201,7 +201,13 @@ If you dynamically insert `<img>` elements you need to call `SVGInject()` after 
 
 ## Fallback for no SVG support (IE <= 8)
 
-Here is a simple fallback solution for no SVG support if you really need it:
+If the browser does not support SVG, this simple fallback solution replaces the `src` attribute with an alternative image URI.
+
+```html
+<​img​ ​src​=​"image.svg"​ ​onload​=​"SVGInject(this)"​ ​onerror​=​"SVGInject.err(this, ‘image.png';" /​>
+```
+
+A more generic method that will attempt to load a file with the same path and name but a different file extension looks like this:
 
 ```javascript
 SVGInject.setOptions({
@@ -209,10 +215,13 @@ SVGInject.setOptions({
     img.src = img.src.slice(0, -4) + ".png";
   }
 });
-
 ```
 
-If you are using the `onload` method you also need to add `onerror="SVGInject.err(this)"` for this to work because the onInjectFail callback will only get triggered this way
+```html
+<​img​ ​src​=​"image.svg"​ ​onload​=​"SVGInject(this)"​ ​onerror​=​"SVGInject.err(this)" /​>
+```
+
+Note that the `onerror="SVGInject.err(this)"` is necessary if SVGInject is used with the `onload` attribute,​ because the `onInjectFail` callback will only get triggered this way.
 
 
 ## What about some examples?
