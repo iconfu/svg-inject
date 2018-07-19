@@ -131,7 +131,6 @@
 
   function buildSvg(svgString, absUrl) {
     DIV_ELEMENT.innerHTML = svgString;
-    console.info(DIV_ELEMENT.firstChild)
     var svg = DIV_ELEMENT.removeChild(DIV_ELEMENT.firstChild);
     svg.insertBefore(document.createComment('SVG injected from "' + absUrl + '"'), svg.firstChild);
     return svg
