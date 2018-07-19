@@ -129,6 +129,7 @@
   }
 
   function injectFail(img, options) {
+    console.info('injectFail')
     img.removeAttribute('onload');
     img.__injectFailed = true;
     options.onInjectFail(img);
@@ -161,6 +162,7 @@
      * @param {Object} [options] - optional parameter with [options](#options) for this injection.
      */
     function SVGInject(img, options) {
+      console.info(img)
       if (img && !img.__injected && !img.__injectFailed) {
         var length = img.length;
         var src = img.src;
@@ -223,6 +225,7 @@
           if (img.complete) {
             afterImageComplete();
           } else {
+            console.info(absUrl)
             img.onload = afterImageComplete;
             img.onerror = onError;
           }
