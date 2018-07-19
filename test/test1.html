@@ -26,8 +26,17 @@
       }
     };
 
+    var testNotInjected = function(id) {
+
+    };
+
+    var testInjected = function(id) {
+
+    };
+
     // multiple same images test
     !function() {
+      var lastSVG = null;
       var sequenceNum = 0;
       var sequence = ['beforeInject', 'afterInject', 'beforeInject', 'afterInject', 'beforeInject', 'afterInject'];
 
@@ -39,18 +48,31 @@
         }
       };
       
-       SVGInject.create('SVGInjectMultiple', {
+      SVGInject.create('SVGInjectMultiple', {
         beforeInject: function(svg, img) {
           testSequence('beforeInject');
+
+          if (lastSVG === svg) {
+            fail();
+          } else if (svg.parentNode) {
+            console.info(svg.parentNode)
+            fail();
+          } else if (!img.parentNode) {
+            fail();
+          }
+
+          lastSVG = svg;
         },
 
         afterInject: function(svg, img) {
           testSequence('afterInject');
-        },
 
-        onInjectFail: function(img) {
-          if (!img.complete) {
-            img.src = img.src.slice(0, -4) + ".png";
+          if (lastSVG !== svg) {
+            fail();
+          } else if (!svg.parentNode) {
+            fail();
+          } else if (img.parentNode) {
+            fail();
           }
         }
       });  
@@ -120,10 +142,10 @@
   <div>
     <img src="imgs/test.png" /> 
 
-    <!-- multiple same images test -->
-    <img src="imgs/test.svg" onload="SVGInjectMultiple(this)" class="inject-success" />
-    <img src="imgs/test.svg" onload="SVGInjectMultiple(this)" class="inject-success" />
-    <img src="imgs/test.svg" onload="SVGInjectMultiple(this)" class="inject-success" />
+    <!-- test 1 multiple same images test -->
+    <img src="imgs/test.svg" onload="SVGInjectMultiple(this)" class="inject-success" id="test_1_1" />
+    <img src="imgs/test.svg" onload="SVGInjectMultiple(this)" class="inject-success" id="test_1_2" />
+    <img src="imgs/test.svg" onload="SVGInjectMultiple(this)" class="inject-success" id="test_1_3" />
 
     <!-- copy attribute test -->
     <img src="imgs/test.svg" onload="SVGInject(this)" id="copy_attribute" alt="businesspeople" title="businesspeople" class="inject-hide" data-test="test" />

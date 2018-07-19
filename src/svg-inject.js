@@ -11,6 +11,8 @@
 (function(window, document) {
   var ATTRIBUTE_EXCLUSION_NAMES = ['src', 'alt', 'onload'];
   var A_ELEMENT = document.createElement('a');
+  var DIV_ELEMENT = document.createElement('div');
+  var SVG_NOT_SUPPORTED = typeof SVGRect == "undefined";
   var DEFAULT_OPTIONS = {
     cache: true,
     copyAttributes: true,
@@ -18,6 +20,9 @@
     afterInject: NOOP,
     onInjectFail: NOOP
   };
+  var INJECT = 1;
+  var INJECTED = 2;
+  var FAIL = 3;
 
   function NOOP() {};
 
@@ -26,7 +31,7 @@
     return A_ELEMENT.href;
   }
 
-  // load svg
+  // load svg with an XHR requuest
   function load(path, callback, errorCallback) {
     if (path) {
       var req = new XMLHttpRequest();
@@ -48,6 +53,7 @@
     }
   }
 
+  // copy attributes from img element to svg element
   function copyAttributes(img, svg, options) {
     if (options.copyAttributes) {
       var attributes = img.attributes;
@@ -72,21 +78,24 @@
     }
   }
 
-  // inject loaded svg
+  // inject svg by replacing the img element with the svg element in the DOM
   function inject(img, svgString, absUrl, options) {
-    if (!img.__injectFailed && !img.__injected) {
+    if (img.__svgInject == INJECT) {
       var svg = buildSvg(svgString, absUrl);
+      var injectElem = options.beforeInject(svg, img);
 
-      copyAttributes(img, svg, options);
+      if (!injectElem) {
+        copyAttributes(img, svg, options);
+        injectElem = svg;
+      }
 
-      var injectElem = options.beforeInject(svg, img) || svg;
       var parentNode = img.parentNode;
       
       if (parentNode) {
         parentNode.replaceChild(injectElem, img);
       }
 
-      img.__injected = true;
+      img.__svgInject = INJECTED;
       img.removeAttribute('onload');
       options.afterInject(injectElem, img);
     }
@@ -121,22 +130,26 @@
   }
 
   function buildSvg(svgString, absUrl) {
-    var div = document.createElement('div');
-    div.innerHTML = svgString;
-    var svg = div.firstChild;
+    DIV_ELEMENT.innerHTML = svgString;
+    console.info(DIV_ELEMENT.firstChild)
+    var svg = DIV_ELEMENT.removeChild(DIV_ELEMENT.firstChild);
     svg.insertBefore(document.createComment('SVG injected from "' + absUrl + '"'), svg.firstChild);
-    return svg;
+    return svg
   }
 
   function injectFail(img, options) {
     img.removeAttribute('onload');
-    img.__injectFailed = true;
+    img.__svgInject = FAIL;
     options.onInjectFail(img);
   }
 
   function removeEventListeners(img) {
     img.onload = null;
     img.onerror = null;
+  }
+
+  function throwImgNotSet() {
+    throw 'img not set';
   }
 
   function createSVGInject(globalName, options) {
@@ -161,13 +174,21 @@
      * @param {Object} [options] - optional parameter with [options](#options) for this injection.
      */
     function SVGInject(img, options) {
-      if (img && !img.__injected && !img.__injectFailed) {
+      if (img) {
         var length = img.length;
         var src = img.src;
         
-        if (src) {
-          var absUrl = getAbsoluteUrl(src);
+        if (src && !img.__svgInject) {
+          img.__svgInject = INJECT;
+
           options = extendOptions(defaultOptions, options);
+          
+          if (SVG_NOT_SUPPORTED) {
+            injectFail(img, options);
+            return;
+          }
+
+          var absUrl = getAbsoluteUrl(src);
           var cache = options.cache;
 
           var onError = function() {
@@ -231,6 +252,8 @@
             SVGInject(img[i], options);
           }
         }    
+      } else {
+        throwImgNotSet()
       }
     }
 
@@ -253,10 +276,14 @@
      * @param {String} [fallbackSrc] - optional parameter fallback src
      */
     SVGInject['err'] = function(img, fallbackSrc) {
-      removeEventListeners(img);
-      injectFail(img, defaultOptions);
-      if (fallbackSrc) {
-        img.src = fallbackSrc;
+      if (img && img.__svgInject != FAIL) {
+        removeEventListeners(img);
+        injectFail(img, defaultOptions);
+        if (fallbackSrc) {
+          img.src = fallbackSrc;
+        }
+      } else {
+        throwImgNotSet()
       }
     };
 
