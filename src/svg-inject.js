@@ -230,7 +230,6 @@
             removeEventListeners(img);
 
             load(absUrl, function(svgString) {
-              console.info(options)
               inject(img, svgString, absUrl, options);
               setSvgLoadCacheValue(svgString);
             }, function() {
@@ -246,13 +245,13 @@
               if (Array.isArray(svgLoad)) {
                 svgLoad.push(function(svgString) {
                   if (svgString === null) {
-                    injectFail(img, options);
+                    loadFail(img, options);
                   } else {
                     inject(img, svgString, absUrl, options);
                   }
                 });
               } else if (svgLoad === null) {
-                injectFail(img, options);
+                loadFail(img, options);
               } else {
                 inject(img, svgLoad, absUrl, options);
               }
@@ -274,7 +273,7 @@
           }
         }    
       } else {
-        throwImgNotSet()
+        throwImgNotSet();
       }
     }
 
@@ -304,7 +303,7 @@
           img.src = fallbackSrc;
         }
       } else {
-        throwImgNotSet()
+        throwImgNotSet();
       }
     };
 
