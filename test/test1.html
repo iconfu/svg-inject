@@ -54,8 +54,7 @@
 
           if (lastSVG === svg) {
             fail();
-          } else if (svg.parentNode) {
-            console.info(svg.parentNode)
+          } else if (svg.parentNode && svg.parentNode.tagName == 'div') {
             fail();
           } else if (!img.parentNode) {
             fail();

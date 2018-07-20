@@ -25,14 +25,14 @@
     return div.firstChild; 
   }
 
-  function showMessage() {
-    if (!msg) {
+  function showMessage(img, status) {
+    if (status == 'LOAD_FAIL' && !msg) {
       msg = createElementFromHTML(msgTemplate);
       document.body.insertBefore(msg, document.body.firstChild);
     }
   }
 
   SVGInject.setOptions({
-    onLoadFail: showMessage
+    onFail: showMessage
   });
 })();

@@ -153,7 +153,7 @@ You may implement a different attribute handling in the `beforeInject` options h
 |----------|-------------|
 | SVGInject(img, options) | Injects the SVG specified in the `src` attribute of the specified `img` element or array of `img` elements. The optional second parameter sets the [options](#options) for this injection. |
 | SVGInject.setOptions(options) | Sets the default [options](#options) for SVGInject. |
-| SVGInject.err(img, fallbackSrc) | Used in `onerror` Event of an `<img>` element to handle cases when loading of the original source fails (for example if the file is corrupt or not found or if the browser does not support SVG). This triggers a call to the option's `onInjectFail` hook if available. The optional second parameter will be set as the new `src` attribute for the `img` element. |
+| SVGInject.err(img, fallbackSrc) | Used in `onerror` Event of an `<img>` element to handle cases when loading of the original source fails (for example if the file is corrupt or not found or if the browser does not support SVG). This triggers a call to the option's `onFail` hook if available. The optional second parameter will be set as the new `src` attribute for the `img` element. |
 
 
 ### Options
@@ -164,7 +164,8 @@ You may implement a different attribute handling in the `beforeInject` options h
 | copyAttributes | boolean | `true` | If set to `true` the attributes will be copied from `img` to `svg`. See [How are attributes handled?](#how-are-attributes-handled) for details. You may implement your own method to copy attributes in the `beforeInject` options hook. |
 | beforeInject | function(svg, img) | `empty function` | Hook before SVG is injected. The `svg` and `img` elements are passed as parameters. If any html element is returned it gets injected instead of applying the default SVG injection. |
 | afterInject | function(svg, img) | `empty function` | Hook after SVG is injected. The `svg` and `img` elements are passed as parameters. |
-| onInjectFail | function(img) | `empty function` | Hook after injection fails. The `img` element is passed as an parameter.  <br> <br> If SVGInject is used with the `onload` attribute, `onerror="SVGinject.err(this);"` must be added to the `<img>` element to make sure `onInjectFail` is called. |
+| onFail | function(img, status) | `empty function` | Hook after injection fails. The `img` element and a `status` string are passed as an parameter. The `status` can be either `'SVG_NOT_SUPPORTED'` (the browser does not support SVG), `'SVG_INVALID'` (the SVG is not in a valid format) or `'LOAD_FAIL'` (loading of the SVG failed).
+ <br> <br> If SVGInject is used with the `onload` attribute, `onerror="SVGinject.err(this);"` must be added to the `<img>` element to make sure `onFail` is called. |
 
 
 ## How does SVGInject prevent "unstyled image flash"
@@ -213,7 +214,7 @@ A more generic method that will attempt to load a file with the same path and na
 
 ```javascript
 SVGInject.setOptions({
-  onInjectFail: function(img) {
+  onFail: function(img) {
     img.src = img.src.slice(0, -4) + ".png";
   }
 });
@@ -223,7 +224,7 @@ SVGInject.setOptions({
 <​img​ ​src​=​"image.svg"​ ​onload​=​"SVGInject(this)"​ ​onerror​=​"SVGInject.err(this)" /​>
 ```
 
-Note that the `onerror="SVGInject.err(this)"` is necessary if SVGInject is used with the `onload` attribute,​ because the `onInjectFail` callback will only get triggered this way.
+Note that the `onerror="SVGInject.err(this)"` is necessary if SVGInject is used with the `onload` attribute,​ because the `onFail` callback will only get triggered this way.
 
 
 ## What about some examples?
@@ -260,7 +261,7 @@ This example shows how to add a fallback for browsers not supporting SVGs. For t
 </html>
 ```
 
-Another, more generic way of providing a fallback image source is using the `onInjectFail` hook. If loading the SVG fails, this will try to load a file with the same name except “png” instead of “svg” for the file ending.
+Another, more generic way of providing a fallback image source is using the `onFail` hook. If loading the SVG fails, this will try to load a file with the same name except “png” instead of “svg” for the file ending.
 
 ```html
 <html>
@@ -270,12 +271,16 @@ Another, more generic way of providing a fallback image source is using the `onI
   <!-- optional PNG fallback if SVG is not supported (IE <= 8) -->
   <script>
     SVGInject.setOptions({
-      onInjectFail: function(img) { img.src = img.src.slice(0, -4) + ".png"; }
+      onFail: function(img, status) {
+        if (status == 'SVG_NOT_SUPPORTED') {
+          img.src = img.src.slice(0, -4) + ".png";
+        }
+      }
     });
   </script>
 </head>
 <body>
-  <!-- the onerror="SVGInject.err(this)" is needed to trigger the onInjectFail callback -->
+  <!-- the onerror="SVGInject.err(this)" is needed to trigger the onFail callback -->
   <img src="image.svg" onload="SVGInject(this)" onerror="SVGInject.err(this)" />
 </body>
 </html>
@@ -302,7 +307,7 @@ This example shows how to use SVGInject with all available options.
         // set opacity
         svg.style.opacity = 1;
       },
-      onInjectFail: function(img) {
+      onFail: function(img) {
         // set the image background red
         img.style.background = 'red';
       }
@@ -327,15 +332,15 @@ This example shows how to use SVGInject directly from Javascript without the onl
 
   <!-- hide images until injection has completed or failed -->
   <style>
-    img.inject:not(.inject-failed) {
+    img.inject:not(.injected) {
       visibility: hidden;
     }
   </style>
 
   <script>
     SVGInject.setOptions({
-      onInjectFail: function(img) {
-        img.classList.addClass('inject-failed');
+      afterInject: function(svg, img) {
+        img.classList.addClass('injected');
       }
     });
 

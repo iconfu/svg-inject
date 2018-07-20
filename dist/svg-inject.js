@@ -16,16 +16,19 @@
   var DEFAULT_OPTIONS = {
     cache: true,
     copyAttributes: true,
+    afterLoad: NOOP,
     beforeInject: NOOP,
     afterInject: NOOP,
-    onInjectFail: NOOP,
-    onLoadFail: NOOP
+    onFail: NOOP
   };
   var INJECT = 1;
   var INJECTED = 2;
   var FAIL = 3;
+  var STR_SVG_NOT_SUPPORTED = 'SVG_NOT_SUPPORTED';
+  var STR_LOAD_FAIL = 'LOAD_FAIL';
+  var STR_SVG_INVALID = 'SVG_INAVLID';
 
-  function NOOP() {};
+  function NOOP() {}
 
   function getAbsoluteUrl(url) {
     A_ELEMENT.href = url;
@@ -36,32 +39,15 @@
   function load(path, callback, errorCallback) {
     if (path) {
       var req = new XMLHttpRequest();
-      var onerror = function() {
-        errorCallback(req);
-      };
-
       req.onreadystatechange = function() {
-        if(req.readyState == 4) {
-          var status = req.status;
-          // readyState is done
-          if (status == 200) {
-            // request ok
-            callback(req.responseText);
-          } else if (status >= 400) {
-            // bad request 
-            onerror();
-          }
+        if (req.readyState == 4 && req.status == 200) {
+          // readyState is done, request status ok
+          callback(req.responseXML, req.responseText);
         }
       };
-
-      req.onerror = onerror;
-
-      //try {
-        req.open('GET', path, true);
-        req.send();  
-      //} catch(e) {
-      //  onerror();
-      //}
+      req.onerror = errorCallback;
+      req.open('GET', path, true);
+      req.send();  
     }
   }
 
@@ -91,30 +77,36 @@
   }
 
   // inject svg by replacing the img element with the svg element in the DOM
-  function inject(img, svgString, absUrl, options) {
+  function inject(img, svgStringOrXml, absUrl, options) {
     if (img.__svgInject == INJECT) {
-      var svg = buildSvg(svgString, absUrl);
-      var injectElem = options.beforeInject(svg, img);
+      var svg = buildSvg(svgStringOrXml, absUrl, img, options);
 
-      if (!injectElem) {
-        copyAttributes(img, svg, options);
-        injectElem = svg;
+      if (svg === null) {
+        svgInvalid(img, options);
+      } else {
+        var injectElem = options.beforeInject(svg, img);
+
+        if (!injectElem) {
+          copyAttributes(img, svg, options);
+          injectElem = svg;
+        }
+
+        var parentNode = img.parentNode;
+        
+        if (parentNode) {
+          parentNode.replaceChild(injectElem, img);
+        }
+
+        img.__svgInject = INJECTED;
+        img.removeAttribute('onload');
+        options.afterInject(injectElem, img);
       }
-
-      var parentNode = img.parentNode;
-      
-      if (parentNode) {
-        parentNode.replaceChild(injectElem, img);
-      }
-
-      img.__svgInject = INJECTED;
-      img.removeAttribute('onload');
-      options.afterInject(injectElem, img);
     }
   }
 
   function extendOptions() {
     var newOptions = {};
+
     for (var i = 0; i < arguments.length; ++i) {
       var argument = arguments[i];
       if (argument) {
@@ -128,6 +120,7 @@
 
   function addStyleToHead(css) {
     var head = document.getElementsByTagName('head')[0];
+
     if (head) {
       var style = document.createElement('style');
       style.type = 'text/css';
@@ -141,26 +134,49 @@
     }
   }
 
-  function buildSvg(svgString, absUrl) {
-    DIV_ELEMENT.innerHTML = svgString;
-    var svg = DIV_ELEMENT.removeChild(DIV_ELEMENT.firstChild);
+  function buildSvg(svgStringOrXml, absUrl, img, options) {
+    var svg;
+
+    if (svgStringOrXml instanceof Document) {
+      svg = svgStringOrXml.documentElement;
+    } else {
+      try {
+        DIV_ELEMENT.innerHTML = svgStringOrXml;
+      } catch (e) {
+        return null;
+      }
+      svg = DIV_ELEMENT.removeChild(DIV_ELEMENT.firstChild);
+    }
+
+    if (svg.tagName.toLowerCase != 'svg') {
+      return null;
+    }
+    
     svg.insertBefore(document.createComment('SVG injected from "' + absUrl + '"'), svg.firstChild);
-    return svg
+    return svg;
   }
 
-  function injectFail(img, options) {
-    img.removeAttribute('onload');
+  function fail(img, status, options) {
     img.__svgInject = FAIL;
-    options.onInjectFail(img);
+    options.onFail(img, status);
+  }
+
+  function svgInvalid(img, options) {
+    img.removeAttribute('onload');
+    fail(img, STR_SVG_INVALID, options);
+  }
+
+  function svgNotSupported(img, options) {
+    img.removeAttribute('onload');
+    fail(img, STR_SVG_NOT_SUPPORTED, options);
   }
 
   function loadFail(img, options) {
-    img.__svgInject = FAIL;
-    options.onLoadFail(img);
+    fail(img, STR_LOAD_FAIL, options);
   }
 
-  function fail(img, options) {
-    SVG_NOT_SUPPORTED ? injectFail(img, options) : loadFail(img, options);
+  function loadFailOrSvgNotSupported(img, options) {
+    SVG_NOT_SUPPORTED ? svgNotSupported(img, options) : loadFail(img, options);
   }
 
   function removeEventListeners(img) {
@@ -188,7 +204,7 @@
      * copyAttributes: If set to `true` the attributes will be copied from `img` to `svg`. Dfault value is `true.
      * beforeInject: Hook before SVG is injected. The `svg` and `img` elements are passed as parameters. If any html element is returned it gets injected instead of applying the default SVG injection.
      * afterInject: Hook after SVG is injected. The `svg` and `img` elements are passed as parameters.
-     * onInjectFail: Hook after injection fails. The `img` element is passed as an parameter.
+     * onFail: Hook after injection fails. The `img` element and a `status` string are passed as an parameter. The `status` can be either `'SVG_NOT_SUPPORTED'` (the browser does not support SVG), `'SVG_INVALID'` (the SVG is not in a valid format) or `'LOAD_FAILED'` (loading of the SVG failed).
      * 
      * @param {HTMLImageElement} img - an img element or an array of img elements
      * @param {Object} [options] - optional parameter with [options](#options) for this injection.
@@ -204,7 +220,7 @@
           options = extendOptions(defaultOptions, options);
           
           if (SVG_NOT_SUPPORTED) {
-            injectFail(img, options);
+            svgNotSupported(img, options);
             return;
           }
 
@@ -213,7 +229,7 @@
 
           var onError = function() {
             removeEventListeners(img);
-            fail(img, options);
+            loadFailOrSvgNotSupported(img, options);
           };
 
           var setSvgLoadCacheValue = function(val) {
@@ -229,9 +245,9 @@
           var afterImageComplete = function() {
             removeEventListeners(img);
 
-            load(absUrl, function(svgString) {
-              console.info(options)
-              inject(img, svgString, absUrl, options);
+            load(absUrl, function(svgXml, svgString) {
+              var newString = options.afterLoad(svgString);
+              inject(img, newString || svgXml || svgString, absUrl, options);
               setSvgLoadCacheValue(svgString);
             }, function() {
               loadFail(img, options);
@@ -246,13 +262,13 @@
               if (Array.isArray(svgLoad)) {
                 svgLoad.push(function(svgString) {
                   if (svgString === null) {
-                    injectFail(img, options);
+                    loadFail(img, options);
                   } else {
                     inject(img, svgString, absUrl, options);
                   }
                 });
               } else if (svgLoad === null) {
-                injectFail(img, options);
+                loadFail(img, options);
               } else {
                 inject(img, svgLoad, absUrl, options);
               }
@@ -274,7 +290,7 @@
           }
         }    
       } else {
-        throwImgNotSet()
+        throwImgNotSet();
       }
     }
 
@@ -291,7 +307,7 @@
     SVGInject.create = createSVGInject;
 
     /**
-     * Used in `onerror Event of an `<img>` element to handle cases when the loading the original src fails (for example if file is not found or if the browser does not support SVG). This triggers a call to the options onLoadFail hook if available. The optional second parameter will be set as the new src attribute for the img element.
+     * Used in `onerror Event of an `<img>` element to handle cases when the loading the original src fails (for example if file is not found or if the browser does not support SVG). This triggers a call to the options onFail hook if available. The optional second parameter will be set as the new src attribute for the img element.
      *
      * @param {HTMLImageElement} img - an img element
      * @param {String} [fallbackSrc] - optional parameter fallback src
@@ -299,12 +315,12 @@
     SVGInject.err = function(img, fallbackSrc) {
       if (img && img.__svgInject != FAIL) {
         removeEventListeners(img);
-        fail(img, defaultOptions);
+        loadFailOrSvgNotSupported(img, defaultOptions);
         if (fallbackSrc) {
           img.src = fallbackSrc;
         }
       } else {
-        throwImgNotSet()
+        throwImgNotSet();
       }
     };
 
