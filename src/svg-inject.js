@@ -38,6 +38,7 @@
   // load svg with an XHR requuest
   function load(path, callback, errorCallback) {
     if (path) {
+      console.info(path)
       var req = new XMLHttpRequest();
       req.onreadystatechange = function() {
         if (req.readyState == 4 && req.status == 200) {
@@ -148,9 +149,10 @@
       svg = DIV_ELEMENT.removeChild(DIV_ELEMENT.firstChild);
     }
 
-    if (svg.tagName.toLowerCase != 'svg') {
+    if (svg.tagName.toLowerCase() != 'svg') {
       return null;
     }
+
     
     svg.insertBefore(document.createComment('SVG injected from "' + absUrl + '"'), svg.firstChild);
     return svg;

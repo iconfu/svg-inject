@@ -7,6 +7,14 @@
   <!-- Include the SvgInject javascript file -->
   <script src="svg-inject.js"></script>
 
+  <script>
+    SVGInject.setOptions({
+      onFail: function(img, status) {
+        console.info(status);
+      }
+    })
+  </script>
+
   <style>
     /* Apply colors to injected SVG with id #businesspeople-variation */
     #businesspeople-variation-1 .color-1 { color: #68C4B5; }
