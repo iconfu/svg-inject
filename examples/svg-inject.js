@@ -38,7 +38,6 @@
   // load svg with an XHR requuest
   function load(path, callback, errorCallback) {
     if (path) {
-      console.info(path)
       var req = new XMLHttpRequest();
       req.onreadystatechange = function() {
         if (req.readyState == 4 && req.status == 200) {
@@ -48,7 +47,7 @@
       };
       req.onerror = errorCallback;
       req.open('GET', path, true);
-      req.send();  
+      req.send();
     }
   }
 
@@ -78,30 +77,28 @@
   }
 
   // inject svg by replacing the img element with the svg element in the DOM
-  function inject(img, svgStringOrXml, absUrl, options) {
-    if (img.__svgInject == INJECT) {
-      var svg = buildSvg(svgStringOrXml, absUrl, img, options);
+  function inject(img, svgXml, svgString, absUrl, options) {
+    var svg = buildSvg(svgXml, svgString, absUrl, img, options);       
 
-      if (svg === null) {
-        svgInvalid(img, options);
-      } else {
-        var injectElem = options.beforeInject(svg, img);
+    if (svg) {
+      var injectElem = options.beforeInject(svg, img);
 
-        if (!injectElem) {
-          copyAttributes(img, svg, options);
-          injectElem = svg;
-        }
-
-        var parentNode = img.parentNode;
-        
-        if (parentNode) {
-          parentNode.replaceChild(injectElem, img);
-        }
-
-        img.__svgInject = INJECTED;
-        img.removeAttribute('onload');
-        options.afterInject(injectElem, img);
+      if (!injectElem) {
+        copyAttributes(img, svg, options);
+        injectElem = svg;
       }
+
+      var parentNode = img.parentNode;
+
+      if (parentNode) {
+        parentNode.replaceChild(injectElem, img);
+      }
+
+      img.__svgInject = INJECTED;
+      img.removeAttribute('onload');
+      options.afterInject(injectElem, img);
+    } else {
+      svgInvalid(img, options);
     }
   }
 
@@ -135,25 +132,23 @@
     }
   }
 
-  function buildSvg(svgStringOrXml, absUrl, img, options) {
+  function buildSvg(svgXml, svgStr, absUrl, img, options) {
     var svg;
-
-    if (svgStringOrXml instanceof Document) {
-      svg = svgStringOrXml.documentElement;
+    if (svgXml instanceof Document) {
+      svg = svgXml.documentElement;
     } else {
       try {
-        DIV_ELEMENT.innerHTML = svgStringOrXml;
+        DIV_ELEMENT.innerHTML = svgStr;
       } catch (e) {
         return null;
       }
       svg = DIV_ELEMENT.removeChild(DIV_ELEMENT.firstChild);
     }
 
-    if (svg.tagName.toLowerCase() != 'svg') {
+    if (!(svg instanceof SVGElement)) {
       return null;
     }
 
-    
     svg.insertBefore(document.createComment('SVG injected from "' + absUrl + '"'), svg.firstChild);
     return svg;
   }
@@ -211,7 +206,7 @@
      * beforeInject: Hook before SVG is injected. The `svg` and `img` elements are passed as parameters. If any html element is returned it gets injected instead of applying the default SVG injection.
      * afterInject: Hook after SVG is injected. The `svg` and `img` elements are passed as parameters.
      * onFail: Hook after injection fails. The `img` element and a `status` string are passed as an parameter. The `status` can be either `'SVG_NOT_SUPPORTED'` (the browser does not support SVG), `'SVG_INVALID'` (the SVG is not in a valid format) or `'LOAD_FAILED'` (loading of the SVG failed).
-     * 
+     *
      * @param {HTMLImageElement} img - an img element or an array of img elements
      * @param {Object} [options] - optional parameter with [options](#options) for this injection.
      */
@@ -219,12 +214,12 @@
       if (img) {
         var length = img.length;
         var src = img.src;
-        
+
         if (src && !img.__svgInject) {
           img.__svgInject = INJECT;
 
           options = extendOptions(defaultOptions, options);
-          
+
           if (SVG_NOT_SUPPORTED) {
             svgNotSupported(img, options);
             return;
@@ -252,15 +247,19 @@
             removeEventListeners(img);
 
             load(absUrl, function(svgXml, svgString) {
-              var newString = options.afterLoad(svgString);
-              inject(img, newString || svgXml || svgString, absUrl, options);
+              if (img.__svgInject == INJECT) {
+                var newString = options.afterLoad(svgString);
+                svgString = newString || svgString;
+                
+                inject(img, newString ? null : svgXml, svgString, absUrl, options);
+              }
               setSvgLoadCacheValue(svgString);
             }, function() {
               loadFail(img, options);
               setSvgLoadCacheValue(null);
             });
           };
-          
+
           if (cache) {
             var svgLoad = svgLoadCache[absUrl];
 
@@ -270,13 +269,13 @@
                   if (svgString === null) {
                     loadFail(img, options);
                   } else {
-                    inject(img, svgString, absUrl, options);
+                    inject(img, null, svgString, absUrl, options);
                   }
                 });
               } else if (svgLoad === null) {
                 loadFail(img, options);
               } else {
-                inject(img, svgLoad, absUrl, options);
+                inject(img, null, svgLoad, absUrl, options);
               }
               return;
             } else {
@@ -294,7 +293,7 @@
           for (var i = 0; i < length; ++i) {
             SVGInject(img[i], options);
           }
-        }    
+        }
       } else {
         throwImgNotSet();
       }
