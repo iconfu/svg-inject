@@ -117,7 +117,7 @@ This provides additional advantages:
 
 * **Early injection**: The injection can already start before the DOM content is fully loaded.
 
-* **Optimized image loading**: The images load in the same order as the browser loads the SVGS without injection.
+* **Optimized image loading**: The images load in the same order as the browser loads the SVGs without injection.
 
 * **Standard-conform**: The `onload` event handler on `<img>` elements has long been supported by all browsers and is officially part of the W3C specification since [HTML5.0](https://www.w3.org/TR/html50/webappapis.html#event-handler-attributes).
 
