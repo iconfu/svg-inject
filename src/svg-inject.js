@@ -27,12 +27,9 @@
   var STR_SVG_NOT_SUPPORTED = 'SVG_NOT_SUPPORTED';
   var STR_LOAD_FAIL = 'LOAD_FAIL';
   var STR_SVG_INVALID = 'SVG_INAVLID';
+  var nextFrame = window.requestAnimationFrame || function(callback) { callback(); };
 
   function NOOP() {}
-
-  function NOOP_ASYNC(callback) { callback(); }
-
-  var nextFrame = window.requestAnimationFrame || NOOP_ASYNC;
 
   function getAbsoluteUrl(url) {
     A_ELEMENT.href = url;
@@ -109,9 +106,10 @@
 
   function extendOptions() {
     var newOptions = {};
+    var args = arguments;
 
-    for (var i = 0; i < arguments.length; ++i) {
-      var argument = arguments[i];
+    for (var i = 0; i < args.length; ++i) {
+      var argument = args[i];
       if (argument) {
         for (var key in argument) {
           newOptions[key] = argument[key];
