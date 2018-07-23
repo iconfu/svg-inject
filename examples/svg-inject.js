@@ -91,12 +91,13 @@
       var parentNode = img.parentNode;
 
       if (parentNode) {
-        parentNode.replaceChild(injectElem, img);
+        window.requestAnimationFrame(function() {
+          parentNode.replaceChild(injectElem, img);
+          img.__svgInject = INJECTED;
+          img.removeAttribute('onload');
+          options.afterInject(injectElem, img);
+        });
       }
-
-      img.__svgInject = INJECTED;
-      img.removeAttribute('onload');
-      options.afterInject(injectElem, img);
     } else {
       svgInvalid(img, options);
     }
@@ -137,6 +138,8 @@
     if (svgXml instanceof Document) {
       svg = svgXml.documentElement;
     } else {
+      // svgXml is either not set or not of type Document which is a special case for IE 9
+      // In both cases the SVG string is used to build the SVG element 
       try {
         DIV_ELEMENT.innerHTML = svgStr;
       } catch (e) {
@@ -176,6 +179,7 @@
     if (SVG_NOT_SUPPORTED) {
       svgNotSupported(img, options);
     } else {
+      img.removeAttribute('onload');
       loadFail(img, options);
     }
   }
@@ -186,7 +190,7 @@
   }
 
   function throwImgNotSet() {
-    throw 'img not set';
+    throw new Error('img not set');
   }
 
   function createSVGInject(globalName, options) {
@@ -255,6 +259,7 @@
               }
               setSvgLoadCacheValue(svgString);
             }, function() {
+              console.info(arguments)
               loadFail(img, options);
               setSvgLoadCacheValue(null);
             });
@@ -318,11 +323,13 @@
      * @param {String} [fallbackSrc] - optional parameter fallback src
      */
     SVGInject.err = function(img, fallbackSrc) {
-      if (img && img.__svgInject != FAIL) {
-        removeEventListeners(img);
-        loadFailOrSvgNotSupported(img, defaultOptions);
-        if (fallbackSrc) {
-          img.src = fallbackSrc;
+      if (img) {
+        if (img.__svgInject != FAIL) {
+          removeEventListeners(img);
+          loadFailOrSvgNotSupported(img, defaultOptions);
+          if (fallbackSrc) {
+            img.src = fallbackSrc;
+          }
         }
       } else {
         throwImgNotSet();
