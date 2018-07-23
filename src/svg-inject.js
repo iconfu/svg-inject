@@ -30,9 +30,9 @@
 
   function NOOP() {}
 
-  function NOOP_ASYNC(callback) { callbac(); }
+  function NOOP_ASYNC(callback) { callback(); }
 
-  function nextFrame = window.requestAnimationFrame || NOOP_ASYNC;
+  var nextFrame = window.requestAnimationFrame || NOOP_ASYNC;
 
   function getAbsoluteUrl(url) {
     A_ELEMENT.href = url;
@@ -269,7 +269,6 @@
               }
               setSvgLoadCacheValue(svgString);
             }, function() {
-              console.info(arguments)
               loadFail(img, options);
               setSvgLoadCacheValue(null);
             });

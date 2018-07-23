@@ -30,6 +30,10 @@
 
   function NOOP() {}
 
+  function NOOP_ASYNC(callback) { callback(); }
+
+  var nextFrame = window.requestAnimationFrame || NOOP_ASYNC;
+
   function getAbsoluteUrl(url) {
     A_ELEMENT.href = url;
     return A_ELEMENT.href;
@@ -91,10 +95,10 @@
       var parentNode = img.parentNode;
 
       if (parentNode) {
-        window.requestAnimationFrame(function() {
+        nextFrame(function() {
           parentNode.replaceChild(injectElem, img);
           img.__svgInject = INJECTED;
-          img.removeAttribute('onload');
+          removeOnLoadAttribute(img);
           options.afterInject(injectElem, img);
         });
       }
@@ -156,18 +160,24 @@
     return svg;
   }
 
+  function removeOnLoadAttribute(img) {
+    nextFrame(function() {
+      img.removeAttribute('onload');
+    });
+  }
+
   function fail(img, status, options) {
     img.__svgInject = FAIL;
     options.onFail(img, status);
   }
 
   function svgInvalid(img, options) {
-    img.removeAttribute('onload');
+    removeOnLoadAttribute(img);
     fail(img, STR_SVG_INVALID, options);
   }
 
   function svgNotSupported(img, options) {
-    img.removeAttribute('onload');
+    removeOnLoadAttribute(img);
     fail(img, STR_SVG_NOT_SUPPORTED, options);
   }
 
@@ -179,7 +189,7 @@
     if (SVG_NOT_SUPPORTED) {
       svgNotSupported(img, options);
     } else {
-      img.removeAttribute('onload');
+      removeOnLoadAttribute(img);
       loadFail(img, options);
     }
   }
