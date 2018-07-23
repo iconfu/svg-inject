@@ -27,12 +27,10 @@
   var STR_SVG_NOT_SUPPORTED = 'SVG_NOT_SUPPORTED';
   var STR_LOAD_FAIL = 'LOAD_FAIL';
   var STR_SVG_INVALID = 'SVG_INAVLID';
+  var STR___SVGINJECT = '__svgInject';
+  var nextFrame = window.requestAnimationFrame || function(callback) { callback(); };
 
   function NOOP() {}
-
-  function NOOP_ASYNC(callback) { callback(); }
-
-  var nextFrame = window.requestAnimationFrame || NOOP_ASYNC;
 
   function getAbsoluteUrl(url) {
     A_ELEMENT.href = url;
@@ -85,19 +83,19 @@
     var svg = buildSvg(svgXml, svgString, absUrl, img, options);       
 
     if (svg) {
-      var injectElem = options.beforeInject(svg, img);
-
-      if (!injectElem) {
-        copyAttributes(img, svg, options);
-        injectElem = svg;
-      }
-
       var parentNode = img.parentNode;
 
       if (parentNode) {
         nextFrame(function() {
+          var injectElem = options.beforeInject(svg, img);
+
+          if (!injectElem) {
+            copyAttributes(img, svg, options);
+            injectElem = svg;
+          }
+          
           parentNode.replaceChild(injectElem, img);
-          img.__svgInject = INJECTED;
+          img[STR___SVGINJECT] = INJECTED;
           removeOnLoadAttribute(img);
           options.afterInject(injectElem, img);
         });
@@ -109,9 +107,10 @@
 
   function extendOptions() {
     var newOptions = {};
+    var args = arguments;
 
-    for (var i = 0; i < arguments.length; ++i) {
-      var argument = arguments[i];
+    for (var i = 0; i < args.length; ++i) {
+      var argument = args[i];
       if (argument) {
         for (var key in argument) {
           newOptions[key] = argument[key];
@@ -167,7 +166,7 @@
   }
 
   function fail(img, status, options) {
-    img.__svgInject = FAIL;
+    img[STR___SVGINJECT] = FAIL;
     options.onFail(img, status);
   }
 
@@ -229,8 +228,8 @@
         var length = img.length;
         var src = img.src;
 
-        if (src && !img.__svgInject) {
-          img.__svgInject = INJECT;
+        if (src && !img[STR___SVGINJECT]) {
+          img[STR___SVGINJECT] = INJECT;
 
           options = extendOptions(defaultOptions, options);
 
@@ -261,7 +260,7 @@
             removeEventListeners(img);
 
             load(absUrl, function(svgXml, svgString) {
-              if (img.__svgInject == INJECT) {
+              if (img[STR___SVGINJECT] == INJECT) {
                 var newString = options.afterLoad(svgString);
                 svgString = newString || svgString;
                 
@@ -269,7 +268,6 @@
               }
               setSvgLoadCacheValue(svgString);
             }, function() {
-              console.info(arguments)
               loadFail(img, options);
               setSvgLoadCacheValue(null);
             });
@@ -334,7 +332,7 @@
      */
     SVGInject.err = function(img, fallbackSrc) {
       if (img) {
-        if (img.__svgInject != FAIL) {
+        if (img[STR___SVGINJECT] != FAIL) {
           removeEventListeners(img);
           loadFailOrSvgNotSupported(img, defaultOptions);
           if (fallbackSrc) {

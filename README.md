@@ -134,9 +134,6 @@ SVGInject is intended to work in production environments but it has a few limita
 * The SVGs are are injected as they are. Except for copying the element attributes no pre- or post-processing is done (for example to ensure uniqueness of ids). However, if required the provided hooks can be used to add custom processing.
 
 
-
-
-
 ## How are attributes handled?
 
 All attributes are copied from the `<img>` element to the injected `<svg>` element with the following exceptions:
