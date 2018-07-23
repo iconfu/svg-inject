@@ -159,8 +159,8 @@ You may implement a different attribute handling in the `beforeInject` options h
 | ------------- | ---- | ------- | ----------- |
 | cache | boolean | `true` | If set to `true` the SVG will be cached using the absolute URL. The cache only persists for the lifetime of the page. Without caching images with the same absolute URL will trigger a new XMLHttpRequest but browser caching will still apply. |
 | copyAttributes | boolean | `true` | If set to `true` the attributes will be copied from `img` to `svg`. See [How are attributes handled?](#how-are-attributes-handled) for details. You may implement your own method to copy attributes in the `beforeInject` options hook. |
-| beforeInject | function(svg, img) | `empty function` | Hook before SVG is injected. The `svg` and `img` elements are passed as parameters. If any html element is returned it gets injected instead of applying the default SVG injection. |
-| afterInject | function(svg, img) | `empty function` | Hook after SVG is injected. The `svg` and `img` elements are passed as parameters. |
+| beforeInject | function(img, svg) | `empty function` | Hook before SVG is injected. The `img` and `svg` elements are passed as parameters. If any html element is returned it gets injected instead of applying the default SVG injection. |
+| afterInject | function(img, svg) | `empty function` | Hook after SVG is injected. The `img` and `svg` elements are passed as parameters. |
 | onFail | function(img, status) | `empty function` | Hook after injection fails. The `img` element and a `status` string are passed as an parameter. The `status` can be either `'SVG_NOT_SUPPORTED'` (the browser does not support SVG), `'SVG_INVALID'` (the SVG is not in a valid format) or `'LOAD_FAIL'` (loading of the SVG failed).
  <br> <br> If SVGInject is used with the `onload` attribute, `onerror="SVGinject.err(this);"` must be added to the `<img>` element to make sure `onFail` is called. |
 
@@ -296,11 +296,11 @@ This example shows how to use SVGInject with all available options.
     SVGInject.setOptions({
       cache: false, // no caching
       copyAttributes: false, // do not copy attributes from `<img>` to `<svg>`
-      beforeInject: function(svg, img) {
+      beforeInject: function(img, svg) {
         // add a class to the svg
         svg.classList.add("my-class");
       }, 
-      afterInject: function(svg, img) {
+      afterInject: function(img, svg) {
         // set opacity
         svg.style.opacity = 1;
       },
@@ -336,7 +336,7 @@ This example shows how to use SVGInject directly from Javascript without the onl
 
   <script>
     SVGInject.setOptions({
-      afterInject: function(svg, img) {
+      afterInject: function(img, svg) {
         img.classList.addClass('injected');
       }
     });

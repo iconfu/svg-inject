@@ -48,7 +48,7 @@
         }
       };
       
-      SVGInject.create('SVGInjectMultiple', {
+      SVGInject.create('SVGInject1', {
         beforeInject: function(svg, img) {
           testSequence('beforeInject');
 
@@ -139,18 +139,26 @@
 
   <div>All Images must have the same colors:</div>
   <div>
-    <img src="imgs/test.png" /> 
+    <img src="imgs/test1.png" /> 
 
     <!-- test 1 multiple same images test -->
-    <img src="imgs/test.svg" onload="SVGInjectMultiple(this)" class="inject-success" id="test_1_1" />
-    <img src="imgs/test.svg" onload="SVGInjectMultiple(this)" class="inject-success" id="test_1_2" />
-    <img src="imgs/test.svg" onload="SVGInjectMultiple(this)" class="inject-success" id="test_1_3" />
+    <img src="imgs/test1.svg" onload="SVGInject1(this)" onerror="SVGInject1.err(this, 'test1.png')" class="inject-success" id="test_1_1" />
+    <img src="imgs/test1.svg" onload="SVGInject1(this)" onerror="SVGInject1.err(this, 'test1.png')" class="inject-success" id="test_1_2" />
+    <img src="imgs/test1.svg" onload="SVGInject1(this)" onerror="SVGInject1.err(this, 'test1.png')" class="inject-success" id="test_1_3" />
+
+    <!-- test 2 multiple same images test -->
+    <img src="imgs/test1.svg" onload="SVGInject1(this)" onerror="SVGInject1.err(this, 'test1.png')" class="inject-success" id="test_1_1" />
+    <img src="imgs/test1.svg" onload="SVGInject1(this)" onerror="SVGInject1.err(this, 'test1.png')" class="inject-success" id="test_1_2" />
+    <img src="imgs/test1.svg" onload="SVGInject1(this)" onerror="SVGInject1.err(this, 'test1.png')" class="inject-success" id="test_1_3" />
+
+
+
 
     <!-- copy attribute test -->
-    <img src="imgs/test.svg" onload="SVGInject(this)" id="copy_attribute" alt="businesspeople" title="businesspeople" class="inject-hide" data-test="test" />
+    <img src="imgs/test1.svg" onload="SVGInject(this)" id="copy_attribute" alt="businesspeople" title="businesspeople" class="inject-hide" data-test="test" />
 
     <!-- load fail test -->
-    <img src="imgs/test.svg" class="inject-hide" onload="SVGInject(this)" alt="businesspeople" title="businesspeople"/>
+    <img src="imgs/test1.svg" class="inject-hide" onload="SVGInject(this)" alt="businesspeople" title="businesspeople"/>
   </div>
 
 </body>

@@ -28,6 +28,7 @@
   var STR_LOAD_FAIL = 'LOAD_FAIL';
   var STR_SVG_INVALID = 'SVG_INAVLID';
   var STR___SVGINJECT = '__svgInject';
+  var NULL = null;
   var nextFrame = window.requestAnimationFrame || function(callback) { callback(); };
 
   function NOOP() {}
@@ -87,17 +88,17 @@
 
       if (parentNode) {
         nextFrame(function() {
-          var injectElem = options.beforeInject(svg, img);
+          var injectElem = options.beforeInject(img, svg);
 
           if (!injectElem) {
             copyAttributes(img, svg, options);
             injectElem = svg;
           }
-          
+
           parentNode.replaceChild(injectElem, img);
           img[STR___SVGINJECT] = INJECTED;
           removeOnLoadAttribute(img);
-          options.afterInject(injectElem, img);
+          options.afterInject(img, injectElem);
         });
       }
     } else {
@@ -146,13 +147,13 @@
       try {
         DIV_ELEMENT.innerHTML = svgStr;
       } catch (e) {
-        return null;
+        return NULL;
       }
       svg = DIV_ELEMENT.removeChild(DIV_ELEMENT.firstChild);
     }
 
     if (!(svg instanceof SVGElement)) {
-      return null;
+      return NULL;
     }
 
     svg.insertBefore(document.createComment('SVG injected from "' + absUrl + '"'), svg.firstChild);
@@ -194,8 +195,8 @@
   }
 
   function removeEventListeners(img) {
-    img.onload = null;
-    img.onerror = null;
+    img.onload = NULL;
+    img.onerror = NULL;
   }
 
   function throwImgNotSet() {
@@ -216,8 +217,8 @@
      * Options:
      * cache: If set to `true` the SVG will be cached using the absolute URL. Default value is `true`.
      * copyAttributes: If set to `true` the attributes will be copied from `img` to `svg`. Dfault value is `true.
-     * beforeInject: Hook before SVG is injected. The `svg` and `img` elements are passed as parameters. If any html element is returned it gets injected instead of applying the default SVG injection.
-     * afterInject: Hook after SVG is injected. The `svg` and `img` elements are passed as parameters.
+     * beforeInject: Hook before SVG is injected. The `img` and `svg` elements are passed as parameters. If any html element is returned it gets injected instead of applying the default SVG injection.
+     * afterInject: Hook after SVG is injected. The `img` and `svg` elements are passed as parameters.
      * onFail: Hook after injection fails. The `img` element and a `status` string are passed as an parameter. The `status` can be either `'SVG_NOT_SUPPORTED'` (the browser does not support SVG), `'SVG_INVALID'` (the SVG is not in a valid format) or `'LOAD_FAILED'` (loading of the SVG failed).
      *
      * @param {HTMLImageElement} img - an img element or an array of img elements
@@ -261,15 +262,15 @@
 
             load(absUrl, function(svgXml, svgString) {
               if (img[STR___SVGINJECT] == INJECT) {
-                var newString = options.afterLoad(svgString);
+                var newString = options.afterLoad(img, svgString);
                 svgString = newString || svgString;
                 
-                inject(img, newString ? null : svgXml, svgString, absUrl, options);
+                inject(img, newString ? NULL : svgXml, svgString, absUrl, options);
               }
               setSvgLoadCacheValue(svgString);
             }, function() {
               loadFail(img, options);
-              setSvgLoadCacheValue(null);
+              setSvgLoadCacheValue(NULL);
             });
           };
 
@@ -279,16 +280,16 @@
             if (typeof svgLoad != 'undefined') {
               if (Array.isArray(svgLoad)) {
                 svgLoad.push(function(svgString) {
-                  if (svgString === null) {
+                  if (svgString === NULL) {
                     loadFail(img, options);
                   } else {
-                    inject(img, null, svgString, absUrl, options);
+                    inject(img, NULL, svgString, absUrl, options);
                   }
                 });
-              } else if (svgLoad === null) {
+              } else if (svgLoad === NULL) {
                 loadFail(img, options);
               } else {
-                inject(img, null, svgLoad, absUrl, options);
+                inject(img, NULL, svgLoad, absUrl, options);
               }
               return;
             } else {
