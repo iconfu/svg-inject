@@ -159,12 +159,11 @@ You may implement a different attribute handling in the `beforeInject` options h
 | ------------- | ---- | ------- | ----------- |
 | cache | boolean | `true` | If set to `true` the SVG will be cached using the absolute URL. The cache only persists for the lifetime of the page. Without caching images with the same absolute URL will trigger a new XMLHttpRequest but browser caching will still apply. |
 | copyAttributes | boolean | `true` | If set to `true` the attributes will be copied from `img` to `svg`. See [How are attributes handled?](#how-are-attributes-handled) for details. You may implement your own method to copy attributes in the `beforeInject` options hook. |
-| makeIdsUnique | boolean | `true` | If set to `true` . |
-| afterLoad | function(img, svg) | `empty function` | Hook after SVG is loaded. The `img` and `svg` elements are passed as parameters. If caching is active this hook will only get called once for injected SVGs with the same absolute path. Changes to the `svg` element in this hook will be applied to all injected SVGs with the same absolute path. |
-| beforeInject | function(img, svg) | `empty function` | Hook before SVG is injected. The `img` and `svg` elements are passed as parameters. The hook is called for every injected SVG. If any html element is returned it gets injected instead of applying the default SVG injection. |
-| afterInject | function(img, svg) | `empty function` | Hook after SVG is injected. The `img` and `svg` elements are passed as parameters. |
-| onFail | function(img, status) | `empty function` | Hook after injection fails. The `img` element and a `status` string are passed as an parameter. The `status` can be either `'SVG_NOT_SUPPORTED'` (the browser does not support SVG), `'SVG_INVALID'` (the SVG is not in a valid format) or `'LOAD_FAIL'` (loading of the SVG failed).
- <br> <br> If SVGInject is used with the `onload` attribute, `onerror="SVGinject.err(this);"` must be added to the `<img>` element to make sure `onFail` is called. |
+| makeIdsUnique | boolean | `true` | If set to `true` the id of elements in the `<defs>` element that can be references by property values (for example 'clipPath') are made unique by adding a random string. This is done to avoid duplicate ids in the DOM. |
+| afterLoad | function(img, svg) | `undefined` | Hook after SVG is loaded. The `img` and `svg` elements are passed as parameters. If caching is active this hook will only get called once for injected SVGs with the same absolute path. Changes to the `svg` element in this hook will be applied to all injected SVGs with the same absolute path. |
+| beforeInject | function(img, svg) | `undefined` | Hook before SVG is injected. The `img` and `svg` elements are passed as parameters. The hook is called for every injected SVG. If any html element is returned it gets injected instead of applying the default SVG injection. |
+| afterInject | function(img, svg) | `undefined` | Hook after SVG is injected. The `img` and `svg` elements are passed as parameters. |
+| onFail | function(img, status) | `undefined` | Hook after injection fails. The `img` element and a `status` string are passed as an parameter. The `status` can be either `'SVG_NOT_SUPPORTED'` (the browser does not support SVG), `'SVG_INVALID'` (the SVG is not in a valid format) or `'LOAD_FAIL'` (loading of the SVG failed). <br> <br> If SVGInject is used with the `onload` attribute, `onerror="SVGinject.err(this);"` must be added to the `<img>` element to make sure `onFail` is called. |
 
 
 ## How does SVGInject prevent "unstyled image flash"
@@ -298,9 +297,16 @@ This example shows how to use SVGInject with all available options.
     SVGInject.setOptions({
       cache: false, // no caching
       copyAttributes: false, // do not copy attributes from `<img>` to `<svg>`
-      beforeInject: function(img, svg) {
+      makeIdsUnique: false, // do not make ids used in the SVG unique
+      afterLoad: function(img, svg) {
         // add a class to the svg
         svg.classList.add("my-class");
+      },
+      beforeInject: function(img, svg) {
+        // wrap SVG in a div element
+        var div = document.createElement('div');
+        div.appendChild(svg);
+        return div;
       }, 
       afterInject: function(img, svg) {
         // set opacity

@@ -11,24 +11,23 @@
 (function(window, document) {
   // constants for better minification
   var NULL = null;
+  var TRUE = true;
   var LENGTH = 'length';
   var SVG_NOT_SUPPORTED = 'SVG_NOT_SUPPORTED';
   var LOAD_FAIL = 'LOAD_FAIL';
   var SVG_INVALID = 'SVG_INAVLID';
+  var CREATE_ELEMENT = 'createElement';
   var __SVGINJECT = '__svgInject';
 
+  // constants
   var ATTRIBUTE_EXCLUSION_NAMES = ['src', 'alt', 'onload'];
-  var A_ELEMENT = document.createElement('a');
-  var DIV_ELEMENT = document.createElement('div');
+  var A_ELEMENT = document[CREATE_ELEMENT]('a');
+  var DIV_ELEMENT = document[CREATE_ELEMENT]('div');
   var IS_SVG_NOT_SUPPORTED = typeof SVGRect == "undefined";
   var DEFAULT_OPTIONS = {
-    cache: true,
-    copyAttributes: true,
-    makeIdsUnique: true,
-    afterLoad: NULL,
-    beforeInject: NOOP,
-    afterInject: NOOP,
-    onFail: NOOP
+    cache: TRUE,
+    copyAttributes: TRUE,
+    makeIdsUnique: TRUE
   };
   var TAG_NAME_PROPERTIES_MAP = {
     clipPath: ['clip-path'],
@@ -163,11 +162,11 @@
         if (options.makeIdsUnique) {
           makeIdsUnique(svg);
         }
-        var injectElem = options.beforeInject(img, svg) || svg;
+        var injectElem = (options.beforeInject && options.beforeInject(img, svg)) || svg;
         parentNode.replaceChild(injectElem, img);
         img[__SVGINJECT] = INJECTED;
         removeOnLoadAttribute(img);
-        options.afterInject(img, injectElem);
+        options.afterInject && options.afterInject(img, injectElem);
       }
     } else {
       svgInvalid(img, options);
@@ -193,7 +192,7 @@
     var head = document.getElementsByTagName('head')[0];
 
     if (head) {
-      var style = document.createElement('style');
+      var style = document[CREATE_ELEMENT]('style');
       style.type = 'text/css';
       if (style.styleSheet){
         // This is required for IE8 and below.
@@ -227,7 +226,7 @@
 
   function fail(img, status, options) {
     img[__SVGINJECT] = FAIL;
-    options.onFail(img, status);
+    options.onFail && options.onFail(img, status);
   }
 
   function svgInvalid(img, options) {
@@ -347,7 +346,7 @@
           if (cache) {
             var svgLoad = svgLoadCache[absUrl];
 
-            if (typeof svgLoad != 'undefined') {
+            if (svgLoad !== undefined) {
               if (Array.isArray(svgLoad)) {
                 svgLoad.push(function(svgString) {
                   if (svgString === NULL) {
