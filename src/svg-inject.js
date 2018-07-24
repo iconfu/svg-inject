@@ -9,35 +9,44 @@
  */
 
 (function(window, document) {
+  // constants for better minification
+  var NULL = null;
+  var LENGTH = 'length';
+  var SVG_NOT_SUPPORTED = 'SVG_NOT_SUPPORTED';
+  var LOAD_FAIL = 'LOAD_FAIL';
+  var SVG_INVALID = 'SVG_INAVLID';
+  var __SVGINJECT = '__svgInject';
+
   var ATTRIBUTE_EXCLUSION_NAMES = ['src', 'alt', 'onload'];
   var A_ELEMENT = document.createElement('a');
   var DIV_ELEMENT = document.createElement('div');
-  var SVG_NOT_SUPPORTED = typeof SVGRect == "undefined";
+  var IS_SVG_NOT_SUPPORTED = typeof SVGRect == "undefined";
   var DEFAULT_OPTIONS = {
     cache: true,
     copyAttributes: true,
-    afterLoad: NOOP,
+    makeIdsUnique: true,
+    afterLoad: NULL,
     beforeInject: NOOP,
     afterInject: NOOP,
     onFail: NOOP
   };
-  var SPECIAL_PROPERTY_MAPPINGS = {
-    'clipPath': ['clip-path'],
-    'linearGradient': ['fill', 'stroke'],
-    'marker': ['marker', 'marker-end', 'marker-mid', 'marker-start'],
-    'pattern': ['fill', 'stroke'],
-    'radialGradient': ['fill', 'stroke']
+  var TAG_NAME_PROPERTIES_MAP = {
+    clipPath: ['clip-path'],
+    'color-profile': NULL,
+    cursor: NULL,
+    filter: NULL,
+    linearGradient: ['fill', 'stroke'],
+    marker: ['marker', 'marker-end', 'marker-mid', 'marker-start'],
+    mask: NULL,
+    pattern: ['fill', 'stroke'],
+    radialGradient: ['fill', 'stroke']
   };
   var INJECT = 1;
   var INJECTED = 2;
   var FAIL = 3;
-  var STR_SVG_NOT_SUPPORTED = 'SVG_NOT_SUPPORTED';
-  var STR_LOAD_FAIL = 'LOAD_FAIL';
-  var STR_SVG_INVALID = 'SVG_INAVLID';
-  var STR___SVGINJECT = '__svgInject';
-  var NULL = null;
+  var i, j, k;
+  
   var xmlSerializer = new XMLSerializer();
-  var injectIdCount = 0;
 
   function NOOP() {}
 
@@ -71,7 +80,7 @@
     if (options.copyAttributes) {
       var attributes = img.attributes;
 
-      for (var i = 0; i < attributes.length; ++i) {
+      for (i = 0; i < attributes[LENGTH]; ++i) {
         var attribute = attributes[i];
         var attributeName = attribute.name;
 
@@ -92,19 +101,51 @@
   }
 
   function makeIdsUnique(svg) {
+    // Collect ids from all elements directly below the <defs> element(s).
     var defElements = svg.querySelectorAll('defs>[id]');
-    for (var i = 0; i < defElements.length; ++i) {
-      var element = defElements[i];
-      var id = element.id;
-      var tag = element.tagName;
-      var newId = '--svg-inject-' + ++injectIdCount;
-      element.id = newId;
-      var properties = SPECIAL_PROPERTY_MAPPINGS[tag] || [tag];
-      for (var j = 0; j < properties.length; ++j) {
-        var property = properties[j];
-        var referringElements = svg.querySelectorAll('[' + property + '*="' + id + '"]');
-        for (var k = 0; k < referringElements.length; ++k) {
-          referringElements[k].setAttribute(property, 'url(#' + newId + ')');
+    var defElement, tag, id, newId;
+    var propertyIdMap = {};
+    var mappedProperties, mappedProperty;
+    for (i = 0; i < defElements[LENGTH]; i++) {
+      defElement = defElements[i];
+      tag = defElement.tagName;
+      // Get array with possible property names for the element's tag name. If
+      // the array is empty, the only property name is the same as the tag name.
+      if (tag in TAG_NAME_PROPERTIES_MAP) {
+        id = defElement.id;
+        // Create a random new id for the element
+        newId = 'ID' + Math.random().toString(36).substr(2, 10);
+        defElement.id = newId;
+        // Add mapping from id to new id for each mapped property
+        mappedProperties = TAG_NAME_PROPERTIES_MAP[tag] || [tag];
+        for (j = 0; j < mappedProperties[LENGTH]; j++) {
+          mappedProperty = mappedProperties[j];
+          (propertyIdMap[mappedProperty] || (propertyIdMap[mappedProperty] = [])).push([id, newId]);
+        }
+      }
+    }
+    // Run through all elements and replace ids in references
+    var properties = Object.keys(propertyIdMap);
+    if (properties[LENGTH]) {
+      var allElements = svg.querySelectorAll('*');
+      var element, property, propertyVal, idTuples;
+      for (i = 0; i < allElements[LENGTH]; i++) {
+        element = allElements[i];
+        // Run through all property names for which ids were found
+        for (j = 0; j < properties[LENGTH]; j++) {
+          property = properties[j];
+          propertyVal = element.getAttribute(property);
+          if (propertyVal) {
+            idTuples = propertyIdMap[property];
+            for (k = 0; k < idTuples[LENGTH]; k++) {
+              // Replace id if peroperty value has the form url(#anyId) or
+              // url("#anyId") (for Internet Explorer).
+              if (propertyVal.replace(/"/g, '') == 'url(#' + idTuples[k][0] + ')') {
+                element.setAttribute(property, 'url(#' + idTuples[k][1] + ')');
+                break;
+              }
+            }
+          }
         }
       }
     }
@@ -119,10 +160,12 @@
 
       if (parentNode) {
         copyAttributes(img, svg, options);
-        makeIdsUnique(svg);
+        if (options.makeIdsUnique) {
+          makeIdsUnique(svg);
+        }
         var injectElem = options.beforeInject(img, svg) || svg;
         parentNode.replaceChild(injectElem, img);
-        img[STR___SVGINJECT] = INJECTED;
+        img[__SVGINJECT] = INJECTED;
         removeOnLoadAttribute(img);
         options.afterInject(img, injectElem);
       }
@@ -135,7 +178,7 @@
     var newOptions = {};
     var args = arguments;
 
-    for (var i = 0; i < args.length; ++i) {
+    for (i = 0; i < args[LENGTH]; ++i) {
       var argument = args[i];
       if (argument) {
         for (var key in argument) {
@@ -183,26 +226,26 @@
   }
 
   function fail(img, status, options) {
-    img[STR___SVGINJECT] = FAIL;
+    img[__SVGINJECT] = FAIL;
     options.onFail(img, status);
   }
 
   function svgInvalid(img, options) {
     removeOnLoadAttribute(img);
-    fail(img, STR_SVG_INVALID, options);
+    fail(img, SVG_INVALID, options);
   }
 
   function svgNotSupported(img, options) {
     removeOnLoadAttribute(img);
-    fail(img, STR_SVG_NOT_SUPPORTED, options);
+    fail(img, SVG_NOT_SUPPORTED, options);
   }
 
   function loadFail(img, options) {
-    fail(img, STR_LOAD_FAIL, options);
+    fail(img, LOAD_FAIL, options);
   }
 
   function loadFailOrSvgNotSupported(img, options) {
-    if (SVG_NOT_SUPPORTED) {
+    if (IS_SVG_NOT_SUPPORTED) {
       svgNotSupported(img, options);
     } else {
       removeOnLoadAttribute(img);
@@ -242,15 +285,15 @@
      */
     function SVGInject(img, options) {
       if (img) {
-        var length = img.length;
+        var length = img[LENGTH];
         var src = img.src;
 
-        if (src && !img[STR___SVGINJECT]) {
-          img[STR___SVGINJECT] = INJECT;
+        if (src && !img[__SVGINJECT]) {
+          img[__SVGINJECT] = INJECT;
 
           options = extendOptions(defaultOptions, options);
 
-          if (SVG_NOT_SUPPORTED) {
+          if (IS_SVG_NOT_SUPPORTED) {
             svgNotSupported(img, options);
             return;
           }
@@ -266,7 +309,7 @@
           var setSvgLoadCacheValue = function(val) {
             if (cache) {
               var svgLoad = svgLoadCache[absUrl];
-              for (var i = 0; i < svgLoad.length; ++i) {
+              for (i = 0; i < svgLoad[LENGTH]; ++i) {
                 svgLoad[i](val);
               }
               svgLoadCache[absUrl] = val;
@@ -277,16 +320,15 @@
             removeEventListeners(img);
 
             load(absUrl, function(svgXml, svgString) {
-              if (img[STR___SVGINJECT] == INJECT) {
+              if (img[__SVGINJECT] == INJECT) {
                 // for IE9 do not use the nativ svgXml
                 var svg = svgXml instanceof Document ? svgXml.documentElement : buildSvg(svgString, absUrl);
 
                 if (svg) {
-                  var newSvg = options.afterLoad(img, svg);
-
-                  if (newSvg) {
-                    svg = newSvg;
-                    svgString = xmlSerializer.serializeToString(elem);
+                  var afterLoad = options.afterLoad;
+                  if (afterLoad) {
+                    afterLoad(img, svg);
+                    svgString = xmlSerializer.serializeToString(svg);
                   }
                   
                   inject(img, svg, svgString, absUrl, options);
@@ -332,7 +374,7 @@
             img.onerror = onError;
           }
         } else if (length) {
-          for (var i = 0; i < length; ++i) {
+          for (i = 0; i < length; ++i) {
             SVGInject(img[i], options);
           }
         }
@@ -361,7 +403,7 @@
      */
     SVGInject.err = function(img, fallbackSrc) {
       if (img) {
-        if (img[STR___SVGINJECT] != FAIL) {
+        if (img[__SVGINJECT] != FAIL) {
           removeEventListeners(img);
           loadFailOrSvgNotSupported(img, defaultOptions);
           if (fallbackSrc) {
