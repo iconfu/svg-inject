@@ -20,7 +20,7 @@
   var __SVGINJECT = '__svgInject';
 
   // constants
-  var ATTRIBUTE_EXCLUSION_NAMES = ['src', 'alt', 'onload'];
+  var ATTRIBUTE_EXCLUSION_NAMES = ['src', 'alt', 'onload', 'onerror'];
   var A_ELEMENT = document[CREATE_ELEMENT]('a');
   var DIV_ELEMENT = document[CREATE_ELEMENT]('div');
   var IS_SVG_NOT_SUPPORTED = typeof SVGRect == "undefined";
@@ -43,7 +43,6 @@
   var INJECT = 1;
   var INJECTED = 2;
   var FAIL = 3;
-  var i, j, k;
   
   var xmlSerializer = new XMLSerializer();
 
@@ -79,7 +78,7 @@
     if (options.copyAttributes) {
       var attributes = img.attributes;
 
-      for (i = 0; i < attributes[LENGTH]; ++i) {
+      for (var i = 0; i < attributes[LENGTH]; ++i) {
         var attribute = attributes[i];
         var attributeName = attribute.name;
 
@@ -105,6 +104,7 @@
     var defElement, tag, id, newId;
     var propertyIdMap = {};
     var mappedProperties, mappedProperty;
+    var i, j, k;
     for (i = 0; i < defElements[LENGTH]; i++) {
       defElement = defElements[i];
       tag = defElement.tagName;
@@ -177,7 +177,7 @@
     var newOptions = {};
     var args = arguments;
 
-    for (i = 0; i < args[LENGTH]; ++i) {
+    for (var i = 0; i < args[LENGTH]; ++i) {
       var argument = args[i];
       if (argument) {
         for (var key in argument) {
@@ -308,7 +308,7 @@
           var setSvgLoadCacheValue = function(val) {
             if (cache) {
               var svgLoad = svgLoadCache[absUrl];
-              for (i = 0; i < svgLoad[LENGTH]; ++i) {
+              for (var i = 0; i < svgLoad[LENGTH]; ++i) {
                 svgLoad[i](val);
               }
               svgLoadCache[absUrl] = val;
@@ -373,7 +373,7 @@
             img.onerror = onError;
           }
         } else if (length) {
-          for (i = 0; i < length; ++i) {
+          for (var i = 0; i < length; ++i) {
             SVGInject(img[i], options);
           }
         }
@@ -401,6 +401,7 @@
      * @param {String} [fallbackSrc] - optional parameter fallback src
      */
     SVGInject.err = function(img, fallbackSrc) {
+      console.info(img)
       if (img) {
         if (img[__SVGINJECT] != FAIL) {
           removeEventListeners(img);
