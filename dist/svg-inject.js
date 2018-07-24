@@ -113,7 +113,7 @@
       if (tag in TAG_NAME_PROPERTIES_MAP) {
         id = defElement.id;
         // Create a random new id for the element
-        newId = 'ID' + Math.random().toString(36).substr(2, 10);
+        newId = id + '-' + Math.random().toString(36).substr(2, 10);
         defElement.id = newId;
         // Add mapping from id to new id for each mapped property
         mappedProperties = TAG_NAME_PROPERTIES_MAP[tag] || [tag];
