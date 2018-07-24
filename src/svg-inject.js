@@ -97,7 +97,7 @@
       var element = defElements[i];
       var id = element.id;
       var tag = element.tagName;
-      var newId = 'svg-inject-id-' + ++injectIdCount;
+      var newId = '--svg-inject-' + ++injectIdCount;
       element.id = newId;
       var properties = SPECIAL_PROPERTY_MAPPINGS[tag] || [tag];
       for (var j = 0; j < properties.length; ++j) {
