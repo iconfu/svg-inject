@@ -98,6 +98,8 @@ Add `onload="SVGInject(this)"` to any `<img>` element where you want the SVG to 
 
 * **Fallback if image source is not available**: Behaves like a normal `<img>` element if file not found or not available.
 
+* **Prevention of ID conflicts**: IDs used internally in the SVG are made unique before injection to prevent ID conflits in the DOM
+
 
 ## What are additional advantages when using `onload`?
 
@@ -172,7 +174,7 @@ Before an SVG is injected the original unstyled SVG may be displayed for a brief
 
 If SVGInject is used with the `onload` attribute, SVGInject has a built-in functionality to prevent unstyled image flash. A `<style>` element with one CSS rule is added to the document to hide all injectable `<img>` elements until injection is complete.
 
-When [using Javscript directly](https://github.com/iconfu/svg-inject#how-to-use-svginject-directly-from-javascript) SVGInject has no build in functionality to prevent unstyled image flash. You can find a custom solution for this in the [example for using SVGInject without the `onload` function](#example-without-using-the-onload-function).
+When [using Javscript directly](#how-to-use-svginject-directly-from-javascript) SVGInject has no build in functionality to prevent unstyled image flash. You can find a custom solution for this in the [example for using SVGInject without the `onload` function](#example-without-using-the-onload-function).
 
 
 ## How to use SVGInject directly from Javascript?
@@ -196,7 +198,7 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 ```
 
-If you dynamically insert `<img>` elements you need to call `SVGInject()` after insertion.
+If you dynamically insert new `<img>` elements you need to call `SVGInject()` on these elements after their insertion.
 
 
 ## Fallback for no SVG support (IE <= 8)
@@ -204,22 +206,10 @@ If you dynamically insert `<img>` elements you need to call `SVGInject()` after 
 If the browser does not support SVG, this simple fallback solution replaces the `src` attribute with an alternative image URI.
 
 ```html
-<​img​ ​src​=​"image.svg"​ ​onload​=​"SVGInject(this)"​ ​onerror​=​"SVGInject.err(this, ‘image.png';" /​>
+<​img​ ​src​=​"image.svg"​ ​onload​=​"SVGInject(this)"​ ​onerror​=​"SVGInject.err(this, 'image.png')" /​>
 ```
 
-A more generic method that will attempt to load a file with the same path and name but a different file extension looks like this:
-
-```javascript
-SVGInject.setOptions({
-  onFail: function(img) {
-    img.src = img.src.slice(0, -4) + ".png";
-  }
-});
-```
-
-```html
-<​img​ ​src​=​"image.svg"​ ​onload​=​"SVGInject(this)"​ ​onerror​=​"SVGInject.err(this)" /​>
-```
+A more generic method that will attempt to load a file with the same path and name but a different file extension can be found in [this example](#example-with-fallback-for-ie8--ie7):
 
 Note that the `onerror="SVGInject.err(this)"` is necessary if SVGInject is used with the `onload` attribute,​ because the `onFail` callback will only get triggered this way.
 
