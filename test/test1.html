@@ -34,11 +34,11 @@
 
     };
 
-    // multiple same images test
+    // Test 1
     !function() {
       var lastSVG = null;
       var sequenceNum = 0;
-      var sequence = ['beforeInject', 'afterInject', 'beforeInject', 'afterInject', 'beforeInject', 'afterInject'];
+      var sequence = ['afterLoad', 'beforeInject', 'afterInject', 'beforeInject', 'afterInject', 'beforeInject', 'afterInject'];
 
       var testSequence = function(eventName) {
         if (sequenceNum === sequence.length || sequence[sequenceNum++] !== eventName) {
@@ -49,7 +49,7 @@
       };
       
       SVGInject.create('SVGInject1', {
-        beforeInject: function(svg, img) {
+        beforeInject: function(img, svg) {
           testSequence('beforeInject');
 
           if (lastSVG === svg) {
@@ -63,7 +63,7 @@
           lastSVG = svg;
         },
 
-        afterInject: function(svg, img) {
+        afterInject: function(img, svg) {
           testSequence('afterInject');
 
           if (lastSVG !== svg) {
@@ -73,6 +73,51 @@
           } else if (img.parentNode) {
             fail();
           }
+        },
+
+        afterLoad: function(img, svgString) {
+          testSequence('afterLoad');
+        } 
+      });  
+    }();
+
+    // Test 2
+    !function() {
+      var sequenceNum = 0;
+      var sequence = [];
+      for (var i = 0; i < 9; ++i) {
+        sequence.push('beforeInject');
+        sequence.push('afterInject');
+      }
+
+      var testSequence = function(eventName) {
+        if (sequenceNum === sequence.length || sequence[sequenceNum++] !== eventName) {
+          fail();
+        } else if (sequenceNum === sequence.length) {
+          success();
+        }
+      };
+      
+      SVGInject.create('SVGInject2', {
+        beforeInject: function(img, svg) {
+          testSequence('beforeInject');
+
+        },
+
+        afterInject: function(img, svg) {
+          testSequence('afterInject');
+        }
+      });  
+    }();
+
+    // Test 3
+    !function() {
+      var includeAttributes = [];
+      var notIncludeAttributes = [];
+
+      SVGInject.create('SVGInject3', {
+        afterInject: function(img, svg) {
+          svg.hasAttribute('onload')
         }
       });  
     }();
@@ -137,25 +182,29 @@
   <div id="success">SUCCESS</div>
   <div id="running">RUNNING</div>
 
-  <div>All Images must have the same colors:</div>
+  <div>All Images must have the same color scheme:</div>
   <div>
     <img src="imgs/test1.png" /> 
 
-    <!-- test 1 multiple same images test -->
+    <!-- Test 1: multiple same images test -->
     <img src="imgs/test1.svg" onload="SVGInject1(this)" onerror="SVGInject1.err(this, 'test1.png')" class="inject-success" id="test_1_1" />
     <img src="imgs/test1.svg" onload="SVGInject1(this)" onerror="SVGInject1.err(this, 'test1.png')" class="inject-success" id="test_1_2" />
     <img src="imgs/test1.svg" onload="SVGInject1(this)" onerror="SVGInject1.err(this, 'test1.png')" class="inject-success" id="test_1_3" />
 
-    <!-- test 2 multiple same images test -->
-    <img src="imgs/test1.svg" onload="SVGInject1(this)" onerror="SVGInject1.err(this, 'test1.png')" class="inject-success" id="test_1_1" />
-    <img src="imgs/test1.svg" onload="SVGInject1(this)" onerror="SVGInject1.err(this, 'test1.png')" class="inject-success" id="test_1_2" />
-    <img src="imgs/test1.svg" onload="SVGInject1(this)" onerror="SVGInject1.err(this, 'test1.png')" class="inject-success" id="test_1_3" />
+    <!-- Test 2: multiple different images test -->
+    <img src="imgs/test1.svg" onload="SVGInject2(this)" onerror="SVGInject2.err(this, 'test1.png')" class="inject-success" id="test_1_1" />
+    <img src="imgs/test2.svg" onload="SVGInject2(this)" onerror="SVGInject2.err(this, 'test2.png')" class="inject-success" id="test_1_2" />
+    <img src="imgs/test3.svg" onload="SVGInject2(this)" onerror="SVGInject2.err(this, 'test3.png')" class="inject-success" id="test_1_3" />
+    <img src="imgs/test1.svg" onload="SVGInject2(this)" onerror="SVGInject2.err(this, 'test1.png')" class="inject-success" id="test_1_1" />
+    <img src="imgs/test2.svg" onload="SVGInject2(this)" onerror="SVGInject2.err(this, 'test2.png')" class="inject-success" id="test_1_2" />
+    <img src="imgs/test3.svg" onload="SVGInject2(this)" onerror="SVGInject2.err(this, 'test3.png')" class="inject-success" id="test_1_3" />
+    <img src="imgs/test1.svg" onload="SVGInject2(this)" onerror="SVGInject2.err(this, 'test1.png')" class="inject-success" id="test_1_1" />
+    <img src="imgs/test2.svg" onload="SVGInject2(this)" onerror="SVGInject2.err(this, 'test2.png')" class="inject-success" id="test_1_2" />
+    <img src="imgs/test3.svg" onload="SVGInject2(this)" onerror="SVGInject2.err(this, 'test3.png')" class="inject-success" id="test_1_3" />
 
-
-
-
-    <!-- copy attribute test -->
-    <img src="imgs/test1.svg" onload="SVGInject(this)" id="copy_attribute" alt="businesspeople" title="businesspeople" class="inject-hide" data-test="test" />
+    <!-- Test 3: copy attribute test -->
+    <img src="imgs/test1.svg" onload="SVGInject3(this)" onerror="SVGInject3.err(this, 'test1.png')" id="copy_attribute" alt="businesspeople" title="businesspeople" class="inject-hide" data-test="test" />
+    <img src="imgs/test1.svg" onload="SVGInject3(this)" onerror="SVGInject3.err(this, 'test1.png')" id="copy_attribute" alt="businesspeople" title="businesspeople" class="inject-hide" data-test="test" />
 
     <!-- load fail test -->
     <img src="imgs/test1.svg" class="inject-hide" onload="SVGInject(this)" alt="businesspeople" title="businesspeople"/>

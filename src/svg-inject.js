@@ -21,6 +21,13 @@
     afterInject: NOOP,
     onFail: NOOP
   };
+  var SPECIAL_PROPERTY_MAPPINGS = {
+    'clipPath': ['clip-path'],
+    'linearGradient': ['fill', 'stroke'],
+    'marker': ['marker', 'marker-end', 'marker-mid', 'marker-start'],
+    'pattern': ['fill', 'stroke'],
+    'radialGradient': ['fill', 'stroke']
+  };
   var INJECT = 1;
   var INJECTED = 2;
   var FAIL = 3;
@@ -29,13 +36,18 @@
   var STR_SVG_INVALID = 'SVG_INAVLID';
   var STR___SVGINJECT = '__svgInject';
   var NULL = null;
-  var nextFrame = window.requestAnimationFrame || function(callback) { callback(); };
+  var xmlSerializer = new XMLSerializer();
+  var injectIdCount = 0;
 
   function NOOP() {}
 
   function getAbsoluteUrl(url) {
     A_ELEMENT.href = url;
     return A_ELEMENT.href;
+  }
+
+  function isSVGElem(svgElem) {
+    return svgElem instanceof SVGElement;
   }
 
   // load svg with an XHR requuest
@@ -79,27 +91,40 @@
     }
   }
 
+  function makeIdsUnique(svg) {
+    var defElements = svg.querySelectorAll('defs>[id]');
+    for (var i = 0; i < defElements.length; ++i) {
+      var element = defElements[i];
+      var id = element.id;
+      var tag = element.tagName;
+      var newId = 'svg-inject-id-' + ++injectIdCount;
+      element.id = newId;
+      var properties = SPECIAL_PROPERTY_MAPPINGS[tag] || [tag];
+      for (var j = 0; j < properties.length; ++j) {
+        var property = properties[j];
+        var referringElements = svg.querySelectorAll('[' + property + '*="' + id + '"]');
+        for (var k = 0; k < referringElements.length; ++k) {
+          referringElements[k].setAttribute(property, 'url(#' + newId + ')');
+        }
+      }
+    }
+  }
+
   // inject svg by replacing the img element with the svg element in the DOM
-  function inject(img, svgXml, svgString, absUrl, options) {
-    var svg = buildSvg(svgXml, svgString, absUrl, img, options);       
+  function inject(img, svg, svgString, absUrl, options) {
+    svg = svg || buildSvg(svgString, absUrl);       
 
     if (svg) {
       var parentNode = img.parentNode;
 
       if (parentNode) {
-        nextFrame(function() {
-          var injectElem = options.beforeInject(img, svg);
-
-          if (!injectElem) {
-            copyAttributes(img, svg, options);
-            injectElem = svg;
-          }
-
-          parentNode.replaceChild(injectElem, img);
-          img[STR___SVGINJECT] = INJECTED;
-          removeOnLoadAttribute(img);
-          options.afterInject(img, injectElem);
-        });
+        copyAttributes(img, svg, options);
+        makeIdsUnique(svg);
+        var injectElem = options.beforeInject(img, svg) || svg;
+        parentNode.replaceChild(injectElem, img);
+        img[STR___SVGINJECT] = INJECTED;
+        removeOnLoadAttribute(img);
+        options.afterInject(img, injectElem);
       }
     } else {
       svgInvalid(img, options);
@@ -137,22 +162,15 @@
     }
   }
 
-  function buildSvg(svgXml, svgStr, absUrl, img, options) {
-    var svg;
-    if (svgXml instanceof Document) {
-      svg = svgXml.documentElement;
-    } else {
-      // svgXml is either not set or not of type Document which is a special case for IE 9
-      // In both cases the SVG string is used to build the SVG element 
-      try {
-        DIV_ELEMENT.innerHTML = svgStr;
-      } catch (e) {
-        return NULL;
-      }
-      svg = DIV_ELEMENT.removeChild(DIV_ELEMENT.firstChild);
+  function buildSvg(svgStr, absUrl) {
+    try {
+      DIV_ELEMENT.innerHTML = svgStr;
+    } catch (e) {
+      return NULL;
     }
+    var svg = DIV_ELEMENT.removeChild(DIV_ELEMENT.firstChild);
 
-    if (!(svg instanceof SVGElement)) {
+    if (!isSVGElem(svg)) {
       return NULL;
     }
 
@@ -161,9 +179,7 @@
   }
 
   function removeOnLoadAttribute(img) {
-    nextFrame(function() {
-      img.removeAttribute('onload');
-    });
+    img.removeAttribute('onload');
   }
 
   function fail(img, status, options) {
@@ -262,12 +278,24 @@
 
             load(absUrl, function(svgXml, svgString) {
               if (img[STR___SVGINJECT] == INJECT) {
-                var newString = options.afterLoad(img, svgString);
-                svgString = newString || svgString;
-                
-                inject(img, newString ? NULL : svgXml, svgString, absUrl, options);
+                // for IE9 do not use the nativ svgXml
+                var svg = svgXml instanceof Document ? svgXml.documentElement : buildSvg(svgString, absUrl);
+
+                if (svg) {
+                  var newSvg = options.afterLoad(img, svg);
+
+                  if (newSvg) {
+                    svg = newSvg;
+                    svgString = xmlSerializer.serializeToString(elem);
+                  }
+                  
+                  inject(img, svg, svgString, absUrl, options);
+
+                  setSvgLoadCacheValue(svgString);
+                } else {
+                  svgInvalid(img, options);
+                }
               }
-              setSvgLoadCacheValue(svgString);
             }, function() {
               loadFail(img, options);
               setSvgLoadCacheValue(NULL);
