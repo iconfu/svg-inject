@@ -174,7 +174,7 @@ Before an SVG is injected the original unstyled SVG may be displayed for a brief
 
 If SVGInject is used with the `onload` attribute, SVGInject has a built-in functionality to prevent unstyled image flash. A `<style>` element with one CSS rule is added to the document to hide all injectable `<img>` elements until injection is complete.
 
-When [using Javscript directly](#how-to-use-svginject-directly-from-javascript) SVGInject has no build in functionality to prevent unstyled image flash. You can find a custom solution for this in the [example for using SVGInject without the `onload` function](#example-without-using-the-onload-function).
+When [using Javscript directly](#how-to-use-svginject-directly-from-javascript) SVGInject has no build in functionality to prevent unstyled image flash. You can find a custom solution for this in the [example for using SVGInject without the `onload` attribute](#example-without-using-the-onload-attribute).
 
 
 ## How to use SVGInject directly from Javascript?
@@ -314,9 +314,9 @@ This example shows how to use SVGInject with all available options.
 </html>
 ```
 
-### Example without using the `onload` function
+### Example without using the `onload` attribute
 
-This example shows how to use SVGInject directly from Javascript without the onload attribute. After the DOM content has loaded, all elements with class `img-inject` are replaced by the SVG specified in their src element. It also implements a method to prevent [unstyled image flash](#how-does-svginject-prevent-unstyled-image-flash).
+This example shows how to use SVGInject directly from Javascript without the `onload` attribute. After the DOM content has loaded, all elements with class `img-inject` are replaced by the SVG specified in their src element. It also implements a method to prevent [unstyled image flash](#how-does-svginject-prevent-unstyled-image-flash).
 
 
 ```html
