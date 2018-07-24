@@ -140,7 +140,7 @@ All attributes are copied from the `<img>` element to the injected `<svg>` eleme
 * `src`, `alt`, and `onload` attributes are not copied
 * the `title` attribute is transformed to a `<title>` element in the injected SVG
 
-You may implement a different attribute handling in the `beforeInject` options hook.
+You may implement a different attribute handling in the `beforeInject` options hook and setting the `copyAttributes` option to `false`.
 
 
 ## API
