@@ -401,7 +401,6 @@
      * @param {String} [fallbackSrc] - optional parameter fallback src
      */
     SVGInject.err = function(img, fallbackSrc) {
-      console.info(img)
       if (img) {
         if (img[__SVGINJECT] != FAIL) {
           removeEventListeners(img);
