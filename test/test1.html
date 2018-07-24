@@ -9,7 +9,6 @@
   <script>
     var failed = false;
     var successCount = 0;
-    var SUCCESS_NUM = 1;
 
     var fail = function() {
       failed = true;
@@ -20,7 +19,7 @@
     };
 
     var success = function() {
-      if (!failed && ++successCount == SUCCESS_NUM) {
+      if (!failed && ++successCount == tests.length) {
         document.getElementById('success').style.display = 'block';
         document.getElementById('running').style.display = 'none';
       }
@@ -34,93 +33,105 @@
 
     };
 
-    // Test 1
-    !function() {
-      var lastSVG = null;
-      var sequenceNum = 0;
-      var sequence = ['afterLoad', 'beforeInject', 'afterInject', 'beforeInject', 'afterInject', 'beforeInject', 'afterInject'];
+    var tests = [
+      // Test 1
+      function() {
+        var lastSVG = null;
+        var sequenceNum = 0;
+        var sequence = ['afterLoad', 'beforeInject', 'afterInject', 'beforeInject', 'afterInject', 'beforeInject', 'afterInject'];
 
-      var testSequence = function(eventName) {
-        if (sequenceNum === sequence.length || sequence[sequenceNum++] !== eventName) {
-          fail();
-        } else if (sequenceNum === sequence.length) {
-          success();
+        var testSequence = function(eventName) {
+          if (sequenceNum === sequence.length || sequence[sequenceNum++] !== eventName) {
+            fail();
+          } else if (sequenceNum === sequence.length) {
+            success();
+          }
+        };
+        
+        SVGInject.create('SVGInject1', {
+          beforeInject: function(img, svg) {
+            testSequence('beforeInject');
+
+            if (lastSVG === svg) {
+              fail();
+            } else if (svg.parentNode && svg.parentNode.tagName == 'div') {
+              fail();
+            } else if (!img.parentNode) {
+              fail();
+            }
+
+            lastSVG = svg;
+          },
+
+          afterInject: function(img, svg) {
+            testSequence('afterInject');
+
+            if (lastSVG !== svg) {
+              fail();
+            } else if (!svg.parentNode) {
+              fail();
+            } else if (img.parentNode) {
+              fail();
+            }
+          },
+
+          afterLoad: function(img, svgString) {
+            testSequence('afterLoad');
+          } 
+        });  
+      },
+
+      // Test 2
+      function() {
+        var sequenceNum = 0;
+        var sequence = [];
+        for (var i = 0; i < 9; ++i) {
+          sequence.push('beforeInject');
+          sequence.push('afterInject');
         }
-      };
-      
-      SVGInject.create('SVGInject1', {
-        beforeInject: function(img, svg) {
-          testSequence('beforeInject');
 
-          if (lastSVG === svg) {
+        var testSequence = function(eventName) {
+          if (sequenceNum === sequence.length || sequence[sequenceNum++] !== eventName) {
             fail();
-          } else if (svg.parentNode && svg.parentNode.tagName == 'div') {
-            fail();
-          } else if (!img.parentNode) {
-            fail();
+          } else if (sequenceNum === sequence.length) {
+            success();
           }
+        };
+        
+        SVGInject.create('SVGInject2', {
+          beforeInject: function(img, svg) {
+            testSequence('beforeInject');
 
-          lastSVG = svg;
-        },
+          },
 
-        afterInject: function(img, svg) {
-          testSequence('afterInject');
-
-          if (lastSVG !== svg) {
-            fail();
-          } else if (!svg.parentNode) {
-            fail();
-          } else if (img.parentNode) {
-            fail();
+          afterInject: function(img, svg) {
+            testSequence('afterInject');
           }
-        },
+        });  
+      },
 
-        afterLoad: function(img, svgString) {
-          testSequence('afterLoad');
-        } 
-      });  
-    }();
+      // Test 3
+      function() {
+        var includeAttributes = ['id', 'class', 'data-test'];
+        var notIncludeAttributes = ['onload', 'onerror', 'alt', 'title'];
 
-    // Test 2
-    !function() {
-      var sequenceNum = 0;
-      var sequence = [];
-      for (var i = 0; i < 9; ++i) {
-        sequence.push('beforeInject');
-        sequence.push('afterInject');
+        SVGInject.create('SVGInject3', {
+          afterInject: function(img, svg) {
+            for (var i = 0; i < includeAttributes.length; ++i) {
+              var includeAttribute = includeAttributes[i];
+
+              if (svg.hasAttribute(includeAttribute) {
+                fail();
+              }
+            }
+          }
+        });  
       }
+    ];
 
-      var testSequence = function(eventName) {
-        if (sequenceNum === sequence.length || sequence[sequenceNum++] !== eventName) {
-          fail();
-        } else if (sequenceNum === sequence.length) {
-          success();
-        }
-      };
-      
-      SVGInject.create('SVGInject2', {
-        beforeInject: function(img, svg) {
-          testSequence('beforeInject');
-
-        },
-
-        afterInject: function(img, svg) {
-          testSequence('afterInject');
-        }
-      });  
-    }();
-
-    // Test 3
-    !function() {
-      var includeAttributes = [];
-      var notIncludeAttributes = [];
-
-      SVGInject.create('SVGInject3', {
-        afterInject: function(img, svg) {
-          svg.hasAttribute('onload')
-        }
-      });  
-    }();
+    for (var i = 0; i < tests.length; ++i) {
+      tests[i]();
+    }
   </script>
 
   <style>
