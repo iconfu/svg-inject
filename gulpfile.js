@@ -9,7 +9,7 @@ gulp.task('default', function (cb) {
   pump([
     gulp.src('src/svg-inject.js'),
     gulp.dest('dist/'),
-    gulp.dest('test/'),
+    gulp.dest('test/js/'),
     gulp.dest('examples/'),
     uglify({
       output: {

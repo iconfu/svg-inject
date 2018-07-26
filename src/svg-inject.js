@@ -15,7 +15,7 @@
   var LENGTH = 'length';
   var SVG_NOT_SUPPORTED = 'SVG_NOT_SUPPORTED';
   var LOAD_FAIL = 'LOAD_FAIL';
-  var SVG_INVALID = 'SVG_INAVLID';
+  var SVG_INVALID = 'SVG_INVALID';
   var CREATE_ELEMENT = 'createElement';
   var __SVGINJECT = '__svgInject';
 
@@ -44,7 +44,12 @@
   var INJECTED = 2;
   var FAIL = 3;
   
-  var xmlSerializer = new XMLSerializer();
+  var xmlSerializer;
+
+  function getXMLSerializer() {
+    xmlSerializer = xmlSerializer || new XMLSerializer();
+    return xmlSerializer;
+  }
 
   function NOOP() {}
 
@@ -62,37 +67,41 @@
     if (path) {
       var req = new XMLHttpRequest();
       req.onreadystatechange = function() {
-        if (req.readyState == 4 && req.status == 200) {
-          // readyState is done, request status ok
-          callback(req.responseXML, req.responseText);
+        if (req.readyState == 4) {
+          var status = req.status;
+          if (status == 200) {
+            // readyState is done, request status ok
+            callback(req.responseXML, req.responseText);
+          } else if (status >= 400) {
+            errorCallback();
+          } else if (status == 0) {
+            errorCallback();
+          }
         }
       };
-      req.onerror = errorCallback;
       req.open('GET', path, true);
       req.send();
     }
   }
 
   // copy attributes from img element to svg element
-  function copyAttributes(img, svg, options) {
-    if (options.copyAttributes) {
-      var attributes = img.attributes;
+  function copyAttributes(img, svg) {
+    var attributes = img.attributes;
 
-      for (var i = 0; i < attributes[LENGTH]; ++i) {
-        var attribute = attributes[i];
-        var attributeName = attribute.name;
+    for (var i = 0; i < attributes[LENGTH]; ++i) {
+      var attribute = attributes[i];
+      var attributeName = attribute.name;
 
-        if (ATTRIBUTE_EXCLUSION_NAMES.indexOf(attributeName) == -1) {
-          var attributeValue = attribute.value;
+      if (ATTRIBUTE_EXCLUSION_NAMES.indexOf(attributeName) == -1) {
+        var attributeValue = attribute.value;
 
-          if (attributeName == 'title') {
-            // if a title attribute exists insert it as the title tag in SVG
-            var title = document.createElementNS('http://www.w3.org/2000/svg', 'title');
-            title.textContent = attributeValue;
-            svg.insertBefore(title, svg.firstChild);
-          } else {
-            svg.setAttribute(attributeName, attributeValue);
-          }
+        if (attributeName == 'title') {
+          // if a title attribute exists insert it as the title tag in SVG
+          var title = document.createElementNS('http://www.w3.org/2000/svg', 'title');
+          title.textContent = attributeValue;
+          svg.insertBefore(title, svg.firstChild);
+        } else {
+          svg.setAttribute(attributeName, attributeValue);
         }
       }
     }
@@ -158,10 +167,9 @@
       var parentNode = img.parentNode;
 
       if (parentNode) {
-        copyAttributes(img, svg, options);
-        if (options.makeIdsUnique) {
-          makeIdsUnique(svg);
-        }
+        options.copyAttributes && copyAttributes(img, svg);
+        options.makeIdsUnique && makeIdsUnique(svg, options);
+        
         var injectElem = (options.beforeInject && options.beforeInject(img, svg)) || svg;
         parentNode.replaceChild(injectElem, img);
         img[__SVGINJECT] = INJECTED;
@@ -243,15 +251,6 @@
     fail(img, LOAD_FAIL, options);
   }
 
-  function loadFailOrSvgNotSupported(img, options) {
-    if (IS_SVG_NOT_SUPPORTED) {
-      svgNotSupported(img, options);
-    } else {
-      removeOnLoadAttribute(img);
-      loadFail(img, options);
-    }
-  }
-
   function removeEventListeners(img) {
     img.onload = NULL;
     img.onerror = NULL;
@@ -265,7 +264,7 @@
     var defaultOptions = extendOptions(DEFAULT_OPTIONS, options);
     var svgLoadCache = {};
 
-    addStyleToHead('img[onload*="' + globalName + '"]{visibility:hidden;}');
+    addStyleToHead('img[onload=^"' + globalName + '("]{visibility:hidden;}');
 
     /**
      * SVGInject
@@ -300,11 +299,6 @@
           var absUrl = getAbsoluteUrl(src);
           var cache = options.cache;
 
-          var onError = function() {
-            removeEventListeners(img);
-            loadFailOrSvgNotSupported(img, options);
-          };
-
           var setSvgLoadCacheValue = function(val) {
             if (cache) {
               var svgLoad = svgLoadCache[absUrl];
@@ -315,50 +309,28 @@
             }
           };
 
-          var afterImageComplete = function() {
-            removeEventListeners(img);
-
-            load(absUrl, function(svgXml, svgString) {
-              if (img[__SVGINJECT] == INJECT) {
-                // for IE9 do not use the nativ svgXml
-                var svg = svgXml instanceof Document ? svgXml.documentElement : buildSvg(svgString, absUrl);
-
-                if (svg) {
-                  var afterLoad = options.afterLoad;
-                  if (afterLoad) {
-                    afterLoad(img, svg);
-                    svgString = xmlSerializer.serializeToString(svg);
-                  }
-                  
-                  inject(img, svg, svgString, absUrl, options);
-
-                  setSvgLoadCacheValue(svgString);
-                } else {
-                  svgInvalid(img, options);
-                }
-              }
-            }, function() {
-              loadFail(img, options);
-              setSvgLoadCacheValue(NULL);
-            });
-          };
+          removeEventListeners(img);
 
           if (cache) {
             var svgLoad = svgLoadCache[absUrl];
 
+            var handleLoadValue = function(loadValue) {
+              if (loadValue === LOAD_FAIL) {
+                loadFail(img, options);
+              } else if (loadValue === SVG_INVALID) {
+                svgInvalid(img, options);
+              } else {
+                inject(img, NULL, loadValue, absUrl, options);
+              }
+            };
+
             if (svgLoad !== undefined) {
               if (Array.isArray(svgLoad)) {
-                svgLoad.push(function(svgString) {
-                  if (svgString === NULL) {
-                    loadFail(img, options);
-                  } else {
-                    inject(img, NULL, svgString, absUrl, options);
-                  }
+                svgLoad.push(function(loadValue) {
+                  handleLoadValue(loadValue);
                 });
-              } else if (svgLoad === NULL) {
-                loadFail(img, options);
               } else {
-                inject(img, NULL, svgLoad, absUrl, options);
+                handleLoadValue(svgLoad);
               }
               return;
             } else {
@@ -366,12 +338,30 @@
             }
           }
 
-          if (img.complete) {
-            afterImageComplete();
-          } else {
-            img.onload = afterImageComplete;
-            img.onerror = onError;
-          }
+          // Load the SVG because it is not cached or caching is disabled
+          load(absUrl, function(svgXml, svgString) {
+            if (img[__SVGINJECT] == INJECT) {
+              // for IE9 do not use the nativ svgXml
+              var svg = svgXml instanceof Document ? svgXml.documentElement : buildSvg(svgString, absUrl);
+
+              if (svg) {
+                var afterLoad = options.afterLoad;
+                if (afterLoad) {
+                  afterLoad(img, svg);
+                  svgString = getXMLSerializer().serializeToString(svg);
+                }
+                
+                inject(img, svg, svgString, absUrl, options);
+                setSvgLoadCacheValue(svgString);
+              } else {
+                svgInvalid(img, options);
+                setSvgLoadCacheValue(SVG_INVALID);
+              }
+            }
+          }, function() {
+            loadFail(img, options);
+            setSvgLoadCacheValue(LOAD_FAIL);
+          });
         } else if (length) {
           for (var i = 0; i < length; ++i) {
             SVGInject(img[i], options);
@@ -404,8 +394,15 @@
       if (img) {
         if (img[__SVGINJECT] != FAIL) {
           removeEventListeners(img);
-          loadFailOrSvgNotSupported(img, defaultOptions);
+
+          if (IS_SVG_NOT_SUPPORTED) {
+            svgNotSupported(img, defaultOptions);
+          } else {
+            removeOnLoadAttribute(img);
+            loadFail(img, defaultOptions);
+          }
           if (fallbackSrc) {
+            removeOnLoadAttribute(img);
             img.src = fallbackSrc;
           }
         }
