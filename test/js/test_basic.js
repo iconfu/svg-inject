@@ -243,16 +243,24 @@ runTests([
 
   // Test 9
   function() {
+    var count = 0;
+
     SVGInject.create('SVGInject9');
 
     SVGInject9.setOptions({
-      onFail: function(img, svg) {
-        img.classList.remove('inject');
+      afterInject: function(img, svg) {
+        svg.classList.remove('prevent-image-flash');
+
+        if (++count == 2) {
+          success();
+        } else if (count > 2) {
+          fail();
+        }
       }
     });
 
     domReady(function() {
-      SVGInject(document.getElementById('test-9').querySelectorAll('img[src$=".svg"]'));
+      SVGInject9(document.getElementById('test-9').querySelectorAll('img[src$=".svg"]'));
     });
   }
 ]);

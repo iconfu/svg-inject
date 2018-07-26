@@ -341,6 +341,7 @@ This example shows how to use SVGInject directly from Javascript without the `on
     });
 
     document.addEventListener("DOMContentLoaded", function() {
+      // inject images with an .svg file ending
       SVGInject(document.querySelectorAll('img[src$=".svg"]'));
     });
   </script>

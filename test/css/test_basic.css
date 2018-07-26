@@ -1,3 +1,7 @@
-#test-9 .img.inject {
+#test-9 img.prevent-image-flash {
+  visibility: hidden;
+}
+
+#test-9 svg.prevent-image-flash {
   visibility: hidden;
 }
