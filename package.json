@@ -1,6 +1,6 @@
 {
   "name": "@iconfu/svg-inject",
-  "version": "0.5.0",
+  "version": "1.0.0-rc1",
   "description": "simple bulletproof svg injector",
   "main": "dist/svg-inject.js",
   "repository": {
