@@ -347,7 +347,7 @@
               if (svg) {
                 var afterLoad = options.afterLoad;
                 if (afterLoad) {
-                  afterLoad(img, svg);
+                  afterLoad(svg);
                   svgString = getXMLSerializer().serializeToString(svg);
                 }
                 

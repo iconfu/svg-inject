@@ -38,7 +38,7 @@ runTests([
           fail();
         }
       },
-      afterLoad: function(img, svgString) {
+      afterLoad: function(svg) {
         testSequence('afterLoad');
       } 
     });  
@@ -161,7 +161,7 @@ runTests([
     };
 
     SVGInject5.setOptions({
-      afterLoad: function() {
+      afterLoad: function(svg) {
         testSequence('afterLoad')
       },
       beforeInject: function(img, svg) {
