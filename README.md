@@ -4,7 +4,7 @@
 
 A tiny, intuitive, robust, caching solution for injecting SVG files inline into the DOM.
 
-Developed and maintained by [INCORS](https://www.incors.com), the creators of [Iconfu](https://www.iconfu.com).
+Developed and maintained by [INCORS](http://www.incors.com), the creators of [iconfu.com](https://www.iconfu.com).
 
 
 ## What does it do?
@@ -115,11 +115,9 @@ This provides additional advantages:
 
 * **Works with dynamic content**: If `<img>` elements are added dynamically, injection still works.
 
-* **Built-in prevention of unstyled image flash**: SVGInject hides `<img>` elements until injection is complete, thus preventing a brief flicker of the unstyled image called ([unstyled image flash](#how-does-svginject-prevent-unstyled-image-flash)).
+* **Built-in prevention of unstyled image flash**: SVGInject hides `<img>` elements until injection is complete, thus preventing a brief flicker of the unstyled image (called [unstyled image flash](#how-does-svginject-prevent-unstyled-image-flash)).
 
 * **Early injection**: The injection can already start before the DOM content is fully loaded.
-
-* **Optimized image loading**: The images load in the same order as the browser loads the SVGs without injection.
 
 * **Standard-conform**: The `onload` event handler on `<img>` elements has long been supported by all browsers and is officially part of the W3C specification since [HTML5.0](https://www.w3.org/TR/html50/webappapis.html#event-handler-attributes).
 
@@ -149,7 +147,7 @@ You can disable the default attribute handling by setting the `copyAttributes` o
 
 | Function | Description |
 |----------|-------------|
-| SVGInject(img, options) | Injects the SVG specified in the `src` attribute of the specified `img` element or array of `img` elements. The optional second parameter sets the [options](#options) for this injection. |
+| SVGInject(img, options) | Injects the SVG specified in the `src` attribute of the specified `img` element or array of elements. The optional second parameter sets the [options](#options) for this injection. |
 | SVGInject.setOptions(options) | Sets the default [options](#options) for SVGInject. |
 | SVGInject.err(img, fallbackSrc) | Used in `onerror` event of an `<img>` element to handle cases when loading of the original source fails (for example if the file is corrupt or not found or if the browser does not support SVG). This triggers a call to the option's `onFail` hook if available. The optional second parameter will be set as the new `src` attribute for the `img` element. |
 
@@ -160,11 +158,11 @@ You can disable the default attribute handling by setting the `copyAttributes` o
 | ------------- | ---- | ------- | ----------- |
 | cache | boolean | `true` | If set to `true` the SVG will be cached using the absolute URL. The cache only persists for the lifetime of the page. Without caching images with the same absolute URL will trigger a new XMLHttpRequest but browser caching will still apply. |
 | copyAttributes | boolean | `true` | If set to `true` [attributes will be copied](#how-are-attributes-handled) from the `img` to the injected `svg` element. You may implement your own method for copying attributes in the `beforeInject` options hook. |
-| makeIdsUnique | boolean | `true` | If set to `true` the id of elements in the `<defs> element that can be references by property values (for example 'clipPath') are made unique by adding a random string. This is done to avoid duplicate ids in the DOM. |
+| makeIdsUnique | boolean | `true` | If set to `true` the id of elements in the `<defs>` element that can be references by property values (for example 'clipPath') are made unique by adding a random string. This is done to avoid duplicate ids in the DOM. |
 | afterLoad | function(img,&nbsp;svg) | `undefined` | Hook after SVG is loaded. The `img` and `svg` elements are passed as parameters. If caching is active this hook will only get called once for injected SVGs with the same absolute path. Changes to the `svg` element in this hook will be applied to all injected SVGs with the same absolute path. |
 | beforeInject | function(img,&nbsp;svg) | `undefined` | Hook directly before the SVG is injected. The `img` and `svg` elements are passed as parameters. The hook is called for every injected SVG. If an [Element](https://developer.mozilla.org/de/docs/Web/API/Element) is returned it gets injected instead of applying the default SVG injection. |
 | afterInject | function(img,&nbsp;svg) | `undefined` | Hook after SVG is injected. The `img` and `svg` elements are passed as parameters. |
-| onFail | function(img,&nbsp;status) | `undefined` | Hook after injection fails. The `img` element and a `status` string are passed as an parameter. The `status` can be either `'SVG_NOT_SUPPORTED'` (the browser does not support SVG), `'SVG_INVALID'` (the SVG is not in a valid format) or `'LOAD_FAIL'` (loading of the SVG failed). <br> <br> If SVGInject is used with the `onload` attribute, `onerror="SVGinject.err(this);"` must be added to the `<img>` element to make sure `onFail` is called. |
+| onFail | function(img,&nbsp;status) | `undefined` | Hook after injection fails. The `img` element and a `status` string are passed as an parameter. The `status` has one of the values: `'SVG_NOT_SUPPORTED'` - the browser does not support SVG, `'SVG_INVALID'` - the SVG is not in a valid format or `'LOAD_FAIL'` -loading of the SVG failed. <br> <br> If SVGInject is used with the `onload` attribute, `onerror="SVGinject.err(this);"` must be added to the `<img>` element to make sure `onFail` is called. |
 
 
 ## How does SVGInject prevent "unstyled image flash"
@@ -209,7 +207,7 @@ If the browser does not support SVG, this simple fallback solution replaces the 
 <​img​ ​src​=​"image.svg"​ ​onload​=​"SVGInject(this)"​ ​onerror​=​"SVGInject.err(this, 'image.png')" /​>
 ```
 
-A more generic method that will attempt to load a file with the same path and name but a different file extension can be found in [this example](#example-with-fallback-for-ie8--ie7):
+A more generic method that will attempt to load a file with the same path and name but a different file extension can be found in [this example](#example-with-fallback-for-ie8--ie7).
 
 Note that the `onerror="SVGInject.err(this)"` is necessary if SVGInject is used with the `onload` attribute,​ because the `onFail` callback will only get triggered this way.
 
@@ -286,7 +284,7 @@ This example shows how to use SVGInject with all available options.
     SVGInject.setOptions({
       cache: false, // no caching
       copyAttributes: false, // do not copy attributes from `<img>` to `<svg>`
-      makeIdsUnique: false, // do not make ids used in the SVG unique
+      makeIdsUnique: false, // do not make ids used within the SVG unique
       afterLoad: function(img, svg) {
         // add a class to the svg
         svg.classList.add("my-class");
@@ -305,7 +303,7 @@ This example shows how to use SVGInject with all available options.
         // set the image background red
         img.style.background = 'red';
       }
-    })
+    });
   </script>
 </head>
 <body>
@@ -316,7 +314,7 @@ This example shows how to use SVGInject with all available options.
 
 ### Example without using the `onload` attribute
 
-This example shows how to use SVGInject directly from Javascript without the `onload` attribute. After the DOM content has loaded, SVGInject is calledd on all elements with class `prevent-unstyled-image-flash`. It also implements a method to prevent [unstyled image flash](#how-does-svginject-prevent-unstyled-image-flash).
+This example shows how to use SVGInject directly from Javascript without the `onload` attribute. After the DOM content has loaded, SVGInject is called on all elements with class `prevent-unstyled-image-flash`. It also implements a method to prevent [unstyled image flash](#how-does-svginject-prevent-unstyled-image-flash).
 
 
 ```html

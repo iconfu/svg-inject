@@ -1,10 +1,10 @@
 /**
- * SVGInject
+ * SVGInject v.9.0
  * A tiny, intuitive, robust, caching solution for injecting SVG files inline into the DOM.
  *
  * https://github.com/iconfu/svg-inject
  *
- * Copyright (c) 2018 Iconfu <info@iconfu.com>
+ * Copyright (c) 2018 INCORS, the creators of www.iconfu.com
  * @license MIT License - https://github.com/iconfu/svg-inject/blob/master/LICENSE
  */
 
