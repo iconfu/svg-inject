@@ -1,5 +1,5 @@
 /**
- * SVGInject v. 0.9.0
+ * SVGInject - Version 0.9.0 - Release Canditate
  * A tiny, intuitive, robust, caching solution for injecting SVG files inline into the DOM.
  *
  * https://github.com/iconfu/svg-inject
