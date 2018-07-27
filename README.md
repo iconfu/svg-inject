@@ -172,7 +172,7 @@ Before an SVG is injected the original unstyled SVG may be displayed for a brief
 
 If SVGInject is used with the `onload` attribute, SVGInject has a built-in functionality to prevent unstyled image flash. A `<style>` element with one CSS rule is added to the document to hide all injectable `<img>` elements until injection is complete.
 
-When [using Javscript directly](#how-to-use-svginject-directly-from-javascript) SVGInject has no build in functionality to prevent unstyled image flash. You can find a custom solution for this in the [example for using SVGInject without the `onload` attribute](#example-without-using-the-onload-attribute).
+When [using Javascript directly](#how-to-use-svginject-directly-from-javascript) SVGInject has no build in functionality to prevent unstyled image flash. You can find a custom solution for this in the [example for using SVGInject without the `onload` attribute](#example-without-using-the-onload-attribute).
 
 
 ## How to use SVGInject directly from Javascript?
@@ -191,7 +191,7 @@ SVGInject(document.getElementById('myId'));
 You need to make sure the images are already inside the DOM before injection like this:
 
 ```javascript
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener('DOMContentLoaded', function() {
   // call SVGInject() from here
 });
 ```
@@ -287,7 +287,7 @@ This example shows how to use SVGInject with all available options.
       makeIdsUnique: false, // do not make ids used within the SVG unique
       afterLoad: function(img, svg) {
         // add a class to the svg
-        svg.classList.add("my-class");
+        svg.classList.add('my-class');
       },
       beforeInject: function(img, svg) {
         // wrap SVG in a div element
@@ -338,7 +338,7 @@ This example shows how to use SVGInject directly from Javascript without the `on
       }
     });
 
-    document.addEventListener("DOMContentLoaded", function() {
+    document.addEventListener('DOMContentLoaded', function() {
       // inject images with an .svg file ending
       SVGInject(document.querySelectorAll('img[src$=".svg"]'));
     });
