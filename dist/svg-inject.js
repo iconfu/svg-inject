@@ -224,7 +224,8 @@
       return NULL;
     }
 
-    svg.insertBefore(document.createComment('SVG injected from "' + absUrl + '"'), svg.firstChild);
+    svg.setAttribute('data-inject-url', absUrl);
+    
     return svg;
   }
 

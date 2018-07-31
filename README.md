@@ -135,13 +135,14 @@ SVGInject is intended to work in production environments however it has a few li
 
 ## How are attributes handled?
 
-All attributes are copied from the `<img>` element to the injected `<svg>` element with the following exceptions:
+All attributes are copied from the `<img>` element to the injected `<svg>` element before injection with the following exceptions:
 
-* `src`, `alt`, `onerror` and `onload` attributes are not copied
-* the `title` attribute is transformed to a `<title>` element in the injected SVG
+* The `src`, `title`, `alt`, `onerror` and `onload` attributes are not copied
+* The `title` attribute is transformed to a `<title>` element in the injected SVG
 
-You can disable the default attribute handling by setting the `copyAttributes` option to `false`. You may also implement your own attribute handling in the `beforeInject` options hook.
+You can disable the previously described attribute handling by setting the `copyAttributes` option to `false`. You may also implement your own attribute handling in the `beforeInject` options hook.
 
+Additionaly after loading the SVG image the value of the `src` attribute is transformed to an absolute URL and inserted as the `data-inject-url` attribute. 
 
 ## API
 
@@ -168,7 +169,6 @@ You can disable the default attribute handling by setting the `copyAttributes` o
 ## How does SVGInject prevent "unstyled image flash"
 
 Before an SVG is injected the original unstyled SVG may be displayed for a brief moment by the browser. If a style is already applied to the SVG at runtime, the styled SVG will look different from the unstyled SVG, causing a brief “flashing” of the unstyled SVG before injection occurs. We call this effect unstyled image flash.
-
 
 If SVGInject is used with the `onload` attribute, SVGInject has a built-in functionality to prevent unstyled image flash. A `<style>` element with one CSS rule is added to the document to hide all injectable `<img>` elements until injection is complete.
 
