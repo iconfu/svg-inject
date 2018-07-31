@@ -1,5 +1,7 @@
 ![minified size](http://img.badgesize.io/iconfu/svg-inject/master/dist/svg-inject.min.js?label=minified%20size) ![gzip size](http://img.badgesize.io/iconfu/svg-inject/master/dist/svg-inject.min.js?compression=gzip)
 
+
+
 # SVGInject
 
 A tiny, intuitive, robust, caching solution for injecting SVG files inline into the DOM.
@@ -142,7 +144,7 @@ All attributes are copied from the `<img>` element to the injected `<svg>` eleme
 
 You can disable the previously described attribute handling by setting the `copyAttributes` option to `false`. You may also implement your own attribute handling in the `beforeInject` options hook.
 
-Additionaly after loading the SVG image the value of the `src` attribute is transformed to an absolute URL and inserted as the `data-inject-url` attribute. 
+Additionaly after loading the SVG, the value of the `src` attribute of the `<img>` element is transformed to an absolute URL and inserted as a `data-inject-url` attribute. 
 
 ## API
 

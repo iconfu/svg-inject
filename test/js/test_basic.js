@@ -262,5 +262,48 @@ runTests([
     domReady(function() {
       SVGInject9(document.getElementById('test-9').querySelectorAll('img[src$=".svg"]'));
     });
+  },
+
+  // Test 10
+  function() {
+    var sequenceNum = 0;
+    var sequence = [];
+    var svgs = [];
+
+    for (var i = 0; i < 8; ++i) {
+      sequence.push('afterLoad');
+      sequence.push('beforeInject');
+      sequence.push('afterInject');
+    }
+
+    var testSequence = function(eventName) {
+      if (sequenceNum === sequence.length || sequence[sequenceNum++] !== eventName) {
+        fail();
+      } else if (sequenceNum === sequence.length) {
+        success();
+      }
+    };
+
+    SVGInject.create('SVGInject10', {
+      cache: false,
+      beforeInject: function(img, svg) {
+        testSequence('beforeInject');
+      },
+      afterInject: function(img, svg) {
+        testSequence('afterInject');
+      },
+      afterLoad: function(svg) {
+        if (svgs.indexOf(svg) !== -1) {
+          fail();
+        } else {
+          svgs.push(svg);
+        }
+        testSequence('afterLoad');
+      } 
+    });
+
+    domReady(function() {
+      SVGInject10(document.getElementsByClassName('test-10'));
+    });
   }
 ]);
