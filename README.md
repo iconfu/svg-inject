@@ -140,7 +140,7 @@ SVGInject is intended to work in production environments however it has a few li
 All attributes are copied from the `<img>` element to the injected `<svg>` element before injection with the following exceptions:
 
 * The `src`, `title`, `alt`, `onerror` and `onload` attributes are not copied
-* The `title` attribute is transformed to a `<title>` element in the injected SVG
+* The `title` attribute is transformed to a `<title>` element and inserted as the first child element of the injeted SVG. If there is an existing `<title>` element as first child element it gets replaced.
 
 You can disable the previously described attribute handling by setting the `copyAttributes` option to `false`. You may also implement your own attribute handling in the `beforeInject` options hook.
 

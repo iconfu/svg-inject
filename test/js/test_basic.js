@@ -100,7 +100,7 @@ runTests([
           }
         }
 
-        if (svg.firstChild.textContent !== 'businesspeople') {
+        if (svg.firstElementChild.textContent !== 'businesspeople') {
           fail();
           return;
         }

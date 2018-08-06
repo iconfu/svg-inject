@@ -1,5 +1,5 @@
 /**
- * SVGInject - Version 1.0.0-rc1
+ * SVGInject - Version 1.0.0-rc.3
  * A tiny, intuitive, robust, caching solution for injecting SVG files inline into the DOM.
  *
  * https://github.com/iconfu/svg-inject
@@ -51,8 +51,6 @@
     return xmlSerializer;
   }
 
-  function NOOP() {}
-
   function getAbsoluteUrl(url) {
     A_ELEMENT.href = url;
     return A_ELEMENT.href;
@@ -99,7 +97,17 @@
           // if a title attribute exists insert it as the title tag in SVG
           var title = document.createElementNS('http://www.w3.org/2000/svg', 'title');
           title.textContent = attributeValue;
-          svg.insertBefore(title, svg.firstChild);
+
+          var firstElementChild = svg.firstElementChild;
+          console.info(firstElementChild)
+
+          if (firstElementChild && firstElementChild.tagName.toLowerCase() == 'title') {
+            // replace an existing title attribute if there is already one as the first child of the SVG element
+            svg.replaceChild(title, firstElementChild); 
+          } else {
+            // insert as first child
+            svg.insertBefore(title, firstElementChild);
+          }
         } else {
           svg.setAttribute(attributeName, attributeValue);
         }
@@ -107,6 +115,7 @@
     }
   }
 
+  // Makes ids unique for entries in the <defs> element's that are used within the svg
   function makeIdsUnique(svg) {
     // Collect ids from all elements directly below the <defs> element(s).
     var defElements = svg.querySelectorAll('defs>[id]');
@@ -181,6 +190,7 @@
     }
   }
 
+  // takes a
   function extendOptions() {
     var newOptions = {};
     var args = arguments;
@@ -196,6 +206,7 @@
     return newOptions;
   }
 
+  // Adds the specified CSS to the document's <head> element
   function addStyleToHead(css) {
     var head = document.getElementsByTagName('head')[0];
 
@@ -212,6 +223,7 @@
     }
   }
 
+  // Builds an SVG element from the specified SVG string
   function buildSvg(svgStr, absUrl) {
     try {
       DIV_ELEMENT.innerHTML = svgStr;
@@ -220,13 +232,10 @@
     }
     var svg = DIV_ELEMENT.removeChild(DIV_ELEMENT.firstChild);
 
-    if (!isSVGElem(svg)) {
-      return NULL;
+    if (isSVGElem(svg)) {
+      svg.setAttribute('data-inject-url', absUrl);
+      return svg;
     }
-
-    svg.setAttribute('data-inject-url', absUrl);
-    
-    return svg;
   }
 
   function removeOnLoadAttribute(img) {
@@ -327,9 +336,7 @@
 
             if (svgLoad !== undefined) {
               if (Array.isArray(svgLoad)) {
-                svgLoad.push(function(loadValue) {
-                  handleLoadValue(loadValue);
-                });
+                svgLoad.push(handleLoadValue);
               } else {
                 handleLoadValue(svgLoad);
               }
