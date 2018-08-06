@@ -99,7 +99,6 @@
           title.textContent = attributeValue;
 
           var firstElementChild = svg.firstElementChild;
-          console.info(firstElementChild)
 
           if (firstElementChild && firstElementChild.tagName.toLowerCase() == 'title') {
             // replace an existing title attribute if there is already one as the first child of the SVG element
@@ -176,14 +175,22 @@
       var parentNode = img.parentNode;
 
       if (parentNode) {
-        options.copyAttributes && copyAttributes(img, svg);
-        options.makeIdsUnique && makeIdsUnique(svg, options);
+        if (options.copyAttributes) {
+          copyAttributes(img, svg);
+        }
+
+        if (options.makeIdsUnique) {
+          makeIdsUnique(svg, options);
+        }
         
         var injectElem = (options.beforeInject && options.beforeInject(img, svg)) || svg;
         parentNode.replaceChild(injectElem, img);
         img[__SVGINJECT] = INJECTED;
         removeOnLoadAttribute(img);
-        options.afterInject && options.afterInject(img, injectElem);
+
+        if (options.afterInject) {
+          options.afterInject(img, injectElem);
+        }
       }
     } else {
       svgInvalid(img, options);
@@ -199,7 +206,9 @@
       var argument = args[i];
       if (argument) {
         for (var key in argument) {
-          newOptions[key] = argument[key];
+          if (argument.hasOwnProperty(key)) {
+            newOptions[key] = argument[key];
+          }
         }
       }
     }
@@ -244,7 +253,10 @@
 
   function fail(img, status, options) {
     img[__SVGINJECT] = FAIL;
-    options.onFail && options.onFail(img, status);
+    
+    if (options.onFail) {
+      options.onFail(img, status);
+    }
   }
 
   function svgInvalid(img, options) {
