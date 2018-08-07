@@ -286,7 +286,7 @@
     var defaultOptions = extendOptions(DEFAULT_OPTIONS, options);
     var svgLoadCache = {};
 
-    addStyleToHead('img[onload=^"' + globalName + '("]{visibility:hidden;}');
+    addStyleToHead('img[onload^="' + globalName + '("]{visibility:hidden;}');
 
     /**
      * SVGInject
