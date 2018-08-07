@@ -249,7 +249,8 @@ runTests([
 
     SVGInject9.setOptions({
       afterInject: function(img, svg) {
-        svg.classList.remove('prevent-image-flash');
+        // do not use className for SVGs!
+        svg.setAttribute('class', 'inject-success');
 
         if (++count == 2) {
           success();
