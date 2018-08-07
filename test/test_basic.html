@@ -135,5 +135,22 @@
     <div><img src="imgs/test2.svg" class="test-10 inject-success" /></div>
     <div><img src="imgs/test2.svg" class="test-10 inject-success" /></div>
   </div>
+
+  <h3>Test 11</h3>
+  <!-- test if existing title is replaced correctly -->
+  <div class="test" id="test-11">
+    <div><img src="imgs/test3.svg" onload="SVGInject11(this)" class="inject-success" title="New Test Title" /></div>
+  </div>
+
+  <h3>Test 12</h3>
+  <!-- test changes to SVG in afterLoad hook -->
+  <div class="test" id="test-12">
+    <div><img src="imgs/test1.svg" onload="SVGInject12(this)" class="inject-success" /></div>
+    <div><img src="imgs/test1.svg" onload="SVGInject12(this)" class="inject-success" /></div>
+    <div><img src="imgs/test2.svg" onload="SVGInject12(this)" class="inject-success" /></div>
+    <div><img src="imgs/test2.svg" onload="SVGInject12(this)" class="inject-success" /></div>
+    <div><img src="imgs/test3.svg" onload="SVGInject12(this)" class="inject-success" /></div>
+    <div><img src="imgs/test3.svg" onload="SVGInject12(this)" class="inject-success" /></div>
+  </div>
 </body>
 </html>

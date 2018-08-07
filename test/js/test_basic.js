@@ -306,5 +306,43 @@ runTests([
     domReady(function() {
       SVGInject10(document.getElementsByClassName('test-10'));
     });
+  },
+
+  // Test 11
+  function() {
+    SVGInject.create('SVGInject11', {
+      afterInject: function(img, svg) {
+        var titleElems = svg.getElementsByTagName('title');
+
+        if (titleElems.length != 1 || titleElems[0].textContent != 'New Test Title') {
+          fail();
+        } else {
+          success();
+        }
+      }
+    });
+  },
+
+  // Test 12
+  function() {
+    var count = 0;
+
+    SVGInject.create('SVGInject12', {
+      afterLoad: function(svg) {
+        svg.setAttribute('data-test-afterload', 'success');
+      },
+
+      afterInject: function(img, svg) {
+        if (svg.getAttribute('data-test-afterload') != 'success') {
+          fail();
+        } else {
+          if (++count == 6) {
+            success();
+          } else if (count > 6) {
+            fail();
+          }
+        }
+      }
+    });
   }
 ]);
