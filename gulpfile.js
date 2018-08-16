@@ -9,7 +9,6 @@ gulp.task('default', function (cb) {
   pump([
     gulp.src('src/svg-inject.js'),
     gulp.dest('dist/'),
-    gulp.dest('test/js/'),
     gulp.dest('examples/'),
     uglify({
       output: {
@@ -19,6 +18,7 @@ gulp.task('default', function (cb) {
     }),
     rename({ extname: '.min.js' }),
     gulp.dest('examples/'),
+    gulp.dest('test/js/'),
     gulp.dest('dist/')
   ], cb);
 });

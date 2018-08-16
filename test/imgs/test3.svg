@@ -1,3 +1,6 @@
+   
+<!-- Comment and white lines should be possible -->
+  
 <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0,0,1024,1024">
 	<title>Test 3</title>
 	<desc>apple icon - Licensed under Iconfu Standard License v1.0 (https://www.iconfu.com/iconfu_standard_license) - Incors GmbH</desc>
@@ -15,3 +18,5 @@
 		</g>
 	</g>
 </svg>
+
+<!-- Comment should be possible here -->

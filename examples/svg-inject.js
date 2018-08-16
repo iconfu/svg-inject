@@ -1,5 +1,5 @@
 /**
- * SVGInject - Version 1.0.0-rc.5
+ * SVGInject - Version 1.0.0-rc.7
  * A tiny, intuitive, robust, caching solution for injecting SVG files inline into the DOM.
  *
  * https://github.com/iconfu/svg-inject
@@ -69,7 +69,7 @@
           var status = req.status;
           if (status == 200) {
             // readyState is done, request status ok
-            callback(req.responseXML, req.responseText);
+            callback(req.responseXML, req.responseText.trim());
           } else if (status >= 400) {
             errorCallback();
           } else if (status == 0) {
@@ -169,7 +169,7 @@
 
   // inject svg by replacing the img element with the svg element in the DOM
   function inject(img, svg, svgString, absUrl, options) {
-    svg = svg || buildSvg(svgString, absUrl);       
+    svg = svg || buildSvg(svgString, absUrl);
 
     if (svg) {
       var parentNode = img.parentNode;
@@ -239,7 +239,8 @@
     } catch (e) {
       return NULL;
     }
-    var svg = DIV_ELEMENT.removeChild(DIV_ELEMENT.firstChild);
+    var svg = DIV_ELEMENT.firstElementChild;
+    DIV_ELEMENT.innerHTML = '';
 
     if (isSVGElem(svg)) {
       svg.setAttribute('data-inject-url', absUrl);
