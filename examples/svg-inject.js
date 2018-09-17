@@ -197,7 +197,6 @@
     }
   }
 
-  // takes a
   function extendOptions() {
     var newOptions = {};
     var args = arguments;
@@ -297,6 +296,8 @@
      * Options:
      * cache: If set to `true` the SVG will be cached using the absolute URL. Default value is `true`.
      * copyAttributes: If set to `true` the attributes will be copied from `img` to `svg`. Dfault value is `true.
+     * makeIdsUnique: If set to `true` the id of elements in the `<defs>` element that can be references by property values (for example 'clipPath') are made unique by adding a random string. This is done to avoid duplicate ids in the DOM.
+     * afterLoad: Hook after SVG is loaded. The loaded svg element is passed as a parameter. If caching is active this hook will only get called once for injected SVGs with the same absolute path. Changes to the svg element in this hook will be applied to all injected SVGs with the same absolute path.
      * beforeInject: Hook before SVG is injected. The `img` and `svg` elements are passed as parameters. If any html element is returned it gets injected instead of applying the default SVG injection.
      * afterInject: Hook after SVG is injected. The `img` and `svg` elements are passed as parameters.
      * onFail: Hook after injection fails. The `img` element and a `status` string are passed as an parameter. The `status` can be either `'SVG_NOT_SUPPORTED'` (the browser does not support SVG), `'SVG_INVALID'` (the SVG is not in a valid format) or `'LOAD_FAILED'` (loading of the SVG failed).
