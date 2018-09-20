@@ -447,6 +447,9 @@
     SVGInject.err = function(img, fallbackSrc) {
       if (img) {
         if (img[__SVGINJECT] != FAIL) {
+          // workaround for IE8 (only) not displaying images after src attribute gets replaced dynamically
+          img.parentNode.replaceChild(img, img);
+
           removeEventListeners(img);
 
           if (IS_SVG_NOT_SUPPORTED) {
