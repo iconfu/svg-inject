@@ -189,6 +189,8 @@
     if (svg) {
       var parentNode = img.parentNode;
 
+      svg.setAttribute('data-inject-url', absUrl);
+
       if (parentNode) {
         if (options.copyAttributes) {
           copyAttributes(img, svg);
@@ -257,7 +259,6 @@
     DIV_ELEMENT.innerHTML = '';
 
     if (isSVGElem(svg)) {
-      svg.setAttribute('data-inject-url', absUrl);
       return svg;
     }
   }
@@ -306,16 +307,26 @@
     /**
      * SVGInject
      *
-     * Injects the SVG specified in he `src` attribute of the specified `img` element or array of `img` elements.
+     * Injects the SVG specified in he `src` attribute of the specified `img` element or array of `img`
+     * elements.
      *
      * Options:
      * cache: If set to `true` the SVG will be cached using the absolute URL. Default value is `true`.
-     * copyAttributes: If set to `true` the attributes will be copied from `img` to `svg`. Dfault value is `true.
-     * makeIdsUnique: If set to `true` the id of elements in the `<defs>` element that can be references by property values (for example 'clipPath') are made unique by adding a random string. This is done to avoid duplicate ids in the DOM.
-     * afterLoad: Hook after SVG is loaded. The loaded svg element is passed as a parameter. If caching is active this hook will only get called once for injected SVGs with the same absolute path. Changes to the svg element in this hook will be applied to all injected SVGs with the same absolute path.
-     * beforeInject: Hook before SVG is injected. The `img` and `svg` elements are passed as parameters. If any html element is returned it gets injected instead of applying the default SVG injection.
+     * copyAttributes: If set to `true` the attributes will be copied from `img` to `svg`. Dfault value
+     *     is `true.
+     * makeIdsUnique: If set to `true` the id of elements in the `<defs>` element that can be references by
+     *     property values (for example 'clipPath') are made unique by appending "--inject-XXXXXXXX", where
+     *     XXXXXXXX is a random alphanumeric string of length 8. This is done to avoid duplicate ids in the
+     *     DOM.
+     * afterLoad: Hook after SVG is loaded. The loaded svg element is passed as a parameter. If caching is
+     *     active this hook will only get called once for injected SVGs with the same absolute path. Changes
+     *     to the svg element in this hook will be applied to all injected SVGs with the same absolute path.
+     * beforeInject: Hook before SVG is injected. The `img` and `svg` elements are passed as parameters. If
+     *     any html element is returned it gets injected instead of applying the default SVG injection.
      * afterInject: Hook after SVG is injected. The `img` and `svg` elements are passed as parameters.
-     * onFail: Hook after injection fails. The `img` element and a `status` string are passed as an parameter. The `status` can be either `'SVG_NOT_SUPPORTED'` (the browser does not support SVG), `'SVG_INVALID'` (the SVG is not in a valid format) or `'LOAD_FAILED'` (loading of the SVG failed).
+     * onFail: Hook after injection fails. The `img` element and a `status` string are passed as an parameter.
+     *     The `status` can be either `'SVG_NOT_SUPPORTED'` (the browser does not support SVG),
+     *     `'SVG_INVALID'` (the SVG is not in a valid format) or `'LOAD_FAILED'` (loading of the SVG failed).
      *
      * @param {HTMLImageElement} img - an img element or an array of img elements
      * @param {Object} [options] - optional parameter with [options](#options) for this injection.
