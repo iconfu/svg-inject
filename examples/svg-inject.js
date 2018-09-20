@@ -256,7 +256,10 @@
       return NULL;
     }
     var svg = DIV_ELEMENT.firstElementChild;
-    DIV_ELEMENT.innerHTML = '';
+    
+    while (DIV_ELEMENT.firstChild) {
+      DIV_ELEMENT.removeChild(DIV_ELEMENT.firstChild);
+    }
 
     if (isSVGElem(svg)) {
       return svg;
