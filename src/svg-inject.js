@@ -1,5 +1,5 @@
 /**
- * SVGInject - Version 1.0.2
+ * SVGInject - Version 1.0.3
  * A tiny, intuitive, robust, caching solution for injecting SVG files inline into the DOM.
  *
  * https://github.com/iconfu/svg-inject
@@ -256,7 +256,7 @@
       return NULL;
     }
     var svg = DIV_ELEMENT.firstElementChild;
-    
+
     while (DIV_ELEMENT.firstChild) {
       DIV_ELEMENT.removeChild(DIV_ELEMENT.firstChild);
     }
