@@ -101,7 +101,7 @@
           var firstElementChild = svg.firstElementChild;
 
           if (firstElementChild && firstElementChild.tagName.toLowerCase() == 'title') {
-            // replace an existing title attribute if there is already one as the first child of the SVG element
+            // if the SVGs first child is a title element, replace it with the new title element
             svg.replaceChild(title, firstElementChild);
           } else {
             // insert as first child
