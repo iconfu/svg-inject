@@ -1,4 +1,4 @@
-![minified size](http://img.badgesize.io/iconfu/svg-inject/v1.0.1/dist/svg-inject.min.js?label=minified%20size) ![gzip size](http://img.badgesize.io/iconfu/svg-inject/v1.0.1/dist/svg-inject.min.js?compression=gzip) [![npm version](https://badge.fury.io/js/%40iconfu%2Fsvg-inject.svg)](https://badge.fury.io/js/%40iconfu%2Fsvg-inject)
+![minified size](http://img.badgesize.io/iconfu/svg-inject/v1.0.2/dist/svg-inject.min.js?label=minified%20size) ![gzip size](http://img.badgesize.io/iconfu/svg-inject/v1.0.2/dist/svg-inject.min.js?compression=gzip) [![npm version](https://badge.fury.io/js/%40iconfu%2Fsvg-inject.svg)](https://badge.fury.io/js/%40iconfu%2Fsvg-inject)
 
 
 
@@ -46,9 +46,9 @@ Include the SVGInject Javascript file in the `<head>` element of your HTML docum
 </head>
 ```
 
-Download plain version (v1.0.1): [svg-inject.js](https://raw.githubusercontent.com/iconfu/svg-inject/v1.0.1/dist/svg-inject.js)
+Download plain version (v1.0.2): [svg-inject.js](https://raw.githubusercontent.com/iconfu/svg-inject/v1.0.2/dist/svg-inject.js)
 
-Download minified version (v1.0.1): [svg-inject.min.js](https://raw.githubusercontent.com/iconfu/svg-inject/v1.0.1/dist/svg-inject.min.js)
+Download minified version (v1.0.2): [svg-inject.min.js](https://raw.githubusercontent.com/iconfu/svg-inject/v1.0.2/dist/svg-inject.min.js)
 
 ### npm
 

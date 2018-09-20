@@ -1,5 +1,5 @@
 /**
- * SVGInject - Version 1.0.1
+ * SVGInject - Version 1.0.2
  * A tiny, intuitive, robust, caching solution for injecting SVG files inline into the DOM.
  *
  * https://github.com/iconfu/svg-inject
@@ -101,7 +101,7 @@
           var firstElementChild = svg.firstElementChild;
 
           if (firstElementChild && firstElementChild.tagName.toLowerCase() == 'title') {
-            // replace an existing title attribute if there is already one as the first child of the SVG element
+            // if the SVGs first child is a title element, replace it with the new title element
             svg.replaceChild(title, firstElementChild);
           } else {
             // insert as first child
@@ -433,7 +433,10 @@
     SVGInject.create = createSVGInject;
 
     /**
-     * Used in onerror Event of an `<img>` element to handle cases when the loading the original src fails (for example if file is not found or if the browser does not support SVG). This triggers a call to the options onFail hook if available. The optional second parameter will be set as the new src attribute for the img element.
+     * Used in onerror Event of an `<img>` element to handle cases when the loading the original src fails
+     * (for example if file is not found or if the browser does not support SVG). This triggers a call to the
+     * options onFail hook if available. The optional second parameter will be set as the new src attribute
+     * for the img element.
      *
      * @param {HTMLImageElement} img - an img element
      * @param {String} [fallbackSrc] - optional parameter fallback src
