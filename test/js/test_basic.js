@@ -344,5 +344,18 @@ runTests([
         }
       }
     });
+  },
+
+  // Test 13
+  function() {
+    var count = 0;
+
+    SVGInject.create('SVGInject13', {
+      afterInject: function() {
+        if (++count == 4) {
+          success();
+        }
+      }
+    });
   }
 ]);

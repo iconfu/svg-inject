@@ -49,6 +49,12 @@ img, svg, .test > div {
   z-index: -1;
 }
 
+.test::after {
+  content: '';
+  display: block;
+  clear: both;
+}
+
 .test > div {
   float: left;
   margin: 10px;
