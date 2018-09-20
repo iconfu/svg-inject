@@ -43,7 +43,7 @@
   var INJECT = 1;
   var INJECTED = 2;
   var FAIL = 3;
-  
+
   var xmlSerializer;
 
   function getXMLSerializer() {
@@ -102,7 +102,7 @@
 
           if (firstElementChild && firstElementChild.tagName.toLowerCase() == 'title') {
             // replace an existing title attribute if there is already one as the first child of the SVG element
-            svg.replaceChild(title, firstElementChild); 
+            svg.replaceChild(title, firstElementChild);
           } else {
             // insert as first child
             svg.insertBefore(title, firstElementChild);
@@ -114,51 +114,66 @@
     }
   }
 
-  // Makes ids unique for entries in the <defs> element's that are used within the svg
+  // This function appends a unique suffix to IDs of elements in the <defs> element that can be
+  // referenced by properties from within the SVG (for example "filter", "mask", etc.). References
+  // to the IDs are adjusted accordingly. The suffix has the form "--inject-XXXXXXXX", where
+  // XXXXXXXX is a random alphanumeric string of length 8.
+  // The suffix is appended to avoid ID collision between two injected SVGs. Since all IDs within
+  // one SVG must be unique anyway, we can use the same suffix for all IDs of one injected SVG.
   function makeIdsUnique(svg) {
-    // Collect ids from all elements directly below the <defs> element(s).
-    var defElements = svg.querySelectorAll('defs>[id]');
-    var defElement, tag, id, newId;
-    var propertyIdMap = {};
+    var i, j;
+    var idSuffix = '--inject-';
+    // Append a random alphanumeric string to the suffix. For an 8 character long string there are
+    // 62^8 = 218340105584896 possible mutations.
+    var rdm62;
+    for (i = 0; i < 8; i++) {
+      // Generate random integer between 0 and 61, 0|x works as Math.floor(x) in this case
+      rdm62 = 0 | Math.random() * 62;
+      // Map to ascii codes: 0-9 to 48-57 (0-9), 10-35 to 65-90 (A-Z), 36-61 to 97-122 (a-z)
+      idSuffix += String.fromCharCode(rdm62 + (rdm62 < 10 ? 48 : rdm62 < 36 ? 55 : 61))
+    }
+    // Collect ids from all elements below the <defs> element(s).
+    var defElements = svg.querySelectorAll('defs [id]');
+    var defElement, tag, id;
+    var propertyIdsMap = {};
     var mappedProperties, mappedProperty;
-    var i, j, k;
     for (i = 0; i < defElements[LENGTH]; i++) {
       defElement = defElements[i];
       tag = defElement.tagName;
-      // Get array with possible property names for the element's tag name. If
-      // the array is empty, the only property name is the same as the tag name.
+      // Get array with possible property names for the element's tag name. If the array is empty,
+      // the only property name is the same as the tag name.
       if (tag in TAG_NAME_PROPERTIES_MAP) {
         id = defElement.id;
-        // Create a random new id for the element
-        newId = id + '-' + Math.random().toString(36).substr(2, 10);
-        defElement.id = newId;
-        // Add mapping from id to new id for each mapped property
+        // Add suffix to id and set it as new id for the element
+        defElement.id = id + idSuffix;
+        // Add id for each mapped property
         mappedProperties = TAG_NAME_PROPERTIES_MAP[tag] || [tag];
         for (j = 0; j < mappedProperties[LENGTH]; j++) {
           mappedProperty = mappedProperties[j];
-          (propertyIdMap[mappedProperty] || (propertyIdMap[mappedProperty] = [])).push([id, newId]);
+          (propertyIdsMap[mappedProperty] || (propertyIdsMap[mappedProperty] = [])).push(id);
         }
       }
     }
-    // Run through all elements and replace ids in references
-    var properties = Object.keys(propertyIdMap);
+    // Get all property names for which ids were found
+    var properties = Object.keys(propertyIdsMap);
     if (properties[LENGTH]) {
+      // Run through all elements and replace ids in references
       var allElements = svg.querySelectorAll('*');
-      var element, property, propertyVal, idTuples;
+      var element, property, propertyVal;
       for (i = 0; i < allElements[LENGTH]; i++) {
         element = allElements[i];
-        // Run through all property names for which ids were found
-        for (j = 0; j < properties[LENGTH]; j++) {
-          property = properties[j];
-          propertyVal = element.getAttribute(property);
-          if (propertyVal) {
-            idTuples = propertyIdMap[property];
-            for (k = 0; k < idTuples[LENGTH]; k++) {
-              // Replace id if peroperty value has the form url(#anyId) or
-              // url("#anyId") (for Internet Explorer).
-              if (propertyVal.replace(/"/g, '') == 'url(#' + idTuples[k][0] + ')') {
-                element.setAttribute(property, 'url(#' + idTuples[k][1] + ')');
-                break;
+        if (element.hasAttributes()) {
+          // Run through all property names for which ids were found
+          for (j = 0; j < properties[LENGTH]; j++) {
+            property = properties[j];
+            propertyVal = element.getAttribute(property);
+            if (propertyVal) {
+              // Extract id from property value if it has the form url(#anyId) or
+              // url("#anyId") (for Internet Explorer)
+              var idMatch = propertyVal.match(/url\("?#([a-zA-Z][\w:.-]*)"?\)/);
+              if (idMatch && propertyIdsMap[property].indexOf(idMatch[1]) >= 0) {
+                // Replace reference with new id if id was found for the property
+                element.setAttribute(property, 'url(#' + idMatch[1] + idSuffix + ')');
               }
             }
           }
@@ -182,7 +197,7 @@
         if (options.makeIdsUnique) {
           makeIdsUnique(svg, options);
         }
-        
+
         var injectElem = (options.beforeInject && options.beforeInject(img, svg)) || svg;
         parentNode.replaceChild(injectElem, img);
         img[__SVGINJECT] = INJECTED;
@@ -253,7 +268,7 @@
 
   function fail(img, status, options) {
     img[__SVGINJECT] = FAIL;
-    
+
     if (options.onFail) {
       options.onFail(img, status);
     }
@@ -372,7 +387,7 @@
                   afterLoad(svg);
                   svgString = getXMLSerializer().serializeToString(svg);
                 }
-                
+
                 inject(img, svg, svgString, absUrl, options);
                 setSvgLoadCacheValue(svgString);
               } else {
@@ -407,7 +422,7 @@
     SVGInject.create = createSVGInject;
 
     /**
-     * Used in `onerror Event of an `<img>` element to handle cases when the loading the original src fails (for example if file is not found or if the browser does not support SVG). This triggers a call to the options onFail hook if available. The optional second parameter will be set as the new src attribute for the img element.
+     * Used in onerror Event of an `<img>` element to handle cases when the loading the original src fails (for example if file is not found or if the browser does not support SVG). This triggers a call to the options onFail hook if available. The optional second parameter will be set as the new src attribute for the img element.
      *
      * @param {HTMLImageElement} img - an img element
      * @param {String} [fallbackSrc] - optional parameter fallback src
