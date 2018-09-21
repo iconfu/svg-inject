@@ -13,17 +13,17 @@
   var NULL = null;
   var TRUE = true;
   var LENGTH = 'length';
-  var SVG_NOT_SUPPORTED = 'SVG_NOT_SUPPORTED';
-  var LOAD_FAIL = 'LOAD_FAIL';
-  var SVG_INVALID = 'SVG_INVALID';
   var CREATE_ELEMENT = 'createElement';
   var __SVGINJECT = '__svgInject';
 
   // constants
+  var LOAD_FAIL = 'LOAD_FAIL';
+  var SVG_NOT_SUPPORTED = 'SVG_NOT_SUPPORTED';
+  var SVG_INVALID = 'SVG_INVALID';
   var ATTRIBUTE_EXCLUSION_NAMES = ['src', 'alt', 'onload', 'onerror'];
   var A_ELEMENT = document[CREATE_ELEMENT]('a');
   var DIV_ELEMENT = document[CREATE_ELEMENT]('div');
-  var IS_SVG_NOT_SUPPORTED = typeof SVGRect == "undefined";
+  var IS_SVG_SUPPORTED = typeof SVGRect != "undefined";
   var DEFAULT_OPTIONS = {
     cache: TRUE,
     copyAttributes: TRUE,
@@ -56,58 +56,56 @@
     return A_ELEMENT.href;
   }
 
-  function isSVGElem(svgElem) {
-    return svgElem instanceof SVGElement;
-  }
-
-  // load svg with an XHR requuest
+  // Load svg with an XHR request
   function load(path, callback, errorCallback) {
     if (path) {
       var req = new XMLHttpRequest();
       req.onreadystatechange = function() {
         if (req.readyState == 4) {
+          // readyState is DONE
           var status = req.status;
           if (status == 200) {
-            // readyState is done, request status ok
+            // request status is OK
             callback(req.responseXML, req.responseText.trim());
           } else if (status >= 400) {
+            // request status is error (4xx or 5xx)
             errorCallback();
           } else if (status == 0) {
+            // request status 0 can indicate a failed cross-domain call
             errorCallback();
           }
         }
       };
-      req.open('GET', path, true);
+      req.open('GET', path, TRUE);
       req.send();
     }
   }
 
-  // copy attributes from img element to svg element
+  // Copy attributes from img element to svg element
   function copyAttributes(img, svg) {
     var attributes = img.attributes;
-
     for (var i = 0; i < attributes[LENGTH]; ++i) {
       var attribute = attributes[i];
       var attributeName = attribute.name;
-
+      // Only copy attributes that are not explicitly excluded from copying
       if (ATTRIBUTE_EXCLUSION_NAMES.indexOf(attributeName) == -1) {
         var attributeValue = attribute.value;
-
-        if (attributeName == 'title') {
-          // if a title attribute exists insert it as the title tag in SVG
-          var title = document.createElementNS('http://www.w3.org/2000/svg', 'title');
+        var TITLE = 'title';
+        if (attributeName == TITLE) {
+          // If img attribute is "title", insert a title element in SVG
+          // Create title element
+          var titleElement = document.createElementNS('http://www.w3.org/2000/svg', TITLE);
           title.textContent = attributeValue;
-
+          // If the SVGs first child is a title element, replace it with the new title element,
+          // otherwise insert the new title element as first child
           var firstElementChild = svg.firstElementChild;
-
-          if (firstElementChild && firstElementChild.tagName.toLowerCase() == 'title') {
-            // if the SVGs first child is a title element, replace it with the new title element
-            svg.replaceChild(title, firstElementChild);
+          if (firstElementChild && firstElementChild.tagName.toLowerCase() == TITLE) {
+            svg.replaceChild(titleElement, firstElementChild);
           } else {
-            // insert as first child
-            svg.insertBefore(title, firstElementChild);
+            svg.insertBefore(titleElement, firstElementChild);
           }
         } else {
+          // Set img attribute to svg
           svg.setAttribute(attributeName, attributeValue);
         }
       }
@@ -145,7 +143,7 @@
       if (tag in TAG_NAME_PROPERTIES_MAP) {
         id = defElement.id;
         // Add suffix to id and set it as new id for the element
-        defElement.id = id + idSuffix;
+        defElement.id += idSuffix;
         // Add id for each mapped property
         mappedProperties = TAG_NAME_PROPERTIES_MAP[tag] || [tag];
         for (j = 0; j < mappedProperties[LENGTH]; j++) {
@@ -199,8 +197,8 @@
         if (options.makeIdsUnique) {
           makeIdsUnique(svg, options);
         }
-
-        var injectElem = (options.beforeInject && options.beforeInject(img, svg)) || svg;
+        var beforeInject = options.beforeInject;
+        var injectElem = (beforeInject && beforeInject(img, svg)) || svg;
         parentNode.replaceChild(injectElem, img);
         img[__SVGINJECT] = INJECTED;
         removeOnLoadAttribute(img);
@@ -214,27 +212,27 @@
     }
   }
 
-  function extendOptions() {
-    var newOptions = {};
+  // Merges any number of options objects into a new object
+  function mergeOptions() {
+    var mergedOptions = {};
     var args = arguments;
-
+    // Iterate over all specified options objects and add all properties to the new options object
     for (var i = 0; i < args[LENGTH]; ++i) {
       var argument = args[i];
       if (argument) {
         for (var key in argument) {
           if (argument.hasOwnProperty(key)) {
-            newOptions[key] = argument[key];
+            mergedOptions[key] = argument[key];
           }
         }
       }
     }
-    return newOptions;
+    return mergedOptions;
   }
 
   // Adds the specified CSS to the document's <head> element
   function addStyleToHead(css) {
     var head = document.getElementsByTagName('head')[0];
-
     if (head) {
       var style = document[CREATE_ELEMENT]('style');
       style.type = 'text/css';
@@ -242,7 +240,7 @@
         // This is required for IE8 and below.
         style.styleSheet.cssText = css;
       } else {
-        style.appendChild(document.createTextNode(css));
+      style.appendChild(document.createTextNode(css));
       }
       head.appendChild(style);
     }
@@ -256,12 +254,10 @@
       return NULL;
     }
     var svg = DIV_ELEMENT.firstElementChild;
-
     while (DIV_ELEMENT.firstChild) {
-      DIV_ELEMENT.removeChild(DIV_ELEMENT.firstChild);
+        DIV_ELEMENT.removeChild(DIV_ELEMENT.firstChild);
     }
-
-    if (isSVGElem(svg)) {
+    if (svg instanceof SVGElement) {
       return svg;
     }
   }
@@ -302,7 +298,7 @@
   }
 
   function createSVGInject(globalName, options) {
-    var defaultOptions = extendOptions(DEFAULT_OPTIONS, options);
+    var defaultOptions = mergeOptions(DEFAULT_OPTIONS, options);
     var svgLoadCache = {};
 
     addStyleToHead('img[onload^="' + globalName + '("]{visibility:hidden;}');
@@ -342,9 +338,9 @@
         if (src && !img[__SVGINJECT]) {
           img[__SVGINJECT] = INJECT;
 
-          options = extendOptions(defaultOptions, options);
+          options = mergeOptions(defaultOptions, options);
 
-          if (IS_SVG_NOT_SUPPORTED) {
+          if (!IS_SVG_SUPPORTED) {
             svgNotSupported(img, options);
             return;
           }
@@ -429,7 +425,7 @@
      * @param {Object} [options] - default [options](#options) for an injection.
      */
     SVGInject.setOptions = function(options) {
-      defaultOptions = extendOptions(defaultOptions, options);
+      defaultOptions = mergeOptions(defaultOptions, options);
     };
 
     // Create a new instance of SVGInject
@@ -447,12 +443,9 @@
     SVGInject.err = function(img, fallbackSrc) {
       if (img) {
         if (img[__SVGINJECT] != FAIL) {
-          // workaround for IE8 (only) not displaying images after src attribute gets replaced dynamically
-          img.parentNode.replaceChild(img, img);
-
           removeEventListeners(img);
 
-          if (IS_SVG_NOT_SUPPORTED) {
+          if (!IS_SVG_SUPPORTED) {
             svgNotSupported(img, defaultOptions);
           } else {
             removeOnLoadAttribute(img);
