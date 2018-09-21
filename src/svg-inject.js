@@ -236,12 +236,7 @@
     if (head) {
       var style = document[CREATE_ELEMENT]('style');
       style.type = 'text/css';
-      if (style.styleSheet){
-        // This is required for IE8 and below.
-        style.styleSheet.cssText = css;
-      } else {
       style.appendChild(document.createTextNode(css));
-      }
       head.appendChild(style);
     }
   }
@@ -301,7 +296,11 @@
     var defaultOptions = mergeOptions(DEFAULT_OPTIONS, options);
     var svgLoadCache = {};
 
-    addStyleToHead('img[onload^="' + globalName + '("]{visibility:hidden;}');
+    if (IS_SVG_SUPPORTED) {
+      // If the browser supports SVG, add a small stylesheet that hides the <img> elements until
+      // injection is finished. This avoids showing the unstyled SVGs before style is applied.
+      addStyleToHead('img[onload^="' + globalName + '("]{visibility:hidden;}');
+    }
 
     /**
      * SVGInject
