@@ -45,7 +45,7 @@
   var INJECTED = 2;
   var FAIL = 3;
 
-  var uniqueIdCount = 1;
+  var uniqueIdCounter = 1;
   var xmlSerializer;
 
   function getXMLSerializer() {
@@ -120,7 +120,7 @@
   // one SVG must be unique, the same suffix can be used for all ids of one injected SVG.
   function makeIdsUnique(svg) {
     var i, j;
-    var idSuffix = '--inject-' + uniqueIdCount++;
+    var idSuffix = '--inject-' + uniqueIdCounter++;
     // Collect ids from all elements below the <defs> element(s).
     var defElements = svg.querySelectorAll('defs [id]');
     var defElement, tag, id;
