@@ -13,17 +13,18 @@
   var NULL = null;
   var TRUE = true;
   var LENGTH = 'length';
-  var SVG_NOT_SUPPORTED = 'SVG_NOT_SUPPORTED';
-  var LOAD_FAIL = 'LOAD_FAIL';
-  var SVG_INVALID = 'SVG_INVALID';
   var CREATE_ELEMENT = 'createElement';
+  var TITLE = 'title';
   var __SVGINJECT = '__svgInject';
 
   // constants
+  var LOAD_FAIL = 'LOAD_FAIL';
+  var SVG_NOT_SUPPORTED = 'SVG_NOT_SUPPORTED';
+  var SVG_INVALID = 'SVG_INVALID';
   var ATTRIBUTE_EXCLUSION_NAMES = ['src', 'alt', 'onload', 'onerror'];
   var A_ELEMENT = document[CREATE_ELEMENT]('a');
   var DIV_ELEMENT = document[CREATE_ELEMENT]('div');
-  var IS_SVG_NOT_SUPPORTED = typeof SVGRect == "undefined";
+  var IS_SVG_SUPPORTED = typeof SVGRect != "undefined";
   var DEFAULT_OPTIONS = {
     cache: TRUE,
     copyAttributes: TRUE,
@@ -44,6 +45,7 @@
   var INJECTED = 2;
   var FAIL = 3;
 
+  var uniqueIdCount = 1;
   var xmlSerializer;
 
   function getXMLSerializer() {
@@ -56,82 +58,69 @@
     return A_ELEMENT.href;
   }
 
-  function isSVGElem(svgElem) {
-    return svgElem instanceof SVGElement;
-  }
-
-  // load svg with an XHR requuest
+  // Load svg with an XHR request
   function load(path, callback, errorCallback) {
     if (path) {
       var req = new XMLHttpRequest();
       req.onreadystatechange = function() {
         if (req.readyState == 4) {
+          // readyState is DONE
           var status = req.status;
           if (status == 200) {
-            // readyState is done, request status ok
+            // request status is OK
             callback(req.responseXML, req.responseText.trim());
           } else if (status >= 400) {
+            // request status is error (4xx or 5xx)
             errorCallback();
           } else if (status == 0) {
+            // request status 0 can indicate a failed cross-domain call
             errorCallback();
           }
         }
       };
-      req.open('GET', path, true);
+      req.open('GET', path, TRUE);
       req.send();
     }
   }
 
-  // copy attributes from img element to svg element
+  // Copy attributes from img element to svg element
   function copyAttributes(img, svg) {
     var attributes = img.attributes;
-
     for (var i = 0; i < attributes[LENGTH]; ++i) {
       var attribute = attributes[i];
       var attributeName = attribute.name;
-
+      // Only copy attributes not explicitly excluded from copying
       if (ATTRIBUTE_EXCLUSION_NAMES.indexOf(attributeName) == -1) {
         var attributeValue = attribute.value;
-
-        if (attributeName == 'title') {
-          // if a title attribute exists insert it as the title tag in SVG
-          var title = document.createElementNS('http://www.w3.org/2000/svg', 'title');
-          title.textContent = attributeValue;
-
+        // If img attribute is "title", insert a title element in SVG
+        if (attributeName == TITLE) {
+          // Create title element
+          var titleElement = document.createElementNS('http://www.w3.org/2000/svg', TITLE);
+          titleElement.textContent = attributeValue;
+          // If the SVGs first child is a title element, replace it with the new title element,
+          // otherwise insert the new title element as first child
           var firstElementChild = svg.firstElementChild;
-
-          if (firstElementChild && firstElementChild.tagName.toLowerCase() == 'title') {
-            // if the SVGs first child is a title element, replace it with the new title element
-            svg.replaceChild(title, firstElementChild);
+          if (firstElementChild && firstElementChild.tagName.toLowerCase() == TITLE) {
+            svg.replaceChild(titleElement, firstElementChild);
           } else {
-            // insert as first child
-            svg.insertBefore(title, firstElementChild);
+            svg.insertBefore(titleElement, firstElementChild);
           }
         } else {
+          // Set img attribute to svg
           svg.setAttribute(attributeName, attributeValue);
         }
       }
     }
   }
 
-  // This function appends a unique suffix to IDs of elements in the <defs> element that can be
-  // referenced by properties from within the SVG (for example "filter", "mask", etc.). References
-  // to the IDs are adjusted accordingly. The suffix has the form "--inject-XXXXXXXX", where
-  // XXXXXXXX is a random alphanumeric string of length 8.
-  // The suffix is appended to avoid ID collision between two injected SVGs. Since all IDs within
-  // one SVG must be unique anyway, we can use the same suffix for all IDs of one injected SVG.
+  // This function appends a unique suffix to ids of elements in the <defs> element that can be referenced by
+  // properties from within the SVG (for example "filter", "mask", etc.). References to the ids are adjusted
+  // accordingly. The suffix has the form "--inject-X", where X is a running number which increases with each
+  // injection. The suffix is appended to avoid ID collision between two injected SVGs. Since all ids within
+  // one SVG must be unique, the same suffix can be used for all ids of one injected SVG.
   function makeIdsUnique(svg) {
     var i, j;
-    var idSuffix = '--inject-';
-    // Append a random alphanumeric string to the suffix. For an 8 character long string there are
-    // 62^8 = 218340105584896 possible mutations.
-    var rdm62;
-    for (i = 0; i < 8; i++) {
-      // Generate random integer between 0 and 61, 0|x works as Math.floor(x) in this case
-      rdm62 = 0 | Math.random() * 62;
-      // Map to ascii codes: 0-9 to 48-57 (0-9), 10-35 to 65-90 (A-Z), 36-61 to 97-122 (a-z)
-      idSuffix += String.fromCharCode(rdm62 + (rdm62 < 10 ? 48 : rdm62 < 36 ? 55 : 61))
-    }
+    var idSuffix = '--inject-' + uniqueIdCount++;
     // Collect ids from all elements below the <defs> element(s).
     var defElements = svg.querySelectorAll('defs [id]');
     var defElement, tag, id;
@@ -145,7 +134,7 @@
       if (tag in TAG_NAME_PROPERTIES_MAP) {
         id = defElement.id;
         // Add suffix to id and set it as new id for the element
-        defElement.id = id + idSuffix;
+        defElement.id += idSuffix;
         // Add id for each mapped property
         mappedProperties = TAG_NAME_PROPERTIES_MAP[tag] || [tag];
         for (j = 0; j < mappedProperties[LENGTH]; j++) {
@@ -199,8 +188,8 @@
         if (options.makeIdsUnique) {
           makeIdsUnique(svg, options);
         }
-
-        var injectElem = (options.beforeInject && options.beforeInject(img, svg)) || svg;
+        var beforeInject = options.beforeInject;
+        var injectElem = (beforeInject && beforeInject(img, svg)) || svg;
         parentNode.replaceChild(injectElem, img);
         img[__SVGINJECT] = INJECTED;
         removeOnLoadAttribute(img);
@@ -214,36 +203,31 @@
     }
   }
 
-  function extendOptions() {
-    var newOptions = {};
+  // Merges any number of options objects into a new object
+  function mergeOptions() {
+    var mergedOptions = {};
     var args = arguments;
-
+    // Iterate over all specified options objects and add all properties to the new options object
     for (var i = 0; i < args[LENGTH]; ++i) {
       var argument = args[i];
       if (argument) {
         for (var key in argument) {
           if (argument.hasOwnProperty(key)) {
-            newOptions[key] = argument[key];
+            mergedOptions[key] = argument[key];
           }
         }
       }
     }
-    return newOptions;
+    return mergedOptions;
   }
 
   // Adds the specified CSS to the document's <head> element
   function addStyleToHead(css) {
     var head = document.getElementsByTagName('head')[0];
-
     if (head) {
       var style = document[CREATE_ELEMENT]('style');
       style.type = 'text/css';
-      if (style.styleSheet){
-        // This is required for IE8 and below.
-        style.styleSheet.cssText = css;
-      } else {
-        style.appendChild(document.createTextNode(css));
-      }
+      style.appendChild(document.createTextNode(css));
       head.appendChild(style);
     }
   }
@@ -256,12 +240,10 @@
       return NULL;
     }
     var svg = DIV_ELEMENT.firstElementChild;
-
     while (DIV_ELEMENT.firstChild) {
-      DIV_ELEMENT.removeChild(DIV_ELEMENT.firstChild);
+        DIV_ELEMENT.removeChild(DIV_ELEMENT.firstChild);
     }
-
-    if (isSVGElem(svg)) {
+    if (svg instanceof SVGElement) {
       return svg;
     }
   }
@@ -302,10 +284,14 @@
   }
 
   function createSVGInject(globalName, options) {
-    var defaultOptions = extendOptions(DEFAULT_OPTIONS, options);
+    var defaultOptions = mergeOptions(DEFAULT_OPTIONS, options);
     var svgLoadCache = {};
 
-    addStyleToHead('img[onload^="' + globalName + '("]{visibility:hidden;}');
+    if (IS_SVG_SUPPORTED) {
+      // If the browser supports SVG, add a small stylesheet that hides the <img> elements until
+      // injection is finished. This avoids showing the unstyled SVGs before style is applied.
+      addStyleToHead('img[onload^="' + globalName + '("]{visibility:hidden;}');
+    }
 
     /**
      * SVGInject
@@ -318,9 +304,8 @@
      * copyAttributes: If set to `true` the attributes will be copied from `img` to `svg`. Dfault value
      *     is `true.
      * makeIdsUnique: If set to `true` the id of elements in the `<defs>` element that can be references by
-     *     property values (for example 'clipPath') are made unique by appending "--inject-XXXXXXXX", where
-     *     XXXXXXXX is a random alphanumeric string of length 8. This is done to avoid duplicate ids in the
-     *     DOM.
+     *     property values (for example 'clipPath') are made unique by appending "--inject-X", where X is a
+     *     running number which increases with each injection. This is done to avoid duplicate ids in the DOM.
      * afterLoad: Hook after SVG is loaded. The loaded svg element is passed as a parameter. If caching is
      *     active this hook will only get called once for injected SVGs with the same absolute path. Changes
      *     to the svg element in this hook will be applied to all injected SVGs with the same absolute path.
@@ -342,9 +327,9 @@
         if (src && !img[__SVGINJECT]) {
           img[__SVGINJECT] = INJECT;
 
-          options = extendOptions(defaultOptions, options);
+          options = mergeOptions(defaultOptions, options);
 
-          if (IS_SVG_NOT_SUPPORTED) {
+          if (!IS_SVG_SUPPORTED) {
             svgNotSupported(img, options);
             return;
           }
@@ -429,7 +414,7 @@
      * @param {Object} [options] - default [options](#options) for an injection.
      */
     SVGInject.setOptions = function(options) {
-      defaultOptions = extendOptions(defaultOptions, options);
+      defaultOptions = mergeOptions(defaultOptions, options);
     };
 
     // Create a new instance of SVGInject
@@ -447,12 +432,9 @@
     SVGInject.err = function(img, fallbackSrc) {
       if (img) {
         if (img[__SVGINJECT] != FAIL) {
-          // workaround for IE8 (only) not displaying images after src attribute gets replaced dynamically
-          img.parentNode.replaceChild(img, img);
-
           removeEventListeners(img);
 
-          if (IS_SVG_NOT_SUPPORTED) {
+          if (!IS_SVG_SUPPORTED) {
             svgNotSupported(img, defaultOptions);
           } else {
             removeOnLoadAttribute(img);

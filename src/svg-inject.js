@@ -14,6 +14,7 @@
   var TRUE = true;
   var LENGTH = 'length';
   var CREATE_ELEMENT = 'createElement';
+  var TITLE = 'title';
   var __SVGINJECT = '__svgInject';
 
   // constants
@@ -44,6 +45,7 @@
   var INJECTED = 2;
   var FAIL = 3;
 
+  var uniqueIdCount = 1;
   var xmlSerializer;
 
   function getXMLSerializer() {
@@ -87,15 +89,14 @@
     for (var i = 0; i < attributes[LENGTH]; ++i) {
       var attribute = attributes[i];
       var attributeName = attribute.name;
-      // Only copy attributes that are not explicitly excluded from copying
+      // Only copy attributes not explicitly excluded from copying
       if (ATTRIBUTE_EXCLUSION_NAMES.indexOf(attributeName) == -1) {
         var attributeValue = attribute.value;
-        var TITLE = 'title';
+        // If img attribute is "title", insert a title element in SVG
         if (attributeName == TITLE) {
-          // If img attribute is "title", insert a title element in SVG
           // Create title element
           var titleElement = document.createElementNS('http://www.w3.org/2000/svg', TITLE);
-          title.textContent = attributeValue;
+          titleElement.textContent = attributeValue;
           // If the SVGs first child is a title element, replace it with the new title element,
           // otherwise insert the new title element as first child
           var firstElementChild = svg.firstElementChild;
@@ -112,24 +113,14 @@
     }
   }
 
-  // This function appends a unique suffix to IDs of elements in the <defs> element that can be
-  // referenced by properties from within the SVG (for example "filter", "mask", etc.). References
-  // to the IDs are adjusted accordingly. The suffix has the form "--inject-XXXXXXXX", where
-  // XXXXXXXX is a random alphanumeric string of length 8.
-  // The suffix is appended to avoid ID collision between two injected SVGs. Since all IDs within
-  // one SVG must be unique anyway, we can use the same suffix for all IDs of one injected SVG.
+  // This function appends a unique suffix to ids of elements in the <defs> element that can be referenced by
+  // properties from within the SVG (for example "filter", "mask", etc.). References to the ids are adjusted
+  // accordingly. The suffix has the form "--inject-X", where X is a running number which increases with each
+  // injection. The suffix is appended to avoid ID collision between two injected SVGs. Since all ids within
+  // one SVG must be unique, the same suffix can be used for all ids of one injected SVG.
   function makeIdsUnique(svg) {
     var i, j;
-    var idSuffix = '--inject-';
-    // Append a random alphanumeric string to the suffix. For an 8 character long string there are
-    // 62^8 = 218340105584896 possible mutations.
-    var rdm62;
-    for (i = 0; i < 8; i++) {
-      // Generate random integer between 0 and 61, 0|x works as Math.floor(x) in this case
-      rdm62 = 0 | Math.random() * 62;
-      // Map to ascii codes: 0-9 to 48-57 (0-9), 10-35 to 65-90 (A-Z), 36-61 to 97-122 (a-z)
-      idSuffix += String.fromCharCode(rdm62 + (rdm62 < 10 ? 48 : rdm62 < 36 ? 55 : 61))
-    }
+    var idSuffix = '--inject-' + uniqueIdCount++;
     // Collect ids from all elements below the <defs> element(s).
     var defElements = svg.querySelectorAll('defs [id]');
     var defElement, tag, id;
@@ -313,9 +304,8 @@
      * copyAttributes: If set to `true` the attributes will be copied from `img` to `svg`. Dfault value
      *     is `true.
      * makeIdsUnique: If set to `true` the id of elements in the `<defs>` element that can be references by
-     *     property values (for example 'clipPath') are made unique by appending "--inject-XXXXXXXX", where
-     *     XXXXXXXX is a random alphanumeric string of length 8. This is done to avoid duplicate ids in the
-     *     DOM.
+     *     property values (for example 'clipPath') are made unique by appending "--inject-X", where X is a
+     *     running number which increases with each injection. This is done to avoid duplicate ids in the DOM.
      * afterLoad: Hook after SVG is loaded. The loaded svg element is passed as a parameter. If caching is
      *     active this hook will only get called once for injected SVGs with the same absolute path. Changes
      *     to the svg element in this hook will be applied to all injected SVGs with the same absolute path.
