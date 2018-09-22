@@ -173,7 +173,7 @@
 
   // inject svg by replacing the img element with the svg element in the DOM
   function inject(img, svg, svgString, absUrl, options) {
-    svg = svg || buildSvg(svgString, absUrl);
+    svg = svg || buildSvg(svgString);
 
     if (svg) {
       var parentNode = img.parentNode;
@@ -233,7 +233,7 @@
   }
 
   // Builds an SVG element from the specified SVG string
-  function buildSvg(svgStr, absUrl) {
+  function buildSvg(svgStr) {
     try {
       DIV_ELEMENT.innerHTML = svgStr;
     } catch (e) {
@@ -378,7 +378,7 @@
           load(absUrl, function(svgXml, svgString) {
             if (img[__SVGINJECT] == INJECT) {
               // for IE9 do not use the nativ svgXml
-              var svg = svgXml instanceof Document ? svgXml.documentElement : buildSvg(svgString, absUrl);
+              var svg = svgXml instanceof Document ? svgXml.documentElement : buildSvg(svgString);
 
               if (svg) {
                 var afterLoad = options.afterLoad;
