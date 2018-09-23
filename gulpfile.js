@@ -14,7 +14,10 @@ gulp.task('default', function (cb) {
       output: {
         preamble: "/* MIT License - https://github.com/iconfu/svg-inject/blob/master/LICENSE */"
       },
-      ie8: true
+      ie8: true,
+      output: {
+        max_line_len: 500
+      }
     }),
     rename({ extname: '.min.js' }),
     gulp.dest('examples/'),
