@@ -48,11 +48,13 @@
   var uniqueIdCounter = 1;
   var xmlSerializer;
 
+  // Returns the xmlSerializer instance. Creates it first if it does not exist yet. 
   function getXMLSerializer() {
     xmlSerializer = xmlSerializer || new XMLSerializer();
     return xmlSerializer;
   }
 
+  // Returns the absolute url for the specified url
   function getAbsoluteUrl(url) {
     A_ELEMENT.href = url;
     return A_ELEMENT.href;
@@ -239,7 +241,10 @@
     } catch (e) {
       return NULL;
     }
+    // Set svg as first child that is an element (comment and text nodes are skipped)
     var svg = DIV_ELEMENT.firstElementChild;
+    // Remove all children from div element. This includes the svg element and all unused elements,
+    // for example comments before or after the svg element.
     while (DIV_ELEMENT.firstChild) {
         DIV_ELEMENT.removeChild(DIV_ELEMENT.firstChild);
     }
