@@ -48,11 +48,13 @@
   var uniqueIdCounter = 1;
   var xmlSerializer;
 
+  // Returns the xmlSerializer instance. Creates it first if it does not exist yet. 
   function getXMLSerializer() {
     xmlSerializer = xmlSerializer || new XMLSerializer();
     return xmlSerializer;
   }
 
+  // Returns the absolute url for the specified url
   function getAbsoluteUrl(url) {
     A_ELEMENT.href = url;
     return A_ELEMENT.href;
@@ -173,7 +175,7 @@
 
   // inject svg by replacing the img element with the svg element in the DOM
   function inject(img, svg, svgString, absUrl, options) {
-    svg = svg || buildSvg(svgString, absUrl);
+    svg = svg || buildSvg(svgString);
 
     if (svg) {
       var parentNode = img.parentNode;
@@ -233,13 +235,16 @@
   }
 
   // Builds an SVG element from the specified SVG string
-  function buildSvg(svgStr, absUrl) {
+  function buildSvg(svgStr) {
     try {
       DIV_ELEMENT.innerHTML = svgStr;
     } catch (e) {
       return NULL;
     }
+    // Set svg as first child that is an element (comment and text nodes are skipped)
     var svg = DIV_ELEMENT.firstElementChild;
+    // Remove all children from div element. This includes the svg element and all unused elements,
+    // for example comments before or after the svg element.
     while (DIV_ELEMENT.firstChild) {
         DIV_ELEMENT.removeChild(DIV_ELEMENT.firstChild);
     }
@@ -378,7 +383,7 @@
           load(absUrl, function(svgXml, svgString) {
             if (img[__SVGINJECT] == INJECT) {
               // for IE9 do not use the nativ svgXml
-              var svg = svgXml instanceof Document ? svgXml.documentElement : buildSvg(svgString, absUrl);
+              var svg = svgXml instanceof Document ? svgXml.documentElement : buildSvg(svgString);
 
               if (svg) {
                 var afterLoad = options.afterLoad;
