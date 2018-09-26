@@ -310,8 +310,9 @@
      * makeIdsUnique: If set to `true` the id of elements in the `<defs>` element that can be references by
      *     property values (for example 'clipPath') are made unique by appending "--inject-X", where X is a
      *     running number which increases with each injection. This is done to avoid duplicate ids in the DOM.
-     * beforeLoad: Hook before SVG is loaded. The `img` element is passed as a parameter. If the hook returns 
-     *     an URL String the SVG is loaded from this URL instead of the `src` attribute of the `img` element.
+     * beforeLoad: Hook before SVG is loaded. The `img` element is passed as a parameter. The `img` element is
+     *     passed as a parameter. If the hook returns a string it is used as the URL instead of the `img`
+     *     element's `src` attribute.
      * afterLoad: Hook after SVG is loaded. The loaded svg element is passed as a parameter. If caching is
      *     active this hook will only get called once for injected SVGs with the same absolute path. Changes
      *     to the svg element in this hook will be applied to all injected SVGs with the same absolute path.
@@ -337,20 +338,20 @@
       }
     }
 
-    // Wrapped SVGInject wher options are already merged with default options
-    function SVGInjectWrapped(img, options) {
-      if (img) {
-        if (!img[__SVGINJECT]) {
-          img[__SVGINJECT] = INJECT;
+    // Injects a single svg element. Options must be already merged with the default options.
+    function SVGInjectElement(imgElem, options) {
+      if (imgElem) {
+        if (!imgElem[__SVGINJECT]) {
+          imgElem[__SVGINJECT] = INJECT;
 
           if (!IS_SVG_SUPPORTED) {
-            svgNotSupported(img, options);
+            svgNotSupported(imgElem, options);
             return;
           }
 
           // Invoke beforeLoad hook if set. If the beforeLoad returns a value use it as the src for the load
-          // URL path. Else use the img src attribute value.
-          var src = (options.beforeLoad && options.beforeLoad(img)) || img.src;
+          // URL path. Else use the imgElem src attribute value.
+          var src = (options.beforeLoad && options.beforeLoad(imgElem)) || imgElem.src;
           var absUrl = getAbsoluteUrl(src);
           var cache = options.cache;
 
@@ -364,18 +365,18 @@
             }
           };
 
-          removeEventListeners(img);
+          removeEventListeners(imgElem);
 
           if (cache) {
             var svgLoad = svgLoadCache[absUrl];
 
             var handleLoadValue = function(loadValue) {
               if (loadValue === LOAD_FAIL) {
-                loadFail(img, options);
+                loadFail(imgElem, options);
               } else if (loadValue === SVG_INVALID) {
-                svgInvalid(img, options);
+                svgInvalid(imgElem, options);
               } else {
-                inject(img, buildSvgElement(loadValue), absUrl, options);
+                inject(imgElem, buildSvgElement(loadValue), absUrl, options);
               }
             };
 
@@ -393,7 +394,7 @@
 
           // Load the SVG because it is not cached or caching is disabled
           loadSvg(absUrl, function(svgXml, svgString) {
-            if (img[__SVGINJECT] == INJECT) {
+            if (imgElem[__SVGINJECT] == INJECT) {
               // Use the XML from the XHR request if it is an instance of Document. Otherwise
               // (for example of IE9), create the svg document from the svg string.
               var svgElem = svgXml instanceof Document ? svgXml.documentElement : buildSvgElement(svgString);
@@ -411,15 +412,15 @@
                   }
                 }
 
-                inject(img, svgElem, absUrl, options);
+                inject(imgElem, svgElem, absUrl, options);
                 setSvgLoadCacheValue(svgString);
               } else {
-                svgInvalid(img, options);
+                svgInvalid(imgElem, options);
                 setSvgLoadCacheValue(SVG_INVALID);
               }
             }
           }, function() {
-            loadFail(img, options);
+            loadFail(imgElem, options);
             setSvgLoadCacheValue(LOAD_FAIL);
           });
         }
