@@ -331,10 +331,10 @@
 
       if (img && typeof img[LENGTH] != 'undefined') {
         for (var i = 0; i < img[LENGTH]; ++i) {
-          SVGInjectWrapped(img[i], options);
+          SVGInjectElement(img[i], options);
         }
       } else {
-        SVGInjectWrapped(img, options);
+        SVGInjectElement(img, options);
       }
     }
 
