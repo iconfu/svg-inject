@@ -328,12 +328,12 @@
     function SVGInject(img, options) {
       options = mergeOptions(defaultOptions, options);
 
-      if (typeof img.length == 'undefined') {
-        SVGInjectWrapped(img, options);
-      } else {
-        for (var i = 0; i < img.length; ++i) {
+      if (img && typeof img[LENGTH] != 'undefined') {
+        for (var i = 0; i < img[LENGTH]; ++i) {
           SVGInjectWrapped(img[i], options);
         }
+      } else {
+        SVGInjectWrapped(img, options);
       }
     }
 
