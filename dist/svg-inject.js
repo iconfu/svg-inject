@@ -86,30 +86,30 @@
   }
 
   // Copy attributes from img element to svg element
-  function copyAttributes(img, svg) {
-    var attributes = img.attributes;
+  function copyAttributes(imgElem, svgElem) {
+    var attributes = imgElem.attributes;
     for (var i = 0; i < attributes[LENGTH]; ++i) {
       var attribute = attributes[i];
       var attributeName = attribute.name;
       // Only copy attributes not explicitly excluded from copying
       if (ATTRIBUTE_EXCLUSION_NAMES.indexOf(attributeName) == -1) {
         var attributeValue = attribute.value;
-        // If img attribute is "title", insert a title element in SVG
+        // If img attribute is "title", insert a title element into SVG element
         if (attributeName == TITLE) {
           // Create title element
-          var titleElement = document.createElementNS('http://www.w3.org/2000/svg', TITLE);
-          titleElement.textContent = attributeValue;
-          // If the SVGs first child is a title element, replace it with the new title element,
-          // otherwise insert the new title element as first child
-          var firstElementChild = svg.firstElementChild;
+          var titleElem = document.createElementNS('http://www.w3.org/2000/svg', TITLE);
+          titleElem.textContent = attributeValue;
+          // If the SVG element's first child is a title element, replace it with the new title
+          // element, otherwise insert the new title element as first child
+          var firstElementChild = svgElem.firstElementChild;
           if (firstElementChild && firstElementChild.tagName.toLowerCase() == TITLE) {
-            svg.replaceChild(titleElement, firstElementChild);
+            svgElem.replaceChild(titleElem, firstElementChild);
           } else {
-            svg.insertBefore(titleElement, firstElementChild);
+            svgElem.insertBefore(titleElem, firstElementChild);
           }
         } else {
-          // Set img attribute to svg
-          svg.setAttribute(attributeName, attributeValue);
+          // Set img attribute to svg element
+          svgElem.setAttribute(attributeName, attributeValue);
         }
       }
     }
@@ -120,23 +120,23 @@
   // accordingly. The suffix has the form "--inject-X", where X is a running number which increases with each
   // injection. The suffix is appended to avoid ID collision between two injected SVGs. Since all ids within
   // one SVG must be unique, the same suffix can be used for all ids of one injected SVG.
-  function makeIdsUnique(svg) {
+  function makeIdsUnique(svgElem) {
     var i, j;
     var idSuffix = '--inject-' + uniqueIdCounter++;
     // Collect ids from all elements below the <defs> element(s).
-    var defElements = svg.querySelectorAll('defs [id]');
-    var defElement, tag, id;
+    var defElements = svgElem.querySelectorAll('defs [id]');
+    var defElem, tag, id;
     var propertyIdsMap = {};
     var mappedProperties, mappedProperty;
     for (i = 0; i < defElements[LENGTH]; i++) {
-      defElement = defElements[i];
-      tag = defElement.tagName;
+      defElem = defElements[i];
+      tag = defElem.tagName;
       // Get array with possible property names for the element's tag name. If the array is empty,
       // the only property name is the same as the tag name.
       if (tag in TAG_NAME_PROPERTIES_MAP) {
-        id = defElement.id;
+        id = defElem.id;
         // Add suffix to id and set it as new id for the element
-        defElement.id += idSuffix;
+        defElem.id += idSuffix;
         // Add id for each mapped property
         mappedProperties = TAG_NAME_PROPERTIES_MAP[tag] || [tag];
         for (j = 0; j < mappedProperties[LENGTH]; j++) {
@@ -149,7 +149,7 @@
     var properties = Object.keys(propertyIdsMap);
     if (properties[LENGTH]) {
       // Run through all elements and replace ids in references
-      var allElements = svg.querySelectorAll('*');
+      var allElements = svgElem.querySelectorAll('*');
       var element, property, propertyVal;
       for (i = 0; i < allElements[LENGTH]; i++) {
         element = allElements[i];
@@ -253,34 +253,34 @@
     }
   }
 
-  function removeOnLoadAttribute(img) {
-    img.removeAttribute('onload');
+  function removeOnLoadAttribute(imgElem) {
+    imgElem.removeAttribute('onload');
   }
 
-  function fail(img, status, options) {
-    img[__SVGINJECT] = FAIL;
+  function fail(imgElem, status, options) {
+    imgElem[__SVGINJECT] = FAIL;
     if (options.onFail) {
-      options.onFail(img, status);
+      options.onFail(imgElem, status);
     }
   }
 
-  function svgInvalid(img, options) {
-    removeOnLoadAttribute(img);
-    fail(img, SVG_INVALID, options);
+  function svgInvalid(imgElem, options) {
+    removeOnLoadAttribute(imgElem);
+    fail(imgElem, SVG_INVALID, options);
   }
 
-  function svgNotSupported(img, options) {
-    removeOnLoadAttribute(img);
-    fail(img, SVG_NOT_SUPPORTED, options);
+  function svgNotSupported(imgElem, options) {
+    removeOnLoadAttribute(imgElem);
+    fail(imgElem, SVG_NOT_SUPPORTED, options);
   }
 
-  function loadFail(img, options) {
-    fail(img, LOAD_FAIL, options);
+  function loadFail(imgElem, options) {
+    fail(imgElem, LOAD_FAIL, options);
   }
 
-  function removeEventListeners(img) {
-    img.onload = NULL;
-    img.onerror = NULL;
+  function removeEventListeners(imgElem) {
+    imgElem.onload = NULL;
+    imgElem.onerror = NULL;
   }
 
   function throwImgNotSet() {
@@ -310,9 +310,8 @@
      * makeIdsUnique: If set to `true` the id of elements in the `<defs>` element that can be references by
      *     property values (for example 'clipPath') are made unique by appending "--inject-X", where X is a
      *     running number which increases with each injection. This is done to avoid duplicate ids in the DOM.
-     * beforeLoad: Hook before SVG is loaded. The `img` element is passed as a parameter. The `img` element is
-     *     passed as a parameter. If the hook returns a string it is used as the URL instead of the `img`
-     *     element's `src` attribute.
+     * beforeLoad: Hook before SVG is loaded. The `img` element is passed as a parameter. If the hook returns
+     *     a string it is used as the URL instead of the `img` element's `src` attribute.
      * afterLoad: Hook after SVG is loaded. The loaded svg element is passed as a parameter. If caching is
      *     active this hook will only get called once for injected SVGs with the same absolute path. Changes
      *     to the svg element in this hook will be applied to all injected SVGs with the same absolute path.
@@ -406,8 +405,8 @@
                   afterLoad(svgElem);
 
                   if (cache) {
-                    // Update svgString because the SVG element can be modified in the afterLoad hook, so 
-                    // the modified SVG element is also used for all later cached injections  
+                    // Update svgString because the SVG element can be modified in the afterLoad hook, so
+                    // the modified SVG element is also used for all later cached injections
                     svgString = getXMLSerializer().serializeToString(svgElem);
                   }
                 }
