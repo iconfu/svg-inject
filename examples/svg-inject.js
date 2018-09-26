@@ -174,8 +174,7 @@
   }
 
   // inject svg by replacing the img element with the svg element in the DOM
-  function inject(imgElem, svgElem, svgString, absUrl, options) {
-    svgElem = svgElem || buildSvgElement(svgString);
+  function inject(imgElem, svgElem, absUrl, options) {
     if (svgElem) {
       svgElem.setAttribute('data-inject-url', absUrl);
       var parentNode = imgElem.parentNode;
@@ -363,7 +362,7 @@
               } else if (loadValue === SVG_INVALID) {
                 svgInvalid(img, options);
               } else {
-                inject(img, NULL, loadValue, absUrl, options);
+                inject(img, buildSvgElement(loadValue), absUrl, options);
               }
             };
 
@@ -399,7 +398,7 @@
                   }
                 }
 
-                inject(img, svgElem, NULL, absUrl, options);
+                inject(img, svgElem, absUrl, options);
                 setSvgLoadCacheValue(svgString);
               } else {
                 svgInvalid(img, options);
