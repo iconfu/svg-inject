@@ -48,7 +48,7 @@
   var uniqueIdCounter = 1;
   var xmlSerializer;
 
-  // Returns the xmlSerializer instance. Creates it first if it does not exist yet. 
+  // Returns the xmlSerializer instance. Creates it first if it does not exist yet.
   function getXMLSerializer() {
     xmlSerializer = xmlSerializer || new XMLSerializer();
     return xmlSerializer;
@@ -61,8 +61,8 @@
   }
 
   // Load svg with an XHR request
-  function load(path, callback, errorCallback) {
-    if (path) {
+  function loadSvg(url, callback, errorCallback) {
+    if (url) {
       var req = new XMLHttpRequest();
       req.onreadystatechange = function() {
         if (req.readyState == 4) {
@@ -80,7 +80,7 @@
           }
         }
       };
-      req.open('GET', path, TRUE);
+      req.open('GET', url, TRUE);
       req.send();
     }
   }
@@ -174,34 +174,33 @@
   }
 
   // inject svg by replacing the img element with the svg element in the DOM
-  function inject(img, svg, svgString, absUrl, options) {
-    svg = svg || buildSvg(svgString);
-
-    if (svg) {
-      var parentNode = img.parentNode;
-
-      svg.setAttribute('data-inject-url', absUrl);
-
+  function inject(imgElem, svgElem, svgString, absUrl, options) {
+    svgElem = svgElem || buildSvgElement(svgString);
+    if (svgElem) {
+      svgElem.setAttribute('data-inject-url', absUrl);
+      var parentNode = imgElem.parentNode;
       if (parentNode) {
         if (options.copyAttributes) {
-          copyAttributes(img, svg);
+          copyAttributes(imgElem, svgElem);
         }
-
         if (options.makeIdsUnique) {
-          makeIdsUnique(svg, options);
+          makeIdsUnique(svgElem, options);
         }
+        // Invoke beforeInject hook if set
         var beforeInject = options.beforeInject;
-        var injectElem = (beforeInject && beforeInject(img, svg)) || svg;
-        parentNode.replaceChild(injectElem, img);
-        img[__SVGINJECT] = INJECTED;
-        removeOnLoadAttribute(img);
-
+        var injectElem = (beforeInject && beforeInject(imgElem, svgElem)) || svgElem;
+        // Replace img element with new element. This is the actual injection.
+        parentNode.replaceChild(injectElem, imgElem);
+        // Mark img element as injected
+        imgElem[__SVGINJECT] = INJECTED;
+        removeOnLoadAttribute(imgElem);
+        // Invoke afterInject hook if set
         if (options.afterInject) {
-          options.afterInject(img, injectElem);
+          options.afterInject(imgElem, injectElem);
         }
       }
     } else {
-      svgInvalid(img, options);
+      svgInvalid(imgElem, options);
     }
   }
 
@@ -235,21 +234,23 @@
   }
 
   // Builds an SVG element from the specified SVG string
-  function buildSvg(svgStr) {
+  function buildSvgElement(svgStr) {
+    // Set the svg string as the innerHTML for the div element. This creates the SVG DOM, which we
+    // can then remove from the div element and return.
     try {
       DIV_ELEMENT.innerHTML = svgStr;
     } catch (e) {
       return NULL;
     }
     // Set svg as first child that is an element (comment and text nodes are skipped)
-    var svg = DIV_ELEMENT.firstElementChild;
+    var svgElem = DIV_ELEMENT.firstElementChild;
     // Remove all children from div element. This includes the svg element and all unused elements,
     // for example comments before or after the svg element.
     while (DIV_ELEMENT.firstChild) {
-        DIV_ELEMENT.removeChild(DIV_ELEMENT.firstChild);
+      DIV_ELEMENT.removeChild(DIV_ELEMENT.firstChild);
     }
-    if (svg instanceof SVGElement) {
-      return svg;
+    if (svgElem instanceof SVGElement) {
+      return svgElem;
     }
   }
 
@@ -259,7 +260,6 @@
 
   function fail(img, status, options) {
     img[__SVGINJECT] = FAIL;
-
     if (options.onFail) {
       options.onFail(img, status);
     }
@@ -380,16 +380,18 @@
           }
 
           // Load the SVG because it is not cached or caching is disabled
-          load(absUrl, function(svgXml, svgString) {
+          loadSvg(absUrl, function(svgXml, svgString) {
             if (img[__SVGINJECT] == INJECT) {
-              // for IE9 do not use the nativ svgXml
-              var svg = svgXml instanceof Document ? svgXml.documentElement : buildSvg(svgString);
+              // Use the XML from the XHR request if it is an instance of Document. Otherwise
+              // (for example of IE9), create the svg document from the svg string.
+              var svgElem = svgXml instanceof Document ? svgXml.documentElement : buildSvgElement(svgString);
 
-              if (svg) {
+              if (svgElem) {
+                // Invoke afterLoad hook
                 var afterLoad = options.afterLoad;
                 if (afterLoad) {
                   // call afterLoad hook. This hook may modify the SVG.
-                  afterLoad(svg);
+                  afterLoad(svgElem);
 
                   if (cache) {
                     // Update svgString because the SVG can be modified in the afterLoad hook, so 
