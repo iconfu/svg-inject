@@ -388,11 +388,17 @@
               if (svg) {
                 var afterLoad = options.afterLoad;
                 if (afterLoad) {
+                  // call afterLoad hook. This hook may modify the SVG.
                   afterLoad(svg);
-                  svgString = getXMLSerializer().serializeToString(svg);
+
+                  if (cache) {
+                    // Update svgString because the SVG can be modified in the afterLoad hook, so 
+                    // the modified SVG is also used for all later cached injections  
+                    svgString = getXMLSerializer().serializeToString(svg);
+                  }
                 }
 
-                inject(img, svg, svgString, absUrl, options);
+                inject(img, svg, NULL, absUrl, options);
                 setSvgLoadCacheValue(svgString);
               } else {
                 svgInvalid(img, options);
