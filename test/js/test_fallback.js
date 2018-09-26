@@ -75,12 +75,19 @@ runTests([
     var count = 0;
 
     SVGInject.create('SVGInject4', {
-      beforeLoad: function(img) {
-        return img.srcset;
-      },
-      afterInject: function() {
-        if (++count == 6) {
-          success();
+      beforeLoad: fail,
+      afterLoad: fail,
+      beforeInject: fail,
+      afterInject: fail,
+      onFail: function(img, status) {
+        if (status === 'SVG_NOT_SUPPORTED') {
+          if (++count == 6) {
+            success();
+          } else if (count > 6) {
+            fail();
+          }
+        } else {
+          fail();
         }
       }
     });
