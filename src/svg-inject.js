@@ -387,20 +387,19 @@
               var svgElem = svgXml instanceof Document ? svgXml.documentElement : buildSvgElement(svgString);
 
               if (svgElem) {
-                // Invoke afterLoad hook
                 var afterLoad = options.afterLoad;
                 if (afterLoad) {
-                  // call afterLoad hook. This hook may modify the SVG.
+                  // Invoke afterLoad hook which may modify the SVG element.
                   afterLoad(svgElem);
 
                   if (cache) {
-                    // Update svgString because the SVG can be modified in the afterLoad hook, so 
-                    // the modified SVG is also used for all later cached injections  
-                    svgString = getXMLSerializer().serializeToString(svg);
+                    // Update svgString because the SVG element can be modified in the afterLoad hook, so 
+                    // the modified SVG element is also used for all later cached injections  
+                    svgString = getXMLSerializer().serializeToString(svgElem);
                   }
                 }
 
-                inject(img, svg, NULL, absUrl, options);
+                inject(img, svgElem, NULL, absUrl, options);
                 setSvgLoadCacheValue(svgString);
               } else {
                 svgInvalid(img, options);
