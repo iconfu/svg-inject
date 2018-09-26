@@ -357,5 +357,41 @@ runTests([
         }
       }
     });
+  },
+
+  // Test 14
+  function() {
+    var count = 0;
+
+    SVGInject.create('SVGInject14', {
+      beforeLoad: function(img) {
+        return img.dataset.src;
+      },
+      afterInject: function() {
+        if (++count == 6) {
+          success();
+        }
+      }
+    });
+
+    domReady(function() {
+      SVGInject14(document.querySelectorAll('#test-14 img'));
+    });
+  },
+
+  // Test 15
+  function() {
+    var count = 0;
+
+    SVGInject.create('SVGInject15', {
+      beforeLoad: function(img) {
+        return img.srcset;
+      },
+      afterInject: function() {
+        if (++count == 6) {
+          success();
+        }
+      }
+    });
   }
 ]);

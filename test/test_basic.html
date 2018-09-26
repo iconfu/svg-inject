@@ -172,5 +172,28 @@
       <div><img id="test-13-4" src="imgs/test-make-unique-ids.svg" onload="SVGInject13(this, { makeIdsUnique: false })" class="inject-success" /></div>
     </div>
   </div>
+
+  <h3>Test 14</h3>
+  <!-- test beforeLoad hook -->
+  <div class="test" id="test-14">
+    <div><img data-src="imgs/test1.svg" class="inject-success" /></div>
+    <div><img data-src="imgs/test1.svg" class="inject-success" /></div>
+    <div><img data-src="imgs/test2.svg" class="inject-success" /></div>
+    <div><img data-src="imgs/test2.svg" class="inject-success" /></div>
+    <div><img data-src="imgs/test3.svg" class="inject-success" /></div>
+    <div><img data-src="imgs/test3.svg" class="inject-success" /></div>
+  </div>
+
+  <h3>Test 15</h3>
+  <!-- test all browser no javasript fallback solution -->
+  <div class="test" id="test-15">
+    <div><img src="imgs/test1.png" srcset="imgs/test1.svg" onload="SVGInject15(this)" class="inject-success" /></div>
+    <div><img src="imgs/test1.png" srcset="imgs/test1.svg" onload="SVGInject15(this)" class="inject-success" /></div>
+    <div><img src="imgs/test2.png" srcset="imgs/test2.svg" onload="SVGInject15(this)" class="inject-success" /></div>
+    <div><img src="imgs/test2.png" srcset="imgs/test2.svg" onload="SVGInject15(this)" class="inject-success" /></div>
+    <div><img src="imgs/test3.png" srcset="imgs/test3.svg" onload="SVGInject15(this)" class="inject-success" /></div>
+    <div><img src="imgs/test3.png" srcset="imgs/test3.svg" onload="SVGInject15(this)" class="inject-success" /></div>
+  </div>
+
 </body>
 </html>

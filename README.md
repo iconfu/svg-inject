@@ -162,6 +162,7 @@ Additionaly after loading the SVG, the value of the `src` attribute of the `<img
 | cache | boolean | `true` | If set to `true` the SVG will be cached using the absolute URL. The cache only persists for the lifetime of the page. Without caching images with the same absolute URL will trigger a new XMLHttpRequest but browser caching will still apply. |
 | copyAttributes | boolean | `true` | If set to `true` [attributes will be copied](#how-are-attributes-handled) from the `img` to the injected `svg` element. You may implement your own method for copying attributes in the `beforeInject` options hook. |
 | makeIdsUnique | boolean | `true` | If set to `true` the id of elements in the `<defs>` element that can be references by property values (for example 'clipPath') are made unique by appending the string "--inject-X", where X is a running number which increases with each injection. This is done to avoid duplicate ids in the DOM. |
+| beforeLoad | function(img) | `undefined` | Hook before SVG is loaded. The `img` element is passed as a parameter. If the hook returns an URL String the SVG is loaded from this URL instead of the `src` attribute of the `img` element. |
 | afterLoad | function(svg) | `undefined` | Hook after SVG is loaded. The loaded `svg` element is passed as a parameter. If caching is active this hook will only get called once for injected SVGs with the same absolute path. Changes to the `svg` element in this hook will be applied to all injected SVGs with the same absolute path. |
 | beforeInject | function(img,&nbsp;svg) | `undefined` | Hook directly before the SVG is injected. The `img` and `svg` elements are passed as parameters. The hook is called for every injected SVG. If an [Element](https://developer.mozilla.org/de/docs/Web/API/Element) is returned it gets injected instead of applying the default SVG injection. |
 | afterInject | function(img,&nbsp;svg) | `undefined` | Hook after SVG is injected. The `img` and `svg` elements are passed as parameters. |
@@ -275,7 +276,7 @@ Another, more generic way of providing a fallback image source is using the `onF
 
 ### Example using `options`
 
-This example shows how to use SVGInject with all available options.
+This example shows how to use SVGInject with mutiple options.
 
 ```html
 <html>

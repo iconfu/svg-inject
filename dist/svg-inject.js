@@ -300,7 +300,7 @@
     /**
      * SVGInject
      *
-     * Injects the SVG specified in he `src` attribute of the specified `img` element or array of `img`
+     * Injects the SVG specified in the `src` attribute of the specified `img` element or array of `img`
      * elements.
      *
      * Options:
@@ -310,6 +310,8 @@
      * makeIdsUnique: If set to `true` the id of elements in the `<defs>` element that can be references by
      *     property values (for example 'clipPath') are made unique by appending "--inject-X", where X is a
      *     running number which increases with each injection. This is done to avoid duplicate ids in the DOM.
+     * beforeLoad: Hook before SVG is loaded. The `img` element is passed as a parameter. If the hook returns 
+     *     an URL String the SVG is loaded from this URL instead of the `src` attribute of the `img` element.
      * afterLoad: Hook after SVG is loaded. The loaded svg element is passed as a parameter. If caching is
      *     active this hook will only get called once for injected SVGs with the same absolute path. Changes
      *     to the svg element in this hook will be applied to all injected SVGs with the same absolute path.
@@ -324,20 +326,31 @@
      * @param {Object} [options] - optional parameter with [options](#options) for this injection.
      */
     function SVGInject(img, options) {
+      options = mergeOptions(defaultOptions, options);
+
+      if (typeof img.length == 'undefined') {
+        SVGInjectWrapped(img, options);
+      } else {
+        for (var i = 0; i < img.length; ++i) {
+          SVGInjectWrapped(img[i], options);
+        }
+      }
+    }
+
+    // Wrapped SVGInject wher options are already merged with default options
+    function SVGInjectWrapped(img, options) {
       if (img) {
-        var length = img[LENGTH];
-        var src = img.src;
-
-        if (src && !img[__SVGINJECT]) {
+        if (!img[__SVGINJECT]) {
           img[__SVGINJECT] = INJECT;
-
-          options = mergeOptions(defaultOptions, options);
 
           if (!IS_SVG_SUPPORTED) {
             svgNotSupported(img, options);
             return;
           }
 
+          // Invoke beforeLoad hook if set. If the beforeLoad returns a value use it as the src for the load
+          // URL path. Else use the img src attribute value.
+          var src = (options.beforeLoad && options.beforeLoad(img)) || img.src;
           var absUrl = getAbsoluteUrl(src);
           var cache = options.cache;
 
@@ -409,10 +422,6 @@
             loadFail(img, options);
             setSvgLoadCacheValue(LOAD_FAIL);
           });
-        } else if (length) {
-          for (var i = 0; i < length; ++i) {
-            SVGInject(img[i], options);
-          }
         }
       } else {
         throwImgNotSet();

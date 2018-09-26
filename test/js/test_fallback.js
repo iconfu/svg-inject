@@ -68,5 +68,21 @@ runTests([
     domReady(function() {
       SVGInject3(document.getElementById('test-3').getElementsByTagName('img'));
     });
+  },
+
+  // Test 4
+  function() {
+    var count = 0;
+
+    SVGInject.create('SVGInject4', {
+      beforeLoad: function(img) {
+        return img.srcset;
+      },
+      afterInject: function() {
+        if (++count == 6) {
+          success();
+        }
+      }
+    });
   }
 ]);
