@@ -161,7 +161,7 @@
             if (propertyVal) {
               // Extract id from property value if it has the form url(#anyId) or
               // url("#anyId") (for Internet Explorer)
-              var idMatch = propertyVal.match(/url\("?#([a-zA-Z][\w:.\-]*)"?\)/);
+              var idMatch = propertyVal.match(/url\("?#([a-zA-Z][\w:.-]*)"?\)/);
               if (idMatch && propertyIdsMap[property].indexOf(idMatch[1]) >= 0) {
                 // Replace reference with new id if id was found for the property
                 element.setAttribute(property, 'url(#' + idMatch[1] + idSuffix + ')');
