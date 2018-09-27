@@ -26,7 +26,7 @@
   var DIV_ELEMENT = document[CREATE_ELEMENT]('div');
   var IS_SVG_SUPPORTED = typeof SVGRect != "undefined";
   var DEFAULT_OPTIONS = {
-    cache: TRUE,
+    useCache: TRUE,
     copyAttributes: TRUE,
     makeIdsUnique: TRUE
   };
@@ -304,7 +304,7 @@
      * elements.
      *
      * Options:
-     * cache: If set to `true` the SVG will be cached using the absolute URL. Default value is `true`.
+     * useCache: If set to `true` the SVG will be cached using the absolute URL. Default value is `true`.
      * copyAttributes: If set to `true` the attributes will be copied from `img` to `svg`. Dfault value
      *     is `true.
      * makeIdsUnique: If set to `true` the id of elements in the `<defs>` element that can be references by
@@ -352,10 +352,10 @@
           // URL path. Else use the imgElem src attribute value.
           var src = (options.beforeLoad && options.beforeLoad(imgElem)) || imgElem.src;
           var absUrl = getAbsoluteUrl(src);
-          var cache = options.cache;
+          var useCache = options.useCache;
 
           var setSvgLoadCacheValue = function(val) {
-            if (cache) {
+            if (useCache) {
               var svgLoad = svgLoadCache[absUrl];
               for (var i = 0; i < svgLoad[LENGTH]; ++i) {
                 svgLoad[i](val);
@@ -366,7 +366,7 @@
 
           removeEventListeners(imgElem);
 
-          if (cache) {
+          if (useCache) {
             var svgLoad = svgLoadCache[absUrl];
 
             var handleLoadValue = function(loadValue) {
@@ -404,7 +404,7 @@
                   // Invoke afterLoad hook which may modify the SVG element.
                   afterLoad(svgElem);
 
-                  if (cache) {
+                  if (useCache) {
                     // Update svgString because the SVG element can be modified in the afterLoad hook, so
                     // the modified SVG element is also used for all later cached injections
                     svgString = getXMLSerializer().serializeToString(svgElem);

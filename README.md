@@ -159,7 +159,7 @@ Additionaly after loading the SVG, the value of the `src` attribute of the `<img
 
 | Property name | Type | Default | Description |
 | ------------- | ---- | ------- | ----------- |
-| cache | boolean | `true` | If set to `true` the SVG will be cached using the absolute URL. The cache only persists for the lifetime of the page. Without caching images with the same absolute URL will trigger a new XMLHttpRequest but browser caching will still apply. |
+| useCache | boolean | `true` | If set to `true` the SVG will be cached using the absolute URL. The cache only persists for the lifetime of the page. Without caching images with the same absolute URL will trigger a new XMLHttpRequest but browser caching will still apply. |
 | copyAttributes | boolean | `true` | If set to `true` [attributes will be copied](#how-are-attributes-handled) from the `img` to the injected `svg` element. You may implement your own method for copying attributes in the `beforeInject` options hook. |
 | makeIdsUnique | boolean | `true` | If set to `true` the id of elements in the `<defs>` element that can be references by property values (for example 'clipPath') are made unique by appending the string "--inject-X", where X is a running number which increases with each injection. This is done to avoid duplicate ids in the DOM. |
 | beforeLoad | function(img) | `undefined` | Hook before SVG is loaded. The `img` element is passed as a parameter. If the hook returns a string it is used as the URL instead of the `img` element's `src` attribute. |
@@ -285,7 +285,7 @@ This example shows how to use SVGInject with mutiple options.
 
   <script>
     SVGInject.setOptions({
-      cache: false, // no caching
+      useCache: false, // no caching
       copyAttributes: false, // do not copy attributes from `<img>` to `<svg>`
       makeIdsUnique: false, // do not make ids used within the SVG unique
       afterLoad: function(svg) {

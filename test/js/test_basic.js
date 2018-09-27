@@ -286,7 +286,7 @@ runTests([
     };
 
     SVGInject.create('SVGInject10', {
-      cache: false,
+      useCache: false,
       beforeInject: function(img, svg) {
         testSequence('beforeInject');
       },
