@@ -11,7 +11,7 @@ Developed and maintained by [INCORS](http://www.incors.com), the creators of [ic
 
 ## What does it do?
 
-![SVG inject example image](docs/svg-injection.png?raw=true "Title")
+![SVG Injection](docs/svg-injection.png?raw=true "SVG Injection")
 
 
 SVGInject replaces an `<img>` element with an inline SVG. The SVG is loaded from the URL specified in the `src` attribute of the `<img>` element.
