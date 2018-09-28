@@ -11,6 +11,9 @@ Developed and maintained by [INCORS](http://www.incors.com), the creators of [ic
 
 ## What does it do?
 
+![SVG inject example image](docs/svg-injection.png?raw=true "Title")
+
+
 SVGInject replaces an `<img>` element with an inline SVG. The SVG is loaded from the URL specified in the `src` attribute of the `<img>` element.
 
 Element b​efore injection:
@@ -276,7 +279,7 @@ Another, more generic way of providing a fallback image source is using the `onF
 
 ### Example using `options`
 
-This example shows how to use SVGInject with mutiple options.
+This example shows how to use SVGInject with multiple options.
 
 ```html
 <html>
