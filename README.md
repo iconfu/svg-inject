@@ -46,9 +46,9 @@ Include the SVGInject Javascript file in the `<head>` element of your HTML docum
 </head>
 ```
 
-Download plain version (v1.0.5): [svg-inject.js](https://raw.githubusercontent.com/iconfu/svg-inject/v1.0.3/dist/svg-inject.js)
+Download plain version (v1.1.0): [svg-inject.js](https://raw.githubusercontent.com/iconfu/svg-inject/v1.1.0/dist/svg-inject.js)
 
-Download minified version (v1.0.5): [svg-inject.min.js](https://raw.githubusercontent.com/iconfu/svg-inject/v1.0.3/dist/svg-inject.min.js)
+Download minified version (v1.1.0): [svg-inject.min.js](https://raw.githubusercontent.com/iconfu/svg-inject/v1.1.0/dist/svg-inject.min.js)
 
 ### npm
 
