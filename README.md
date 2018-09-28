@@ -1,4 +1,4 @@
-![minified size](http://img.badgesize.io/iconfu/svg-inject/master/dist/svg-inject.min.js?label=minified%20size&v=3) ![gzip size](http://img.badgesize.io/iconfu/svg-inject/master/dist/svg-inject.min.js?compression=gzip&v=3) [![npm version](https://badge.fury.io/js/%40iconfu%2Fsvg-inject.svg?v=2)](https://badge.fury.io/js/%40iconfu%2Fsvg-inject)
+![minified size](http://img.badgesize.io/iconfu/svg-inject/master/dist/svg-inject.min.js?label=minified%20size&v=4) ![gzip size](http://img.badgesize.io/iconfu/svg-inject/master/dist/svg-inject.min.js?compression=gzip&v=4) [![npm version](https://badge.fury.io/js/%40iconfu%2Fsvg-inject.svg?v=2)](https://badge.fury.io/js/%40iconfu%2Fsvg-inject)
 
 
 
@@ -166,7 +166,7 @@ Additionaly after loading the SVG, the value of the `src` attribute of the `<img
 | afterLoad | function(svg) | `undefined` | Hook after SVG is loaded. The loaded `svg` element is passed as a parameter. If caching is active this hook will only get called once for injected SVGs with the same absolute path. Changes to the `svg` element in this hook will be applied to all injected SVGs with the same absolute path. |
 | beforeInject | function(img,&nbsp;svg) | `undefined` | Hook directly before the SVG is injected. The `img` and `svg` elements are passed as parameters. The hook is called for every injected SVG. If an [Element](https://developer.mozilla.org/de/docs/Web/API/Element) is returned it gets injected instead of applying the default SVG injection. |
 | afterInject | function(img,&nbsp;svg) | `undefined` | Hook after SVG is injected. The `img` and `svg` elements are passed as parameters. |
-| onFail | function(img,&nbsp;status) | `undefined` | Hook after injection fails. The `img` element and a `status` string are passed as an parameter. The `status` has one of the values: `'SVG_NOT_SUPPORTED'` - the browser does not support SVG, `'SVG_INVALID'` - the SVG is not in a valid format or `'LOAD_FAIL'` -loading of the SVG failed. <br> <br> If SVGInject is used with the `onload` attribute, `onerror="SVGinject.err(this);"` must be added to the `<img>` element to make sure `onFail` is called. |
+| onFail | function(img,&nbsp;status) | `undefined` | Hook after injection fails. The `img` element and a `status` string are passed as an parameter. The `status` has one of the values: `'SVG_NOT_SUPPORTED'` - the browser does not support SVG, `'SVG_INVALID'` - the SVG is not in a valid format or `'LOAD_FAIL'` - loading of the SVG failed. <br> <br> If SVGInject is used with the `onload` attribute, `onerror="SVGinject.err(this);"` must be added to the `<img>` element to make sure `onFail` is called. |
 
 
 ## How does SVGInject prevent "unstyled image flash"
