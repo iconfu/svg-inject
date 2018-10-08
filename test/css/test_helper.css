@@ -61,6 +61,18 @@ img, svg, .test > div {
   background: #f0f0f0;
 }
 
+.background_1::before {
+  content: '';
+  display: block;
+  width: 128px;
+  height: 128px;
+  background: url(../imgs/test1.png);
+}
+
+.background_1 > img {
+  display: none;
+}  
+
 h3 {
   clear: both;
 }

@@ -10,6 +10,7 @@ gulp.task('default', function (cb) {
     gulp.src('src/svg-inject.js'),
     gulp.dest('dist/'),
     gulp.dest('examples/'),
+    gulp.dest('test/js/'),
     uglify({
       output: {
         preamble: "/* MIT License - https://github.com/iconfu/svg-inject/blob/master/LICENSE */"

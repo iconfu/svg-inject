@@ -186,9 +186,9 @@ runTests([
       afterInject: fail,
       onFail: function(img) {
         img.src = 'imgs/test1.png';
-        if (++count == 6) {
+        if (++count == 7) {
           success();
-        } else if (count > 6) {
+        } else if (count > 7) {
           fail();
         }
       }
@@ -204,9 +204,9 @@ runTests([
       afterInject: fail,
       onFail: function(img) {
         img.src = 'imgs/test1.png';
-        if (++count == 6) {
+        if (++count == 7) {
           success();
-        } else if (count > 6) {
+        } else if (count > 7) {
           fail();
         }
       }

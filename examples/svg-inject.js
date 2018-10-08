@@ -23,7 +23,7 @@
   var SVG_INVALID = 'SVG_INVALID';
   var ATTRIBUTE_EXCLUSION_NAMES = ['src', 'alt', 'onload', 'onerror'];
   var A_ELEMENT = document[CREATE_ELEMENT]('a');
-  var DIV_ELEMENT = document[CREATE_ELEMENT]('div');
+  //var DIV_ELEMENT = document[CREATE_ELEMENT]('div');
   var IS_SVG_SUPPORTED = typeof SVGRect != 'undefined';
   var DEFAULT_OPTIONS = {
     useCache: TRUE,
@@ -235,24 +235,16 @@
   }
 
   // Builds an SVG element from the specified SVG string
-  function buildSvgElement(svgStr) {
-    // Set the svg string as the innerHTML for the div element. This creates the SVG DOM, which we
-    // can then remove from the div element and return.
-    try {
-      DIV_ELEMENT.innerHTML = svgStr;
-    } catch (e) {
+  function buildSvgElement(svgStr, verify) {
+    // Parse the SVG string with SVGParser
+    var svgDoc = new DOMParser().parseFromString(svgStr, 'text/xml');
+    
+    if (verify && svgDoc.getElementsByTagName('parsererror').length) {
+      // DOMParser does not throw an exception, but instead returns an parsererror document
       return NULL;
     }
-    // Set svg as first child that is an element (comment and text nodes are skipped)
-    var svgElem = DIV_ELEMENT.firstElementChild;
-    // Remove all children from div element. This includes the svg element and all unused elements,
-    // for example comments before or after the svg element.
-    while (DIV_ELEMENT.firstChild) {
-      DIV_ELEMENT.removeChild(DIV_ELEMENT.firstChild);
-    }
-    if (svgElem instanceof SVGElement) {
-      return svgElem;
-    }
+
+    return svgDoc.documentElement;
   }
 
   function removeOnLoadAttribute(imgElem) {
@@ -345,8 +337,6 @@
     function SVGInjectElement(imgElem, options) {
       if (imgElem) {
         if (!imgElem[__SVGINJECT]) {
-          imgElem[__SVGINJECT] = INJECT;
-
           removeEventListeners(imgElem);
 
           if (!IS_SVG_SUPPORTED) {
@@ -356,7 +346,16 @@
 
           // Invoke beforeLoad hook if set. If the beforeLoad returns a value use it as the src for the load
           // URL path. Else use the imgElem src attribute value.
-          var src = (options.beforeLoad && options.beforeLoad(imgElem)) || imgElem.src;
+          var src = (options.beforeLoad && options.beforeLoad(imgElem)) || imgElem.getAttribute('src');
+
+          if (src === null) {
+            // If no image src attribute is set do no injection. This can only be reached by using javascript
+            // because if no src attribute is set the onload and onerror events do not get called
+            return;
+          }
+
+          imgElem[__SVGINJECT] = INJECT;
+          
           var absUrl = getAbsoluteUrl(src);
           var useCache = options.useCache;
 
@@ -379,7 +378,7 @@
               } else if (loadValue === SVG_INVALID) {
                 svgInvalid(imgElem, options);
               } else {
-                inject(imgElem, buildSvgElement(loadValue), absUrl, options);
+                inject(imgElem, buildSvgElement(loadValue, false), absUrl, options);
               }
             };
 
@@ -400,9 +399,9 @@
             if (imgElem[__SVGINJECT] == INJECT) {
               // Use the XML from the XHR request if it is an instance of Document. Otherwise
               // (for example of IE9), create the svg document from the svg string.
-              var svgElem = svgXml instanceof Document ? svgXml.documentElement : buildSvgElement(svgString);
+              var svgElem = svgXml instanceof Document ? svgXml.documentElement : buildSvgElement(svgString, true);
 
-              if (svgElem) {
+              if (svgElem instanceof SVGElement) {
                 var afterLoad = options.afterLoad;
                 if (afterLoad) {
                   // Invoke afterLoad hook which may modify the SVG element.
