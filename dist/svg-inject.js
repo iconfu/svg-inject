@@ -48,11 +48,17 @@
 
   var uniqueIdCounter = 1;
   var xmlSerializer;
+  var domParser;
 
   // Returns the xmlSerializer instance. Creates it first if it does not exist yet.
   function getXMLSerializer() {
     xmlSerializer = xmlSerializer || new XMLSerializer();
     return xmlSerializer;
+  }
+
+  function getDOMParser() {
+    domParser = domParser || new DOMParser();
+    return domParser;
   }
 
   // Returns the absolute url for the specified url
@@ -233,17 +239,29 @@
     }
   }
 
+  
+
   // Builds an SVG element from the specified SVG string
   function buildSvgElement(svgStr, verify) {
-    // Parse the SVG string with DOMParser
-    var svgDoc = new DOMParser().parseFromString(svgStr, 'text/xml');
-    
-    if (verify && svgDoc.getElementsByTagName('parsererror').length) {
-      // DOMParser does not throw an exception, but instead returns an parsererror document
-      return NULL;
-    }
+    //if (verify) {
+      // Parse the SVG string with DOMParser
+      var svgDoc;
+      try {
+        svgDoc = getDOMParser().parseFromString(svgStr, 'text/xml');
+      } catch(e) {}
+      
+      if (!svgDoc || (verify && svgDoc.getElementsByTagName('parsererror').length)) {
+        // DOMParser does not throw an exception, but instead returns an parsererror document
+        return NULL;
+      }
 
-    return svgDoc.documentElement;
+      return svgDoc.documentElement;
+    /*} else {
+      var div = document.createElement('div');
+      div.innerHTML = svgStr;
+      return div.firstElementChild;
+    }*/
+    
   }
 
   function removeOnLoadAttribute(imgElem) {

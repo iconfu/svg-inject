@@ -385,7 +385,7 @@ runTests([
 
     SVGInject.create('SVGInject15', {
       beforeLoad: function(img) {
-        return img.srcset;
+        return img.getAttribute('srcset');
       },
       afterInject: function() {
         if (++count == 6) {
