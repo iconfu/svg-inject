@@ -24,13 +24,15 @@
   var ATTRIBUTE_EXCLUSION_NAMES = ['src', 'alt', 'onload', 'onerror'];
   var A_ELEMENT = document[CREATE_ELEMENT]('a');
   var DIV_ELEMENT = document[CREATE_ELEMENT]('div');
-  var IS_SVG_SUPPORTED = typeof SVGRect != "undefined";
+  var IS_SVG_SUPPORTED = typeof SVGRect != 'undefined';
   var DEFAULT_OPTIONS = {
     useCache: TRUE,
     copyAttributes: TRUE,
     makeIdsUnique: TRUE
   };
-  var TAG_NAME_PROPERTIES_MAP = {
+  // Map of IRI referenceable tag names to properties that can reference them. This is defined in
+  // https://www.w3.org/TR/SVG11/linking.html#processingIRI
+  var IRI_TAG_PROPERTIES_MAP = {
     clipPath: ['clip-path'],
     'color-profile': NULL,
     cursor: NULL,
@@ -115,57 +117,57 @@
     }
   }
 
-  // This function appends a unique suffix to ids of elements in the <defs> element that can be referenced by
-  // properties from within the SVG (for example "filter", "mask", etc.). References to the ids are adjusted
-  // accordingly. The suffix has the form "--inject-X", where X is a running number which increases with each
-  // injection. The suffix is appended to avoid ID collision between two injected SVGs. Since all ids within
-  // one SVG must be unique, the same suffix can be used for all ids of one injected SVG.
+  // This function appends a suffix to IDs of referenced elements in the <defs> in order to  to avoid ID collision
+  // between multiple injected SVGs. The suffix has the form "--inject-X", where X is a running number which is
+  // incremented with each injection.  References to the ids are adjusted accordingly.
+  // We assume tha all ids within the injected SVG are unique, therefore the same suffix can be used for all ids of one
+  // injected SVG.
   function makeIdsUnique(svgElem) {
     var i, j;
     var idSuffix = '--inject-' + uniqueIdCounter++;
-    // Collect ids from all elements below the <defs> element(s).
-    var defElements = svgElem.querySelectorAll('defs [id]');
-    var defElem, tag, id;
-    var propertyIdsMap = {};
-    var mappedProperties, mappedProperty;
-    for (i = 0; i < defElements[LENGTH]; i++) {
-      defElem = defElements[i];
-      tag = defElem.tagName;
-      // Get array with possible property names for the element's tag name. If the array is empty,
-      // the only property name is the same as the tag name.
-      if (tag in TAG_NAME_PROPERTIES_MAP) {
-        id = defElem.id;
-        // Add suffix to id and set it as new id for the element
-        defElem.id += idSuffix;
-        // Add id for each mapped property
-        mappedProperties = TAG_NAME_PROPERTIES_MAP[tag] || [tag];
+    // Get all elements with an id. It is recommended to put referenced elements inside <defs> elements, but this
+    // is not required, therefore we have to search the whole SVG.
+    var idElements = svgElem.querySelectorAll('[id]');
+    var idElem, tagName, id;
+    var iriPropertiesObj = {};
+    var mappedProperties;
+    for (i = 0; i < idElements[LENGTH]; i++) {
+      idElem = idElements[i];
+      tagName = idElem.tagName;
+      // Make ID unique if tag name is IRI referenceable
+      if (tagName in IRI_TAG_PROPERTIES_MAP) {
+        id = idElem.id;
+        // Add mapped properties to found properties
+        mappedProperties = IRI_TAG_PROPERTIES_MAP[tagName] || [tagName];
         for (j = 0; j < mappedProperties[LENGTH]; j++) {
-          mappedProperty = mappedProperties[j];
-          (propertyIdsMap[mappedProperty] || (propertyIdsMap[mappedProperty] = [])).push(id);
+          iriPropertiesObj[mappedProperties[j]] = true;
         }
+        // Add suffix to element's id
+        idElem.id += idSuffix;
       }
     }
-    // Get all property names for which ids were found
-    var properties = Object.keys(propertyIdsMap);
-    if (properties[LENGTH]) {
-      // Run through all elements and replace ids in references
+    // Replace IDs with new IDs in all references
+    // Get an array of all iri referenceable property names that were found
+    var iriPropertiesArr = Object.keys(iriPropertiesObj);
+    if (iriPropertiesArr[LENGTH]) {
+      // Add "style" to properties, because it can contain references in the form 'style="fill:url(#myFill)"'
+      iriPropertiesArr.push('style');
+      // Regular expression for functional notations of an IRI references. This will find occurences in the form
+      // url(#anyId) or url("#anyId") (for Internet Explorer)
+      var funcIriRegExp = new RegExp('url\\("?#([a-zA-Z][\\w:.-]*)"?\\)', 'g');
+      // Run through all elements of the SVG and replace ids in references
       var allElements = svgElem.querySelectorAll('*');
-      var element, property, propertyVal;
+      var element, propertyName, propertyVal;
       for (i = 0; i < allElements[LENGTH]; i++) {
         element = allElements[i];
         if (element.hasAttributes()) {
           // Run through all property names for which ids were found
-          for (j = 0; j < properties[LENGTH]; j++) {
-            property = properties[j];
-            propertyVal = element.getAttribute(property);
-            if (propertyVal) {
-              // Extract id from property value if it has the form url(#anyId) or
-              // url("#anyId") (for Internet Explorer)
-              var idMatch = propertyVal.match(/url\("?#([a-zA-Z][\w:.-]*)"?\)/);
-              if (idMatch && propertyIdsMap[property].indexOf(idMatch[1]) >= 0) {
-                // Replace reference with new id if id was found for the property
-                element.setAttribute(property, 'url(#' + idMatch[1] + idSuffix + ')');
-              }
+          for (j = 0; j < iriPropertiesArr[LENGTH]; j++) {
+            propertyName = iriPropertiesArr[j];
+            propertyVal = element.getAttribute(propertyName);
+            var newVal = propertyVal && propertyVal.replace(funcIriRegExp, 'url(#$1' + idSuffix + ')');
+            if (newVal !== propertyVal) {
+              element.setAttribute(propertyName, newVal);
             }
           }
         }
@@ -254,6 +256,8 @@
   }
 
   function removeOnLoadAttribute(imgElem) {
+    // Remove the onload attribute. Should only be used to remove the unstyled image flash protection and
+    // make the element visible, not for removing the event listener.
     imgElem.removeAttribute('onload');
   }
 
