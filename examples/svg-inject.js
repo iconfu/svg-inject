@@ -343,6 +343,8 @@
         if (!imgElem[__SVGINJECT]) {
           imgElem[__SVGINJECT] = INJECT;
 
+          removeEventListeners(imgElem);
+
           if (!IS_SVG_SUPPORTED) {
             svgNotSupported(imgElem, options);
             return;
@@ -363,8 +365,6 @@
               svgLoadCache[absUrl] = val;
             }
           };
-
-          removeEventListeners(imgElem);
 
           if (useCache) {
             var svgLoad = svgLoadCache[absUrl];

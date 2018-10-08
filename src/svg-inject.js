@@ -254,6 +254,8 @@
   }
 
   function removeOnLoadAttribute(imgElem) {
+    // Remove the onload attribute. Should only be used to remove the unstyled image flash protection and
+    // make the element visible, not for removing the event listener.
     imgElem.removeAttribute('onload');
   }
 
@@ -343,6 +345,8 @@
         if (!imgElem[__SVGINJECT]) {
           imgElem[__SVGINJECT] = INJECT;
 
+          removeEventListeners(imgElem);
+
           if (!IS_SVG_SUPPORTED) {
             svgNotSupported(imgElem, options);
             return;
@@ -363,8 +367,6 @@
               svgLoadCache[absUrl] = val;
             }
           };
-
-          removeEventListeners(imgElem);
 
           if (useCache) {
             var svgLoad = svgLoadCache[absUrl];
