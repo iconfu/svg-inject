@@ -24,7 +24,7 @@
   var ATTRIBUTE_EXCLUSION_NAMES = ['src', 'alt', 'onload', 'onerror'];
   var A_ELEMENT = document[CREATE_ELEMENT]('a');
   var DIV_ELEMENT = document[CREATE_ELEMENT]('div');
-  var IS_SVG_SUPPORTED = typeof SVGRect != "undefined";
+  var IS_SVG_SUPPORTED = typeof SVGRect != 'undefined';
   var DEFAULT_OPTIONS = {
     useCache: TRUE,
     copyAttributes: TRUE,
