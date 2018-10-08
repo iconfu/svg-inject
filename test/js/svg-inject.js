@@ -23,7 +23,6 @@
   var SVG_INVALID = 'SVG_INVALID';
   var ATTRIBUTE_EXCLUSION_NAMES = ['src', 'alt', 'onload', 'onerror'];
   var A_ELEMENT = document[CREATE_ELEMENT]('a');
-  //var DIV_ELEMENT = document[CREATE_ELEMENT]('div');
   var IS_SVG_SUPPORTED = typeof SVGRect != 'undefined';
   var DEFAULT_OPTIONS = {
     useCache: TRUE,
@@ -236,7 +235,7 @@
 
   // Builds an SVG element from the specified SVG string
   function buildSvgElement(svgStr, verify) {
-    // Parse the SVG string with SVGParser
+    // Parse the SVG string with DOMParser
     var svgDoc = new DOMParser().parseFromString(svgStr, 'text/xml');
     
     if (verify && svgDoc.getElementsByTagName('parsererror').length) {
