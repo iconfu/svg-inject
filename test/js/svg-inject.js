@@ -50,12 +50,13 @@
   var xmlSerializer;
   var domParser;
 
-  // Returns the xmlSerializer instance. Creates it first if it does not exist yet.
+  // Returns the XMLSerializer instance. Creates it first if it does not exist yet.
   function getXMLSerializer() {
     xmlSerializer = xmlSerializer || new XMLSerializer();
     return xmlSerializer;
   }
 
+  // Returns the DOMPArser instance. Creates it first if it does not exist yet.
   function getDOMParser() {
     domParser = domParser || new DOMParser();
     return domParser;
@@ -243,25 +244,18 @@
 
   // Builds an SVG element from the specified SVG string
   function buildSvgElement(svgStr, verify) {
-    //if (verify) {
+    var svgDoc;
+    try {
       // Parse the SVG string with DOMParser
-      var svgDoc;
-      try {
-        svgDoc = getDOMParser().parseFromString(svgStr, 'text/xml');
-      } catch(e) {}
-      
-      if (!svgDoc || (verify && svgDoc.getElementsByTagName('parsererror').length)) {
-        // DOMParser does not throw an exception, but instead returns an parsererror document
-        return NULL;
-      }
-
-      return svgDoc.documentElement;
-    /*} else {
-      var div = document.createElement('div');
-      div.innerHTML = svgStr;
-      return div.firstElementChild;
-    }*/
+      svgDoc = getDOMParser().parseFromString(svgStr, 'text/xml');
+    } catch(e) {}
     
+    if (!svgDoc || (verify && svgDoc.getElementsByTagName('parsererror').length)) {
+      // DOMParser does not throw an exception, but instead returns an parsererror document
+      return NULL;
+    }
+
+    return svgDoc.documentElement;
   }
 
   function removeOnLoadAttribute(imgElem) {
