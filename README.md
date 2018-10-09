@@ -1,4 +1,4 @@
-![minified size](http://img.badgesize.io/iconfu/svg-inject/master/dist/svg-inject.min.js?label=minified%20size&v=4) ![gzip size](http://img.badgesize.io/iconfu/svg-inject/master/dist/svg-inject.min.js?compression=gzip&v=4) [![npm version](https://badge.fury.io/js/%40iconfu%2Fsvg-inject.svg?v=2)](https://badge.fury.io/js/%40iconfu%2Fsvg-inject)
+![minified size](http://img.badgesize.io/iconfu/svg-inject/master/dist/svg-inject.min.js?label=minified%20size&v=5) ![gzip size](http://img.badgesize.io/iconfu/svg-inject/master/dist/svg-inject.min.js?compression=gzip&v=5) [![npm version](https://badge.fury.io/js/%40iconfu%2Fsvg-inject.svg?v=5)](https://badge.fury.io/js/%40iconfu%2Fsvg-inject)
 
 
 
