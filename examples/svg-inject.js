@@ -134,7 +134,7 @@
     // Get all elements with an id. It is recommended to put referenced elements inside <defs> elements, but this
     // is not required, therefore we have to search the whole SVG.
     var idElements = svgElem.querySelectorAll('[id]');
-    var idElem, tagName, id;
+    var idElem, tagName;
     var iriPropertiesObj = {};
     var mappedProperties;
     for (i = 0; i < idElements[LENGTH]; i++) {
@@ -142,7 +142,6 @@
       tagName = idElem.tagName;
       // Make ID unique if tag name is IRI referenceable
       if (tagName in IRI_TAG_PROPERTIES_MAP) {
-        id = idElem.id;
         // Add mapped properties to found properties
         mappedProperties = IRI_TAG_PROPERTIES_MAP[tagName] || [tagName];
         for (j = 0; j < mappedProperties[LENGTH]; j++) {
