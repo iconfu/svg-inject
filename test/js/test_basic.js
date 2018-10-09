@@ -393,5 +393,28 @@ runTests([
         }
       }
     });
+  },
+
+  // Test 16
+  function() {
+    var count = 0;
+
+    SVGInject.create('SVGInject16', {
+      onFail: function(img, status) {
+
+        img.src = 'imgs/test1.png';
+
+        console.info(status)
+        if (++count == 2) {
+          success();
+        } else if (count >= 2) {
+          fail();
+        }
+      }
+    });
+
+    domReady(function() {
+      SVGInject16(document.querySelectorAll('#test-16 .inject'));
+    });
   }
 ]);

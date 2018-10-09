@@ -56,7 +56,7 @@
     return xmlSerializer;
   }
 
-  // Returns the DOMPArser instance. Creates it first if it does not exist yet.
+  // Returns the DOMParser instance. Creates it first if it does not exist yet.
   function getDOMParser() {
     domParser = domParser || new DOMParser();
     return domParser;
@@ -245,13 +245,16 @@
   // Builds an SVG element from the specified SVG string
   function buildSvgElement(svgStr, verify) {
     var svgDoc;
+
     try {
       // Parse the SVG string with DOMParser
       svgDoc = getDOMParser().parseFromString(svgStr, 'text/xml');
-    } catch(e) {}
+    } catch(e) {
+      return NULL;
+    }
     
-    if (!svgDoc || (verify && svgDoc.getElementsByTagName('parsererror').length)) {
-      // DOMParser does not throw an exception, but instead returns an parsererror document
+    if (verify && svgDoc.getElementsByTagName('parsererror').length) {
+      // DOMParser does not throw an exception, but instead puts parsererror tags in the document
       return NULL;
     }
 
