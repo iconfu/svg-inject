@@ -401,10 +401,8 @@ runTests([
 
     SVGInject.create('SVGInject16', {
       onFail: function(img, status) {
-
         img.src = 'imgs/test1.png';
 
-        console.info(status)
         if (++count == 2) {
           success();
         } else if (count >= 2) {
