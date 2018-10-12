@@ -71,9 +71,9 @@ $ yarn add @iconfu/svg-inject
 
 ## Basic usage
 
-Add `onload="SVGInject(this)"` to any `<img>` element where you want the SVG to be injected
+### Call SVGInject from the `onload` attribute
 
-**Example:**
+Add `onload="SVGInject(this)"` to any `<img>` element where you want the SVG to be injected
 
 ```html
 <html>
@@ -81,14 +81,36 @@ Add `onload="SVGInject(this)"` to any `<img>` element where you want the SVG to 
   <script src="svg-inject.min.js"></script>
 </head>
 <body>
-  <img src="image.svg" onload="SVGInject(this)" />
+  <img src="image1.svg" onload="SVGInject(this)" />
+  <img src="image2.svg" onload="SVGInject(this)" />
 </body>
 </html>
 ```
 
-**That's all: The SVG gets injected and is styleable!!!**
+For most usecases this approach is recommended and provides nice [advantages](#what-are-additional-advantages-when-using-onload).
+
+### Call SVGInject from anywhere
+
+```html
+<html>
+<head>
+  <script src="svg-inject.min.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      SVGInject(document.querySelector("img.inject-me"));
+    });
+  </script>
+</head>
+<body>
+  <img src="image1.svg" class="inject-me" />
+  <img src="image2.svg" class="inject-me" />
+</body>
+</html>
+```
 
 :sparkles: :sparkles: :sparkles:
+
+**Hurray - The SVGs get injected and are styleable!!!**
 
 
 <hr>
@@ -319,7 +341,7 @@ This example shows how to use SVGInject with multiple options.
 
 ### Example without using the `onload` attribute
 
-This example shows how to use SVGInject directly from Javascript without the `onload` attribute. After the DOM content has loaded, SVGInject is called on all elements with class `prevent-unstyled-image-flash`. It also implements a method to prevent [unstyled image flash](#how-does-svginject-prevent-unstyled-image-flash).
+This example shows how to use SVGInject directly from Javascript without the `onload` attribute. After the DOM content has loaded, SVGInject is called on all elements with class `inject-me`. It also implements a method to prevent [unstyled image flash](#how-does-svginject-prevent-unstyled-image-flash).
 
 
 ```html
@@ -330,7 +352,7 @@ This example shows how to use SVGInject directly from Javascript without the `on
   <!-- hide images until injection has completed or failed -->
   <style>
     /* hide all img elements until the svg is injected to prevent "unstyled image flash" */
-    img.prevent-unstyled-image-flash {
+    img.inject-me {
       visibility: hidden;
     }
   </style>
@@ -339,19 +361,19 @@ This example shows how to use SVGInject directly from Javascript without the `on
     SVGInject.setOptions({
       onFail: function(img, svg) {
         // if injection fails show the img element
-        img.classList.remove('prevent-unstyled-image-flash');
+        img.classList.remove('inject-me');
       }
     });
 
     document.addEventListener('DOMContentLoaded', function() {
       // inject images with an .svg file ending
-      SVGInject(document.querySelectorAll('img[src$=".svg"]'));
+      SVGInject(document.querySelectorAll('img.inject-me'));
     });
   </script>
 </head>
 <body>
-  <img src="image_1.svg" class="prevent-unstyled-image-flash" />
-  <img src="image_2.svg" class="prevent-unstyled-image-flash" />
+  <img src="image_1.svg" class="inject-me" />
+  <img src="image_2.svg" class="inject-me" />
 </body>
 </html>
 ```
