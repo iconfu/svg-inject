@@ -71,9 +71,11 @@ $ yarn add @iconfu/svg-inject
 
 ## Basic usage
 
-### Call SVGInject from the `onload` attribute
+### Option 1 - Call SVGInject from the `onload` attribute
 
-Add `onload="SVGInject(this)"` to any `<img>` element where you want the SVG to be injected
+Add `onload="SVGInject(this)"` to any `<img>` element where you want the SVG to be injected.
+
+For most usecases this approach is recommended and provides nice [advantages](#what-are-additional-advantages-when-using-onload).
 
 ```html
 <html>
@@ -87,9 +89,7 @@ Add `onload="SVGInject(this)"` to any `<img>` element where you want the SVG to 
 </html>
 ```
 
-For most usecases this approach is recommended and provides nice [advantages](#what-are-additional-advantages-when-using-onload).
-
-### Call SVGInject from anywhere
+### Option 2 - Call SVGInject from anywhere
 
 ```html
 <html>
@@ -110,7 +110,7 @@ For most usecases this approach is recommended and provides nice [advantages](#w
 
 :sparkles: :sparkles: :sparkles:
 
-**Hurray - The SVGs get injected and are styleable!!!**
+**Hooray - The SVGs get injected and are styleable!!!**
 
 
 <hr>
