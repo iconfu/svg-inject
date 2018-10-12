@@ -337,8 +337,8 @@
     function SVGInject(img, options) {
       options = mergeOptions(defaultOptions, options);
 
-      var length;
-      var doneCount = 0;
+      var injectNum;
+      var injectCount = 0;
 
       var run = function(resolve) {
         var onAllFinish = function() {
@@ -347,27 +347,28 @@
         };
 
         var onFinish = function() {
-          if (++doneCount == length) {
+          if (++injectCount == injectNum) {
             onAllFinish();
           }
         };
 
         if (img && typeof img[LENGTH] != 'undefined') {
-          length = img[LENGTH];
-          for (var i = 0; i < length; ++i) {
+          injectNum = img[LENGTH];
+          
+          for (var i = 0; i < injectNum; ++i) {
             SVGInjectElement(img[i], options, onFinish);
           }
-        } else {
-          length = 1;
-          SVGInjectElement(img, options, onFinish);
-        }
 
-        if (length == 0) {
-          onAllFinish();
+          if (injectNum == 0) {
+            onAllFinish();
+          }
+        } else {
+          injectNum = 1;
+          SVGInjectElement(img, options, onFinish);
         }
       };
 
-      return Promise ? new Promise(run) : run();
+      return typeof Promise == 'undefined' ? run() : new Promise(run);
     }
 
     // Injects a single svg element. Options must be already merged with the default options.
@@ -425,6 +426,7 @@
               } else {
                 handleLoadValue(svgLoad);
               }
+              callback();
               return;
             } else {
               svgLoadCache[absUrl] = [];
