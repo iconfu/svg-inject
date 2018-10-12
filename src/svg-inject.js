@@ -337,17 +337,41 @@
     function SVGInject(img, options) {
       options = mergeOptions(defaultOptions, options);
 
-      if (img && typeof img[LENGTH] != 'undefined') {
-        for (var i = 0; i < img[LENGTH]; ++i) {
-          SVGInjectElement(img[i], options);
+      var length;
+      var doneCount = 0;
+
+      var run = function(resolve) {
+        var onAllFinish = function() {
+          options.onAllFinish && options.onAllFinish();
+          resolve && resolve();
+        };
+
+        var onFinish = function() {
+          if (++doneCount == length) {
+            onAllFinish();
+          }
+        };
+
+        if (img && typeof img[LENGTH] != 'undefined') {
+          length = img[LENGTH];
+          for (var i = 0; i < length; ++i) {
+            SVGInjectElement(img[i], options, onFinish);
+          }
+        } else {
+          length = 1;
+          SVGInjectElement(img, options, onFinish);
         }
-      } else {
-        SVGInjectElement(img, options);
-      }
+
+        if (length == 0) {
+          onAllFinish();
+        }
+      };
+
+      return Promise ? new Promise(run) : run();
     }
 
     // Injects a single svg element. Options must be already merged with the default options.
-    function SVGInjectElement(imgElem, options) {
+    function SVGInjectElement(imgElem, options, callback) {
       if (imgElem) {
         if (!imgElem[__SVGINJECT]) {
           removeEventListeners(imgElem);
@@ -434,9 +458,11 @@
                 setSvgLoadCacheValue(SVG_INVALID);
               }
             }
+            callback();
           }, function() {
             loadFail(imgElem, options);
             setSvgLoadCacheValue(LOAD_FAIL);
+            callback();
           });
         }
       } else {
