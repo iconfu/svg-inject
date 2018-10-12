@@ -97,13 +97,13 @@ For most usecases this approach is recommended and provides nice [advantages](#w
   <script src="svg-inject.min.js"></script>
   <script>
     document.addEventListener("DOMContentLoaded", function() {
-      SVGInject(document.querySelector("img.inject-me"));
+      SVGInject(document.querySelector("img.injectable"));
     });
   </script>
 </head>
 <body>
-  <img src="image1.svg" class="inject-me" />
-  <img src="image2.svg" class="inject-me" />
+  <img src="image1.svg" class="injectable" />
+  <img src="image2.svg" class="injectable" />
 </body>
 </html>
 ```
@@ -341,7 +341,7 @@ This example shows how to use SVGInject with multiple options.
 
 ### Example without using the `onload` attribute
 
-This example shows how to use SVGInject directly from Javascript without the `onload` attribute. After the DOM content has loaded, SVGInject is called on all elements with class `inject-me`. It also implements a method to prevent [unstyled image flash](#how-does-svginject-prevent-unstyled-image-flash).
+This example shows how to use SVGInject directly from Javascript without the `onload` attribute. After the DOM content has loaded, SVGInject is called on all elements with class `injectable`. It also implements a method to prevent [unstyled image flash](#how-does-svginject-prevent-unstyled-image-flash).
 
 
 ```html
@@ -352,7 +352,7 @@ This example shows how to use SVGInject directly from Javascript without the `on
   <!-- hide images until injection has completed or failed -->
   <style>
     /* hide all img elements until the svg is injected to prevent "unstyled image flash" */
-    img.inject-me {
+    img.injectable {
       visibility: hidden;
     }
   </style>
@@ -361,19 +361,19 @@ This example shows how to use SVGInject directly from Javascript without the `on
     SVGInject.setOptions({
       onFail: function(img, svg) {
         // if injection fails show the img element
-        img.classList.remove('inject-me');
+        img.classList.remove('injectable');
       }
     });
 
     document.addEventListener('DOMContentLoaded', function() {
       // inject images with an .svg file ending
-      SVGInject(document.querySelectorAll('img.inject-me'));
+      SVGInject(document.querySelectorAll('img.injectable'));
     });
   </script>
 </head>
 <body>
-  <img src="image_1.svg" class="inject-me" />
-  <img src="image_2.svg" class="inject-me" />
+  <img src="image_1.svg" class="injectable" />
+  <img src="image_2.svg" class="injectable" />
 </body>
 </html>
 ```
