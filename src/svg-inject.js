@@ -136,9 +136,8 @@
     var idElements = svgElem.querySelectorAll('[id]');
     var idElem;
     var tagName;
-    var iriPropertiesArr = [];
     var iriTagNames = {};
-    var mappedProperties;
+    var iriPropertiesArr = [];
     for (i = 0; i < idElements[LENGTH]; i++) {
       idElem = idElements[i];
       tagName = idElem.tagName;
@@ -156,14 +155,14 @@
         });
       }
     }
+    // Get all properties that are mapped to the found tags
     for (tagName in iriTagNames) {
-      // Collect all properties mapped to found tags
-      mappedProperties = IRI_TAG_PROPERTIES_MAP[tagName] || [tagName];
-      for (j = 0; j < mappedProperties[LENGTH]; j++) {
-        if (iriPropertiesArr.indexOf(mappedProperties[j])) {
-          iriPropertiesArr.push(mappedProperties[j]);
+      (IRI_TAG_PROPERTIES_MAP[tagName] || [tagName]).forEach(function (mappedProperty) {
+        // We can afford linear search here because the number of possible entries is very small (maximum 11)
+        if (iriPropertiesArr.indexOf(mappedProperty) < 0) {
+          iriPropertiesArr.push(mappedProperty);
         }
-      }
+      });
     }
     // Replace IDs with new IDs in all references
     // Get an array of all iri referenceable property names that were found
