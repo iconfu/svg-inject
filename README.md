@@ -93,17 +93,14 @@ For most usecases this approach is recommended and provides nice [advantages](#w
 
 ```html
 <html>
-<head>
-  <script src="svg-inject.min.js"></script>
-  <script>
-    document.addEventListener("DOMContentLoaded", function() {
-      SVGInject(document.querySelector("img.injectable"));
-    });
-  </script>
-</head>
 <body>
   <img src="image1.svg" class="injectable" />
   <img src="image2.svg" class="injectable" />
+
+  <script src="svg-inject.min.js"></script>
+  <script>
+    SVGInject(document.querySelector("img.injectable"));
+  </script>
 </body>
 </html>
 ```
