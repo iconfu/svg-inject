@@ -15,7 +15,7 @@ SVGInject replaces an `<img>` element with an inline SVG. The SVG is loaded from
 
 ![SVG Injection](https://github.com/iconfu/svg-inject/raw/master/resources/svg-injection.png?raw=true "SVG Injection")
 
-Element b​efore injection:
+Element before injection:
 
 ```html
 <img src="image.svg" onload="SVGInject(this)" />
@@ -38,7 +38,7 @@ An SVG can only be properly styled with CSS and accessed with Javascript on elem
 
 ### Manually 
 
-Include the SVGInject Javascript file in the `<head>` element of your HTML document
+Include the SVGInject Javascript file in the `<head>` element of the HTML document, or anywhere before the first usage of SVGInject
 
 ```html
 <head>
