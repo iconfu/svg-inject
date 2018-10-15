@@ -414,5 +414,14 @@ runTests([
     domReady(function() {
       SVGInject16(document.querySelectorAll('#test-16 .inject'));
     });
+  },
+
+  // Test 17
+  function() {
+    SVGInject.create('SVGInject17', {
+      onFail: fail
+    });
+
+    success();
   }
 ]);

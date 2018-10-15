@@ -131,48 +131,71 @@
   function makeIdsUnique(svgElem) {
     var i, j;
     var idSuffix = '--inject-' + uniqueIdCounter++;
-    // Get all elements with an id. It is recommended to put referenced elements inside <defs> elements, but this
-    // is not required, therefore we have to search the whole SVG.
+    // Get all elements with an id. The SVG spec recommends to put referenced elements inside <defs> elements, but
+    // this is a requirement, therefore we have to search for IDs in the whole SVG.
     var idElements = svgElem.querySelectorAll('[id]');
-    var idElem, tagName;
-    var iriPropertiesObj = {};
+    var idElem;
+    var tagName;
+    var iriPropertiesArr = [];
+    var iriTagNames = {};
     var mappedProperties;
     for (i = 0; i < idElements[LENGTH]; i++) {
       idElem = idElements[i];
       tagName = idElem.tagName;
       // Make ID unique if tag name is IRI referenceable
       if (tagName in IRI_TAG_PROPERTIES_MAP) {
-        // Add mapped properties to found properties
-        mappedProperties = IRI_TAG_PROPERTIES_MAP[tagName] || [tagName];
-        for (j = 0; j < mappedProperties[LENGTH]; j++) {
-          iriPropertiesObj[mappedProperties[j]] = true;
-        }
+        iriTagNames[tagName] = 1;
         // Add suffix to element's id
         idElem.id += idSuffix;
+        //ToDo: Check if and why this only needs to be done for IRI referencable tags
+        // Replace ids xlink:ref and href attributes
+        ['xlink:href', 'href'].forEach(function(refAttrName) {
+          var iri = idElem.getAttribute(refAttrName);
+          if (/^\s*#/.test(iri)) { // Check if iri is non-null and has correct format
+            idElem.setAttribute(refAttrName, iri.trim() + idSuffix)
+          }
+        });
+      }
+    }
+    for (tagName in iriTagNames) {
+      // Add mapped properties to found properties
+      mappedProperties = IRI_TAG_PROPERTIES_MAP[tagName] || [tagName];
+      for (j = 0; j < mappedProperties[LENGTH]; j++) {
+        if (iriPropertiesArr.indexOf(mappedProperties[j])) {
+          iriPropertiesArr.push(mappedProperties[j]);
+        }
       }
     }
     // Replace IDs with new IDs in all references
     // Get an array of all iri referenceable property names that were found
-    var iriPropertiesArr = Object.keys(iriPropertiesObj);
     if (iriPropertiesArr[LENGTH]) {
-      // Add "style" to properties, because it can contain references in the form 'style="fill:url(#myFill)"'
+      // Add "style" to properties, because it may contain references in the form 'style="fill:url(#myFill)"'
       iriPropertiesArr.push('style');
       // Regular expression for functional notations of an IRI references. This will find occurences in the form
       // url(#anyId) or url("#anyId") (for Internet Explorer)
       var funcIriRegExp = new RegExp('url\\("?#([a-zA-Z][\\w:.-]*)"?\\)', 'g');
       // Run through all elements of the SVG and replace ids in references
       var allElements = svgElem.querySelectorAll('*');
-      var element, propertyName, propertyVal;
+      var element;
+      var propertyName;
+      var value;
+      var newValue;
       for (i = 0; i < allElements[LENGTH]; i++) {
         element = allElements[i];
-        if (element.hasAttributes()) {
+        if (element.tagName == 'style') {
+          value = element.textContent;
+          newValue = value && value.replace(funcIriRegExp, 'url(#$1' + idSuffix + ')');
+          if (newValue !== value) {
+            element.textContent = newValue;
+          }
+        } else if (element.hasAttributes()) {
           // Run through all property names for which ids were found
           for (j = 0; j < iriPropertiesArr[LENGTH]; j++) {
             propertyName = iriPropertiesArr[j];
-            propertyVal = element.getAttribute(propertyName);
-            var newVal = propertyVal && propertyVal.replace(funcIriRegExp, 'url(#$1' + idSuffix + ')');
-            if (newVal !== propertyVal) {
-              element.setAttribute(propertyName, newVal);
+            value = element.getAttribute(propertyName);
+            newValue = value && value.replace(funcIriRegExp, 'url(#$1' + idSuffix + ')');
+            if (newValue !== value) {
+              element.setAttribute(propertyName, newValue);
             }
           }
         }
