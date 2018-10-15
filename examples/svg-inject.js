@@ -147,8 +147,7 @@
         iriTagNames[tagName] = 1;
         // Add suffix to element's id
         idElem.id += idSuffix;
-        //ToDo: Check if and why this only needs to be done for IRI referencable tags
-        // Replace ids xlink:ref and href attributes
+        // Replace ids in xlink:ref and href attributes
         ['xlink:href', 'href'].forEach(function(refAttrName) {
           var iri = idElem.getAttribute(refAttrName);
           if (/^\s*#/.test(iri)) { // Check if iri is non-null and has correct format
@@ -158,7 +157,7 @@
       }
     }
     for (tagName in iriTagNames) {
-      // Add mapped properties to found properties
+      // Collect all properties mapped to found tags
       mappedProperties = IRI_TAG_PROPERTIES_MAP[tagName] || [tagName];
       for (j = 0; j < mappedProperties[LENGTH]; j++) {
         if (iriPropertiesArr.indexOf(mappedProperties[j])) {
