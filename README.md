@@ -250,7 +250,8 @@ This is the standard usage of SVGInject which works on all modern browsers, and 
   <script src="svg-inject.min.js"></script>
 </head>
 <body>
-  <img src="image.svg" onload="SVGInject(this)" />
+  <img src="image1.svg" onload="SVGInject(this)" />
+  <img src="image2.svg" onload="SVGInject(this)" />
 </body>
 </html>
 ```
