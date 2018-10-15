@@ -105,9 +105,7 @@ For most usecases this approach is recommended and provides nice [advantages](#w
 </html>
 ```
 
-:sparkles: :sparkles: :sparkles:
-
-**Hooray - The SVGs get injected and are styleable!!!**
+**Hooray :tada: - The SVGs get injected and are styleable!!!**
 
 
 <hr>
