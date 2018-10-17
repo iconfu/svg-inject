@@ -107,7 +107,7 @@
     var attributeName;
     var attributeValue;
     var attributes = imgElem.attributes;
-    for (var i = 0; i < attributes[_LENGTH_]; ++i) {
+    for (var i = 0; i < attributes[_LENGTH_]; i++) {
       attribute = attributes[i];
       attributeName = attribute.name;
       // Only copy attributes not explicitly excluded from copying
@@ -251,7 +251,7 @@
     var mergedOptions = {};
     var args = arguments;
     // Iterate over all specified options objects and add all properties to the new options object
-    for (var i = 0; i < args[_LENGTH_]; ++i) {
+    for (var i = 0; i < args[_LENGTH_]; i++) {
       var argument = args[i];
         for (var key in argument) {
           if (argument.hasOwnProperty(key)) {
@@ -377,7 +377,7 @@
     function SVGInject(img, options) {
       options = mergeOptions(defaultOptions, options);
       if (img && typeof img[_LENGTH_] != _UNDEFINED_) {
-        for (var i = 0; i < img[_LENGTH_]; ++i) {
+        for (var i = 0; i < img[_LENGTH_]; i++) {
           SVGInjectElement(img[i], options);
         }
       } else {
