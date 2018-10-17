@@ -10,24 +10,27 @@
 
 (function(window, document) {
   // constants for better minification
+  var _CREATE_ELEMENT_ = 'createElement';
+  var _GET_ELEMENTS_BY_TAG_NAME_ = 'getElementsByTagName';
+  var _LENGTH_ = 'length';
+  var _STYLE_ = 'style';
+  var _TITLE_ = 'title';
+  var _UNDEFINED_ = 'undefined';
+
   var NULL = null;
-  var TRUE = true;
-  var LENGTH = 'length';
-  var CREATE_ELEMENT = 'createElement';
-  var TITLE = 'title';
-  var __SVGINJECT = '__svgInject';
 
   // constants
+  var __SVGINJECT = '__svgInject';
   var LOAD_FAIL = 'LOAD_FAIL';
   var SVG_NOT_SUPPORTED = 'SVG_NOT_SUPPORTED';
   var SVG_INVALID = 'SVG_INVALID';
   var ATTRIBUTE_EXCLUSION_NAMES = ['src', 'alt', 'onload', 'onerror'];
-  var A_ELEMENT = document[CREATE_ELEMENT]('a');
-  var IS_SVG_SUPPORTED = typeof SVGRect != 'undefined';
+  var A_ELEMENT = document[_CREATE_ELEMENT_]('a');
+  var IS_SVG_SUPPORTED = typeof SVGRect != _UNDEFINED_;
   var DEFAULT_OPTIONS = {
-    useCache: TRUE,
-    copyAttributes: TRUE,
-    makeIdsUnique: TRUE
+    useCache: true,
+    copyAttributes: true,
+    makeIdsUnique: true
   };
   // Map of IRI referenceable tag names to properties that can reference them. This is defined in
   // https://www.w3.org/TR/SVG11/linking.html#processingIRI
@@ -50,11 +53,13 @@
   var xmlSerializer;
   var domParser;
 
+
   // Returns the XMLSerializer instance. Creates it first if it does not exist yet.
   function getXMLSerializer() {
     xmlSerializer = xmlSerializer || new XMLSerializer();
     return xmlSerializer;
   }
+
 
   // Returns the DOMParser instance. Creates it first if it does not exist yet.
   function getDOMParser() {
@@ -62,11 +67,13 @@
     return domParser;
   }
 
+
   // Returns the absolute url for the specified url
   function getAbsoluteUrl(url) {
     A_ELEMENT.href = url;
     return A_ELEMENT.href;
   }
+
 
   // Load svg with an XHR request
   function loadSvg(url, callback, errorCallback) {
@@ -88,29 +95,33 @@
           }
         }
       };
-      req.open('GET', url, TRUE);
+      req.open('GET', url, true);
       req.send();
     }
   }
 
+
   // Copy attributes from img element to svg element
   function copyAttributes(imgElem, svgElem) {
+    var attribute;
+    var attributeName;
+    var attributeValue;
     var attributes = imgElem.attributes;
-    for (var i = 0; i < attributes[LENGTH]; ++i) {
-      var attribute = attributes[i];
-      var attributeName = attribute.name;
+    for (var i = 0; i < attributes[_LENGTH_]; ++i) {
+      attribute = attributes[i];
+      attributeName = attribute.name;
       // Only copy attributes not explicitly excluded from copying
       if (ATTRIBUTE_EXCLUSION_NAMES.indexOf(attributeName) == -1) {
-        var attributeValue = attribute.value;
+        attributeValue = attribute.value;
         // If img attribute is "title", insert a title element into SVG element
-        if (attributeName == TITLE) {
+        if (attributeName == _TITLE_) {
           // Create title element
-          var titleElem = document.createElementNS('http://www.w3.org/2000/svg', TITLE);
+          var titleElem = document[_CREATE_ELEMENT_ + 'NS']('http://www.w3.org/2000/svg', _TITLE_);
           titleElem.textContent = attributeValue;
           // If the SVG element's first child is a title element, replace it with the new title
           // element, otherwise insert the new title element as first child
           var firstElementChild = svgElem.firstElementChild;
-          if (firstElementChild && firstElementChild.tagName.toLowerCase() == TITLE) {
+          if (firstElementChild && firstElementChild.tagName.toLowerCase() == _TITLE_) {
             svgElem.replaceChild(titleElem, firstElementChild);
           } else {
             svgElem.insertBefore(titleElem, firstElementChild);
@@ -122,6 +133,7 @@
       }
     }
   }
+
 
   // This function appends a suffix to IDs of referenced elements in the <defs> in order to  to avoid ID collision
   // between multiple injected SVGs. The suffix has the form "--inject-X", where X is a running number which is
@@ -137,8 +149,8 @@
     var idElem;
     var tagName;
     var iriTagNames = {};
-    var iriPropertiesArr = [];
-    for (i = 0; i < idElements[LENGTH]; i++) {
+    var iriProperties = [];
+    for (i = 0; i < idElements[_LENGTH_]; i++) {
       idElem = idElements[i];
       tagName = idElem.tagName;
       // Make ID unique if tag name is IRI referenceable
@@ -158,40 +170,41 @@
     // Get all properties that are mapped to the found tags
     for (tagName in iriTagNames) {
       (IRI_TAG_PROPERTIES_MAP[tagName] || [tagName]).forEach(function (mappedProperty) {
-        // We can afford linear search here because the number of possible entries is very small (maximum 11)
-        if (iriPropertiesArr.indexOf(mappedProperty) < 0) {
-          iriPropertiesArr.push(mappedProperty);
+        // Add mapped properties to array of iri referencing properties.
+        // Use linear search here because the number of possible entries is very small (maximum 11)
+        if (iriProperties.indexOf(mappedProperty) < 0) {
+          iriProperties.push(mappedProperty);
         }
       });
     }
     // Replace IDs with new IDs in all references
-    // Get an array of all iri referenceable property names that were found
-    if (iriPropertiesArr[LENGTH]) {
+    if (iriProperties[_LENGTH_]) {
       // Add "style" to properties, because it may contain references in the form 'style="fill:url(#myFill)"'
-      iriPropertiesArr.push('style');
+      iriProperties.push(_STYLE_);
       // Regular expression for functional notations of an IRI references. This will find occurences in the form
       // url(#anyId) or url("#anyId") (for Internet Explorer)
-      var funcIriRegExp = new RegExp('url\\("?#([a-zA-Z][\\w:.-]*)"?\\)', 'g');
-      // Run through all elements of the SVG and replace ids in references
-      var allElements = svgElem.querySelectorAll('*');
+      var funcIriRegex = /url\("?#([a-zA-Z][\w:.-]*)"?\)/g;
+      // Run through all elements of the SVG and replace ids in references. It seems that getElementsByTagName('*')
+      // performs faster than querySelectorAll('*') in this case.
+      var allElements = svgElem[_GET_ELEMENTS_BY_TAG_NAME_]('*');
       var element;
       var propertyName;
       var value;
       var newValue;
-      for (i = 0; i < allElements[LENGTH]; i++) {
+      for (i = 0; i < allElements[_LENGTH_]; i++) {
         element = allElements[i];
-        if (element.tagName == 'style') {
+        if (element.tagName == _STYLE_) {
           value = element.textContent;
-          newValue = value && value.replace(funcIriRegExp, 'url(#$1' + idSuffix + ')');
+          newValue = value && value.replace(funcIriRegex, 'url(#$1' + idSuffix + ')');
           if (newValue !== value) {
             element.textContent = newValue;
           }
         } else if (element.hasAttributes()) {
           // Run through all property names for which ids were found
-          for (j = 0; j < iriPropertiesArr[LENGTH]; j++) {
-            propertyName = iriPropertiesArr[j];
+          for (j = 0; j < iriProperties[_LENGTH_]; j++) {
+            propertyName = iriProperties[j];
             value = element.getAttribute(propertyName);
-            newValue = value && value.replace(funcIriRegExp, 'url(#$1' + idSuffix + ')');
+            newValue = value && value.replace(funcIriRegex, 'url(#$1' + idSuffix + ')');
             if (newValue !== value) {
               element.setAttribute(propertyName, newValue);
             }
@@ -200,6 +213,7 @@
       }
     }
   }
+
 
   // inject svg by replacing the img element with the svg element in the DOM
   function inject(imgElem, svgElem, absUrl, options) {
@@ -231,61 +245,59 @@
     }
   }
 
+
   // Merges any number of options objects into a new object
   function mergeOptions() {
     var mergedOptions = {};
     var args = arguments;
     // Iterate over all specified options objects and add all properties to the new options object
-    for (var i = 0; i < args[LENGTH]; ++i) {
+    for (var i = 0; i < args[_LENGTH_]; ++i) {
       var argument = args[i];
-      if (argument) {
         for (var key in argument) {
           if (argument.hasOwnProperty(key)) {
             mergedOptions[key] = argument[key];
           }
         }
       }
-    }
     return mergedOptions;
   }
 
+
   // Adds the specified CSS to the document's <head> element
   function addStyleToHead(css) {
-    var head = document.getElementsByTagName('head')[0];
+    var head = document[_GET_ELEMENTS_BY_TAG_NAME_]('head')[0];
     if (head) {
-      var style = document[CREATE_ELEMENT]('style');
+      var style = document[_CREATE_ELEMENT_](_STYLE_);
       style.type = 'text/css';
       style.appendChild(document.createTextNode(css));
       head.appendChild(style);
     }
   }
 
-  
 
   // Builds an SVG element from the specified SVG string
   function buildSvgElement(svgStr, verify) {
     var svgDoc;
-
     try {
       // Parse the SVG string with DOMParser
       svgDoc = getDOMParser().parseFromString(svgStr, 'text/xml');
     } catch(e) {
       return NULL;
     }
-    
-    if (verify && svgDoc.getElementsByTagName('parsererror').length) {
+    if (verify && svgDoc[_GET_ELEMENTS_BY_TAG_NAME_]('parsererror')[_LENGTH_]) {
       // DOMParser does not throw an exception, but instead puts parsererror tags in the document
       return NULL;
     }
-
     return svgDoc.documentElement;
   }
+
 
   function removeOnLoadAttribute(imgElem) {
     // Remove the onload attribute. Should only be used to remove the unstyled image flash protection and
     // make the element visible, not for removing the event listener.
     imgElem.removeAttribute('onload');
   }
+
 
   function fail(imgElem, status, options) {
     imgElem[__SVGINJECT] = FAIL;
@@ -294,28 +306,34 @@
     }
   }
 
+
   function svgInvalid(imgElem, options) {
     removeOnLoadAttribute(imgElem);
     fail(imgElem, SVG_INVALID, options);
   }
+
 
   function svgNotSupported(imgElem, options) {
     removeOnLoadAttribute(imgElem);
     fail(imgElem, SVG_NOT_SUPPORTED, options);
   }
 
+
   function loadFail(imgElem, options) {
     fail(imgElem, LOAD_FAIL, options);
   }
+
 
   function removeEventListeners(imgElem) {
     imgElem.onload = NULL;
     imgElem.onerror = NULL;
   }
 
+
   function throwImgNotSet() {
     throw new Error('img not set');
   }
+
 
   function createSVGInject(globalName, options) {
     var defaultOptions = mergeOptions(DEFAULT_OPTIONS, options);
@@ -326,6 +344,7 @@
       // injection is finished. This avoids showing the unstyled SVGs before style is applied.
       addStyleToHead('img[onload^="' + globalName + '("]{visibility:hidden;}');
     }
+
 
     /**
      * SVGInject
@@ -357,15 +376,15 @@
      */
     function SVGInject(img, options) {
       options = mergeOptions(defaultOptions, options);
-
-      if (img && typeof img[LENGTH] != 'undefined') {
-        for (var i = 0; i < img[LENGTH]; ++i) {
+      if (img && typeof img[_LENGTH_] != _UNDEFINED_) {
+        for (var i = 0; i < img[_LENGTH_]; ++i) {
           SVGInjectElement(img[i], options);
         }
       } else {
         SVGInjectElement(img, options);
       }
     }
+
 
     // Injects a single svg element. Options must be already merged with the default options.
     function SVGInjectElement(imgElem, options) {
@@ -380,25 +399,25 @@
 
           // Invoke beforeLoad hook if set. If the beforeLoad returns a value use it as the src for the load
           // URL path. Else use the imgElem src attribute value.
-          var src = (options.beforeLoad && options.beforeLoad(imgElem)) || imgElem.getAttribute('src');
+          var beforeLoad = options.beforeLoad;
+          var src = (beforeLoad && beforeLoad(imgElem)) || imgElem.getAttribute('src');
 
-          if (src === null) {
+          if (src === NULL) {
             // If no image src attribute is set do no injection. This can only be reached by using javascript
             // because if no src attribute is set the onload and onerror events do not get called
             return;
           }
 
           imgElem[__SVGINJECT] = INJECT;
-          
+
           var absUrl = getAbsoluteUrl(src);
           var useCache = options.useCache;
 
           var setSvgLoadCacheValue = function(val) {
             if (useCache) {
-              var svgLoad = svgLoadCache[absUrl];
-              for (var i = 0; i < svgLoad[LENGTH]; ++i) {
-                svgLoad[i](val);
-              }
+              svgLoadCache[absUrl].forEach(function(svgLoad) {
+                svgLoad(val);
+              });
               svgLoadCache[absUrl] = val;
             }
           };
@@ -416,8 +435,10 @@
               }
             };
 
-            if (svgLoad !== undefined) {
+            if (typeof svgLoad != _UNDEFINED_) {
+              // Value for url exists in cache
               if (Array.isArray(svgLoad)) {
+                // Same url has been cached, but value has not been loaded yet
                 svgLoad.push(handleLoadValue);
               } else {
                 handleLoadValue(svgLoad);
@@ -465,6 +486,7 @@
       }
     }
 
+
     /**
      * Sets the default [options](#options) for SVGInject.
      *
@@ -474,8 +496,10 @@
       defaultOptions = mergeOptions(defaultOptions, options);
     };
 
+
     // Create a new instance of SVGInject
     SVGInject.create = createSVGInject;
+
 
     /**
      * Used in onerror Event of an `<img>` element to handle cases when the loading the original src fails
