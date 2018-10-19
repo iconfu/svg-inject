@@ -350,7 +350,9 @@
      * SVGInject
      *
      * Injects the SVG specified in the `src` attribute of the specified `img` element or array of `img`
-     * elements.
+     * elements. Returns a Promise object which resolves if all `img` elements have either been inected or
+     * failed to inject (Only if a global Promise Object is available (in all modern browsers or through a
+     * polyfill). 
      *
      * Options:
      * useCache: If set to `true` the SVG will be cached using the absolute URL. Default value is `true`.
@@ -367,6 +369,8 @@
      * beforeInject: Hook before SVG is injected. The `img` and `svg` elements are passed as parameters. If
      *     any html element is returned it gets injected instead of applying the default SVG injection.
      * afterInject: Hook after SVG is injected. The `img` and `svg` elements are passed as parameters.
+     * onAllFinish: Hook after all `img` elements passed to an SVGInject() call have either been injected or
+     *     failed to inject.
      * onFail: Hook after injection fails. The `img` element and a `status` string are passed as an parameter.
      *     The `status` can be either `'SVG_NOT_SUPPORTED'` (the browser does not support SVG),
      *     `'SVG_INVALID'` (the SVG is not in a valid format) or `'LOAD_FAILED'` (loading of the SVG failed).
@@ -377,34 +381,31 @@
     function SVGInject(img, options) {
       options = mergeOptions(defaultOptions, options);
 
-      var injectNum;
-      var injectCount = 0;
-
       var run = function(resolve) {
         var onAllFinish = function() {
           options.onAllFinish && options.onAllFinish();
           resolve && resolve();
         };
 
-        var onFinish = function() {
-          if (++injectCount == injectNum) {
-            onAllFinish();
-          }
-        };
-
         if (img && typeof img[_LENGTH_] != _UNDEFINED_) {
-          injectNum = img[_LENGTH_];
-          
-          for (var i = 0; i < injectNum; ++i) {
-            SVGInjectElement(img[i], options, onFinish);
-          }
+          var injectCount = 0;
+          var injectNum = img[_LENGTH_];
 
           if (injectNum == 0) {
             onAllFinish();
+          } else {
+            var onFinish = function() {
+              if (++injectCount == injectNum) {
+                onAllFinish();
+              }
+            };
+            
+            for (var i = 0; i < injectNum; ++i) {
+              SVGInjectElement(img[i], options, onFinish);
+            }
           }
         } else {
-          injectNum = 1;
-          SVGInjectElement(img, options, onFinish);
+          SVGInjectElement(img, options, onAllFinish);
         }
       };
 
@@ -415,7 +416,8 @@
     // Injects a single svg element. Options must be already merged with the default options.
     function SVGInjectElement(imgElem, options, callback) {
       if (imgElem) {
-        if (!imgElem[__SVGINJECT]) {
+        var svgInjectAttributeValue = imgElem[__SVGINJECT];
+        if (!svgInjectAttributeValue) {
           removeEventListeners(imgElem);
 
           if (!IS_SVG_SUPPORTED) {
@@ -434,7 +436,16 @@
             return;
           }
 
-          imgElem[__SVGINJECT] = INJECT;
+          // set array so later calls can register callbacks
+          var onFinishCallbacks = [];
+          imgElem[__SVGINJECT] = onFinishCallbacks;
+
+          var onFinish = function() {
+            callback();
+            onFinishCallbacks.forEach(function(onFinishCallback) {
+              onFinishCallback();
+            });
+          };
 
           var absUrl = getAbsoluteUrl(src);
           var useCache = options.useCache;
@@ -459,6 +470,7 @@
               } else {
                 inject(imgElem, buildSvgElement(loadValue, false), absUrl, options);
               }
+              onFinish();
             };
 
             if (typeof svgLoad != _UNDEFINED_) {
@@ -469,7 +481,6 @@
               } else {
                 handleLoadValue(svgLoad);
               }
-              callback();
               return;
             } else {
               svgLoadCache[absUrl] = [];
@@ -478,37 +489,42 @@
 
           // Load the SVG because it is not cached or caching is disabled
           loadSvg(absUrl, function(svgXml, svgString) {
-            if (imgElem[__SVGINJECT] == INJECT) {
-              // Use the XML from the XHR request if it is an instance of Document. Otherwise
-              // (for example of IE9), create the svg document from the svg string.
-              var svgElem = svgXml instanceof Document ? svgXml.documentElement : buildSvgElement(svgString, true);
+            // Use the XML from the XHR request if it is an instance of Document. Otherwise
+            // (for example of IE9), create the svg document from the svg string.
+            var svgElem = svgXml instanceof Document ? svgXml.documentElement : buildSvgElement(svgString, true);
 
-              if (svgElem instanceof SVGElement) {
-                var afterLoad = options.afterLoad;
-                if (afterLoad) {
-                  // Invoke afterLoad hook which may modify the SVG element.
-                  afterLoad(svgElem);
+            if (svgElem instanceof SVGElement) {
+              var afterLoad = options.afterLoad;
+              if (afterLoad) {
+                // Invoke afterLoad hook which may modify the SVG element.
+                afterLoad(svgElem);
 
-                  if (useCache) {
-                    // Update svgString because the SVG element can be modified in the afterLoad hook, so
-                    // the modified SVG element is also used for all later cached injections
-                    svgString = getXMLSerializer().serializeToString(svgElem);
-                  }
+                if (useCache) {
+                  // Update svgString because the SVG element can be modified in the afterLoad hook, so
+                  // the modified SVG element is also used for all later cached injections
+                  svgString = getXMLSerializer().serializeToString(svgElem);
                 }
-
-                inject(imgElem, svgElem, absUrl, options);
-                setSvgLoadCacheValue(svgString);
-              } else {
-                svgInvalid(imgElem, options);
-                setSvgLoadCacheValue(SVG_INVALID);
               }
+
+              inject(imgElem, svgElem, absUrl, options);
+              setSvgLoadCacheValue(svgString);
+            } else {
+              svgInvalid(imgElem, options);
+              setSvgLoadCacheValue(SVG_INVALID);
             }
-            callback();
+            onFinish();
           }, function() {
             loadFail(imgElem, options);
             setSvgLoadCacheValue(LOAD_FAIL);
-            callback();
+            onFinish();
           });
+        } else {
+          if (Array.isArray(svgInjectAttributeValue)) {
+            // svgInjectAttributeValue is an array. Injection is not complete so register callback
+            svgInjectAttributeValue.push(callback);
+          } else {
+            callback();
+          }
         }
       } else {
         throwImgNotSet();

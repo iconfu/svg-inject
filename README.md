@@ -169,7 +169,7 @@ Additionaly after loading the SVG, the value of the `src` attribute of the `<img
 
 | Function | Description |
 |----------|-------------|
-| SVGInject(img, options) | Injects the SVG specified in the `src` attribute of the specified `img` element or array of elements. The optional second parameter sets the [options](#options) for this injection. |
+| SVGInject(img, options) | Injects the SVG specified in the `src` attribute of the specified `img` element or array of elements. The optional second parameter sets the [options](#options) for this injection. Returns a `Promise` object which resolves if all `img` elements have either been injected or failed to inject (Only if a global [Promise Object is available](https://caniuse.com/#feat=promises) (in all modern browsers or through a [polyfill](https://www.npmjs.com/package/promise-polyfill)).  |
 | SVGInject.setOptions(options) | Sets the default [options](#options) for SVGInject. |
 | SVGInject.err(img, fallbackSrc) | Used in `onerror` event of an `<img>` element to handle cases when loading of the original source fails (for example if the file is corrupt or not found or if the browser does not support SVG). This triggers a call to the option's `onFail` hook if available. The optional second parameter will be set as the new `src` attribute for the `img` element. |
 
@@ -185,6 +185,7 @@ Additionaly after loading the SVG, the value of the `src` attribute of the `<img
 | afterLoad | function(svg) | `undefined` | Hook after SVG is loaded. The loaded `svg` element is passed as a parameter. If caching is active this hook will only get called once for injected SVGs with the same absolute path. Changes to the `svg` element in this hook will be applied to all injected SVGs with the same absolute path. |
 | beforeInject | function(img,&nbsp;svg) | `undefined` | Hook directly before the SVG is injected. The `img` and `svg` elements are passed as parameters. The hook is called for every injected SVG. If an [Element](https://developer.mozilla.org/de/docs/Web/API/Element) is returned it gets injected instead of applying the default SVG injection. |
 | afterInject | function(img,&nbsp;svg) | `undefined` | Hook after SVG is injected. The `img` and `svg` elements are passed as parameters. |
+| onAllFinish | function() | `undefined` | Hook after all `img` elements passed to an SVGInject() call have either been injected or failed to inject.
 | onFail | function(img,&nbsp;status) | `undefined` | Hook after injection fails. The `img` element and a `status` string are passed as an parameter. The `status` has one of the values: `'SVG_NOT_SUPPORTED'` - the browser does not support SVG, `'SVG_INVALID'` - the SVG is not in a valid format or `'LOAD_FAIL'` - loading of the SVG failed. <br> <br> If SVGInject is used with the `onload` attribute, `onerror="SVGinject.err(this);"` must be added to the `<img>` element to make sure `onFail` is called. |
 
 

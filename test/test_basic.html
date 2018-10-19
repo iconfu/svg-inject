@@ -7,7 +7,7 @@
   <link rel="stylesheet" type="text/css" href="css/test_helper.css" />
   <link rel="stylesheet" type="text/css" href="css/test_basic.css" />
 
-  <script src="js/svg-inject.min.js"></script>
+  <script src="js/svg-inject.js"></script>
   <script src="js/test_helper.js"></script>
   <script src="js/test_basic.js"></script>
 
@@ -217,6 +217,21 @@
       <div><img src="imgs/test-17-corel.svg" onload="SVGInject17(this)" /></div>
       <div><img src="imgs/test-17-inkscape.svg" onload="SVGInject17(this)" /></div>
       <div><img src="imgs/test-17-custom.svg" onload="SVGInject17(this)" /></div>
+    </div>
+  </div>
+
+  <h3>Test 18</h3>
+  <!-- Test Promise and onAllFinish -->
+  <div id="test-18">
+    <div class="test">
+      <div><img src="imgs/test1.svg" class="inject-success all group-1 group-2" /></div>
+      <div><img src="imgs/test1.svg" class="inject-success all group-2" /></div>
+      <div><img src="imgs/test2.svg" class="inject-success all group-1 group-2" /></div>
+      <div><img src="imgs/test2.svg" class="inject-success all group-2 group-3" /></div>
+      <div><img src="imgs/test3.svg" class="inject-success all group-1 group-3" /></div>
+      <div><img src="imgs/test3.svg" class="inject-success all group-3" /></div>
+      <div><img src="imgs/malformed1.svg" class="inject-fail inject all group-1 group-3" /></div>
+      <div><img src="imgs/malformed1.svg" class="inject-fail inject all group-3" /></div>
     </div>
   </div>
 </body>

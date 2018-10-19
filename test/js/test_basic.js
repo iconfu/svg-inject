@@ -423,5 +423,62 @@ runTests([
     });
 
     success();
+  },
+
+  // Test 18
+  function() {
+    SVGInject.create('SVGInject18');
+
+    var hasPromise = typeof Promise !== 'undefined';
+    var afterLoadCount = 0;
+    var afterInjectCount = 0;
+    var failCount = 0;
+    var allFinishCount = 0;
+    var promiseCount = 0;
+
+    var hookCompleteCount = 0;
+    var hookCompleteNum = hasPromise ? 5 : 4;
+    var hookComplete = function() {
+      isEqualElseFail(++hookCompleteCount, hookCompleteNum, success);
+    };
+  
+
+    var testGroup = function(groupName) {
+      var promise = SVGInject18(document.querySelectorAll('#test-18 .' + groupName), {
+        afterLoad: function() {
+          isEqualElseFail(++afterLoadCount, 3, hookComplete);
+        },
+        afterInject: function() {
+          isEqualElseFail(++afterInjectCount, 6, hookComplete);
+        },
+        onFail: function(img, status) {
+          img.src = 'imgs/test1.png';
+          isEqualElseFail(++failCount, 2, hookComplete);
+        },
+        onAllFinish: function() {
+          isEqualElseFail(++allFinishCount, 4, hookComplete);
+        }
+      });
+
+      if (hasPromise) {
+        promise.then(function() {
+          isEqualElseFail(++promiseCount, 4, hookComplete);
+        });
+      }
+    };
+
+    var groupCount = 0;
+    var groupDone = function() {
+      if (++groupCount == 4) {
+        success();
+      }
+    };
+
+    domReady(function() {
+      testGroup('all');
+      testGroup('group-1');
+      testGroup('group-2');
+      testGroup('group-3');
+    });
   }
 ]);

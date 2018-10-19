@@ -376,20 +376,44 @@
      */
     function SVGInject(img, options) {
       options = mergeOptions(defaultOptions, options);
-      if (img && typeof img[_LENGTH_] != _UNDEFINED_) {
-        for (var i = 0; i < img[_LENGTH_]; i++) {
-          SVGInjectElement(img[i], options);
+
+      var run = function(resolve) {
+        var onAllFinish = function() {
+          options.onAllFinish && options.onAllFinish();
+          resolve && resolve();
+        };
+
+        if (img && typeof img[_LENGTH_] != _UNDEFINED_) {
+          var injectCount = 0;
+          var injectNum = img[_LENGTH_];
+
+          if (injectNum == 0) {
+            onAllFinish();
+          } else {
+            var onFinish = function() {
+              if (++injectCount == injectNum) {
+                onAllFinish();
+              }
+            };
+            
+            for (var i = 0; i < injectNum; ++i) {
+              SVGInjectElement(img[i], options, onFinish);
+            }
+          }
+        } else {
+          SVGInjectElement(img, options, onAllFinish);
         }
-      } else {
-        SVGInjectElement(img, options);
-      }
+      };
+
+      return typeof Promise == 'undefined' ? run() : new Promise(run);
     }
 
 
     // Injects a single svg element. Options must be already merged with the default options.
-    function SVGInjectElement(imgElem, options) {
+    function SVGInjectElement(imgElem, options, callback) {
       if (imgElem) {
-        if (!imgElem[__SVGINJECT]) {
+        var svgInjectAttributeValue = imgElem[__SVGINJECT];
+        if (!svgInjectAttributeValue) {
           removeEventListeners(imgElem);
 
           if (!IS_SVG_SUPPORTED) {
@@ -408,7 +432,16 @@
             return;
           }
 
-          imgElem[__SVGINJECT] = INJECT;
+          // set array so later calls can register callbacks
+          var onFinishCallbacks = [];
+          imgElem[__SVGINJECT] = onFinishCallbacks;
+
+          var onFinish = function() {
+            callback();
+            onFinishCallbacks.forEach(function(onFinishCallback) {
+              onFinishCallback();
+            });
+          };
 
           var absUrl = getAbsoluteUrl(src);
           var useCache = options.useCache;
@@ -433,6 +466,7 @@
               } else {
                 inject(imgElem, buildSvgElement(loadValue, false), absUrl, options);
               }
+              onFinish();
             };
 
             if (typeof svgLoad != _UNDEFINED_) {
@@ -451,7 +485,7 @@
 
           // Load the SVG because it is not cached or caching is disabled
           loadSvg(absUrl, function(svgXml, svgString) {
-            if (imgElem[__SVGINJECT] == INJECT) {
+            //if (imgElem[__SVGINJECT] == INJECT) {
               // Use the XML from the XHR request if it is an instance of Document. Otherwise
               // (for example of IE9), create the svg document from the svg string.
               var svgElem = svgXml instanceof Document ? svgXml.documentElement : buildSvgElement(svgString, true);
@@ -475,11 +509,20 @@
                 svgInvalid(imgElem, options);
                 setSvgLoadCacheValue(SVG_INVALID);
               }
-            }
+            //}
+            onFinish();
           }, function() {
             loadFail(imgElem, options);
             setSvgLoadCacheValue(LOAD_FAIL);
+            onFinish();
           });
+        } else {
+          if (Array.isArray(svgInjectAttributeValue)) {
+            // svgInjectAttributeValue is an array. Injection is not complete so register callback
+            svgInjectAttributeValue.push(callback);
+          } else {
+            callback();
+          }
         }
       } else {
         throwImgNotSet();
