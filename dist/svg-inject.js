@@ -350,7 +350,9 @@
      * SVGInject
      *
      * Injects the SVG specified in the `src` attribute of the specified `img` element or array of `img`
-     * elements.
+     * elements. Returns a Promise object which resolves if all passed in `img` elements have either been
+     * injected or failed to inject (Only if a global Promise object is available like in all modern browsers
+     * or through a polyfill). 
      *
      * Options:
      * useCache: If set to `true` the SVG will be cached using the absolute URL. Default value is `true`.
@@ -367,6 +369,8 @@
      * beforeInject: Hook before SVG is injected. The `img` and `svg` elements are passed as parameters. If
      *     any html element is returned it gets injected instead of applying the default SVG injection.
      * afterInject: Hook after SVG is injected. The `img` and `svg` elements are passed as parameters.
+     * onAllFinish: Hook after all `img` elements passed to an SVGInject() call have either been injected or
+     *     failed to inject.
      * onFail: Hook after injection fails. The `img` element and a `status` string are passed as an parameter.
      *     The `status` can be either `'SVG_NOT_SUPPORTED'` (the browser does not support SVG),
      *     `'SVG_INVALID'` (the SVG is not in a valid format) or `'LOAD_FAILED'` (loading of the SVG failed).
@@ -485,31 +489,29 @@
 
           // Load the SVG because it is not cached or caching is disabled
           loadSvg(absUrl, function(svgXml, svgString) {
-            //if (imgElem[__SVGINJECT] == INJECT) {
-              // Use the XML from the XHR request if it is an instance of Document. Otherwise
-              // (for example of IE9), create the svg document from the svg string.
-              var svgElem = svgXml instanceof Document ? svgXml.documentElement : buildSvgElement(svgString, true);
+            // Use the XML from the XHR request if it is an instance of Document. Otherwise
+            // (for example of IE9), create the svg document from the svg string.
+            var svgElem = svgXml instanceof Document ? svgXml.documentElement : buildSvgElement(svgString, true);
 
-              if (svgElem instanceof SVGElement) {
-                var afterLoad = options.afterLoad;
-                if (afterLoad) {
-                  // Invoke afterLoad hook which may modify the SVG element.
-                  afterLoad(svgElem);
+            if (svgElem instanceof SVGElement) {
+              var afterLoad = options.afterLoad;
+              if (afterLoad) {
+                // Invoke afterLoad hook which may modify the SVG element.
+                afterLoad(svgElem);
 
-                  if (useCache) {
-                    // Update svgString because the SVG element can be modified in the afterLoad hook, so
-                    // the modified SVG element is also used for all later cached injections
-                    svgString = getXMLSerializer().serializeToString(svgElem);
-                  }
+                if (useCache) {
+                  // Update svgString because the SVG element can be modified in the afterLoad hook, so
+                  // the modified SVG element is also used for all later cached injections
+                  svgString = getXMLSerializer().serializeToString(svgElem);
                 }
-
-                inject(imgElem, svgElem, absUrl, options);
-                setSvgLoadCacheValue(svgString);
-              } else {
-                svgInvalid(imgElem, options);
-                setSvgLoadCacheValue(SVG_INVALID);
               }
-            //}
+
+              inject(imgElem, svgElem, absUrl, options);
+              setSvgLoadCacheValue(svgString);
+            } else {
+              svgInvalid(imgElem, options);
+              setSvgLoadCacheValue(SVG_INVALID);
+            }
             onFinish();
           }, function() {
             loadFail(imgElem, options);
