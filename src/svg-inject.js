@@ -409,7 +409,7 @@
         }
       };
 
-      return typeof Promise == 'undefined' ? run() : new Promise(run);
+      return typeof Promise == _UNDEFINED_ ? run() : new Promise(run);
     }
 
 
