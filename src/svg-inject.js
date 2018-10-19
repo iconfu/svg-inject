@@ -350,9 +350,9 @@
      * SVGInject
      *
      * Injects the SVG specified in the `src` attribute of the specified `img` element or array of `img`
-     * elements. Returns a Promise object which resolves if all `img` elements have either been inected or
-     * failed to inject (Only if a global Promise Object is available (in all modern browsers or through a
-     * polyfill). 
+     * elements. Returns a Promise object which resolves if all passed in `img` elements have either been
+     * injected or failed to inject (Only if a global Promise object is available like in all modern browsers
+     * or through a polyfill). 
      *
      * Options:
      * useCache: If set to `true` the SVG will be cached using the absolute URL. Default value is `true`.
