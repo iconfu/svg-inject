@@ -419,10 +419,13 @@ runTests([
   // Test 17
   function() {
     SVGInject.create('SVGInject17', {
-      onFail: fail
+      onFail: fail,
+      afterInject: function() {
+        if (document.querySelectorAll('#test-17 img[onload]').length === 0) {
+          success();
+        }
+      }
     });
-
-    success();
   },
 
   // Test 18

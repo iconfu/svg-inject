@@ -21,6 +21,8 @@
 
   // constants
   var __SVGINJECT = '__svgInject';
+  var ID_SUFFIX = '--inject-';
+  var ID_SUFFIX_REGEX = new RegExp(ID_SUFFIX + '\d*', "g");
   var LOAD_FAIL = 'LOAD_FAIL';
   var SVG_NOT_SUPPORTED = 'SVG_NOT_SUPPORTED';
   var SVG_INVALID = 'SVG_INVALID';
@@ -45,9 +47,8 @@
     pattern: ['fill', 'stroke'],
     radialGradient: ['fill', 'stroke']
   };
-  var INJECT = 1;
-  var INJECTED = 2;
-  var FAIL = 3;
+  var INJECTED = 1;
+  var FAIL = 2;
 
   var uniqueIdCounter = 1;
   var xmlSerializer;
@@ -142,7 +143,7 @@
   // injected SVG.
   function makeIdsUnique(svgElem) {
     var i, j;
-    var idSuffix = '--inject-' + uniqueIdCounter++;
+    var idSuffix = ID_SUFFIX + uniqueIdCounter++;
     // Get all elements with an id. The SVG spec recommends to put referenced elements inside <defs> elements, but
     // this is a requirement, therefore we have to search for IDs in the whole SVG.
     var idElements = svgElem.querySelectorAll('[id]');
@@ -150,11 +151,13 @@
     var tagName;
     var iriTagNames = {};
     var iriProperties = [];
+    var changed = false;
     for (i = 0; i < idElements[_LENGTH_]; i++) {
       idElem = idElements[i];
       tagName = idElem.tagName;
       // Make ID unique if tag name is IRI referenceable
       if (tagName in IRI_TAG_PROPERTIES_MAP) {
+        changed = true;
         iriTagNames[tagName] = 1;
         // Add suffix to element's id
         idElem.id += idSuffix;
@@ -162,7 +165,7 @@
         ['xlink:href', 'href'].forEach(function(refAttrName) {
           var iri = idElem.getAttribute(refAttrName);
           if (/^\s*#/.test(iri)) { // Check if iri is non-null and has correct format
-            idElem.setAttribute(refAttrName, iri.trim() + idSuffix)
+            idElem.setAttribute(refAttrName, iri.trim() + idSuffix);
           }
         });
       }
@@ -212,8 +215,16 @@
         }
       }
     }
+
+    // return boolean if svgElem has been changed
+    return changed;
   }
 
+  // for alredy cached SVGs ids are made unique by simply replacing the already inserted unique ids with a 
+  // higher id counter. This has a much more performant as makeIdsUnique() 
+  function makeIdsUniqueCached(svgString) {
+    return svgString.replace(ID_SUFFIX_REGEX, ID_SUFFIX + uniqueIdCounter++);
+  }
 
   // inject svg by replacing the img element with the svg element in the DOM
   function inject(imgElem, svgElem, absUrl, options) {
@@ -223,9 +234,6 @@
       if (parentNode) {
         if (options.copyAttributes) {
           copyAttributes(imgElem, svgElem);
-        }
-        if (options.makeIdsUnique) {
-          makeIdsUnique(svgElem, options);
         }
         // Invoke beforeInject hook if set
         var beforeInject = options.beforeInject;
@@ -388,6 +396,7 @@
         };
 
         if (img && typeof img[_LENGTH_] != _UNDEFINED_) {
+          // an array like structure of img elements
           var injectCount = 0;
           var injectNum = img[_LENGTH_];
 
@@ -405,10 +414,12 @@
             }
           }
         } else {
+          // only on img element
           SVGInjectElement(img, options, onAllFinish);
         }
       };
 
+      // return a Promise object if globally available
       return typeof Promise == _UNDEFINED_ ? run() : new Promise(run);
     }
 
@@ -448,10 +459,11 @@
           };
 
           var absUrl = getAbsoluteUrl(src);
-          var useCache = options.useCache;
+          var useCacheOption = options.useCache;
+          var makeIdsUniqueOption = options.makeIdsUnique;
 
           var setSvgLoadCacheValue = function(val) {
-            if (useCache) {
+            if (useCacheOption) {
               svgLoadCache[absUrl].forEach(function(svgLoad) {
                 svgLoad(val);
               });
@@ -459,7 +471,7 @@
             }
           };
 
-          if (useCache) {
+          if (useCacheOption) {
             var svgLoad = svgLoadCache[absUrl];
 
             var handleLoadValue = function(loadValue) {
@@ -468,7 +480,29 @@
               } else if (loadValue === SVG_INVALID) {
                 svgInvalid(imgElem, options);
               } else {
-                inject(imgElem, buildSvgElement(loadValue, false), absUrl, options);
+                var hasUniqueIds = loadValue[0];
+                var svgString = loadValue[1];
+                var uniqueIdsSvgString = loadValue[2];
+                var svgElem;
+                
+                if (makeIdsUniqueOption) {
+                  if (hasUniqueIds === null) {
+                    // Ids for the SVG string have not been made unique before. This may happen if previous
+                    // injection of a cached SVG have been run with the option makedIdsUnique set to false
+                    svgElem = buildSvgElement(svgString, false);
+                    hasUniqueIds = makeIdsUnique(svgElem);
+
+                    loadValue[0] = hasUniqueIds;
+                    loadValue[2] = hasUniqueIds ? getXMLSerializer().serializeToString(svgElem) : null;
+                  } else if (hasUniqueIds) {
+                    // Building already cached SVGs has a better performance  
+                    svgElem = buildSvgElement(makeIdsUniqueCached(uniqueIdsSvgString), false);
+                  }
+                }
+
+                svgElem = svgElem || buildSvgElement(svgString, false);
+                    
+                inject(imgElem, svgElem, absUrl, options);
               }
               onFinish();
             };
@@ -499,15 +533,24 @@
                 // Invoke afterLoad hook which may modify the SVG element.
                 afterLoad(svgElem);
 
-                if (useCache) {
-                  // Update svgString because the SVG element can be modified in the afterLoad hook, so
-                  // the modified SVG element is also used for all later cached injections
-                  svgString = getXMLSerializer().serializeToString(svgElem);
-                }
+                // Update svgString because the SVG element can be modified in the afterLoad hook, so the
+                // modified SVG element is also used for all later cached injections
+                svgString = getXMLSerializer().serializeToString(svgElem);
+              }
+
+              var hasUniqueIds = null;
+              if (makeIdsUniqueOption) {
+                hasUniqueIds = makeIdsUnique(svgElem);
+              }
+
+              if (useCacheOption) {
+                var uniqueIdsSvgString = hasUniqueIds ? getXMLSerializer().serializeToString(svgElem) : null;
+
+                // set an array with three entries to the load cache
+                setSvgLoadCacheValue([hasUniqueIds, svgString, uniqueIdsSvgString]);
               }
 
               inject(imgElem, svgElem, absUrl, options);
-              setSvgLoadCacheValue(svgString);
             } else {
               svgInvalid(imgElem, options);
               setSvgLoadCacheValue(SVG_INVALID);
