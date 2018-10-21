@@ -55,17 +55,17 @@
   var domParser;
 
 
-  // Returns the XMLSerializer instance. Creates it first if it does not exist yet.
-  function getXMLSerializer() {
-    xmlSerializer = xmlSerializer || new XMLSerializer();
-    return xmlSerializer;
+  // creates an SVG document from an SVG string
+  function svgStringToSvgDoc(svgStr) {
+    domParser = domParser || new DOMParser();
+    return domParser.parseFromString(svgStr, 'text/xml');
   }
 
 
-  // Returns the DOMParser instance. Creates it first if it does not exist yet.
-  function getDOMParser() {
-    domParser = domParser || new DOMParser();
-    return domParser;
+  // searializes an SVG element to an SVG string
+  function svgElemToSvgString(svgElement) {
+    xmlSerializer = xmlSerializer || new XMLSerializer();
+    return xmlSerializer.serializeToString(svgElement);
   }
 
 
@@ -288,7 +288,7 @@
     var svgDoc;
     try {
       // Parse the SVG string with DOMParser
-      svgDoc = getDOMParser().parseFromString(svgStr, 'text/xml');
+      svgDoc = svgStringToSvgDoc(svgStr);
     } catch(e) {
       return NULL;
     }
@@ -414,12 +414,12 @@
             }
           }
         } else {
-          // only on img element
+          // only one img element
           SVGInjectElement(img, options, onAllFinish);
         }
       };
 
-      // return a Promise object if globally available
+      // return a Promise object if it is globally available
       return typeof Promise == _UNDEFINED_ ? run() : new Promise(run);
     }
 
@@ -486,14 +486,14 @@
                 var svgElem;
                 
                 if (makeIdsUniqueOption) {
-                  if (hasUniqueIds === null) {
+                  if (hasUniqueIds === NULL) {
                     // Ids for the SVG string have not been made unique before. This may happen if previous
                     // injection of a cached SVG have been run with the option makedIdsUnique set to false
                     svgElem = buildSvgElement(svgString, false);
                     hasUniqueIds = makeIdsUnique(svgElem);
 
                     loadValue[0] = hasUniqueIds;
-                    loadValue[2] = hasUniqueIds ? getXMLSerializer().serializeToString(svgElem) : null;
+                    loadValue[2] = hasUniqueIds ? svgElemToSvgString(svgElem) : NULL;
                   } else if (hasUniqueIds) {
                     // Building already cached SVGs has a better performance  
                     svgElem = buildSvgElement(makeIdsUniqueCached(uniqueIdsSvgString), false);
@@ -535,16 +535,16 @@
 
                 // Update svgString because the SVG element can be modified in the afterLoad hook, so the
                 // modified SVG element is also used for all later cached injections
-                svgString = getXMLSerializer().serializeToString(svgElem);
+                svgString = svgElemToSvgString(svgElem);
               }
 
-              var hasUniqueIds = null;
+              var hasUniqueIds = NULL;
               if (makeIdsUniqueOption) {
                 hasUniqueIds = makeIdsUnique(svgElem);
               }
 
               if (useCacheOption) {
-                var uniqueIdsSvgString = hasUniqueIds ? getXMLSerializer().serializeToString(svgElem) : null;
+                var uniqueIdsSvgString = hasUniqueIds ? svgElemToSvgString(svgElem) : NULL;
 
                 // set an array with three entries to the load cache
                 setSvgLoadCacheValue([hasUniqueIds, svgString, uniqueIdsSvgString]);
