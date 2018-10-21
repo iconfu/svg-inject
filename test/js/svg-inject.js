@@ -16,6 +16,8 @@
   var _STYLE_ = 'style';
   var _TITLE_ = 'title';
   var _UNDEFINED_ = 'undefined';
+  var _SET_ATTRIBUTE_ = 'setAttribute';
+  var _GET_ATTRIBUTE_ = 'getAttribute';
 
   var NULL = null;
 
@@ -129,7 +131,7 @@
           }
         } else {
           // Set img attribute to svg element
-          svgElem.setAttribute(attributeName, attributeValue);
+          svgElem[_SET_ATTRIBUTE_](attributeName, attributeValue);
         }
       }
     }
@@ -163,9 +165,9 @@
         idElem.id += idSuffix;
         // Replace ids in xlink:ref and href attributes
         ['xlink:href', 'href'].forEach(function(refAttrName) {
-          var iri = idElem.getAttribute(refAttrName);
+          var iri = idElem[_GET_ATTRIBUTE_](refAttrName);
           if (/^\s*#/.test(iri)) { // Check if iri is non-null and has correct format
-            idElem.setAttribute(refAttrName, iri.trim() + idSuffix);
+            idElem[_SET_ATTRIBUTE_](refAttrName, iri.trim() + idSuffix);
           }
         });
       }
@@ -206,10 +208,10 @@
           // Run through all property names for which ids were found
           for (j = 0; j < iriProperties[_LENGTH_]; j++) {
             propertyName = iriProperties[j];
-            value = element.getAttribute(propertyName);
+            value = element[_GET_ATTRIBUTE_](propertyName);
             newValue = value && value.replace(funcIriRegex, 'url(#$1' + idSuffix + ')');
             if (newValue !== value) {
-              element.setAttribute(propertyName, newValue);
+              element[_SET_ATTRIBUTE_](propertyName, newValue);
             }
           }
         }
@@ -229,7 +231,7 @@
   // inject svg by replacing the img element with the svg element in the DOM
   function inject(imgElem, svgElem, absUrl, options) {
     if (svgElem) {
-      svgElem.setAttribute('data-inject-url', absUrl);
+      svgElem[_SET_ATTRIBUTE_]('data-inject-url', absUrl);
       var parentNode = imgElem.parentNode;
       if (parentNode) {
         if (options.copyAttributes) {
@@ -414,12 +416,12 @@
             }
           }
         } else {
-          // only on img element
+          // only one img element
           SVGInjectElement(img, options, onAllFinish);
         }
       };
 
-      // return a Promise object if globally available
+      // return a Promise object if it is globally available
       return typeof Promise == _UNDEFINED_ ? run() : new Promise(run);
     }
 
@@ -439,7 +441,7 @@
           // Invoke beforeLoad hook if set. If the beforeLoad returns a value use it as the src for the load
           // URL path. Else use the imgElem src attribute value.
           var beforeLoad = options.beforeLoad;
-          var src = (beforeLoad && beforeLoad(imgElem)) || imgElem.getAttribute('src');
+          var src = (beforeLoad && beforeLoad(imgElem)) || imgElem[_GET_ATTRIBUTE_]('src');
 
           if (src === NULL) {
             // If no image src attribute is set do no injection. This can only be reached by using javascript
