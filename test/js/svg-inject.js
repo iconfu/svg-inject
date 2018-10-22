@@ -292,18 +292,24 @@
 
   // Builds an SVG element from the specified SVG string
   function buildSvgElement(svgStr, verify) {
-    var svgDoc;
-    try {
-      // Parse the SVG string with DOMParser
-      svgDoc = svgStringToSvgDoc(svgStr);
-    } catch(e) {
-      return NULL;
+    if (verify) {
+      var svgDoc;
+      try {
+        // Parse the SVG string with DOMParser
+        svgDoc = svgStringToSvgDoc(svgStr);
+      } catch(e) {
+        return NULL;
+      }
+      if (svgDoc[_GET_ELEMENTS_BY_TAG_NAME_]('parsererror')[_LENGTH_]) {
+        // DOMParser does not throw an exception, but instead puts parsererror tags in the document
+        return NULL;
+      }
+      return svgDoc.documentElement;  
+    } else {
+      var div = document.createElement('div');
+      div.innerHTML = svgStr;
+      return div.firstElementChild;
     }
-    if (verify && svgDoc[_GET_ELEMENTS_BY_TAG_NAME_]('parsererror')[_LENGTH_]) {
-      // DOMParser does not throw an exception, but instead puts parsererror tags in the document
-      return NULL;
-    }
-    return svgDoc.documentElement;
   }
 
 
@@ -492,7 +498,7 @@
                 var svgElem;
                 
                 if (makeIdsUniqueOption) {
-                  if (hasUniqueIds === NULL) {
+                  if (true || hasUniqueIds === NULL) {
                     // Ids for the SVG string have not been made unique before. This may happen if previous
                     // injection of a cached SVG have been run with the option makedIdsUnique set to false
                     svgElem = buildSvgElement(svgString, false);
@@ -501,7 +507,7 @@
                     loadValue[0] = hasUniqueIds;
                     loadValue[2] = hasUniqueIds && svgElemToSvgString(svgElem);
                   } else if (hasUniqueIds) {
-                    // Make ids unique for already cached SVGs with better performance  
+                    // Make ids unique for already cached SVGs with better performance
                     svgString = makeIdsUniqueCached(uniqueIdsSvgString);
                   }
                 }

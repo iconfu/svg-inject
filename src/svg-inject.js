@@ -507,7 +507,7 @@
                     loadValue[0] = hasUniqueIds;
                     loadValue[2] = hasUniqueIds && svgElemToSvgString(svgElem);
                   } else if (hasUniqueIds) {
-                    // Make ids unique for already cached SVGs with better performance  
+                    // Make ids unique for already cached SVGs with better performance
                     svgString = makeIdsUniqueCached(uniqueIdsSvgString);
                   }
                 }
