@@ -55,8 +55,8 @@
   var uniqueIdCounter = 1;
   var xmlSerializer;
   var domParser;
-  var i;
-  var j;
+
+  var count = 0;
 
 
   // creates an SVG document from an SVG string
@@ -112,7 +112,7 @@
     var attributeName;
     var attributeValue;
     var attributes = imgElem.attributes;
-    for (i = 0; i < attributes[_LENGTH_]; i++) {
+    for (var i = 0; i < attributes[_LENGTH_]; i++) {
       attribute = attributes[i];
       attributeName = attribute.name;
       // Only copy attributes not explicitly excluded from copying
@@ -155,6 +155,7 @@
     var iriTagNames = {};
     var iriProperties = [];
     var changed = false;
+    var i, j;
 
     for (i = 0; i < idElements[_LENGTH_]; i++) {
       idElem = idElements[i];
@@ -265,7 +266,7 @@
     var mergedOptions = {};
     var args = arguments;
     // Iterate over all specified options objects and add all properties to the new options object
-    for (i = 0; i < args[_LENGTH_]; i++) {
+    for (var i = 0; i < args[_LENGTH_]; i++) {
       var argument = args[i];
         for (var key in argument) {
           if (argument.hasOwnProperty(key)) {
@@ -291,18 +292,20 @@
 
   // Builds an SVG element from the specified SVG string
   function buildSvgElement(svgStr, verify) {
-    var svgDoc;
-    try {
-      // Parse the SVG string with DOMParser
-      svgDoc = svgStringToSvgDoc(svgStr);
-    } catch(e) {
-      return NULL;
+    if (verify) {
+      var svgDoc;
+      try {
+        // Parse the SVG string with DOMParser
+        svgDoc = svgStringToSvgDoc(svgStr);
+      } catch(e) {
+        return NULL;
+      }
+      if (verify && svgDoc[_GET_ELEMENTS_BY_TAG_NAME_]('parsererror')[_LENGTH_]) {
+        // DOMParser does not throw an exception, but instead puts parsererror tags in the document
+        return NULL;
+      }
+      return svgDoc.documentElement;  
     }
-    if (verify && svgDoc[_GET_ELEMENTS_BY_TAG_NAME_]('parsererror')[_LENGTH_]) {
-      // DOMParser does not throw an exception, but instead puts parsererror tags in the document
-      return NULL;
-    }
-    return svgDoc.documentElement;
   }
 
 
@@ -415,7 +418,7 @@
               }
             };
             
-            for (i = 0; i < injectNum; i++) {
+            for (var i = 0; i < injectNum; i++) {
               SVGInjectElement(img[i], options, onFinish);
             }
           }
