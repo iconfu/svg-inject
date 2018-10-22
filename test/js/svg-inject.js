@@ -24,7 +24,7 @@
   // constants
   var __SVGINJECT = '__svgInject';
   var ID_SUFFIX = '--inject-';
-  var ID_SUFFIX_REGEX = new RegExp(ID_SUFFIX + '\d*', "g");
+  var ID_SUFFIX_REGEX = new RegExp(ID_SUFFIX + '\\d+', "g");
   var LOAD_FAIL = 'LOAD_FAIL';
   var SVG_NOT_SUPPORTED = 'SVG_NOT_SUPPORTED';
   var SVG_INVALID = 'SVG_INVALID';
@@ -55,6 +55,8 @@
   var uniqueIdCounter = 1;
   var xmlSerializer;
   var domParser;
+  var i;
+  var j;
 
 
   // creates an SVG document from an SVG string
@@ -110,7 +112,7 @@
     var attributeName;
     var attributeValue;
     var attributes = imgElem.attributes;
-    for (var i = 0; i < attributes[_LENGTH_]; i++) {
+    for (i = 0; i < attributes[_LENGTH_]; i++) {
       attribute = attributes[i];
       attributeName = attribute.name;
       // Only copy attributes not explicitly excluded from copying
@@ -144,7 +146,6 @@
   // We assume tha all ids within the injected SVG are unique, therefore the same suffix can be used for all ids of one
   // injected SVG.
   function makeIdsUnique(svgElem) {
-    var i, j;
     var idSuffix = ID_SUFFIX + uniqueIdCounter++;
     // Get all elements with an id. The SVG spec recommends to put referenced elements inside <defs> elements, but
     // this is a requirement, therefore we have to search for IDs in the whole SVG.
@@ -154,6 +155,7 @@
     var iriTagNames = {};
     var iriProperties = [];
     var changed = false;
+
     for (i = 0; i < idElements[_LENGTH_]; i++) {
       idElem = idElements[i];
       tagName = idElem.tagName;
@@ -172,6 +174,7 @@
         });
       }
     }
+
     // Get all properties that are mapped to the found tags
     for (tagName in iriTagNames) {
       (IRI_TAG_PROPERTIES_MAP[tagName] || [tagName]).forEach(function (mappedProperty) {
@@ -182,6 +185,7 @@
         }
       });
     }
+
     // Replace IDs with new IDs in all references
     if (iriProperties[_LENGTH_]) {
       // Add "style" to properties, because it may contain references in the form 'style="fill:url(#myFill)"'
@@ -218,17 +222,17 @@
       }
     }
 
-    // return boolean if svgElem has been changed
+    // return boolean if SVG element has been changed
     return changed;
   }
 
-  // for alredy cached SVGs ids are made unique by simply replacing the already inserted unique ids with a 
-  // higher id counter. This has a much more performant as makeIdsUnique() 
+  // For alredy cached SVGs ids are made unique by simply replacing the already inserted unique ids with a 
+  // higher id counter. This is much more performant as a call to makeIdsUnique().
   function makeIdsUniqueCached(svgString) {
     return svgString.replace(ID_SUFFIX_REGEX, ID_SUFFIX + uniqueIdCounter++);
   }
 
-  // inject svg by replacing the img element with the svg element in the DOM
+  // Inject SVG by replacing the img element with the SVG element in the DOM
   function inject(imgElem, svgElem, absUrl, options) {
     if (svgElem) {
       svgElem[_SET_ATTRIBUTE_]('data-inject-url', absUrl);
@@ -261,7 +265,7 @@
     var mergedOptions = {};
     var args = arguments;
     // Iterate over all specified options objects and add all properties to the new options object
-    for (var i = 0; i < args[_LENGTH_]; i++) {
+    for (i = 0; i < args[_LENGTH_]; i++) {
       var argument = args[i];
         for (var key in argument) {
           if (argument.hasOwnProperty(key)) {
@@ -411,7 +415,7 @@
               }
             };
             
-            for (var i = 0; i < injectNum; ++i) {
+            for (i = 0; i < injectNum; i++) {
               SVGInjectElement(img[i], options, onFinish);
             }
           }
@@ -437,7 +441,6 @@
             svgNotSupported(imgElem, options);
             return;
           }
-
           // Invoke beforeLoad hook if set. If the beforeLoad returns a value use it as the src for the load
           // URL path. Else use the imgElem src attribute value.
           var beforeLoad = options.beforeLoad;
@@ -495,10 +498,10 @@
                     hasUniqueIds = makeIdsUnique(svgElem);
 
                     loadValue[0] = hasUniqueIds;
-                    loadValue[2] = hasUniqueIds ? svgElemToSvgString(svgElem) : NULL;
+                    loadValue[2] = hasUniqueIds && svgElemToSvgString(svgElem);
                   } else if (hasUniqueIds) {
-                    // Building already cached SVGs has a better performance  
-                    svgElem = buildSvgElement(makeIdsUniqueCached(uniqueIdsSvgString), false);
+                    // Make ids unique for already cached SVGs with better performance  
+                    svgString = makeIdsUniqueCached(uniqueIdsSvgString);
                   }
                 }
 
@@ -534,7 +537,6 @@
               if (afterLoad) {
                 // Invoke afterLoad hook which may modify the SVG element.
                 afterLoad(svgElem);
-
                 // Update svgString because the SVG element can be modified in the afterLoad hook, so the
                 // modified SVG element is also used for all later cached injections
                 svgString = svgElemToSvgString(svgElem);
@@ -546,8 +548,7 @@
               }
 
               if (useCacheOption) {
-                var uniqueIdsSvgString = hasUniqueIds ? svgElemToSvgString(svgElem) : NULL;
-
+                var uniqueIdsSvgString = hasUniqueIds && svgElemToSvgString(svgElem);
                 // set an array with three entries to the load cache
                 setSvgLoadCacheValue([hasUniqueIds, svgString, uniqueIdsSvgString]);
               }
