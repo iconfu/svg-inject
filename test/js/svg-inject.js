@@ -292,20 +292,18 @@
 
   // Builds an SVG element from the specified SVG string
   function buildSvgElement(svgStr, verify) {
-    if (verify) {
-      var svgDoc;
-      try {
-        // Parse the SVG string with DOMParser
-        svgDoc = svgStringToSvgDoc(svgStr);
-      } catch(e) {
-        return NULL;
-      }
-      if (verify && svgDoc[_GET_ELEMENTS_BY_TAG_NAME_]('parsererror')[_LENGTH_]) {
-        // DOMParser does not throw an exception, but instead puts parsererror tags in the document
-        return NULL;
-      }
-      return svgDoc.documentElement;  
+    var svgDoc;
+    try {
+      // Parse the SVG string with DOMParser
+      svgDoc = svgStringToSvgDoc(svgStr);
+    } catch(e) {
+      return NULL;
     }
+    if (verify && svgDoc[_GET_ELEMENTS_BY_TAG_NAME_]('parsererror')[_LENGTH_]) {
+      // DOMParser does not throw an exception, but instead puts parsererror tags in the document
+      return NULL;
+    }
+    return svgDoc.documentElement;
   }
 
 
