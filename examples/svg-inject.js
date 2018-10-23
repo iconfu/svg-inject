@@ -374,8 +374,7 @@
      * elements. Returns a Promise object which resolves if all passed in `img` elements have either been
      * injected or failed to inject (Only if a global Promise object is available like in all modern browsers
      * or through a polyfill). 
-     *
-     * Options:
+injectIndex     * Options:
      * useCache: If set to `true` the SVG will be cached using the absolute URL. Default value is `true`.
      * copyAttributes: If set to `true` the attributes will be copied from `img` to `svg`. Dfault value
      *     is `true.
@@ -404,25 +403,28 @@
 
       var run = function(resolve) {
         var onAllFinish = function() {
-          options.onAllFinish && options.onAllFinish();
+          if (options.onAllFinish) {
+            options.onAllFinish();
+          }
+          
           resolve && resolve();
         };
 
         if (img && typeof img[_LENGTH_] != _UNDEFINED_) {
           // an array like structure of img elements
-          var injectCount = 0;
-          var injectNum = img[_LENGTH_];
+          var injectIndex = 0;
+          var injectCount = img[_LENGTH_];
 
-          if (injectNum == 0) {
+          if (injectCount == 0) {
             onAllFinish();
           } else {
             var onFinish = function() {
-              if (++injectCount == injectNum) {
+              if (++injectIndex == injectCount) {
                 onAllFinish();
               }
             };
             
-            for (var i = 0; i < injectNum; i++) {
+            for (var i = 0; i < injectCount; i++) {
               SVGInjectElement(img[i], options, onFinish);
             }
           }
@@ -498,7 +500,7 @@
                 var svgElem;
                 
                 if (makeIdsUniqueOption) {
-                  if (true || hasUniqueIds === NULL) {
+                  if (hasUniqueIds === NULL) {
                     // Ids for the SVG string have not been made unique before. This may happen if previous
                     // injection of a cached SVG have been run with the option makedIdsUnique set to false
                     svgElem = buildSvgElement(svgString, false);
