@@ -44,10 +44,15 @@ domReady(function(event) {
 
     svgInject(document.querySelectorAll('img.image-' + num), {
       onAllFinish: function() {
-        var time = new Date().getTime() - start;
+        window.requestAnimationFrame(function() {
+          var time = new Date().getTime() - start;
 
-        renderContainerElem.innerHTML = '';
-        callback(testElem, time);
+          renderContainerElem.innerHTML = '';
+
+          window.requestAnimationFrame(function() {
+            callback(testElem, time);
+          });
+        });
       },
       useCache: !disableCache
     });
