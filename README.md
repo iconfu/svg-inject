@@ -364,13 +364,19 @@ This example shows how to use SVGInject directly from Javascript without the `on
 
     document.addEventListener('DOMContentLoaded', function() {
       // inject images with an .svg file ending
-      SVGInject(document.querySelectorAll('img.injectable'));
+      SVGInject(document.querySelectorAll('img.injectable'), {
+        onAllFinish: function() {
+          // the SVG injection has finished for all three images
+
+        }
+      });
     });
   </script>
 </head>
 <body>
   <img src="image_1.svg" class="injectable" />
   <img src="image_2.svg" class="injectable" />
+  <img src="image_3.svg" class="injectable" />
 </body>
 </html>
 ```
@@ -380,7 +386,7 @@ This example shows how to use SVGInject directly from Javascript without the `on
 
 Full support for all modern browsers, and IE9+ ([full list](https://caniuse.com/#feat=svg))
 
-Support for IE8,IE7 with optional [PNG fallback method](#fallback-for-no-svg-support-ie--8)
+Support for IE8 and IE7 with optional [PNG fallback method](#fallback-for-no-svg-support-ie--8)
 
 
 ## License
