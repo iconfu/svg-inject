@@ -75,7 +75,7 @@ $ yarn add @iconfu/svg-inject
 
 Add `onload="SVGInject(this)"` to any `<img>` element where you want the SVG to be injected.
 
-For most usecases this approach is recommended and provides nice [advantages](#what-are-additional-advantages-when-using-onload).
+For most use cases this approach is recommended and provides nice [advantages](#what-are-additional-advantages-when-using-onload).
 
 ```html
 <html>
@@ -163,7 +163,7 @@ All attributes are copied from the `<img>` element to the injected `<svg>` eleme
 
 You can disable the previously described attribute handling by setting the `copyAttributes` option to `false`. You may also implement your own attribute handling in the `beforeInject` options hook.
 
-Additionaly after loading the SVG, the value of the `src` attribute of the `<img>` element is transformed to an absolute URL and inserted as a `data-inject-url` attribute. 
+Additionally after loading the SVG, the value of the `src` attribute of the `<img>` element is transformed to an absolute URL and inserted as a `data-inject-url` attribute. 
 
 ## API
 
