@@ -71,7 +71,7 @@ domReady(function(event) {
           bestTime = bestTime && bestTime < time ? bestTime : time;
           
           if (--repetitionCount == 0) {
-            var statsStr = '<div class="stats">' + bestTime / sampleSize + 'ms</div>';
+            var statsStr = '<div class="stats">' + (bestTime / sampleSize) + 'ms</div>';
               
             testElem.getElementsByClassName('stats')[0].innerHTML = statsStr;
 
