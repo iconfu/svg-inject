@@ -23,6 +23,9 @@ gulp.task('default', function (cb) {
     rename({ extname: '.min.js' }),
     gulp.dest('examples/'),
     gulp.dest('test/js/'),
-    gulp.dest('dist/')
+    gulp.dest('dist/'),
+
+    gulp.src('test/js/xhr-check.js'),
+    gulp.dest('examples/_example_helpers/')
   ], cb);
 });
