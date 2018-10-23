@@ -22,8 +22,8 @@
   display: none;
 }
 
-#render-container {
-  clear: both;
+#render-container > img, #render-container > svg {
+  margin: 20px;
 }
 
 .running #running {
@@ -48,5 +48,5 @@
 }
 
 .tool {
-  padding: 5px 0;
+  margin: 10px 0;
 }

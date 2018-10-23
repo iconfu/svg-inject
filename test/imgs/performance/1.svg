@@ -1,0 +1,26 @@
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0,0,1024,1024">
+	<!-- Color names: color-1, color-2, color-3, color-4 -->
+	<desc>users icon - Licensed under Iconfu Standard License v1.0 (https://www.iconfu.com/iconfu_standard_license) - Incors GmbH</desc>
+	<g fill="none" fill-rule="nonzero" style="mix-blend-mode: normal">
+		<g color="#ffa726" class="color-2">
+			<g style="color:var(--color-2)">
+				<path d="M960,645.57c0,64.83 -153.6,90.43 -256,90.43c-38.43,0 -84.07,-3.61 -126.1,-11.53c-4.22,-7.35 -9,-14.49 -14.42,-21.41c-21.99,-28.03 -51.98,-49.62 -80.66,-70.59c37.9,-39.93 61.18,-93.83 61.18,-153.27c0,-10.66 -0.76,-21.13 -2.21,-31.39c7.44,-5.57 15.31,-11.31 23.59,-17.39c38.14,29.96 86.28,47.84 138.62,47.84c52.34,0 100.49,-17.88 138.62,-47.84c76.5,56.14 117.35,83.09 117.38,215.15z" fill="currentColor"/>
+			</g>
+		</g>
+		<g color="#78909c" class="color-4">
+			<g style="color:var(--color-4)">
+				<path d="M704,64c106.04,0 192,85.6 192,191.2c0,105.59 -85.96,191.19 -192,191.19c-106.04,0 -192,-85.6 -192,-191.19c0,-105.6 85.96,-191.2 192,-191.2z" fill="currentColor"/>
+			</g>
+		</g>
+		<g color="#546e7a" class="color-1">
+			<g style="color:var(--color-1)">
+				<path d="M576,869.57c0,64.83 -153.6,90.43 -256,90.43c-102.4,0 -256,-25.6 -256,-90.35c0,-132 40.97,-159.14 117.38,-215.23c38.14,29.96 86.28,47.84 138.62,47.84c52.34,0 100.49,-17.88 138.62,-47.84c76.5,56.14 117.35,83.09 117.38,215.15z" fill="currentColor"/>
+			</g>
+		</g>
+		<g color="#78909c" class="color-4">
+			<g style="color:var(--color-4)">
+				<path d="M320,288c106.04,0 192,85.6 192,191.2c0,105.59 -85.96,191.19 -192,191.19c-106.04,0 -192,-85.6 -192,-191.19c0,-105.6 85.96,-191.2 192,-191.2z" fill="currentColor"/>
+			</g>
+		</g>
+	</g>
+</svg>
