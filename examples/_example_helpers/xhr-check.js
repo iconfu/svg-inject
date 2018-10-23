@@ -12,7 +12,7 @@
                       '<p>Due to the same origin policy for some browsers (Chrome, Safari), SVGs can not be loaded when run on the file system.</p>' +
                       '<h2>How to get this to work:</h2>' +
                       '<ul style="font-size: larger;">' +
-                        '<li>Run with a Web Server</li>' +
+                        '<li>Run this with a Web Server</li>' +
                         '<li>Use a Firefox browser</li>' +
                       '</ul>' +
                       '<p>There are also other possible solutions (--allow-file-access-from-files flag in Chrome) you might want to look for to run this example on the file system.</p>' +

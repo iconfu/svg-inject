@@ -56,8 +56,6 @@
   var xmlSerializer;
   var domParser;
 
-  var count = 0;
-
 
   // creates an SVG document from an SVG string
   function svgStringToSvgDoc(svgStr) {
@@ -373,8 +371,9 @@
      * Injects the SVG specified in the `src` attribute of the specified `img` element or array of `img`
      * elements. Returns a Promise object which resolves if all passed in `img` elements have either been
      * injected or failed to inject (Only if a global Promise object is available like in all modern browsers
-     * or through a polyfill). 
-injectIndex     * Options:
+     * or through a polyfill).
+     *
+     * Options:
      * useCache: If set to `true` the SVG will be cached using the absolute URL. Default value is `true`.
      * copyAttributes: If set to `true` the attributes will be copied from `img` to `svg`. Dfault value
      *     is `true.
