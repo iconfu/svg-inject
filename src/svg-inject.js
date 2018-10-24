@@ -317,11 +317,17 @@
     imgElem.removeAttribute('onload');
   }
 
+  function errorMessage(msg) {
+    console.error('SVGInject: ' + msg);
+  }
+
 
   function fail(imgElem, status, options) {
     imgElem[__SVGINJECT] = FAIL;
     if (options.onFail) {
       options.onFail(imgElem, status);
+    } else {
+      errorMessage(status);
     }
   }
 
@@ -349,8 +355,8 @@
   }
 
 
-  function throwImgNotSet() {
-    throw new Error('img not set');
+  function imgNotSet(msg) {
+    errorMessage('no img element');
   }
 
 
@@ -586,7 +592,7 @@
           }
         }
       } else {
-        throwImgNotSet();
+        imgNotSet();
       }
     }
 
@@ -631,7 +637,7 @@
           }
         }
       } else {
-        throwImgNotSet();
+        imgNotSet();
       }
     };
 
