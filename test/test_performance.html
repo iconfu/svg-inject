@@ -26,20 +26,24 @@
       <fieldset class="tool">
         <legend>Cache Level</legend>
         <div>
-            <input type="radio" id="cache-full" name="cache-level" value="cacheFull" checked />
-            <label for="cache-full">Full Caching</label>
+          <input type="radio" id="cache-full" name="cache-level" value="cacheFull" checked />
+          <label for="cache-full">Full Caching</label>
         </div>
 
         <div>
-            <input type="radio" id="cache-disable-svg-inject" name="cache-level" value="cacheDisableSVGInject" />
-            <label for="cache-disable-svg-inject">Disable SVGInject Caching</label>
+          <input type="radio" id="cache-disable-svg-inject" name="cache-level" value="cacheDisableSVGInject" />
+          <label for="cache-disable-svg-inject">Disable SVGInject Caching</label>
         </div>
 
         <div>
-            <input type="radio" id="cache-disable-browser" name="cache-level" value="cacheDisableBrowser" />
-            <label for="cache-disable-browser">Disable Browser Caching (each SVG is loaded as a unique image)</label>
+          <input type="radio" id="cache-disable-browser" name="cache-level" value="cacheDisableBrowser" />
+          <label for="cache-disable-browser">Disable Browser Caching (each SVG is loaded as a unique image)</label>
         </div>
       </fieldset>
+      <div class="tool">
+        <input type="checkbox" id="use-onload-attribute" checked>
+        <label for="use-onload-attribute">Use onload attribute for injection</label>
+      </div>
       <div class="tool">
         <button type="button" onclick="run()">run performance tests</button>
       </div>
