@@ -157,7 +157,7 @@
 
     for (i = 0; i < idElements[_LENGTH_]; i++) {
       idElem = idElements[i];
-      tagName = idElem.tagName;
+      tagName = idElem.localName; // Use non-namespaced tag name
       // Make ID unique if tag name is IRI referenceable
       if (tagName in IRI_TAG_PROPERTIES_MAP) {
         changed = true;
@@ -201,7 +201,7 @@
       var newValue;
       for (i = 0; i < allElements[_LENGTH_]; i++) {
         element = allElements[i];
-        if (element.tagName == _STYLE_) {
+        if (element.localName == _STYLE_) {
           value = element.textContent;
           newValue = value && value.replace(funcIriRegex, 'url(#$1' + idSuffix + ')');
           if (newValue !== value) {
