@@ -20,6 +20,10 @@ domReady(function(event) {
     return '<img src="./imgs/' + svgUrl + (disableBrowserCache ? '?imageNum=' + createRandomURILString(4) : '') + '"' + (useOnload ? ' onload="SVGInject' + testNum + '(this)"' : '') + ' class="image-' + testNum + '" alt="image ' + testNum + ' ' + imageNum + '">';
   };
 
+  var requestAnimationFrame = function(callback) {
+    window.requestAnimationFrame ? window.requestAnimationFrame(callback) : window.setTimeout(callback, 0);
+  };
+
   var runPerformanceTest = function(svgUrl, num, sampleSize, insertResultElem, disableCache, disableBrowserCache, useOnload, callback) {
     var imgsStr = '';
     for (var i = 0; i < sampleSize; ++i) {
@@ -31,10 +35,10 @@ domReady(function(event) {
     var svgInject = SVGInject.create('SVGInject' + num);
 
     var afterAllInjected = function(callback) {
-      window.requestAnimationFrame(function() {
+      requestAnimationFrame(function() {
         var time = new Date().getTime() - startTime;
 
-        window.requestAnimationFrame(function() {
+        requestAnimationFrame(function() {
           callback(testElem, time);
         });
       });
