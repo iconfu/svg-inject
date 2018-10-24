@@ -382,9 +382,11 @@
      *     running number which increases with each injection. This is done to avoid duplicate ids in the DOM.
      * beforeLoad: Hook before SVG is loaded. The `img` element is passed as a parameter. If the hook returns
      *     a string it is used as the URL instead of the `img` element's `src` attribute.
-     * afterLoad: Hook after SVG is loaded. The loaded svg element is passed as a parameter. If caching is
-     *     active this hook will only get called once for injected SVGs with the same absolute path. Changes
-     *     to the svg element in this hook will be applied to all injected SVGs with the same absolute path.
+     * afterLoad: Hook after SVG is loaded. The loaded `svg` element and `svg` string are passed as a
+     *     parameters. If caching is active this hook will only get called once for injected SVGs with the
+     *     same absolute path. Changes to the `svg` element in this hook will be applied to all injected SVGs
+     *     with the same absolute path. It's also possible to return an `svg` string or `svg` element which
+     *     will then be used for the injection.
      * beforeInject: Hook before SVG is injected. The `img` and `svg` elements are passed as parameters. If
      *     any html element is returned it gets injected instead of applying the default SVG injection.
      * afterInject: Hook after SVG is injected. The `img` and `svg` elements are passed as parameters.
@@ -543,11 +545,14 @@
             if (svgElem instanceof SVGElement) {
               var afterLoad = options.afterLoad;
               if (afterLoad) {
-                // Invoke afterLoad hook which may modify the SVG element.
-                afterLoad(svgElem);
+                // Invoke afterLoad hook which may modify the SVG element. If afterLoad return 
+                var svgElemOrSvgString = afterLoad(svgElem, svgString) || svgElem;
                 // Update svgString because the SVG element can be modified in the afterLoad hook, so the
                 // modified SVG element is also used for all later cached injections
-                svgString = svgElemToSvgString(svgElem);
+                var isString = typeof svgElemOrSvgString == 'string';
+
+                svgString = isString ? svgElemOrSvgString : svgElemToSvgString(svgElem);
+                svgElem = isString ? buildSvgElement(svgElemOrSvgString, true) : svgElemOrSvgString;
               }
 
               var hasUniqueIds = NULL;

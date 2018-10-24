@@ -182,7 +182,7 @@ Additionally after loading the SVG, the value of the `src` attribute of the `<im
 | copyAttributes | boolean | `true` | If set to `true` [attributes will be copied](#how-are-attributes-handled) from the `img` to the injected `svg` element. You may implement your own method for copying attributes in the `beforeInject` options hook. |
 | makeIdsUnique | boolean | `true` | If set to `true` the id of elements in the `<defs>` element that can be references by property values (for example 'clipPath') are made unique by appending the string "--inject-X", where X is a running number which increases with each injection. This is done to avoid duplicate ids in the DOM. |
 | beforeLoad | function(img) | `undefined` | Hook before SVG is loaded. The `img` element is passed as a parameter. If the hook returns a string it is used as the URL instead of the `img` element's `src` attribute. |
-| afterLoad | function(svg) | `undefined` | Hook after SVG is loaded. The loaded `svg` element is passed as a parameter. If caching is active this hook will only get called once for injected SVGs with the same absolute path. Changes to the `svg` element in this hook will be applied to all injected SVGs with the same absolute path. |
+| afterLoad | function(svg,&nbsp;svgString) | `undefined` | Hook after SVG is loaded. The loaded `svg` element and `svg` string are passed as a parameters. If caching is active this hook will only get called once for injected SVGs with the same absolute path. Changes to the `svg` element in this hook will be applied to all injected SVGs with the same absolute path. It's also possible to return an `svg` string or `svg` element which will then be used for the injection. |
 | beforeInject | function(img,&nbsp;svg) | `undefined` | Hook directly before the SVG is injected. The `img` and `svg` elements are passed as parameters. The hook is called for every injected SVG. If an [Element](https://developer.mozilla.org/de/docs/Web/API/Element) is returned it gets injected instead of applying the default SVG injection. |
 | afterInject | function(img,&nbsp;svg) | `undefined` | Hook after SVG is injected. The `img` and `svg` elements are passed as parameters. |
 | onAllFinish | function() | `undefined` | Hook after all `img` elements passed to an SVGInject() call have either been injected or failed to inject.
@@ -309,7 +309,7 @@ This example shows how to use SVGInject with multiple options.
       useCache: false, // no caching
       copyAttributes: false, // do not copy attributes from `<img>` to `<svg>`
       makeIdsUnique: false, // do not make ids used within the SVG unique
-      afterLoad: function(svg) {
+      afterLoad: function(svg, svgString) {
         // add a class to the svg
         svg.classList.add('my-class');
       },
