@@ -1,4 +1,4 @@
-var runTests = function(testFuncs) {
+var runTests = function(testFuncs, testNum) {
   var failed = false;
   var successCount = 0;
 
@@ -10,8 +10,16 @@ var runTests = function(testFuncs) {
     console.error(new Error());
   };
 
+  window.failCallback = function() {
+    var err = new Error();
+    return function() {
+      console.error(err);
+      window.fail();
+    };
+  };
+
   window.success = function() {
-    if (!failed && ++successCount == testFuncs.length) {
+    if (!failed && ++successCount == (typeof testNum !== 'undefined' ? 1 : testFuncs.length)) {
       document.getElementById('success').style.display = 'block';
       document.getElementById('running').style.display = 'none';
     }
@@ -25,8 +33,29 @@ var runTests = function(testFuncs) {
 
   };
 
+  window.isEqualElseFail = function(count, num, callback) {
+    if (count === num) {
+      callback && callback();
+      return true;
+    } else if (count > num) {
+      window.fail();
+      return false;
+    }
+  };
+
   for (var i = 0; i < testFuncs.length; ++i) {
-    testFuncs[i]();
+    if (typeof testNum !== 'undefined') {
+      // testing only one test 
+      if (i === testNum) {
+        testFuncs[i]();
+      } else {
+        // set dummy function
+        window['SVGInject' + (i + 1)] = function() {};
+        window['SVGInject' + (i + 1)].err = function() {};
+      }
+    } else {
+      testFuncs[i]();
+    }
   }
 };
 

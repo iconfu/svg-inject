@@ -10,14 +10,11 @@
   <script src="js/svg-inject.js"></script>
   <script src="js/test_helper.js"></script>
   <script src="js/test_basic.js"></script>
-
 </head>
 <body>
   <div id="failed">FAILED</div>
   <div id="success">SUCCESS</div>
   <div id="running">RUNNING</div>
-
-  <p>Tests must be run on a Webserver or Firefox due to the same-origin-policy of XHR</p>
 
   <p>All Images must be visible inside the grey boxes and look like the reference images.</p>
   
@@ -123,8 +120,8 @@
   <h3>Test 9</h3>
   <!-- test example how to use SVGInject directly from Javascript without the `onload` attribute -->
   <div class="test" id="test-9">
-    <img src="imgs/test1.svg" class="prevent-image-flash inject-success" />
-    <img src="imgs/test2.svg" class="prevent-image-flash inject-success" />
+    <div><img src="imgs/test1.svg" class="prevent-image-flash inject-success" /></div>
+    <div><img src="imgs/test2.svg" class="prevent-image-flash inject-success" /></div>
   </div>
 
   <h3>Test 10</h3>
@@ -219,5 +216,22 @@
       <div><img src="imgs/test-17-custom.svg" onload="SVGInject17(this)" /></div>
     </div>
   </div>
+
+  <h3>Test 18</h3>
+  <!-- Test Promise and onAllFinish -->
+  <div id="test-18">
+    <div class="test">
+      <div><img src="imgs/test1.svg" class="inject-success all group-1 group-2" /></div>
+      <div><img src="imgs/test1.svg" class="inject-success all group-2" /></div>
+      <div><img src="imgs/test2.svg" class="inject-success all group-1 group-2" /></div>
+      <div><img src="imgs/test2.svg" class="inject-success all group-2 group-3" /></div>
+      <div><img src="imgs/test3.svg" class="inject-success all group-1 group-3" /></div>
+      <div><img src="imgs/test3.svg" class="inject-success all group-3" /></div>
+      <div><img src="imgs/malformed1.svg" class="inject-fail inject all group-1 group-3" /></div>
+      <div><img src="imgs/malformed1.svg" class="inject-fail inject all group-3" /></div>
+    </div>
+  </div>
+
+  <script src="./js/xhr-check.js"></script>
 </body>
 </html>

@@ -16,11 +16,15 @@
   var _STYLE_ = 'style';
   var _TITLE_ = 'title';
   var _UNDEFINED_ = 'undefined';
+  var _SET_ATTRIBUTE_ = 'setAttribute';
+  var _GET_ATTRIBUTE_ = 'getAttribute';
 
   var NULL = null;
 
   // constants
   var __SVGINJECT = '__svgInject';
+  var ID_SUFFIX = '--inject-';
+  var ID_SUFFIX_REGEX = new RegExp(ID_SUFFIX + '\\d+', "g");
   var LOAD_FAIL = 'LOAD_FAIL';
   var SVG_NOT_SUPPORTED = 'SVG_NOT_SUPPORTED';
   var SVG_INVALID = 'SVG_INVALID';
@@ -45,26 +49,25 @@
     pattern: ['fill', 'stroke'],
     radialGradient: ['fill', 'stroke']
   };
-  var INJECT = 1;
-  var INJECTED = 2;
-  var FAIL = 3;
+  var INJECTED = 1;
+  var FAIL = 2;
 
   var uniqueIdCounter = 1;
   var xmlSerializer;
   var domParser;
 
 
-  // Returns the XMLSerializer instance. Creates it first if it does not exist yet.
-  function getXMLSerializer() {
-    xmlSerializer = xmlSerializer || new XMLSerializer();
-    return xmlSerializer;
+  // creates an SVG document from an SVG string
+  function svgStringToSvgDoc(svgStr) {
+    domParser = domParser || new DOMParser();
+    return domParser.parseFromString(svgStr, 'text/xml');
   }
 
 
-  // Returns the DOMParser instance. Creates it first if it does not exist yet.
-  function getDOMParser() {
-    domParser = domParser || new DOMParser();
-    return domParser;
+  // searializes an SVG element to an SVG string
+  function svgElemToSvgString(svgElement) {
+    xmlSerializer = xmlSerializer || new XMLSerializer();
+    return xmlSerializer.serializeToString(svgElement);
   }
 
 
@@ -115,20 +118,22 @@
         attributeValue = attribute.value;
         // If img attribute is "title", insert a title element into SVG element
         if (attributeName == _TITLE_) {
-          // Create title element
-          var titleElem = document[_CREATE_ELEMENT_ + 'NS']('http://www.w3.org/2000/svg', _TITLE_);
-          titleElem.textContent = attributeValue;
-          // If the SVG element's first child is a title element, replace it with the new title
-          // element, otherwise insert the new title element as first child
+          var titleElem;
           var firstElementChild = svgElem.firstElementChild;
-          if (firstElementChild && firstElementChild.tagName.toLowerCase() == _TITLE_) {
-            svgElem.replaceChild(titleElem, firstElementChild);
+          if (firstElementChild && firstElementChild.localName.toLowerCase() == _TITLE_) {
+            // If the SVG element's first child is a title element, keep it as the title element
+            titleElem = firstElementChild;
           } else {
+            // If the SVG element's first child element is not a title element, create a new title
+            // ele,emt and set it as the first child
+            titleElem = document[_CREATE_ELEMENT_ + 'NS']('http://www.w3.org/2000/svg', _TITLE_);
             svgElem.insertBefore(titleElem, firstElementChild);
           }
+          // Set new title content
+          titleElem.textContent = attributeValue;
         } else {
           // Set img attribute to svg element
-          svgElem.setAttribute(attributeName, attributeValue);
+          svgElem[_SET_ATTRIBUTE_](attributeName, attributeValue);
         }
       }
     }
@@ -141,8 +146,7 @@
   // We assume tha all ids within the injected SVG are unique, therefore the same suffix can be used for all ids of one
   // injected SVG.
   function makeIdsUnique(svgElem) {
-    var i, j;
-    var idSuffix = '--inject-' + uniqueIdCounter++;
+    var idSuffix = ID_SUFFIX + uniqueIdCounter++;
     // Get all elements with an id. The SVG spec recommends to put referenced elements inside <defs> elements, but
     // this is a requirement, therefore we have to search for IDs in the whole SVG.
     var idElements = svgElem.querySelectorAll('[id]');
@@ -150,23 +154,28 @@
     var tagName;
     var iriTagNames = {};
     var iriProperties = [];
+    var changed = false;
+    var i, j;
+
     for (i = 0; i < idElements[_LENGTH_]; i++) {
       idElem = idElements[i];
-      tagName = idElem.tagName;
+      tagName = idElem.localName; // Use non-namespaced tag name
       // Make ID unique if tag name is IRI referenceable
       if (tagName in IRI_TAG_PROPERTIES_MAP) {
+        changed = true;
         iriTagNames[tagName] = 1;
         // Add suffix to element's id
         idElem.id += idSuffix;
         // Replace ids in xlink:ref and href attributes
         ['xlink:href', 'href'].forEach(function(refAttrName) {
-          var iri = idElem.getAttribute(refAttrName);
+          var iri = idElem[_GET_ATTRIBUTE_](refAttrName);
           if (/^\s*#/.test(iri)) { // Check if iri is non-null and has correct format
-            idElem.setAttribute(refAttrName, iri.trim() + idSuffix)
+            idElem[_SET_ATTRIBUTE_](refAttrName, iri.trim() + idSuffix);
           }
         });
       }
     }
+
     // Get all properties that are mapped to the found tags
     for (tagName in iriTagNames) {
       (IRI_TAG_PROPERTIES_MAP[tagName] || [tagName]).forEach(function (mappedProperty) {
@@ -177,6 +186,7 @@
         }
       });
     }
+
     // Replace IDs with new IDs in all references
     if (iriProperties[_LENGTH_]) {
       // Add "style" to properties, because it may contain references in the form 'style="fill:url(#myFill)"'
@@ -193,7 +203,7 @@
       var newValue;
       for (i = 0; i < allElements[_LENGTH_]; i++) {
         element = allElements[i];
-        if (element.tagName == _STYLE_) {
+        if (element.localName == _STYLE_) {
           value = element.textContent;
           newValue = value && value.replace(funcIriRegex, 'url(#$1' + idSuffix + ')');
           if (newValue !== value) {
@@ -203,29 +213,34 @@
           // Run through all property names for which ids were found
           for (j = 0; j < iriProperties[_LENGTH_]; j++) {
             propertyName = iriProperties[j];
-            value = element.getAttribute(propertyName);
+            value = element[_GET_ATTRIBUTE_](propertyName);
             newValue = value && value.replace(funcIriRegex, 'url(#$1' + idSuffix + ')');
             if (newValue !== value) {
-              element.setAttribute(propertyName, newValue);
+              element[_SET_ATTRIBUTE_](propertyName, newValue);
             }
           }
         }
       }
     }
+
+    // return boolean if SVG element has been changed
+    return changed;
   }
 
+  // For alredy cached SVGs ids are made unique by simply replacing the already inserted unique ids with a 
+  // higher id counter. This is much more performant as a call to makeIdsUnique().
+  function makeIdsUniqueCached(svgString) {
+    return svgString.replace(ID_SUFFIX_REGEX, ID_SUFFIX + uniqueIdCounter++);
+  }
 
-  // inject svg by replacing the img element with the svg element in the DOM
+  // Inject SVG by replacing the img element with the SVG element in the DOM
   function inject(imgElem, svgElem, absUrl, options) {
     if (svgElem) {
-      svgElem.setAttribute('data-inject-url', absUrl);
+      svgElem[_SET_ATTRIBUTE_]('data-inject-url', absUrl);
       var parentNode = imgElem.parentNode;
       if (parentNode) {
         if (options.copyAttributes) {
           copyAttributes(imgElem, svgElem);
-        }
-        if (options.makeIdsUnique) {
-          makeIdsUnique(svgElem, options);
         }
         // Invoke beforeInject hook if set
         var beforeInject = options.beforeInject;
@@ -277,18 +292,24 @@
 
   // Builds an SVG element from the specified SVG string
   function buildSvgElement(svgStr, verify) {
-    var svgDoc;
-    try {
-      // Parse the SVG string with DOMParser
-      svgDoc = getDOMParser().parseFromString(svgStr, 'text/xml');
-    } catch(e) {
-      return NULL;
+    if (verify) {
+      var svgDoc;
+      try {
+        // Parse the SVG string with DOMParser
+        svgDoc = svgStringToSvgDoc(svgStr);
+      } catch(e) {
+        return NULL;
+      }
+      if (svgDoc[_GET_ELEMENTS_BY_TAG_NAME_]('parsererror')[_LENGTH_]) {
+        // DOMParser does not throw an exception, but instead puts parsererror tags in the document
+        return NULL;
+      }
+      return svgDoc.documentElement;  
+    } else {
+      var div = document.createElement('div');
+      div.innerHTML = svgStr;
+      return div.firstElementChild;
     }
-    if (verify && svgDoc[_GET_ELEMENTS_BY_TAG_NAME_]('parsererror')[_LENGTH_]) {
-      // DOMParser does not throw an exception, but instead puts parsererror tags in the document
-      return NULL;
-    }
-    return svgDoc.documentElement;
   }
 
 
@@ -298,11 +319,17 @@
     imgElem.removeAttribute('onload');
   }
 
+  function errorMessage(msg) {
+    console.error('SVGInject: ' + msg);
+  }
+
 
   function fail(imgElem, status, options) {
     imgElem[__SVGINJECT] = FAIL;
     if (options.onFail) {
       options.onFail(imgElem, status);
+    } else {
+      errorMessage(status);
     }
   }
 
@@ -330,8 +357,8 @@
   }
 
 
-  function throwImgNotSet() {
-    throw new Error('img not set');
+  function imgNotSet(msg) {
+    errorMessage('no img element');
   }
 
 
@@ -350,7 +377,9 @@
      * SVGInject
      *
      * Injects the SVG specified in the `src` attribute of the specified `img` element or array of `img`
-     * elements.
+     * elements. Returns a Promise object which resolves if all passed in `img` elements have either been
+     * injected or failed to inject (Only if a global Promise object is available like in all modern browsers
+     * or through a polyfill).
      *
      * Options:
      * useCache: If set to `true` the SVG will be cached using the absolute URL. Default value is `true`.
@@ -361,12 +390,16 @@
      *     running number which increases with each injection. This is done to avoid duplicate ids in the DOM.
      * beforeLoad: Hook before SVG is loaded. The `img` element is passed as a parameter. If the hook returns
      *     a string it is used as the URL instead of the `img` element's `src` attribute.
-     * afterLoad: Hook after SVG is loaded. The loaded svg element is passed as a parameter. If caching is
-     *     active this hook will only get called once for injected SVGs with the same absolute path. Changes
-     *     to the svg element in this hook will be applied to all injected SVGs with the same absolute path.
+     * afterLoad: Hook after SVG is loaded. The loaded `svg` element and `svg` string are passed as a
+     *     parameters. If caching is active this hook will only get called once for injected SVGs with the
+     *     same absolute path. Changes to the `svg` element in this hook will be applied to all injected SVGs
+     *     with the same absolute path. It's also possible to return an `svg` string or `svg` element which
+     *     will then be used for the injection.
      * beforeInject: Hook before SVG is injected. The `img` and `svg` elements are passed as parameters. If
      *     any html element is returned it gets injected instead of applying the default SVG injection.
      * afterInject: Hook after SVG is injected. The `img` and `svg` elements are passed as parameters.
+     * onAllFinish: Hook after all `img` elements passed to an SVGInject() call have either been injected or
+     *     failed to inject.
      * onFail: Hook after injection fails. The `img` element and a `status` string are passed as an parameter.
      *     The `status` can be either `'SVG_NOT_SUPPORTED'` (the browser does not support SVG),
      *     `'SVG_INVALID'` (the SVG is not in a valid format) or `'LOAD_FAILED'` (loading of the SVG failed).
@@ -376,45 +409,89 @@
      */
     function SVGInject(img, options) {
       options = mergeOptions(defaultOptions, options);
-      if (img && typeof img[_LENGTH_] != _UNDEFINED_) {
-        for (var i = 0; i < img[_LENGTH_]; i++) {
-          SVGInjectElement(img[i], options);
+
+      var run = function(resolve) {
+        var onAllFinish = function() {
+          if (options.onAllFinish) {
+            options.onAllFinish();
+          }
+          
+          resolve && resolve();
+        };
+
+        if (img && typeof img[_LENGTH_] != _UNDEFINED_) {
+          // an array like structure of img elements
+          var injectIndex = 0;
+          var injectCount = img[_LENGTH_];
+
+          if (injectCount == 0) {
+            onAllFinish();
+          } else {
+            var onFinish = function() {
+              if (++injectIndex == injectCount) {
+                onAllFinish();
+              }
+            };
+            
+            for (var i = 0; i < injectCount; i++) {
+              SVGInjectElement(img[i], options, onFinish);
+            }
+          }
+        } else {
+          // only one img element
+          SVGInjectElement(img, options, onAllFinish);
         }
-      } else {
-        SVGInjectElement(img, options);
-      }
+      };
+
+      // return a Promise object if it is globally available
+      return typeof Promise == _UNDEFINED_ ? run() : new Promise(run);
     }
 
 
     // Injects a single svg element. Options must be already merged with the default options.
-    function SVGInjectElement(imgElem, options) {
+    function SVGInjectElement(imgElem, options, callback) {
       if (imgElem) {
-        if (!imgElem[__SVGINJECT]) {
+        var svgInjectAttributeValue = imgElem[__SVGINJECT];
+        if (!svgInjectAttributeValue) {
           removeEventListeners(imgElem);
 
           if (!IS_SVG_SUPPORTED) {
             svgNotSupported(imgElem, options);
+            callback();
             return;
           }
-
           // Invoke beforeLoad hook if set. If the beforeLoad returns a value use it as the src for the load
           // URL path. Else use the imgElem src attribute value.
           var beforeLoad = options.beforeLoad;
-          var src = (beforeLoad && beforeLoad(imgElem)) || imgElem.getAttribute('src');
+          var src = (beforeLoad && beforeLoad(imgElem)) || imgElem[_GET_ATTRIBUTE_]('src');
 
-          if (src === NULL) {
+          if (!src) {
             // If no image src attribute is set do no injection. This can only be reached by using javascript
             // because if no src attribute is set the onload and onerror events do not get called
+            if (src === '') {
+              loadFail(imgElem, options);
+            }
+            callback();
             return;
           }
 
-          imgElem[__SVGINJECT] = INJECT;
+          // set array so later calls can register callbacks
+          var onFinishCallbacks = [];
+          imgElem[__SVGINJECT] = onFinishCallbacks;
+
+          var onFinish = function() {
+            callback();
+            onFinishCallbacks.forEach(function(onFinishCallback) {
+              onFinishCallback();
+            });
+          };
 
           var absUrl = getAbsoluteUrl(src);
-          var useCache = options.useCache;
+          var useCacheOption = options.useCache;
+          var makeIdsUniqueOption = options.makeIdsUnique;
 
           var setSvgLoadCacheValue = function(val) {
-            if (useCache) {
+            if (useCacheOption) {
               svgLoadCache[absUrl].forEach(function(svgLoad) {
                 svgLoad(val);
               });
@@ -422,7 +499,7 @@
             }
           };
 
-          if (useCache) {
+          if (useCacheOption) {
             var svgLoad = svgLoadCache[absUrl];
 
             var handleLoadValue = function(loadValue) {
@@ -431,8 +508,31 @@
               } else if (loadValue === SVG_INVALID) {
                 svgInvalid(imgElem, options);
               } else {
-                inject(imgElem, buildSvgElement(loadValue, false), absUrl, options);
+                var hasUniqueIds = loadValue[0];
+                var svgString = loadValue[1];
+                var uniqueIdsSvgString = loadValue[2];
+                var svgElem;
+                
+                if (makeIdsUniqueOption) {
+                  if (hasUniqueIds === NULL) {
+                    // Ids for the SVG string have not been made unique before. This may happen if previous
+                    // injection of a cached SVG have been run with the option makedIdsUnique set to false
+                    svgElem = buildSvgElement(svgString, false);
+                    hasUniqueIds = makeIdsUnique(svgElem);
+
+                    loadValue[0] = hasUniqueIds;
+                    loadValue[2] = hasUniqueIds && svgElemToSvgString(svgElem);
+                  } else if (hasUniqueIds) {
+                    // Make ids unique for already cached SVGs with better performance
+                    svgString = makeIdsUniqueCached(uniqueIdsSvgString);
+                  }
+                }
+
+                svgElem = svgElem || buildSvgElement(svgString, false);
+                    
+                inject(imgElem, svgElem, absUrl, options);
               }
+              onFinish();
             };
 
             if (typeof svgLoad != _UNDEFINED_) {
@@ -451,38 +551,58 @@
 
           // Load the SVG because it is not cached or caching is disabled
           loadSvg(absUrl, function(svgXml, svgString) {
-            if (imgElem[__SVGINJECT] == INJECT) {
-              // Use the XML from the XHR request if it is an instance of Document. Otherwise
-              // (for example of IE9), create the svg document from the svg string.
-              var svgElem = svgXml instanceof Document ? svgXml.documentElement : buildSvgElement(svgString, true);
+            // Use the XML from the XHR request if it is an instance of Document. Otherwise
+            // (for example of IE9), create the svg document from the svg string.
+            var svgElem = svgXml instanceof Document ? svgXml.documentElement : buildSvgElement(svgString, true);
 
-              if (svgElem instanceof SVGElement) {
-                var afterLoad = options.afterLoad;
-                if (afterLoad) {
-                  // Invoke afterLoad hook which may modify the SVG element.
-                  afterLoad(svgElem);
-
-                  if (useCache) {
-                    // Update svgString because the SVG element can be modified in the afterLoad hook, so
-                    // the modified SVG element is also used for all later cached injections
-                    svgString = getXMLSerializer().serializeToString(svgElem);
-                  }
-                }
-
-                inject(imgElem, svgElem, absUrl, options);
-                setSvgLoadCacheValue(svgString);
-              } else {
-                svgInvalid(imgElem, options);
-                setSvgLoadCacheValue(SVG_INVALID);
+            var afterLoad = options.afterLoad;
+            if (afterLoad) {
+              // Invoke afterLoad hook which may modify the SVG element. After load may also return a new
+              // svg element or svg string
+              var svgElemOrSvgString = afterLoad(svgElem, svgString) || svgElem;
+              
+              if (svgElemOrSvgString) {
+                // Update svgElem and svgString because of modifications to the SVG element or SVG string in
+                // the afterLoad hook, so the modified SVG is also used for all later cached injections
+                var isString = typeof svgElemOrSvgString == 'string';
+                svgString = isString ? svgElemOrSvgString : svgElemToSvgString(svgElem);
+                svgElem = isString ? buildSvgElement(svgElemOrSvgString, true) : svgElemOrSvgString;
               }
             }
+
+            if (svgElem instanceof SVGElement) {
+              var hasUniqueIds = NULL;
+              if (makeIdsUniqueOption) {
+                hasUniqueIds = makeIdsUnique(svgElem);
+              }
+
+              if (useCacheOption) {
+                var uniqueIdsSvgString = hasUniqueIds && svgElemToSvgString(svgElem);
+                // set an array with three entries to the load cache
+                setSvgLoadCacheValue([hasUniqueIds, svgString, uniqueIdsSvgString]);
+              }
+
+              inject(imgElem, svgElem, absUrl, options);
+            } else {
+              svgInvalid(imgElem, options);
+              setSvgLoadCacheValue(SVG_INVALID);
+            }
+            onFinish();
           }, function() {
             loadFail(imgElem, options);
             setSvgLoadCacheValue(LOAD_FAIL);
+            onFinish();
           });
+        } else {
+          if (Array.isArray(svgInjectAttributeValue)) {
+            // svgInjectAttributeValue is an array. Injection is not complete so register callback
+            svgInjectAttributeValue.push(callback);
+          } else {
+            callback();
+          }
         }
       } else {
-        throwImgNotSet();
+        imgNotSet();
       }
     }
 
@@ -527,7 +647,7 @@
           }
         }
       } else {
-        throwImgNotSet();
+        imgNotSet();
       }
     };
 
