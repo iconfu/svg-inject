@@ -118,17 +118,19 @@
         attributeValue = attribute.value;
         // If img attribute is "title", insert a title element into SVG element
         if (attributeName == _TITLE_) {
-          // Create title element
-          var titleElem = document[_CREATE_ELEMENT_ + 'NS']('http://www.w3.org/2000/svg', _TITLE_);
-          titleElem.textContent = attributeValue;
-          // If the SVG element's first child is a title element, replace it with the new title
-          // element, otherwise insert the new title element as first child
+          var titleElem;
           var firstElementChild = svgElem.firstElementChild;
-          if (firstElementChild && firstElementChild.tagName.toLowerCase() == _TITLE_) {
-            svgElem.replaceChild(titleElem, firstElementChild);
+          if (firstElementChild && firstElementChild.localName.toLowerCase() == _TITLE_) {
+            // If the SVG element's first child is a title element, keep it as the title element
+            titleElem = firstElementChild;
           } else {
+            // If the SVG element's first child element is not a title element, create a new title
+            // ele,emt and set it as the first child
+            titleElem = document[_CREATE_ELEMENT_ + 'NS']('http://www.w3.org/2000/svg', _TITLE_);
             svgElem.insertBefore(titleElem, firstElementChild);
           }
+          // Set new title content
+          titleElem.textContent = attributeValue;
         } else {
           // Set img attribute to svg element
           svgElem[_SET_ATTRIBUTE_](attributeName, attributeValue);
