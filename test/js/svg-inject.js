@@ -551,12 +551,13 @@
             if (svgElem instanceof SVGElement) {
               var afterLoad = options.afterLoad;
               if (afterLoad) {
-                // Invoke afterLoad hook which may modify the SVG element. If afterLoad return 
+                // Invoke afterLoad hook which may modify the SVG element. After load may also return a new
+                // svg string or svg element 
                 var svgElemOrSvgString = afterLoad(svgElem, svgString) || svgElem;
-                // Update svgString because the SVG element can be modified in the afterLoad hook, so the
-                // modified SVG element is also used for all later cached injections
+                
+                // Update svgElem and svgString because of modifications to the SVG element or SVG string in
+                // the afterLoad hook, so the modified SVG is also used for all later cached injections
                 var isString = typeof svgElemOrSvgString == 'string';
-
                 svgString = isString ? svgElemOrSvgString : svgElemToSvgString(svgElem);
                 svgElem = isString ? buildSvgElement(svgElemOrSvgString, true) : svgElemOrSvgString;
               }
