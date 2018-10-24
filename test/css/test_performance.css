@@ -26,6 +26,10 @@
   margin: 20px;
 }
 
+#render-container > img {
+  visibility: hidden;
+}
+
 .running #running {
   display: flex;
 }
