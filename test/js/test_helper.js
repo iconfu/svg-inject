@@ -10,6 +10,14 @@ var runTests = function(testFuncs, testNum) {
     console.error(new Error());
   };
 
+  window.failCallback = function() {
+    var err = new Error();
+    return function() {
+      console.error(err);
+      window.fail();
+    };
+  };
+
   window.success = function() {
     if (!failed && ++successCount == (typeof testNum !== 'undefined' ? 1 : testFuncs.length)) {
       document.getElementById('success').style.display = 'block';

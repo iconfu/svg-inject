@@ -157,7 +157,7 @@
 
     for (i = 0; i < idElements[_LENGTH_]; i++) {
       idElem = idElements[i];
-      tagName = idElem.tagName;
+      tagName = idElem.localName; // Use non-namespaced tag name
       // Make ID unique if tag name is IRI referenceable
       if (tagName in IRI_TAG_PROPERTIES_MAP) {
         changed = true;
@@ -201,7 +201,7 @@
       var newValue;
       for (i = 0; i < allElements[_LENGTH_]; i++) {
         element = allElements[i];
-        if (element.tagName == _STYLE_) {
+        if (element.localName == _STYLE_) {
           value = element.textContent;
           newValue = value && value.replace(funcIriRegex, 'url(#$1' + idSuffix + ')');
           if (newValue !== value) {
@@ -455,6 +455,7 @@
 
           if (!IS_SVG_SUPPORTED) {
             svgNotSupported(imgElem, options);
+            callback();
             return;
           }
           // Invoke beforeLoad hook if set. If the beforeLoad returns a value use it as the src for the load
@@ -462,9 +463,13 @@
           var beforeLoad = options.beforeLoad;
           var src = (beforeLoad && beforeLoad(imgElem)) || imgElem[_GET_ATTRIBUTE_]('src');
 
-          if (src === NULL) {
+          if (!src) {
             // If no image src attribute is set do no injection. This can only be reached by using javascript
             // because if no src attribute is set the onload and onerror events do not get called
+            if (src === '') {
+              loadFail(imgElem, options);
+            }
+            callback();
             return;
           }
 
@@ -551,7 +556,7 @@
             var afterLoad = options.afterLoad;
             if (afterLoad) {
               // Invoke afterLoad hook which may modify the SVG element. After load may also return a new
-              // svg string or svg element 
+              // svg element or svg string
               var svgElemOrSvgString = afterLoad(svgElem, svgString) || svgElem;
               
               if (svgElemOrSvgString) {

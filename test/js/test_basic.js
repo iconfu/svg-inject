@@ -181,9 +181,9 @@ runTests([
   function() {
     var count = 0;
     SVGInject.create('SVGInject6', {
-      afterLoad: fail,
-      beforeInject: fail,
-      afterInject: fail,
+      afterLoad: failCallback(),
+      beforeInject: failCallback(),
+      afterInject: failCallback(),
       onFail: function(img) {
         img.src = 'imgs/test1.png';
         if (++count == 7) {
@@ -199,9 +199,9 @@ runTests([
   function() {
     var count = 0;
     SVGInject.create('SVGInject7', {
-      afterLoad: fail,
-      beforeInject: fail,
-      afterInject: fail,
+      afterLoad: failCallback(),
+      beforeInject: failCallback(),
+      afterInject: failCallback(),
       onFail: function(img) {
         img.src = 'imgs/test1.png';
         if (++count == 7) {
@@ -221,9 +221,9 @@ runTests([
   function() {
     var count = 0;
     SVGInject.create('SVGInject8', {
-      afterLoad: fail,
-      beforeInject: fail,
-      afterInject: fail,
+      afterLoad: failCallback(),
+      beforeInject: failCallback(),
+      afterInject: failCallback(),
       onFail: function(img) {
         if (img.hasAttribute('onload')) {
           fail();
@@ -419,7 +419,7 @@ runTests([
   // Test 17
   function() {
     SVGInject.create('SVGInject17', {
-      onFail: fail,
+      onFail: failCallback(),
       afterInject: function() {
         if (document.querySelectorAll('#test-17 img[onload]').length === 0) {
           success();
@@ -449,7 +449,7 @@ runTests([
     var testGroup = function(groupName) {
       var promise = SVGInject18(document.querySelectorAll('#test-18 .' + groupName), {
         afterLoad: function() {
-          isEqualElseFail(++afterLoadCount, 3, hookComplete);
+          isEqualElseFail(++afterLoadCount, 4, hookComplete);
         },
         afterInject: function() {
           isEqualElseFail(++afterInjectCount, 6, hookComplete);
