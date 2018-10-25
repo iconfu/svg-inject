@@ -537,15 +537,19 @@
 
             if (typeof svgLoad != _UNDEFINED_) {
               // Value for url exists in cache
-              if (Array.isArray(svgLoad)) {
-                // Same url has been cached, but value has not been loaded yet
+              if (svgLoad.isCallbackQueue) {
+                // Same url has been cached, but value has not been loaded yet, so add to callbacks
                 svgLoad.push(handleLoadValue);
               } else {
                 handleLoadValue(svgLoad);
               }
               return;
             } else {
-              svgLoadCache[absUrl] = [];
+              // 
+              var svgLoad = [];
+              // set property isCallbackQueue to Array to differentiate from array with cached loaded values  
+              svgLoad.isCallbackQueue = true;
+              svgLoadCache[absUrl] = svgLoad;
             }
           }
 
