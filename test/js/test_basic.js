@@ -482,6 +482,48 @@ runTests([
       testGroup('group-1');
       testGroup('group-2');
       testGroup('group-3');
+     });
+  },
+
+  // Test 19
+  function() {
+    domReady(function() {
+      var svgInject = SVGInject.create('SVGInject19');
+
+      var testContainer = document.querySelector('#test-19 .test');
+
+      var insertImgs = function() {
+        
+        testContainer.insertAdjacentHTML(
+          'beforeend',
+          '<div><img src="imgs/test1.svg" onload="SVGInject19(this)" onerror="SVGInject19.err(this)" class="inject-success"></div>' +
+          '<div><img src="imgs/test2.svg" onload="SVGInject19(this)" onerror="SVGInject19.err(this)" class="inject-success"></div>' +
+          '<div><img src="imgs/test3.svg" onload="SVGInject19(this)" onerror="SVGInject19.err(this)" class="inject-success"></div>'
+        );
+      };
+
+      var injectCount = 0;
+      var repetitions = 0;
+
+      svgInject.setOptions({
+        onFail: failCallback(),
+        afterInject: function() {
+          window.setTimeout(function() {
+            if (++injectCount == 3) {
+              injectCount = 0;
+
+              if (++repetitions < 5) {
+                insertImgs();
+              } else {
+                success();
+              }
+            }
+          }, 10);
+        }
+      });
+
+      insertImgs();
     });
   }
+      
 ]);
