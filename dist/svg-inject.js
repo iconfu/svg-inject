@@ -1,5 +1,5 @@
 /**
- * SVGInject - Version 1.2.0
+ * SVGInject - Version 1.2.1
  * A tiny, intuitive, robust, caching solution for injecting SVG files inline into the DOM.
  *
  * https://github.com/iconfu/svg-inject
@@ -251,8 +251,9 @@
         imgElem[__SVGINJECT] = INJECTED;
         removeOnLoadAttribute(imgElem);
         // Invoke afterInject hook if set
-        if (options.afterInject) {
-          options.afterInject(imgElem, injectElem);
+        var afterInject = options.afterInject;
+        if (afterInject) {
+          afterInject(imgElem, injectElem);
         }
       }
     } else {
@@ -411,11 +412,11 @@
       options = mergeOptions(defaultOptions, options);
 
       var run = function(resolve) {
-        var onAllFinish = function() {
-          if (options.onAllFinish) {
-            options.onAllFinish();
-          }
-          
+        var allFinish = function() {
+          var onAllFinish = options.onAllFinish;
+          if (onAllFinish) {
+            onAllFinish();
+          }          
           resolve && resolve();
         };
 
@@ -425,21 +426,21 @@
           var injectCount = img[_LENGTH_];
 
           if (injectCount == 0) {
-            onAllFinish();
+            allFinish();
           } else {
-            var onFinish = function() {
+            var finish = function() {
               if (++injectIndex == injectCount) {
-                onAllFinish();
+                allFinish();
               }
             };
             
             for (var i = 0; i < injectCount; i++) {
-              SVGInjectElement(img[i], options, onFinish);
+              SVGInjectElement(img[i], options, finish);
             }
           }
         } else {
           // only one img element
-          SVGInjectElement(img, options, onAllFinish);
+          SVGInjectElement(img, options, allFinish);
         }
       };
 

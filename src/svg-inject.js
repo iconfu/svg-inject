@@ -1,5 +1,5 @@
 /**
- * SVGInject - Version 1.2.0
+ * SVGInject - Version 1.2.1
  * A tiny, intuitive, robust, caching solution for injecting SVG files inline into the DOM.
  *
  * https://github.com/iconfu/svg-inject
