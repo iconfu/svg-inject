@@ -119,7 +119,7 @@ For most use cases this approach is recommended and provides nice [advantages](#
 
 * **Fallback if image source is not available**: Behaves like a normal `<img>` element if file not found or not available.
 
-* **Prevention of ID conflicts**: IDs used internally in the SVG are made unique before injection to prevent ID conflits in the DOM
+* **Prevention of ID conflicts**: IDs used internally in the SVG are made unique before injection to prevent ID conflicts in the DOM
 
 
 ## What are additional advantages when using `onload`?
@@ -132,7 +132,7 @@ The recommended way to trigger injection is to call `SVGInject(this)` inside the
 
 This provides additional advantages:
 
-* **Intuitive usage**: Insert SVG images into HTML code just as PNG images, with only one additional instruction. It's very clear to understand what it does looking at the pure HTML.
+* **Intuitive usage**: Insert SVG images into HTML code just as PNG images, with only one additional instruction. It's very clear to understand what it does by looking at the pure HTML.
 
 * **Works with dynamic content**: If `<img>` elements are added dynamically, injection still works.
 
@@ -150,7 +150,7 @@ If you do not want to use the `onload` attribute but prefer to inject SVGs direc
 
 SVGInject is intended to work in production environments however it has a few limitations you should be aware of:
 
-* The image source must conform to the [same-origin policy](https://en.wikipedia.org/wiki/Same-origin_policy), which basically means the image origin must be were the website is running. This may be bypassed using the [Cross-Origin Resource Sharing (CORS) mechanism](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS).
+* The image source must conform to the [same-origin policy](https://en.wikipedia.org/wiki/Same-origin_policy), which basically means the image origin must be where the website is running. This may be bypassed using the [Cross-Origin Resource Sharing (CORS) mechanism](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS).
 * Due to the same-origin policy SVGInject does not work when run from the local file system in many browsers (Chrome, Safari), yet in Firefox it works.
 
 
@@ -163,7 +163,7 @@ All attributes are copied from the `<img>` element to the injected `<svg>` eleme
 
 You can disable the previously described attribute handling by setting the `copyAttributes` option to `false`. You may also implement your own attribute handling in the `beforeInject` options hook.
 
-Additionally after loading the SVG, the value of the `src` attribute of the `<img>` element is transformed to an absolute URL and inserted as a `data-inject-url` attribute. 
+Additionally, after loading the SVG, the value of the `src` attribute of the `<img>` element is transformed to an absolute URL and inserted as a `data-inject-url` attribute. 
 
 ## API
 
