@@ -227,8 +227,8 @@
     return changed;
   }
 
-  // For alredy cached SVGs ids are made unique by simply replacing the already inserted unique ids with a 
-  // higher id counter. This is much more performant as a call to makeIdsUnique().
+  // For cached SVGs the ids are made unique by simply replacing the already inserted unique ids with a 
+  // higher id counter. This is much more performant than a call to makeIdsUnique().
   function makeIdsUniqueCached(svgString) {
     return svgString.replace(ID_SUFFIX_REGEX, ID_SUFFIX + uniqueIdCounter++);
   }
@@ -444,7 +444,7 @@
         }
       };
 
-      // return a Promise object if it is globally available
+      // return a Promise object if globally available
       return typeof Promise == _UNDEFINED_ ? run() : new Promise(run);
     }
 
@@ -462,7 +462,7 @@
             return;
           }
           // Invoke beforeLoad hook if set. If the beforeLoad returns a value use it as the src for the load
-          // URL path. Else use the imgElem src attribute value.
+          // URL path. Else use the imgElem's src attribute value.
           var beforeLoad = options.beforeLoad;
           var src = (beforeLoad && beforeLoad(imgElem)) || imgElem[_GET_ATTRIBUTE_]('src');
 
@@ -546,7 +546,6 @@
               }
               return;
             } else {
-              // 
               var svgLoad = [];
               // set property isCallbackQueue to Array to differentiate from array with cached loaded values  
               svgLoad.isCallbackQueue = true;
@@ -564,8 +563,7 @@
             if (afterLoad) {
               // Invoke afterLoad hook which may modify the SVG element. After load may also return a new
               // svg element or svg string
-              var svgElemOrSvgString = afterLoad(svgElem, svgString) || svgElem;
-              
+              var svgElemOrSvgString = afterLoad(svgElem, svgString) || svgElem;              
               if (svgElemOrSvgString) {
                 // Update svgElem and svgString because of modifications to the SVG element or SVG string in
                 // the afterLoad hook, so the modified SVG is also used for all later cached injections
