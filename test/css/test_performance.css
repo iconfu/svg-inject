@@ -22,8 +22,16 @@
   display: none;
 }
 
+#render-container {
+  position: relative;
+}
+
 #render-container > img, #render-container > svg {
   margin: 20px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: #fff;
 }
 
 #render-container > img {
@@ -32,6 +40,11 @@
 
 .running #running {
   display: flex;
+}
+
+#results svg, #results svg {
+  width: 128px !important;
+  height: 128px !important;
 }
 
 .result {

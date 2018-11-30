@@ -16,89 +16,101 @@ domReady(function(event) {
     return build.firstElementChild;
   };
 
-  var getImageStr = function(svgUrl, testNum, imageNum, disableBrowserCache, useOnload) {
-    return '<img src="./imgs/' + svgUrl + (disableBrowserCache ? '?imageNum=' + createRandomURILString(4) : '') + '"' + (useOnload ? ' onload="SVGInject' + testNum + '(this)"' : '') + ' class="image-' + testNum + '" alt="image ' + testNum + ' ' + imageNum + '">';
+  var getImageStr = function(svgUrl, testNum, imageNum, disableBrowserCache, useOnload, size) {
+    return '<img src="./imgs/' + svgUrl + (disableBrowserCache ? '?imageNum=' + createRandomURILString(4) : '') + '"' + (useOnload ? ' onload="SVGInject' + testNum + '(this)"' : '') + ' class="image-' + testNum + '" alt="image ' + testNum + ' ' + imageNum + '" style="width: ' + size + 'px; height: ' + size + 'px;">';
   };
 
   var requestAnimationFrame = function(callback) {
     window.requestAnimationFrame ? window.requestAnimationFrame(callback) : window.setTimeout(callback, 0);
   };
 
-  var runPerformanceTest = function(svgUrl, num, sampleSize, insertResultElem, disableCache, disableBrowserCache, useOnload, callback) {
-    var imgsStr = '';
-    for (var i = 0; i < sampleSize; ++i) {
-      imgsStr += getImageStr(svgUrl, num, i, disableBrowserCache, useOnload);
-    }
-
-    renderContainerElem.innerHTML = imgsStr;
-
-    var svgInject = SVGInject.create('SVGInject' + num);
-
-    var afterAllInjected = function(callback) {
-      requestAnimationFrame(function() {
-        var time = new Date().getTime() - startTime;
-
-        requestAnimationFrame(function() {
-          callback(testElem, time);
-        });
-      });
-    };
-
-    if (useOnload) {
-      var injectCount = 0;
-      svgInject.setOptions({
-        afterInject: function() {
-          if (++injectCount == sampleSize) {
-            afterAllInjected(callback);
-          }
-        }
-      });
-    }
+  var runPerformanceTest = function(svgUrl, num, sampleSize, insertResultElem, disableCache, disableBrowserCache, useOnload, size, callback) {
     
+    requestAnimationFrame(function() {
+      var imgsStr = '';
+      for (var i = 0; i < sampleSize; ++i) {
+        imgsStr += getImageStr(svgUrl, num, i, disableBrowserCache, useOnload, size);
+      }
 
-    if (insertResultElem) {
-      var testStr = '<div class="result" id="result-' + num + '">' +
-                      getImageStr(svgUrl, num, 0, disableBrowserCache, useOnload) +
-                      '<div class="stats"></div>'
-                    '</div>';
+      renderContainerElem.innerHTML = imgsStr;
 
-      var testElem = buildHtml(testStr);
+      var svgInject = SVGInject.create('SVGInject' + num);
 
-      resultsElem.appendChild(testElem);
-    }
-
-    var startTime = new Date().getTime();
-
-    if (!useOnload) {
-      svgInject(document.querySelectorAll('img.image-' + num), {
-        onAllFinish: function() {
-          window.requestAnimationFrame(function() {
-            afterAllInjected(callback);
+      var afterAllInjected = function(callback) {
+        requestAnimationFrame(function() {
+          var time = new Date().getTime() - startTime;
+          
+          requestAnimationFrame(function() {
+            callback(testElem, time);
           });
-        },
-        useCache: !disableCache
-      });
-    }
+        });
+      };
+
+      var afterLoadStartTime = null;
+
+      if (useOnload) {
+        var injectCount = 0;
+        svgInject.setOptions({
+          afterInject: function(img, svg) {
+            if (++injectCount == sampleSize) {
+              afterAllInjected(callback);
+            }
+          }
+        });
+      }
+      
+
+      if (insertResultElem) {
+        var testStr = '<div class="result" id="result-' + num + '">' +
+                        getImageStr(svgUrl, num, 0, disableBrowserCache, useOnload, size) +
+                        '<div class="stats"></div>'
+                      '</div>';
+
+        var testElem = buildHtml(testStr);
+
+        resultsElem.appendChild(testElem);
+      }
+
+      var startTime = new Date().getTime();
+
+      if (!useOnload) {
+        svgInject(document.querySelectorAll('img.image-' + num), {
+          onAllFinish: function() {
+            window.requestAnimationFrame(function() {
+              afterAllInjected(callback);
+            });
+          },
+          useCache: !disableCache
+        });
+      }
+    });
   };
 
-  var runPerformanceTests = function(svgUrls, count, sampleSize, repetitions, disableCache, disableBrowserCache, useOnload, callback) {
+  var runPerformanceTests = function(svgUrls, count, sampleSize, repetitions, disableCache, disableBrowserCache, useOnload, size, callback) {
+    
     if (svgUrls.length == count) {
-      callback();
+      callback(totalTime);
     } else {
       var svgUrl = svgUrls[count];
       var bestTime;
+      var totalTime = 0;
+
       var repetitionCount = repetitions;
 
       var runTest = function() {
-        runPerformanceTest(svgUrl, count, sampleSize, repetitionCount == 1, disableCache, disableBrowserCache, useOnload, function(testElem, time) {
+        runPerformanceTest(svgUrl, count, sampleSize, repetitionCount == 1, disableCache, disableBrowserCache, useOnload, size, function(testElem, time) {
           bestTime = bestTime && bestTime < time ? bestTime : time;
+          totalTime = totalTime + time;
+
+          var bestTimeAvg = bestTime / sampleSize;
+          var totalTimeAvg = Math.round((totalTime * 100) / (sampleSize * repetitions)) / 100;
           
           if (--repetitionCount == 0) {
-            var statsStr = '<div class="stats">' + (bestTime / sampleSize) + 'ms</div>';
+            var statsStr = '<div class="stats">' + totalTimeAvg  + 'ms</div>';
               
             testElem.getElementsByClassName('stats')[0].innerHTML = statsStr;
 
-            runPerformanceTests(svgUrls, ++count, sampleSize, repetitions, disableCache, disableBrowserCache, useOnload, callback);
+            runPerformanceTests(svgUrls, ++count, sampleSize, repetitions, disableCache, disableBrowserCache, useOnload, size, callback);
           } else {
             runTest();
           }
@@ -116,6 +128,7 @@ domReady(function(event) {
 
     var sampleSize = parseInt(document.getElementById('sample-size').value);
     var repetitions = parseInt(document.getElementById('repetitions').value);
+    var size = parseInt(document.getElementById('svg-size').value);
     var disableCache = disableCacheRadio.checked;
     var disableBrowserCache = disableBrowserCacheRadio.checked;
     var useOnload = useOnloadAttributeCheckbox.checked;
@@ -125,7 +138,7 @@ domReady(function(event) {
       svgUrls.push('performance/' + i + '.svg');
     }
 
-    runPerformanceTests(svgUrls, 0, sampleSize, repetitions, disableCache, disableBrowserCache, useOnload, function() {
+    runPerformanceTests(svgUrls, 0, sampleSize, repetitions, disableCache, disableBrowserCache, useOnload, size, function() {
       document.body.className = '';
     });
   };  

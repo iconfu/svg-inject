@@ -1,0 +1,197 @@
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0,0,1024,1024">
+	<!-- Color names: color-1, color-2, color-3 -->
+	<desc>users icon - Licensed under Iconfu Standard License v1.0 (https://www.iconfu.com/iconfu_standard_license) - Incors GmbH</desc>
+	<defs>
+		<clipPath id="clip-AlMsMH48">
+			<path d="M811.22,811.22c-15.47,15.47 -31.85,29.5 -48.95,42.07h-500.54c-17.11,-12.58 -33.48,-26.6 -48.95,-42.07c-8.85,-8.85 -17.23,-18 -25.14,-27.41v-543.62c0.79,-0.94 1.59,-1.88 2.39,-2.82h643.94c0.8,0.94 1.6,1.88 2.39,2.82v543.62c-7.91,9.41 -16.29,18.56 -25.14,27.41z"/>
+		</clipPath>
+		<clipPath id="clip-j8GbMe3i">
+			<path d="M811.22,811.22c-165.26,165.26 -433.19,165.26 -598.45,0c-165.26,-165.26 -165.26,-433.19 0,-598.45c165.26,-165.26 433.19,-165.26 598.45,0c165.26,165.26 165.26,433.19 0,598.45z"/>
+		</clipPath>
+		<radialGradient cx="512" cy="235.52" r="940.13" id="color-ilcRQT4q" gradientUnits="userSpaceOnUse">
+			<stop offset="0" stop-color="#a3a3a3"/>
+			<stop offset="0.77" stop-color="#000000"/>
+		</radialGradient>
+		<radialGradient cx="512" cy="184.32" r="983.47" id="color-ioISnQpn" gradientUnits="userSpaceOnUse">
+			<stop offset="0.17" stop-color="#000000"/>
+			<stop offset="0.78" stop-color="#ffffff"/>
+		</radialGradient>
+		<radialGradient cx="512" cy="235.52" r="940.13" id="color-xtyR6eMs" gradientUnits="userSpaceOnUse">
+			<stop offset="0" stop-color="#000000"/>
+			<stop offset="0.77" stop-color="#ffffff"/>
+		</radialGradient>
+		<linearGradient x1="512" y1="0" x2="512" y2="1024" id="color-XYJ023F9" gradientUnits="userSpaceOnUse">
+			<stop offset="0" stop-color="#000000"/>
+			<stop offset="1" stop-color="#ffffff"/>
+		</linearGradient>
+		<filter id="filter-c7Z9Ufq0" color-interpolation-filters="sRGB" x="0%" y="0%" width="100%" height="100%">
+			<feColorMatrix values="0.17 0.72 0.11 0 -0.4 0.64 0.28 0.08 0 -0.4 0.20 0.23 0.57 0 -0.4 0 0 0 1 0"/>
+			<feColorMatrix values="-0.65039 1.77384 -0.12345 0 0 1.60663 -0.345 -0.26163 0 0 -0.42008 -0.48319 1.90327 0 0 0 0 0 1 0"/>
+		</filter>
+		<filter id="filter-DEvmSmO8" color-interpolation-filters="sRGB" x="0%" y="0%" width="100%" height="100%">
+			<feColorMatrix values="0.17 0.72 0.11 0 -0.2 0.64 0.28 0.08 0 -0.2 0.20 0.23 0.57 0 -0.2 0 0 0 1 0"/>
+			<feColorMatrix values="-0.65039 1.77384 -0.12345 0 0 1.60663 -0.345 -0.26163 0 0 -0.42008 -0.48319 1.90327 0 0 0 0 0 1 0"/>
+		</filter>
+		<filter id="filter-JpYFINSw" x="0%" y="0%" width="100%" height="105%" color-interpolation-filters="sRGB">
+			<feColorMatrix values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 0.11 0" in="SourceGraphic"/>
+			<feOffset dy="-21.33"/>
+			<feGaussianBlur stdDeviation="11.73" result="blur0"/>
+			<feColorMatrix values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 0.17 0" in="SourceGraphic"/>
+			<feOffset dy="-32"/>
+			<feGaussianBlur stdDeviation="21.33" result="blur1"/>
+			<feMerge>
+				<feMergeNode in="blur0"/>
+				<feMergeNode in="blur1"/>
+			</feMerge>
+		</filter>
+		<filter id="filter-NmfY1x0d" color-interpolation-filters="sRGB" x="0%" y="0%" width="100%" height="100%">
+			<feColorMatrix values="0.17 0.72 0.11 0 0.2 0.64 0.28 0.08 0 0.2 0.20 0.23 0.57 0 0.2 0 0 0 1 0" result="r1"/>
+			<feColorMatrix values="1 0 0 0 0  3.58377 0 0 0 -2.58377  4.77344 0 0 0 -3.77344  0 0 0 1 0"/>
+			<feBlend mode="lighten" in2="r1"/>
+			<feColorMatrix values="-0.65039 1.77384 -0.12345 0 0 1.60663 -0.345 -0.26163 0 0 -0.42008 -0.48319 1.90327 0 0 0 0 0 1 0"/>
+		</filter>
+		<filter id="filter-o4yaBUhL" color-interpolation-filters="sRGB" x="0%" y="0%" width="100%" height="100%">
+			<feColorMatrix values="0.17 0.72 0.11 0 0.05 0.64 0.28 0.08 0 0.05 0.20 0.23 0.57 0 0.05 0 0 0 1 0" result="r1"/>
+			<feColorMatrix values="1 0 0 0 0  3.58377 0 0 0 -2.58377  4.77344 0 0 0 -3.77344  0 0 0 1 0"/>
+			<feBlend mode="lighten" in2="r1"/>
+			<feColorMatrix values="-0.65039 1.77384 -0.12345 0 0 1.60663 -0.345 -0.26163 0 0 -0.42008 -0.48319 1.90327 0 0 0 0 0 1 0"/>
+		</filter>
+		<filter id="filter-rjLwuNXA" color-interpolation-filters="sRGB" x="0%" y="0%" width="100%" height="100%">
+			<feColorMatrix values="0.17 0.72 0.11 0 -0.1 0.64 0.28 0.08 0 -0.1 0.20 0.23 0.57 0 -0.1 0 0 0 1 0"/>
+			<feColorMatrix values="-0.65039 1.77384 -0.12345 0 0 1.60663 -0.345 -0.26163 0 0 -0.42008 -0.48319 1.90327 0 0 0 0 0 1 0"/>
+		</filter>
+		<filter id="filter-seqgXfIy" x="0%" y="0%" width="105%" height="102%" color-interpolation-filters="sRGB">
+			<feColorMatrix values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 0.21 0" in="SourceGraphic"/>
+			<feOffset dy="10"/>
+			<feGaussianBlur stdDeviation="5.5" result="blur0"/>
+			<feColorMatrix values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 0.31 0" in="SourceGraphic"/>
+			<feOffset dy="15"/>
+			<feGaussianBlur stdDeviation="10" result="blur1"/>
+			<feMerge>
+				<feMergeNode in="blur0"/>
+				<feMergeNode in="blur1"/>
+			</feMerge>
+		</filter>
+		<filter id="filter-sTguN7qX" x="-12%" y="-6%" width="172%" height="180%" color-interpolation-filters="sRGB">
+			<feColorMatrix values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 0.14 0" in="SourceGraphic"/>
+			<feOffset dy="13.33"/>
+			<feGaussianBlur stdDeviation="7.33" result="blur0"/>
+			<feColorMatrix values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 0.21 0" in="SourceGraphic"/>
+			<feOffset dy="20"/>
+			<feGaussianBlur stdDeviation="13.33" result="blur1"/>
+			<feMerge>
+				<feMergeNode in="blur0"/>
+				<feMergeNode in="blur1"/>
+			</feMerge>
+		</filter>
+		<filter id="filter-U8LRevmd" color-interpolation-filters="sRGB">
+			<feOffset/>
+		</filter>
+		<filter id="filter-xEwOYd22" color-interpolation-filters="sRGB" x="0%" y="0%" width="100%" height="100%">
+			<feColorMatrix values="0.17 0.72 0.11 0 -0.3 0.64 0.28 0.08 0 -0.3 0.20 0.23 0.57 0 -0.3 0 0 0 1 0"/>
+			<feColorMatrix values="-0.65039 1.77384 -0.12345 0 0 1.60663 -0.345 -0.26163 0 0 -0.42008 -0.48319 1.90327 0 0 0 0 0 1 0"/>
+		</filter>
+		<mask id="mask-1uU7Zpmu">
+			<rect fill="url(#color-xtyR6eMs)" x="88.83" y="88.83" width="846.34" height="846.34"/>
+		</mask>
+		<mask id="mask-8GLQEL9k">
+			<rect fill="url(#color-ioISnQpn)" x="249.64" y="266.03" width="524.73" height="491.93"/>
+		</mask>
+		<mask id="mask-bSKINedq">
+			<rect fill="url(#color-XYJ023F9)" x="0" y="0" width="1024" height="1024"/>
+		</mask>
+		<mask id="mask-fTapxAcW">
+			<rect fill="url(#color-XYJ023F9)" x="88.83" y="88.83" width="846.34" height="846.34"/>
+		</mask>
+		<mask id="mask-PA27rZ8E">
+			<rect fill="url(#color-XYJ023F9)" x="66.56" y="66.56" width="890.88" height="890.88"/>
+		</mask>
+		<mask id="mask-QnWAKhfB">
+			<path d="M811.22,811.22c-165.26,165.26 -433.19,165.26 -598.45,0c-165.26,-165.26 -165.26,-433.19 0,-598.45c165.26,-165.26 433.19,-165.26 598.45,0c165.26,165.26 165.26,433.19 0,598.45z" fill="#ffffff"/>
+		</mask>
+		<mask id="mask-QRef8peT">
+			<path d="M874.04,874.04c-199.95,199.95 -524.13,199.95 -724.08,0c-199.95,-199.95 -199.95,-524.13 0,-724.08c199.95,-199.95 524.13,-199.95 724.08,0c199.95,199.95 199.95,524.13 0,724.08z" fill="#ffffff"/>
+		</mask>
+		<mask id="mask-QXQBlrAR">
+			<path d="M826.97,826.97c-173.96,173.96 -455.99,173.96 -629.95,0c-173.96,-173.96 -173.96,-455.99 0,-629.95c173.96,-173.96 455.99,-173.96 629.95,0c173.96,173.96 173.96,455.99 0,629.95z" fill="#ffffff"/>
+		</mask>
+		<mask id="mask-t2BnKXjW">
+			<path d="M811.22,811.22c-165.26,165.26 -433.19,165.26 -598.45,0c-165.26,-165.26 -165.26,-433.19 0,-598.45c165.26,-165.26 433.19,-165.26 598.45,0c165.26,165.26 165.26,433.19 0,598.45z" fill="url(#color-ilcRQT4q)"/>
+		</mask>
+		<mask id="mask-wWOIZbDq">
+			<path d="M602.19,725.17c-2.3,0 -4.63,-0.01 -6.99,-0.04c-31.84,24.12 -107.4,32.84 -165.19,32.84c-75.16,0 -180.38,-14.75 -180.38,-58.94c0,-92.9 57.29,-108.54 96.78,-136.05c5.48,11.69 17.79,19.91 29.43,25.04c16.53,7.29 36.16,10.83 54.16,10.83c5.88,0 11.94,-0.38 18,-1.14c12.5,-1.57 25.03,-4.78 36.16,-9.69c11.64,-5.13 23.95,-13.35 29.43,-25.04c-4.63,-3.22 -8.97,-6.57 -12.98,-10.25c7.53,-4.53 14.93,-8.92 21.77,-13.68c5.23,11.16 16.98,19 28.09,23.9c15.77,6.95 34.5,10.33 51.69,10.34c0,0 0.01,0 0.02,0c17.18,0 35.92,-3.39 51.69,-10.34c11.12,-4.9 22.86,-12.74 28.1,-23.9c37.69,26.26 92.38,41.18 92.38,129.86c0,42.18 -100.44,56.26 -172.18,56.26zM497.81,550.03c-0.1,15.51 -33.79,30.03 -67.8,30.03c-33.95,0 -67.59,-14.46 -67.8,-29.95l-0.18,-36.64c-27.51,-28.93 -46.9,-72.59 -46.9,-116.26c0.01,-60.12 28.72,-120.25 114.88,-120.25c37.94,0 64.75,11.66 82.86,29.85c16.79,-24.22 45.14,-40.78 89.31,-40.78c82.24,0 109.65,57.39 109.65,114.78c0,41.68 -18.51,83.36 -44.77,110.97l-0.16,35.13c-0.39,14.73 -32.42,28.44 -64.73,28.44c-32.31,0 -64.34,-13.72 -64.73,-28.44l-0.16,-35.13c-4.52,-4.76 -8.82,-9.93 -12.83,-15.45c-7.36,13.88 -16.37,26.5 -26.48,37.13z" fill="#ffffff"/>
+		</mask>
+	</defs>
+	<g fill="none" fill-rule="nonzero" style="mix-blend-mode: normal">
+		<g mask="url(#mask-QRef8peT)">
+			<g color="#c2c2c2" class="color-3">
+				<pattern id="pattern-YyCSW5UV" patternUnits="userSpaceOnUse" x="1" y="1" width="62" height="62">
+					<rect filter="url(#filter-o4yaBUhL)" fill="currentColor" x="0" y="0" width="64" height="64"/>
+				</pattern>
+				<rect x="0" y="0" width="1024" height="1024" fill="url(#pattern-YyCSW5UV)"/>
+			</g>
+			<g color="#c2c2c2" class="color-3" mask="url(#mask-bSKINedq)">
+				<pattern id="pattern-cCxKTjCC" patternUnits="userSpaceOnUse" x="1" y="1" width="62" height="62">
+					<rect filter="url(#filter-xEwOYd22)" fill="currentColor" x="0" y="0" width="64" height="64"/>
+				</pattern>
+				<rect x="0" y="0" width="1024" height="1024" fill="url(#pattern-cCxKTjCC)"/>
+			</g>
+		</g>
+		<g mask="url(#mask-QXQBlrAR)">
+			<g color="#c2c2c2" class="color-3">
+				<pattern id="pattern-bUoJJaAy" patternUnits="userSpaceOnUse" x="1" y="1" width="62" height="62">
+					<rect filter="url(#filter-c7Z9Ufq0)" fill="currentColor" x="0" y="0" width="64" height="64"/>
+				</pattern>
+				<rect x="66.56" y="66.56" width="890.88" height="890.88" fill="url(#pattern-bUoJJaAy)"/>
+			</g>
+			<g color="#c2c2c2" class="color-3" mask="url(#mask-PA27rZ8E)">
+				<pattern id="pattern-u1RHr211" patternUnits="userSpaceOnUse" x="1" y="1" width="62" height="62">
+					<rect filter="url(#filter-o4yaBUhL)" fill="currentColor" x="0" y="0" width="64" height="64"/>
+				</pattern>
+				<rect x="66.56" y="66.56" width="890.88" height="890.88" fill="url(#pattern-u1RHr211)"/>
+			</g>
+		</g>
+		<g mask="url(#mask-QnWAKhfB)">
+			<g color="#42a5f5" class="color-1">
+				<rect x="88.83" y="88.83" width="846.34" height="846.34" fill="currentColor"/>
+			</g>
+			<g color="#42a5f5" class="color-1" mask="url(#mask-fTapxAcW)">
+				<pattern id="pattern-tQdhwTY4" patternUnits="userSpaceOnUse" x="1" y="1" width="62" height="62">
+					<rect filter="url(#filter-DEvmSmO8)" fill="currentColor" x="0" y="0" width="64" height="64"/>
+				</pattern>
+				<rect x="88.83" y="88.83" width="846.34" height="846.34" fill="url(#pattern-tQdhwTY4)"/>
+			</g>
+		</g>
+		<g filter="url(#filter-U8LRevmd)" mask="url(#mask-t2BnKXjW)">
+			<g color="#42a5f5" class="color-1">
+				<pattern id="pattern-Mnz4XUuq" patternUnits="userSpaceOnUse" x="1" y="1" width="62" height="62">
+					<rect filter="url(#filter-NmfY1x0d)" fill="currentColor" x="0" y="0" width="64" height="64"/>
+				</pattern>
+				<rect x="88.83" y="88.83" width="846.34" height="846.34" fill="url(#pattern-Mnz4XUuq)"/>
+			</g>
+			<g color="#42a5f5" class="color-1" mask="url(#mask-1uU7Zpmu)">
+				<rect x="88.83" y="88.83" width="846.34" height="846.34" fill="currentColor"/>
+			</g>
+		</g>
+		<g clip-path="url(#clip-j8GbMe3i)">
+			<path d="M-10.37,1087.7v-1044.74h1044.74v1044.74zM811.22,212.78c-165.26,-165.26 -433.19,-165.26 -598.45,0c-165.26,165.26 -165.26,433.19 0,598.45c165.26,165.26 433.19,165.26 598.45,0c165.26,-165.26 165.26,-433.19 0,-598.45z" fill="#000000" fill-opacity="1" filter="url(#filter-JpYFINSw)"/>
+		</g>
+		<g clip-path="url(#clip-j8GbMe3i)">
+			<path d="M42.33,956.67v-939.34h939.34v939.34zM811.22,212.78c-165.26,-165.26 -433.19,-165.26 -598.45,0c-165.26,165.26 -165.26,433.19 0,598.45c165.26,165.26 433.19,165.26 598.45,0c165.26,-165.26 165.26,-433.19 0,-598.45z" fill="#000000" fill-opacity="1" filter="url(#filter-seqgXfIy)"/>
+		</g>
+		<g clip-path="url(#clip-AlMsMH48)">
+			<path d="M602.19,725.17c-2.3,0 -4.63,-0.01 -6.99,-0.04c-31.84,24.12 -107.4,32.84 -165.19,32.84c-75.16,0 -180.38,-14.75 -180.38,-58.94c0,-92.9 57.29,-108.54 96.78,-136.05c5.48,11.69 17.79,19.91 29.43,25.04c16.53,7.29 36.16,10.83 54.16,10.83c5.88,0 11.94,-0.38 18,-1.14c12.5,-1.57 25.03,-4.78 36.16,-9.69c11.64,-5.13 23.95,-13.35 29.43,-25.04c-4.63,-3.22 -8.97,-6.57 -12.98,-10.25c7.53,-4.53 14.93,-8.92 21.77,-13.68c5.23,11.16 16.98,19 28.09,23.9c15.77,6.95 34.5,10.33 51.69,10.34c0,0 0.01,0 0.02,0c17.18,0 35.92,-3.39 51.69,-10.34c11.12,-4.9 22.86,-12.74 28.1,-23.9c37.69,26.26 92.38,41.18 92.38,129.86c0,42.18 -100.44,56.26 -172.18,56.26zM497.81,550.03c-0.1,15.51 -33.79,30.03 -67.8,30.03c-33.95,0 -67.59,-14.46 -67.8,-29.95l-0.18,-36.64c-27.51,-28.93 -46.9,-72.59 -46.9,-116.26c0.01,-60.12 28.72,-120.25 114.88,-120.25c37.94,0 64.75,11.66 82.86,29.85c16.79,-24.22 45.14,-40.78 89.31,-40.78c82.24,0 109.65,57.39 109.65,114.78c0,41.68 -18.51,83.36 -44.77,110.97l-0.16,35.13c-0.39,14.73 -32.42,28.44 -64.73,28.44c-32.31,0 -64.34,-13.72 -64.73,-28.44l-0.16,-35.13c-4.52,-4.76 -8.82,-9.93 -12.83,-15.45c-7.36,13.88 -16.37,26.5 -26.48,37.13z" fill="#000000" fill-opacity="1" filter="url(#filter-sTguN7qX)"/>
+		</g>
+		<g mask="url(#mask-wWOIZbDq)">
+			<g color="#ffffff" class="color-2">
+				<rect x="249.64" y="266.03" width="524.73" height="491.93" fill="currentColor"/>
+			</g>
+			<g color="#ffffff" class="color-2" mask="url(#mask-8GLQEL9k)">
+				<pattern id="pattern-CqKmY3yi" patternUnits="userSpaceOnUse" x="1" y="1" width="62" height="62">
+					<rect filter="url(#filter-rjLwuNXA)" fill="currentColor" x="0" y="0" width="64" height="64"/>
+				</pattern>
+				<rect x="249.64" y="266.03" width="524.73" height="491.93" fill="url(#pattern-CqKmY3yi)"/>
+			</g>
+		</g>
+	</g>
+</svg>
