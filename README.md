@@ -222,22 +222,21 @@ document.addEventListener('DOMContentLoaded', function() {
 If you dynamically insert new `<img>` elements you need to call `SVGInject()` on these elements after their insertion.
 
 
-## Fallback for no SVG support (IE <= 8)
+## Fallback for old browsers
 
-If the browser does not support SVG, this simple fallback solution replaces the `src` attribute with an alternative image URI.
+If the browser does not support SVG, this simple fallback solution replaces the `src` attribute with an alternative image URL.
 
 ```html
-<​img​ ​src​=​"image.svg"​ ​onload​=​"SVGInject(this)"​ ​onerror​=​"SVGInject.err(this, 'image.png')" /​>
+< img src="image.svg" onload="SVGInject(this)" onerror="SVGInject.err(this, 'image.png')" />
 ```
 
-A more generic method that will attempt to load a file with the same path and name but a different file extension can be found in [this example](#example-with-fallback-for-ie8--ie7).
-
-Note that the `onerror="SVGInject.err(this)"` is necessary if SVGInject is used with the `onload` attribute,​ because the `onFail` callback will only get triggered this way.
+More detailed information on implementing fallback solutions for old browsers can be found on our [Fallback solutions WIki page](../../wiki/Fallback-solutions).
 
 
 ## What about some examples?
 
 Here are some examples which cover the most common use cases.
+
 
 ### Basic Example
 
@@ -255,45 +254,6 @@ This is the standard usage of SVGInject which works on all modern browsers, and 
 </html>
 ```
 
-### Example with fallback for IE8 & IE7
-
-This example shows how to add a fallback for browsers not supporting SVGs. For these browsers an alternative PNG source is used to display the image.
-
-```html
-<html>
-<head>
-  <script src="svg-inject.min.js"></script>
-</head>
-<body>
-  <img src="image.svg" onload="SVGInject(this)" onerror="SVGInject.err(this, 'image.png')" />
-</body>
-</html>
-```
-
-Another, more generic way of providing a fallback image source is using the `onFail` hook. If loading the SVG fails, this will try to load a file with the same name except “png” instead of “svg” for the file ending.
-
-```html
-<html>
-<head>
-  <script src="svg-inject.min.js"></script>
-
-  <!-- optional PNG fallback if SVG is not supported (IE <= 8) -->
-  <script>
-    SVGInject.setOptions({
-      onFail: function(img, status) {
-        if (status == 'SVG_NOT_SUPPORTED') {
-          img.src = img.src.slice(0, -4) + ".png";
-        }
-      }
-    });
-  </script>
-</head>
-<body>
-  <!-- the onerror="SVGInject.err(this)" is needed to trigger the onFail callback -->
-  <img src="image.svg" onload="SVGInject(this)" onerror="SVGInject.err(this)" />
-</body>
-</html>
-```
 
 ### Example using `options`
 
@@ -335,6 +295,7 @@ This example shows how to use SVGInject with multiple options.
 </body>
 </html>
 ```
+
 
 ### Example without using the `onload` attribute
 
