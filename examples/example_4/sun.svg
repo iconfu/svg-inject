@@ -1,0 +1,176 @@
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0,0,1024,1024">
+	<!-- Color names: color-1, color-2, color-3 -->
+	<desc>sun icon - Licensed under Iconfu Standard License v1.0 (https://www.iconfu.com/iconfu_standard_license) - Incors GmbH</desc>
+	<defs>
+		<clipPath id="clip-9Dzr9P46">
+			<path d="M285.69,310.69h452.62v408.33c-3.06,3.34 -6.2,6.62 -9.43,9.85c-12.86,12.86 -26.57,24.34 -40.96,34.43h-351.83c-14.39,-10.1 -28.1,-21.57 -40.96,-34.43c-3.23,-3.23 -6.38,-6.52 -9.43,-9.85z"/>
+		</clipPath>
+		<clipPath id="clip-G94ER8Pu">
+			<path d="M0,1024v-990.19h1024v990.19z"/>
+		</clipPath>
+		<clipPath id="clip-rbvNwlBL">
+			<path d="M728.88,728.88c-119.78,119.78 -313.97,119.78 -433.75,0c-119.78,-119.78 -119.78,-313.97 0,-433.75c119.78,-119.78 313.97,-119.78 433.75,0c119.78,119.78 119.78,313.97 0,433.75z"/>
+		</clipPath>
+		<linearGradient x1="262.45" y1="112.64" x2="761.55" y2="911.36" id="color-0GxwGMby" gradientUnits="userSpaceOnUse">
+			<stop offset="0" stop-color="#bfbfbf"/>
+			<stop offset="1" stop-color="#ffffff"/>
+		</linearGradient>
+		<linearGradient x1="262.45" y1="112.64" x2="761.55" y2="911.36" id="color-3pXXgKny" gradientUnits="userSpaceOnUse">
+			<stop offset="0" stop-color="#000000"/>
+			<stop offset="1" stop-color="#ffffff"/>
+		</linearGradient>
+		<linearGradient x1="512" y1="112.64" x2="512" y2="911.36" id="color-5V5v1lUx" gradientUnits="userSpaceOnUse">
+			<stop offset="0" stop-color="#000000"/>
+			<stop offset="1" stop-color="#ffffff"/>
+		</linearGradient>
+		<filter id="filter-CVWJGepi" x="-13%" y="-6%" width="219%" height="219%" color-interpolation-filters="sRGB">
+			<feColorMatrix values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 0.1 0" in="SourceGraphic"/>
+			<feOffset dy="10"/>
+			<feGaussianBlur stdDeviation="5.5" result="blur0"/>
+			<feColorMatrix values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 0.15 0" in="SourceGraphic"/>
+			<feOffset dy="15"/>
+			<feGaussianBlur stdDeviation="10" result="blur1"/>
+			<feMerge>
+				<feMergeNode in="blur0"/>
+				<feMergeNode in="blur1"/>
+			</feMerge>
+		</filter>
+		<filter id="filter-fOGiC9mR" color-interpolation-filters="sRGB">
+			<feColorMatrix values="0.17 0.72 0.11 0 -0.03 0.64 0.28 0.08 0 -0.03 0.20 0.23 0.57 0 -0.03 0 0 0 1 0"/>
+			<feColorMatrix values="-0.65039 1.77384 -0.12345 0 0 1.60663 -0.345 -0.26163 0 0 -0.42008 -0.48319 1.90327 0 0 0 0 0 1 0"/>
+		</filter>
+		<filter id="filter-GgGowfat" color-interpolation-filters="sRGB">
+			<feColorMatrix values="0.17 0.72 0.11 0 -0.1 0.64 0.28 0.08 0 -0.1 0.20 0.23 0.57 0 -0.1 0 0 0 1 0"/>
+			<feColorMatrix values="-0.65039 1.77384 -0.12345 0 0 1.60663 -0.345 -0.26163 0 0 -0.42008 -0.48319 1.90327 0 0 0 0 0 1 0"/>
+		</filter>
+		<filter id="filter-LMwW24ec" x="0%" y="0%" width="100%" height="100%" color-interpolation-filters="sRGB">
+			<feColorMatrix values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 0.1 0" in="SourceGraphic"/>
+			<feOffset dy="10"/>
+			<feGaussianBlur stdDeviation="5.5" result="blur0"/>
+			<feColorMatrix values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 0.15 0" in="SourceGraphic"/>
+			<feOffset dy="15"/>
+			<feGaussianBlur stdDeviation="10" result="blur1"/>
+			<feMerge>
+				<feMergeNode in="blur0"/>
+				<feMergeNode in="blur1"/>
+			</feMerge>
+		</filter>
+		<filter id="filter-ly0RxdyL" color-interpolation-filters="sRGB">
+			<feOffset/>
+		</filter>
+		<filter id="filter-qQfLEE2M" x="-22%" y="-10%" width="158%" height="157%" color-interpolation-filters="sRGB">
+			<feColorMatrix values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 0.67 0" in="SourceGraphic"/>
+			<feOffset dy="36.67"/>
+			<feGaussianBlur stdDeviation="20.17" result="blur0"/>
+			<feColorMatrix values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 1 0" in="SourceGraphic"/>
+			<feOffset dy="55"/>
+			<feGaussianBlur stdDeviation="36.67" result="blur1"/>
+			<feMerge>
+				<feMergeNode in="blur0"/>
+				<feMergeNode in="blur1"/>
+			</feMerge>
+		</filter>
+		<mask id="mask-1MJqbLUu">
+			<rect fill="url(#color-5V5v1lUx)" x="192.51" y="192.51" width="638.98" height="638.98"/>
+		</mask>
+		<mask id="mask-6tv8XMxA">
+			<path d="M794.39,794.39c-155.96,155.96 -408.82,155.96 -564.78,0c-155.96,-155.96 -155.96,-408.82 0,-564.78c155.96,-155.96 408.82,-155.96 564.78,0c155.96,155.96 155.96,408.82 0,564.78z" fill="url(#color-0GxwGMby)"/>
+		</mask>
+		<mask id="mask-7f9XrDtQ">
+			<rect fill="url(#color-5V5v1lUx)" x="332.19" y="332.19" width="359.62" height="359.62"/>
+		</mask>
+		<mask id="mask-934rARpG">
+			<rect fill="url(#color-5V5v1lUx)" x="205.29" y="205.29" width="613.42" height="613.42"/>
+		</mask>
+		<mask id="mask-ir9g6Sjm">
+			<rect fill="url(#color-3pXXgKny)" x="-57.86" y="33.81" width="1139.72" height="1139.72"/>
+		</mask>
+		<mask id="mask-j1uy9NbJ">
+			<path d="M512,409.25c56.75,0 102.75,46 102.75,102.75c0,56.74 -46,102.75 -102.75,102.75c-56.75,0 -102.75,-46 -102.75,-102.75c0,-56.75 46,-102.75 102.75,-102.75zM512,434.94c-42.56,0 -77.06,34.5 -77.06,77.06c0,42.56 34.5,77.06 77.06,77.06c42.56,0 77.06,-34.5 77.06,-77.06c0,-42.56 -34.5,-77.06 -77.06,-77.06zM422.1,667.72c-6.13,-3.54 -8.24,-11.42 -4.7,-17.54l12.85,-22.25c3.54,-6.12 11.42,-8.24 17.54,-4.7c6.12,3.54 8.24,11.42 4.7,17.54l-12.84,22.25c-3.54,6.12 -11.42,8.24 -17.54,4.7zM356.28,422.1c3.54,-6.13 11.42,-8.24 17.54,-4.7l22.25,12.85c6.12,3.54 8.24,11.42 4.7,17.54c-3.54,6.12 -11.42,8.24 -17.54,4.7l-22.25,-12.84c-6.12,-3.54 -8.24,-11.42 -4.7,-17.54zM667.72,601.9c-3.54,6.13 -11.42,8.24 -17.54,4.7l-22.25,-12.85c-6.12,-3.54 -8.24,-11.42 -4.7,-17.54c3.54,-6.12 11.42,-8.24 17.54,-4.7l22.25,12.84c6.12,3.54 8.24,11.42 4.7,17.54zM601.9,356.28c6.13,3.54 8.24,11.42 4.7,17.54l-12.85,22.25c-3.54,6.12 -11.42,8.24 -17.54,4.7c-6.12,-3.54 -8.24,-11.42 -4.7,-17.54l12.84,-22.25c3.54,-6.12 11.42,-8.24 17.54,-4.7zM601.9,667.72c-6.12,3.54 -14.01,1.42 -17.54,-4.7l-12.84,-22.25c-3.54,-6.12 -1.42,-14.01 4.7,-17.54c6.12,-3.54 14.01,-1.42 17.54,4.7l12.84,22.25c3.54,6.12 1.42,14.01 -4.7,17.54zM356.28,601.9c-3.54,-6.12 -1.42,-14.01 4.7,-17.54l22.25,-12.84c6.12,-3.54 14.01,-1.42 17.54,4.7c3.54,6.12 1.42,14.01 -4.7,17.54l-22.25,12.84c-6.12,3.54 -14.01,1.42 -17.54,-4.7zM422.1,356.28c6.12,-3.54 14.01,-1.42 17.54,4.7l12.84,22.25c3.54,6.12 1.42,14.01 -4.7,17.54c-6.12,3.54 -14.01,1.42 -17.54,-4.7l-12.84,-22.25c-3.54,-6.12 -1.42,-14.01 4.7,-17.54zM667.72,422.1c3.54,6.12 1.42,14.01 -4.7,17.54l-22.25,12.84c-6.12,3.54 -14.01,1.42 -17.54,-4.7c-3.54,-6.12 -1.42,-14.01 4.7,-17.54l22.25,-12.84c6.12,-3.54 14.01,-1.42 17.54,4.7zM512,691.81c-7.08,0 -12.84,-5.77 -12.84,-12.84v-25.69c0,-7.07 5.77,-12.84 12.84,-12.84c7.07,0 12.84,5.77 12.84,12.84v25.69c0,7.08 -5.77,12.84 -12.84,12.84zM332.19,512c0,-7.08 5.77,-12.84 12.84,-12.84h25.69c7.07,0 12.84,5.77 12.84,12.84c0,7.07 -5.77,12.84 -12.84,12.84h-25.69c-7.08,0 -12.84,-5.77 -12.84,-12.84zM512,332.19c7.08,0 12.84,5.77 12.84,12.84v25.69c0,7.07 -5.77,12.84 -12.84,12.84c-7.07,0 -12.84,-5.77 -12.84,-12.84v-25.69c0,-7.08 5.77,-12.84 12.84,-12.84zM691.81,512c0,7.08 -5.77,12.84 -12.84,12.84h-25.69c-7.07,0 -12.84,-5.77 -12.84,-12.84c0,-7.07 5.77,-12.84 12.84,-12.84h25.69c7.08,0 12.84,5.77 12.84,12.84z" fill="#ffffff"/>
+		</mask>
+		<mask id="mask-K6S6b8z7">
+			<rect fill="url(#color-5V5v1lUx)" x="112.64" y="112.64" width="798.72" height="798.72"/>
+		</mask>
+		<mask id="mask-mexjLcqw">
+			<path d="M737.91,737.91c-124.77,124.77 -327.06,124.77 -451.82,0c-124.77,-124.77 -124.77,-327.06 0,-451.82c124.77,-124.77 327.06,-124.77 451.82,0c124.77,124.77 124.77,327.06 0,451.82z" fill="#ffffff"/>
+		</mask>
+		<mask id="mask-NK5oNY6O">
+			<path d="M728.88,728.88c-119.78,119.78 -313.97,119.78 -433.75,0c-119.78,-119.78 -119.78,-313.97 0,-433.75c119.78,-119.78 313.97,-119.78 433.75,0c119.78,119.78 119.78,313.97 0,433.75z" fill="#ffffff"/>
+		</mask>
+		<mask id="mask-SjCad8jk">
+			<path d="M794.39,794.39c-155.96,155.96 -408.82,155.96 -564.78,0c-155.96,-155.96 -155.96,-408.82 0,-564.78c155.96,-155.96 408.82,-155.96 564.78,0c155.96,155.96 155.96,408.82 0,564.78z" fill="#ffffff"/>
+		</mask>
+	</defs>
+	<g fill="none" fill-rule="nonzero" style="mix-blend-mode: normal">
+		<g clip-path="url(#clip-G94ER8Pu)">
+			<g filter="url(#filter-qQfLEE2M)">
+				<g filter="url(#filter-ly0RxdyL)" mask="url(#mask-6tv8XMxA)">
+					<g color="#00f4f9" class="color-2">
+						<rect x="-57.86" y="33.81" width="1139.72" height="1139.72" fill="currentColor"/>
+					</g>
+					<g color="#738ace" class="color-1" mask="url(#mask-ir9g6Sjm)">
+						<rect x="-57.86" y="33.81" width="1139.72" height="1139.72" fill="currentColor"/>
+					</g>
+				</g>
+			</g>
+		</g>
+		<g mask="url(#mask-SjCad8jk)">
+			<g color="#ffffff" class="color-3">
+				<rect x="112.64" y="112.64" width="798.72" height="798.72" fill="currentColor"/>
+			</g>
+			<g color="#ffffff" class="color-3" mask="url(#mask-K6S6b8z7)">
+				<defs>
+					<pattern id="pattern-tnJ5WA8T" x="4" y="4" width="64" height="64" patternUnits="userSpaceOnUse">
+						<rect filter="url(#filter-GgGowfat)" fill="currentColor" x="0" y="0" width="72" height="72"/>
+					</pattern>
+				</defs>
+				<rect x="112.64" y="112.64" width="798.72" height="798.72" fill="url(#pattern-tnJ5WA8T)"/>
+			</g>
+		</g>
+		<g mask="url(#mask-mexjLcqw)">
+			<g color="#ffffff" class="color-3">
+				<defs>
+					<pattern id="pattern-eBLu1RYR" x="4" y="4" width="64" height="64" patternUnits="userSpaceOnUse">
+						<rect filter="url(#filter-GgGowfat)" fill="currentColor" x="0" y="0" width="72" height="72"/>
+					</pattern>
+				</defs>
+				<rect x="192.51" y="192.51" width="638.98" height="638.98" fill="url(#pattern-eBLu1RYR)"/>
+			</g>
+			<g color="#ffffff" class="color-3" mask="url(#mask-1MJqbLUu)">
+				<defs>
+					<pattern id="pattern-p61h1giV" x="4" y="4" width="64" height="64" patternUnits="userSpaceOnUse">
+						<rect filter="url(#filter-fOGiC9mR)" fill="currentColor" x="0" y="0" width="72" height="72"/>
+					</pattern>
+				</defs>
+				<rect x="192.51" y="192.51" width="638.98" height="638.98" fill="url(#pattern-p61h1giV)"/>
+			</g>
+		</g>
+		<g mask="url(#mask-NK5oNY6O)">
+			<g color="#738ace" class="color-1">
+				<rect x="205.29" y="205.29" width="613.42" height="613.42" fill="currentColor"/>
+			</g>
+			<g color="#00f4f9" class="color-2" mask="url(#mask-934rARpG)">
+				<rect x="205.29" y="205.29" width="613.42" height="613.42" fill="currentColor"/>
+			</g>
+		</g>
+		<g clip-path="url(#clip-rbvNwlBL)">
+			<path d="M158.79,840.21v-706.42h706.42v706.42zM728.88,295.12c-119.78,-119.78 -313.97,-119.78 -433.75,0c-119.78,119.78 -119.78,313.97 0,433.75c119.78,119.78 313.97,119.78 433.75,0c119.78,-119.78 119.78,-313.97 0,-433.75z" fill="#000000" fill-opacity="1" filter="url(#filter-LMwW24ec)"/>
+		</g>
+		<g clip-path="url(#clip-9Dzr9P46)">
+			<path d="M512,409.25c56.75,0 102.75,46 102.75,102.75c0,56.74 -46,102.75 -102.75,102.75c-56.75,0 -102.75,-46 -102.75,-102.75c0,-56.75 46,-102.75 102.75,-102.75zM512,434.94c-42.56,0 -77.06,34.5 -77.06,77.06c0,42.56 34.5,77.06 77.06,77.06c42.56,0 77.06,-34.5 77.06,-77.06c0,-42.56 -34.5,-77.06 -77.06,-77.06zM422.1,667.72c-6.13,-3.54 -8.24,-11.42 -4.7,-17.54l12.85,-22.25c3.54,-6.12 11.42,-8.24 17.54,-4.7c6.12,3.54 8.24,11.42 4.7,17.54l-12.84,22.25c-3.54,6.12 -11.42,8.24 -17.54,4.7zM356.28,422.1c3.54,-6.13 11.42,-8.24 17.54,-4.7l22.25,12.85c6.12,3.54 8.24,11.42 4.7,17.54c-3.54,6.12 -11.42,8.24 -17.54,4.7l-22.25,-12.84c-6.12,-3.54 -8.24,-11.42 -4.7,-17.54zM667.72,601.9c-3.54,6.13 -11.42,8.24 -17.54,4.7l-22.25,-12.85c-6.12,-3.54 -8.24,-11.42 -4.7,-17.54c3.54,-6.12 11.42,-8.24 17.54,-4.7l22.25,12.84c6.12,3.54 8.24,11.42 4.7,17.54zM601.9,356.28c6.13,3.54 8.24,11.42 4.7,17.54l-12.85,22.25c-3.54,6.12 -11.42,8.24 -17.54,4.7c-6.12,-3.54 -8.24,-11.42 -4.7,-17.54l12.84,-22.25c3.54,-6.12 11.42,-8.24 17.54,-4.7zM601.9,667.72c-6.12,3.54 -14.01,1.42 -17.54,-4.7l-12.84,-22.25c-3.54,-6.12 -1.42,-14.01 4.7,-17.54c6.12,-3.54 14.01,-1.42 17.54,4.7l12.84,22.25c3.54,6.12 1.42,14.01 -4.7,17.54zM356.28,601.9c-3.54,-6.12 -1.42,-14.01 4.7,-17.54l22.25,-12.84c6.12,-3.54 14.01,-1.42 17.54,4.7c3.54,6.12 1.42,14.01 -4.7,17.54l-22.25,12.84c-6.12,3.54 -14.01,1.42 -17.54,-4.7zM422.1,356.28c6.12,-3.54 14.01,-1.42 17.54,4.7l12.84,22.25c3.54,6.12 1.42,14.01 -4.7,17.54c-6.12,3.54 -14.01,1.42 -17.54,-4.7l-12.84,-22.25c-3.54,-6.12 -1.42,-14.01 4.7,-17.54zM667.72,422.1c3.54,6.12 1.42,14.01 -4.7,17.54l-22.25,12.84c-6.12,3.54 -14.01,1.42 -17.54,-4.7c-3.54,-6.12 -1.42,-14.01 4.7,-17.54l22.25,-12.84c6.12,-3.54 14.01,-1.42 17.54,4.7zM512,691.81c-7.08,0 -12.84,-5.77 -12.84,-12.84v-25.69c0,-7.07 5.77,-12.84 12.84,-12.84c7.07,0 12.84,5.77 12.84,12.84v25.69c0,7.08 -5.77,12.84 -12.84,12.84zM332.19,512c0,-7.08 5.77,-12.84 12.84,-12.84h25.69c7.07,0 12.84,5.77 12.84,12.84c0,7.07 -5.77,12.84 -12.84,12.84h-25.69c-7.08,0 -12.84,-5.77 -12.84,-12.84zM512,332.19c7.08,0 12.84,5.77 12.84,12.84v25.69c0,7.07 -5.77,12.84 -12.84,12.84c-7.07,0 -12.84,-5.77 -12.84,-12.84v-25.69c0,-7.08 5.77,-12.84 12.84,-12.84zM691.81,512c0,7.08 -5.77,12.84 -12.84,12.84h-25.69c-7.07,0 -12.84,-5.77 -12.84,-12.84c0,-7.07 5.77,-12.84 12.84,-12.84h25.69c7.08,0 12.84,5.77 12.84,12.84z" fill="#000000" fill-opacity="1" filter="url(#filter-CVWJGepi)"/>
+		</g>
+		<g mask="url(#mask-j1uy9NbJ)">
+			<g color="#ffffff" class="color-3">
+				<rect x="332.19" y="332.19" width="359.62" height="359.62" fill="currentColor"/>
+			</g>
+			<g color="#ffffff" class="color-3" mask="url(#mask-7f9XrDtQ)">
+				<defs>
+					<pattern id="pattern-uaSdEf4m" x="4" y="4" width="64" height="64" patternUnits="userSpaceOnUse">
+						<rect filter="url(#filter-GgGowfat)" fill="currentColor" x="0" y="0" width="72" height="72"/>
+					</pattern>
+				</defs>
+				<rect x="332.19" y="332.19" width="359.62" height="359.62" fill="url(#pattern-uaSdEf4m)"/>
+			</g>
+		</g>
+	</g>
+</svg>

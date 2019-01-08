@@ -1,0 +1,9 @@
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0,0,1024,1024">
+	<!-- Color names: color-1, color-2 -->
+	<desc>leaf icon - Licensed under Iconfu Standard License v1.0 (https://www.iconfu.com/iconfu_standard_license) - Incors GmbH</desc>
+	<g fill="none" fill-rule="nonzero" style="mix-blend-mode: normal">
+		<g color="#1b8f00" class="color-1">
+			<path d="M768,256c-134.95,257.37 -390.38,202.65 -608.93,416.84c-75.95,-152.02 7.61,-319.58 128.93,-384.84c200.92,-108.08 413.63,-58.62 535.95,-224c154.04,272.32 54.04,586.68 -142.12,702.88c-116.56,69.06 -300.05,95.65 -427,18.94c-47.42,43.64 -83.23,108.89 -115.38,174.18c-30.98,-6.48 -72.9,-36.27 -75.45,-63.84c31.57,-57.6 103.17,-146.16 131.4,-168.31c202.04,-205.41 451.33,-181.05 572.6,-471.85z" fill="currentColor"/>
+		</g>
+	</g>
+</svg>

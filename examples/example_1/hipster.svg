@@ -1,0 +1,169 @@
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0,0,1024,1024">
+	<!-- Color names: color-1, color-2, color-3, color-4, color-5 -->
+	<desc>hipster icon - Licensed under Iconfu Standard License v1.0 (https://www.iconfu.com/iconfu_standard_license) - Incors GmbH</desc>
+	<defs>
+		<filter id="filter-E2sfJ1C9" color-interpolation-filters="sRGB">
+			<feColorMatrix values="0.17 0.72 0.11 0 0.1 0.64 0.28 0.08 0 0.1 0.20 0.23 0.57 0 0.1 0 0 0 1 0" result="r1"/>
+			<feColorMatrix values="1 0 0 0 0  3.58377 0 0 0 -2.58377  4.77344 0 0 0 -3.77344  0 0 0 1 0"/>
+			<feBlend mode="lighten" in2="r1"/>
+			<feColorMatrix values="-0.65039 1.77384 -0.12345 0 0 1.60663 -0.345 -0.26163 0 0 -0.42008 -0.48319 1.90327 0 0 0 0 0 1 0"/>
+		</filter>
+		<filter id="filter-NQQfNoHi" color-interpolation-filters="sRGB">
+			<feColorMatrix values="0.17 0.72 0.11 0 0.05 0.64 0.28 0.08 0 0.05 0.20 0.23 0.57 0 0.05 0 0 0 1 0" result="r1"/>
+			<feColorMatrix values="1 0 0 0 0  3.58377 0 0 0 -2.58377  4.77344 0 0 0 -3.77344  0 0 0 1 0"/>
+			<feBlend mode="lighten" in2="r1"/>
+			<feColorMatrix values="-0.65039 1.77384 -0.12345 0 0 1.60663 -0.345 -0.26163 0 0 -0.42008 -0.48319 1.90327 0 0 0 0 0 1 0"/>
+		</filter>
+		<filter id="filter-Onp94lRH" color-interpolation-filters="sRGB">
+			<feColorMatrix values="0.17 0.72 0.11 0 -0.02 0.64 0.28 0.08 0 -0.02 0.20 0.23 0.57 0 -0.02 0 0 0 1 0"/>
+			<feColorMatrix values="-0.65039 1.77384 -0.12345 0 0 1.60663 -0.345 -0.26163 0 0 -0.42008 -0.48319 1.90327 0 0 0 0 0 1 0"/>
+		</filter>
+		<filter id="filter-q2tqSEIM" color-interpolation-filters="sRGB">
+			<feColorMatrix values="0.17 0.72 0.11 0 -0.17 0.64 0.28 0.08 0 -0.17 0.20 0.23 0.57 0 -0.17 0 0 0 1 0"/>
+			<feColorMatrix values="-0.65039 1.77384 -0.12345 0 0 1.60663 -0.345 -0.26163 0 0 -0.42008 -0.48319 1.90327 0 0 0 0 0 1 0"/>
+		</filter>
+		<filter id="filter-rFnh5b0u" color-interpolation-filters="sRGB">
+			<feColorMatrix values="0.17 0.72 0.11 0 -0.1 0.64 0.28 0.08 0 -0.1 0.20 0.23 0.57 0 -0.1 0 0 0 1 0"/>
+			<feColorMatrix values="-0.65039 1.77384 -0.12345 0 0 1.60663 -0.345 -0.26163 0 0 -0.42008 -0.48319 1.90327 0 0 0 0 0 1 0"/>
+		</filter>
+		<filter id="filter-VgVlYF3P" color-interpolation-filters="sRGB">
+			<feColorMatrix values="0.17 0.72 0.11 0 -0.07 0.64 0.28 0.08 0 -0.07 0.20 0.23 0.57 0 -0.07 0 0 0 1 0"/>
+			<feColorMatrix values="-0.65039 1.77384 -0.12345 0 0 1.60663 -0.345 -0.26163 0 0 -0.42008 -0.48319 1.90327 0 0 0 0 0 1 0"/>
+		</filter>
+		<filter id="filter-ZbcL2yI0" color-interpolation-filters="sRGB">
+			<feColorMatrix values="0.17 0.72 0.11 0 0.03 0.64 0.28 0.08 0 0.03 0.20 0.23 0.57 0 0.03 0 0 0 1 0" result="r1"/>
+			<feColorMatrix values="1 0 0 0 0  3.58377 0 0 0 -2.58377  4.77344 0 0 0 -3.77344  0 0 0 1 0"/>
+			<feBlend mode="lighten" in2="r1"/>
+			<feColorMatrix values="-0.65039 1.77384 -0.12345 0 0 1.60663 -0.345 -0.26163 0 0 -0.42008 -0.48319 1.90327 0 0 0 0 0 1 0"/>
+		</filter>
+	</defs>
+	<g fill="none" fill-rule="nonzero" style="mix-blend-mode: normal">
+		<g color="#53696d" class="color-1">
+			<defs>
+				<pattern id="pattern-gVFkErHj" x="4" y="4" width="64" height="64" patternUnits="userSpaceOnUse">
+					<rect filter="url(#filter-rFnh5b0u)" fill="currentColor" x="0" y="0" width="72" height="72"/>
+				</pattern>
+			</defs>
+			<path d="M512,1024c-160,0 -384,-30.41 -384,-121.55c0,-219.45 160,-229.85 239.8,-307.42c39.23,-38.13 103.42,-98.03 144.2,-98.03c40.78,0 104.97,59.9 144.2,98.03c79.8,77.57 239.8,87.97 239.8,307.42c0,91.14 -224,121.55 -384,121.55z" fill="url(#pattern-gVFkErHj)"/>
+		</g>
+		<g color="#53696d" class="color-1">
+			<defs>
+				<pattern id="pattern-3pk8DoQC" x="4" y="4" width="64" height="64" patternUnits="userSpaceOnUse">
+					<rect filter="url(#filter-q2tqSEIM)" fill="currentColor" x="0" y="0" width="72" height="72"/>
+				</pattern>
+			</defs>
+			<path d="M512,497c40.78,0 104.97,59.9 144.2,98.03c79.8,77.57 239.8,87.97 239.8,307.42c0,91.14 -224,121.55 -384,121.55z" fill="url(#pattern-3pk8DoQC)"/>
+		</g>
+		<g color="#53696d" class="color-1">
+			<path d="M165.67,960c-23.6,-15.69 -37.67,-34.72 -37.67,-57.55c0,-2.19 0.04,-4.31 0.07,-6.45h31.93v-64h-25.48c4.97,-24.62 12.58,-45.69 22.15,-64h3.33v-6.12c29.6,-52.32 74.54,-80.66 124.41,-109.81c23.05,-13.47 46.69,-26.72 67.59,-43.25v31.18h64v-89.43c21.1,-18.02 43.59,-34.88 64,-44.71v134.14h64v-134.13c20.41,9.82 42.9,26.68 64,44.7v89.43h64v-31.18c66.33,52.45 145.05,70.09 192,153.06v6.12h3.33c9.57,18.31 17.18,39.38 22.15,64h-25.48v64h31.93c0.03,2.14 0.07,4.26 0.07,6.45c0,22.83 -14.07,41.86 -37.67,57.55c-17.61,11.7 -38.34,20.29 -58.33,26.98v-26.98h-64v43.71c-20.51,4.18 -42.04,7.64 -64,10.45v-54.16h-64v60.51c-21.66,1.57 -43.18,2.58 -64,3.09v-63.6h-64v63.6c-20.82,-0.51 -42.34,-1.52 -64,-3.09v-60.51h-64v54.16c-21.96,-2.81 -43.49,-6.27 -64,-10.45v-43.71h-64v26.98c-19.99,-6.69 -40.72,-15.28 -58.33,-26.98zM224,896h64v-64h-64zM352,896h64v-64h-64zM480,896h64v-64h-64zM608,896h64v-64h-64zM736,896h64v-64h-64zM416,768v-64h-64v64zM480,704v64h64v-64zM288,768v-64h-64v64zM608,704v64h64v-64zM736,704v64h64v-64z" fill="currentColor"/>
+		</g>
+		<g color="#53696d" class="color-1">
+			<defs>
+				<pattern id="pattern-5iu62K4F" x="4" y="4" width="64" height="64" patternUnits="userSpaceOnUse">
+					<rect filter="url(#filter-VgVlYF3P)" fill="currentColor" x="0" y="0" width="72" height="72"/>
+				</pattern>
+			</defs>
+			<path d="M512,640h32v-134.13c20.41,9.82 42.9,26.68 64,44.7v89.43h64v-31.18c21.21,16.77 45.26,30.2 68.67,43.87c49.9,29.17 94.09,57.52 123.33,109.19v6.12h3.33c9.57,18.31 17.18,39.38 22.15,64h-25.48v64h31.93c0.03,2.14 0.07,4.26 0.07,6.45c0,22.83 -14.07,41.86 -37.67,57.55c-17.61,11.7 -38.34,20.29 -58.33,26.98v-26.98h-64v43.71c-20.51,4.18 -42.04,7.64 -64,10.45v-54.16h-64v60.51c-21.66,1.57 -43.18,2.58 -64,3.09v-63.6h-32v-64h32v-64h-32v-64h32v-64h-32zM608,896h64v-64h-64zM736,896h64v-64h-64zM608,704v64h64v-64zM736,704v64h64v-64z" fill="url(#pattern-5iu62K4F)"/>
+		</g>
+		<g color="#53696d" class="color-1">
+			<defs>
+				<pattern id="pattern-8RHHxUB1" x="4" y="4" width="64" height="64" patternUnits="userSpaceOnUse">
+					<rect filter="url(#filter-E2sfJ1C9)" fill="currentColor" x="0" y="0" width="72" height="72"/>
+				</pattern>
+			</defs>
+			<path d="M165.67,960c-1.96,-1.31 -3.84,-2.64 -5.67,-3.99v-60.01h64v64zM288,649.97c5.74,-3.33 11.43,-6.64 17.05,-9.97h46.95v64h-64zM718.95,640c5.62,3.33 11.31,6.64 17.05,9.97v54.03h-64v-64zM864,956c-1.83,1.36 -3.71,2.69 -5.67,4h-58.33v-64h64zM224,768v64h-64v-64zM288,896h64v64h-64zM416,896h64v64h-64zM544,896h64v64h-64zM672,896h64v64h-64zM416,640h64v64h-64zM544,640h64v64h-64zM288,768h64v64h-64zM416,768h64v64h-64zM544,768h64v64h-64zM672,768h64v64h-64zM800,768h64v64h-64zM207.82,704c5.27,-4.6 10.67,-8.96 16.18,-13.13v13.13zM800,690.88c5.51,4.16 10.91,8.52 16.18,13.12h-16.18z" fill="url(#pattern-8RHHxUB1)"/>
+		</g>
+		<g color="#53696d" class="color-1">
+			<defs>
+				<pattern id="pattern-Nh0sh3CN" x="4" y="4" width="64" height="64" patternUnits="userSpaceOnUse">
+					<rect filter="url(#filter-ZbcL2yI0)" fill="currentColor" x="0" y="0" width="72" height="72"/>
+				</pattern>
+			</defs>
+			<path d="M718.95,640c5.62,3.33 11.31,6.64 17.05,9.97v54.03h-64v-64zM864,956c-1.83,1.36 -3.71,2.69 -5.67,4h-58.33v-64h64zM544,896h64v64h-64zM672,896h64v64h-64zM544,640h64v64h-64zM544,768h64v64h-64zM672,768h64v64h-64zM800,768h64v64h-64zM800,690.88c5.51,4.16 10.91,8.52 16.18,13.12h-16.18z" fill="url(#pattern-Nh0sh3CN)"/>
+		</g>
+		<g color="#d5cebe" class="color-5">
+			<defs>
+				<pattern id="pattern-9lM4GPdl" x="4" y="4" width="64" height="64" patternUnits="userSpaceOnUse">
+					<rect filter="url(#filter-rFnh5b0u)" fill="currentColor" x="0" y="0" width="72" height="72"/>
+				</pattern>
+			</defs>
+			<path d="M512,896c-32,-103.9 -143.87,-125.7 -144.2,-207.55l-0.6,-148.09c96.53,0 193.07,0 289.6,0l-0.6,148.09c-0.33,82.24 -112.2,103.65 -144.2,207.55z" fill="url(#pattern-9lM4GPdl)"/>
+		</g>
+		<g color="#53696d" class="color-1">
+			<defs>
+				<pattern id="pattern-usCQ9gFf" x="4" y="4" width="64" height="64" patternUnits="userSpaceOnUse">
+					<rect filter="url(#filter-rFnh5b0u)" fill="currentColor" x="0" y="0" width="72" height="72"/>
+				</pattern>
+			</defs>
+			<path d="M511.98,895.92c36,-118.75 161.45,-229.02 161.82,-290.9c2.67,-10.64 28.36,11.06 46.72,38.53c23.31,34.88 36.34,67.02 46.53,102.87c3.2,11.26 -2.66,12.4 -8.58,10.77c-37.9,-10.45 -48.8,-13.95 -75.73,-16.14c1.16,8.95 6.92,28.53 -6.39,29.97c-45.49,4.94 -136.86,89.02 -164.4,124.98c-39.04,-50.98 -127.16,-120.94 -164.35,-124.98c-13.31,-1.44 -7.54,-21.03 -6.39,-29.97c-26.92,2.19 -37.82,5.69 -75.73,16.14c-5.92,1.63 -11.77,0.49 -8.57,-10.77c10.19,-35.85 23.21,-67.99 46.52,-102.87c18.36,-27.47 44.05,-49.17 46.73,-38.53c0.36,61.88 125.87,172.15 161.82,290.9z" fill="url(#pattern-usCQ9gFf)"/>
+		</g>
+		<g color="#53696d" class="color-1">
+			<defs>
+				<pattern id="pattern-PaOrCHUs" x="4" y="4" width="64" height="64" patternUnits="userSpaceOnUse">
+					<rect filter="url(#filter-q2tqSEIM)" fill="currentColor" x="0" y="0" width="72" height="72"/>
+				</pattern>
+			</defs>
+			<path d="M673.8,605.02c2.67,-10.64 28.36,11.06 46.72,38.53c23.31,34.88 36.34,67.02 46.53,102.87c3.2,11.26 -2.66,12.4 -8.58,10.77c-37.9,-10.45 -48.8,-13.95 -75.73,-16.14l2.33,18.04c0.76,5.95 -3.16,11.33 -8.72,11.93c-37.19,4.04 -125.37,74 -164.4,124.98c35.97,-118.78 161.48,-229.09 161.85,-290.98z" fill="url(#pattern-PaOrCHUs)"/>
+		</g>
+		<g color="#d5cebe" class="color-5">
+			<path d="M512,32c183.42,0 244.56,128 244.56,256c0,160 -122.28,320 -244.56,320c-122.28,0 -244.56,-160 -244.56,-320c0.01,-128 61.14,-256 244.56,-256z" fill="currentColor"/>
+		</g>
+		<g color="#d5cebe" class="color-5">
+			<defs>
+				<pattern id="pattern-tlAa07N5" x="4" y="4" width="64" height="64" patternUnits="userSpaceOnUse">
+					<rect filter="url(#filter-VgVlYF3P)" fill="currentColor" x="0" y="0" width="72" height="72"/>
+				</pattern>
+			</defs>
+			<path d="M512,32c183.42,0 244.56,128 244.56,256c0,160 -122.28,320 -244.56,320v-379.43c-75.15,19.87 -171.08,13.75 -231.97,-35.12c25.91,-89.74 94.69,-161.45 231.97,-161.45z" fill="url(#pattern-tlAa07N5)"/>
+		</g>
+		<g color="#806b56" class="color-3">
+			<path d="M512,768c-205.42,0 -173.19,-161.88 -224,-352c-4.6,-17.19 -8.86,-32.96 -11.63,-51.78c43.63,83.78 107.63,98.78 139.63,98.78c33.65,0 62.35,-17.5 96,-17.5c33.65,0 62.35,17.5 96,17.5c32,0 96,-15 139.63,-98.78c-2.77,18.82 -7.03,34.59 -11.63,51.78c-50.81,190.12 -18.58,352 -224,352zM464,512c-21.03,0 -21.03,32 0,32h96c21.03,0 21.03,-32 0,-32z" fill="currentColor"/>
+		</g>
+		<g color="#806b56" class="color-3">
+			<defs>
+				<pattern id="pattern-qLXMelTK" x="4" y="4" width="64" height="64" patternUnits="userSpaceOnUse">
+					<rect filter="url(#filter-VgVlYF3P)" fill="currentColor" x="0" y="0" width="72" height="72"/>
+				</pattern>
+			</defs>
+			<path d="M512,445.5c33.65,0 62.35,17.5 96,17.5c32,0 96,-15 139.63,-98.78c-2.77,18.82 -7.03,34.59 -11.63,51.78c-50.81,190.12 -18.58,352 -224,352v-224h48c21.03,0 21.03,-32 0,-32h-48z" fill="url(#pattern-qLXMelTK)"/>
+		</g>
+		<g color="#806b56" class="color-3">
+			<path d="M308.27,0c-6.66,48.75 22.93,57.56 68.58,50.97c65.79,-9.5 164.97,-50.97 237.17,-50.97c91.73,0 151.32,53.54 121.7,168.28c-60.54,-72.28 -121.7,-8.28 -213.42,23.72c-83.33,29.07 -177.31,14.92 -225.3,-26.03c-56.96,-48.6 -55.81,-130.87 11.27,-165.97z" fill="currentColor"/>
+		</g>
+		<g color="#806b56" class="color-3">
+			<defs>
+				<pattern id="pattern-gE8ZoaL3" x="4" y="4" width="64" height="64" patternUnits="userSpaceOnUse">
+					<rect filter="url(#filter-VgVlYF3P)" fill="currentColor" x="0" y="0" width="72" height="72"/>
+				</pattern>
+			</defs>
+			<path d="M735.72,168.28c-60.54,-72.28 -121.7,-8.28 -213.42,23.72c-83.33,29.07 -177.31,14.92 -225.3,-26.03c-56.96,-48.6 -55.81,-130.87 11.27,-165.97c-54.66,74.1 7.76,125.71 81.21,128c139.79,4.36 316.27,-160 346.24,40.28z" fill="url(#pattern-gE8ZoaL3)"/>
+		</g>
+		<g color="#efb653" class="color-2">
+			<path d="M512.03,291.77c-10.83,0 -12.97,8.22 -15.71,16.47l-10.67,32c-8.78,26.36 -32.93,43.76 -60.71,43.76h-49.88c-62.24,0 -74.53,-48.53 -72.78,-100.45c1.17,-34.46 27.51,-59.55 62.12,-59.55h71.2c15.67,0 30.15,5.41 41.56,15.25c6.05,5.21 12.92,7.77 20.9,7.77h27.94c7.99,0 14.85,-2.56 20.9,-7.77c11.42,-9.84 25.9,-15.25 41.56,-15.25h71.21c34.6,0 60.94,25.09 62.11,59.55c1.75,51.92 -10.53,100.45 -72.78,100.45h-49.87c-27.79,0 -51.93,-17.4 -60.72,-43.76l-10.66,-32c-2.75,-8.25 -4.89,-16.47 -15.72,-16.47z" fill="currentColor"/>
+		</g>
+		<g color="#efb653" class="color-2">
+			<defs>
+				<pattern id="pattern-Eo7AHmie" x="4" y="4" width="64" height="64" patternUnits="userSpaceOnUse">
+					<rect filter="url(#filter-VgVlYF3P)" fill="currentColor" x="0" y="0" width="72" height="72"/>
+				</pattern>
+			</defs>
+			<path d="M512.03,291.77l-0.03,-44.75h14c7.99,0 14.85,-2.56 20.9,-7.77c11.42,-9.84 25.9,-15.25 41.56,-15.25h71.21c34.6,0 60.94,25.09 62.11,59.55c1.75,51.92 -10.53,100.45 -72.78,100.45h-49.87c-27.79,0 -51.93,-17.4 -60.72,-43.76l-10.66,-32c-2.75,-8.25 -4.89,-16.47 -15.72,-16.47z" fill="url(#pattern-Eo7AHmie)"/>
+		</g>
+		<g color="#d5cebe" class="color-5">
+			<defs>
+				<pattern id="pattern-T7sIp218" x="4" y="4" width="64" height="64" patternUnits="userSpaceOnUse">
+					<rect filter="url(#filter-NQQfNoHi)" fill="currentColor" x="0" y="0" width="72" height="72"/>
+				</pattern>
+			</defs>
+			<path d="M648.85,352h-49.87c-14.02,0 -25.93,-8.59 -30.36,-21.88l-10.67,-32c-6.94,-20.82 8.41,-42.12 30.36,-42.12h71.21c17.32,0 29.55,11.42 30.13,28.63c0.55,16.4 -0.11,44.11 -11.4,57.36c-7.15,8.38 -19,10.01 -29.4,10.01zM345.67,341.99c-11.3,-13.25 -11.96,-40.96 -11.4,-57.36c0.58,-17.21 12.8,-28.63 30.13,-28.63h71.2c21.95,0 37.3,21.3 30.36,42.12l-10.67,32c-4.43,13.29 -16.34,21.88 -30.35,21.88h-49.88c-10.4,0 -22.24,-1.63 -29.39,-10.01z" fill="url(#pattern-T7sIp218)"/>
+		</g>
+		<g color="#d5cebe" class="color-5">
+			<defs>
+				<pattern id="pattern-zCHeJOBw" x="4" y="4" width="64" height="64" patternUnits="userSpaceOnUse">
+					<rect filter="url(#filter-Onp94lRH)" fill="currentColor" x="0" y="0" width="72" height="72"/>
+				</pattern>
+			</defs>
+			<path d="M648.85,352h-49.87c-14.02,0 -25.93,-8.59 -30.36,-21.88l-10.67,-32c-6.94,-20.82 8.41,-42.12 30.36,-42.12h71.21c17.32,0 29.55,11.42 30.13,28.63c0.55,16.4 -0.11,44.11 -11.4,57.36c-7.15,8.38 -19,10.01 -29.4,10.01z" fill="url(#pattern-zCHeJOBw)"/>
+		</g>
+	</g>
+</svg>

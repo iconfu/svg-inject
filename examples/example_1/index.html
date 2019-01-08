@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Individual Icon Coloring Example</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width">
+    <script src="../js/svg-inject.min.js"></script>
+    <script>
+      SVGInject.setOptions({
+        beforeInject: function (img, svg) {
+          if (/Trident|MSIE/.test(window.navigator.userAgent)) {
+            // responsive SVGs (width: 100%; height: auto;) are not correctly positioned in Internet Explorer.
+            // Solve this issue by wrapping the SVG in a div. The SVG is prepended by a canvas element to the SVG.
+            var viewBoxVals = (svg.getAttribute('viewBox') || '').split(/[\s,]+/);
+            var width = parseInt(viewBoxVals[2]);
+            var height = parseInt(viewBoxVals[3]);
+            if (width > 0 && height > 0) {
+              // Create canvas using aspect ratio from viewBox
+              var canvas = document.createElement('canvas');
+              // Use Euclidean algorithm to find the greatest common divisor of width and height in
+              // order to create the smallest canvas possible with the SVG's width/height ratio.
+              var whGcd = function gcd(a, b) { return b ? gcd(b, a % b) : a; }(width, height);
+              canvas.height = height / whGcd;
+              canvas.width = width / whGcd;
+              canvas.setAttribute('style', 'display:block; width:100%; height:auto; visibility:hidden;');
+              // Adjust style of SVG and its parent to make SVG fill the space reserved by canvas
+              // Also set overflow: hidden to work around another layout bug in IE 11.
+              var svgStyle = svg.style;
+              svgStyle.position = 'absolute';
+              svgStyle.top = 0;
+              svgStyle.overflow = 'hidden';
+              var parentNode = img.parentNode;
+              parentNode.style.position = 'relative';
+              // Add canvas before img element
+              parentNode.insertBefore(canvas, img);
+            }
+          }
+        }
+      });
+    </script>
+  </head>
+  <body>
+    <div style="width: 100vw; height: 30vw; max-width: 1000px; max-height: 300px; margin: 0 auto; overflow: auto;">
+      <div class="ifu-example-view">
+        <style>
+
+          body {
+            margin: 0;
+            background: #fff;
+          }
+
+          .ifu-example-view {
+            height: 100%;
+            display: flex;
+            align-items: center;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+          }
+
+          .ifu-example-view-content {
+            flex: 1 0 100%;
+            min-width: 0;
+          }
+
+          /* ifu-code-source-css */
+          /* icon colors */
+
+          #hipster-1 .color-1 { color: #54953A; }
+          #hipster-1 .color-2 { color: #9A3F02; }
+          #hipster-1 .color-3 { color: #67552D; }
+          #hipster-1 .color-4 { color: #757575; }
+          #hipster-1 .color-5 { color: #F4C68B }
+
+          #hipster-2 .color-1 { color: #C53DC0; }
+          #hipster-2 .color-2 { color: #DC9D39; }
+          #hipster-2 .color-3 { color: #282828; }
+          #hipster-2 .color-4 { color: #546E7A; }
+          #hipster-2 .color-5 { color: #6D4E1D; }
+
+          #hipster-3 .color-1 { color: #659FB2; }
+          #hipster-3 .color-2 { color: #685646; }
+          #hipster-3 .color-3 { color: #CECECE; }
+          #hipster-3 .color-4 { color: #8a969a; }
+          #hipster-3 .color-5 { color: #CEA063; }
+
+          #hipster-4 .color-1 { color: #575F47; }
+          #hipster-4 .color-2 { color: #83846C; }
+          #hipster-4 .color-3 { color: #AEAD98; }
+          #hipster-4 .color-4 { color: #757575; }
+          #hipster-4 .color-5 { color: #E8E7E2; }
+
+          /* layout */
+          
+          .icon-array {
+            display: flex;
+            justify-content: center;
+            margin: 0 4%;
+            text-align: center; /* Fallback for old browsers */
+          }
+
+          .icon-box {
+            width: 160px;
+            margin: 0 2%;
+            display: inline-block; /* Fallback for old browsers */
+          }
+
+          .svg-icon {
+            width: 100%;
+            height: auto;
+          }
+          /* ifu-code-source-css */
+        </style>
+
+        <div class="ifu-example-view-content">
+          <!-- ifu-code-source-html -->
+          <div class="icon-array">
+            <div class="icon-box">
+              <img class="svg-icon" id="hipster-1" src="hipster.svg" alt="hipster-1" onload="SVGInject(this)"/>
+            </div>
+            <div class="icon-box">
+              <img class="svg-icon" id="hipster-2" src="hipster.svg" alt="hipster-2" onload="SVGInject(this)"/>
+            </div>
+            <div class="icon-box">
+              <img class="svg-icon" id="hipster-3" src="hipster.svg" alt="hipster-3" onload="SVGInject(this)"/>
+            </div>
+            <div class="icon-box">
+              <img class="svg-icon" id="hipster-4" src="hipster.svg" alt="hipster-4" onload="SVGInject(this)"/>
+            </div>
+          </div>
+          <!-- ifu-code-source-html -->
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Mouse Interaction Icon Coloring Example</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <script src="../js/svg-inject.min.js"></script>
+    <script>
+      SVGInject.setOptions({
+        beforeInject: function (img, svg) {
+          if (/Trident|MSIE/.test(window.navigator.userAgent)) {
+            // responsive SVGs (width: 100%; height: auto;) are not correctly positioned in Internet Explorer.
+            // Solve this issue by wrapping the SVG in a div. The SVG is prepended by a canvas element to the SVG.
+            var viewBoxVals = (svg.getAttribute('viewBox') || '').split(/[\s,]+/);
+            var width = parseInt(viewBoxVals[2]);
+            var height = parseInt(viewBoxVals[3]);
+            if (width > 0 && height > 0) {
+              // Create canvas using aspect ratio from viewBox
+              var canvas = document.createElement('canvas');
+              // Use Euclidean algorithm to find the greatest common divisor of width and height in
+              // order to create the smallest canvas possible with the SVG's width/height ratio.
+              var whGcd = function gcd(a, b) { return b ? gcd(b, a % b) : a; }(width, height);
+              canvas.height = height / whGcd;
+              canvas.width = width / whGcd;
+              canvas.setAttribute('style', 'display:block; width:100%; height:auto; visibility:hidden;');
+              // Adjust style of SVG and its parent to make SVG fill the space reserved by canvas
+              // Also set overflow: hidden to work around another layout bug in IE 11.
+              var svgStyle = svg.style;
+              svgStyle.position = 'absolute';
+              svgStyle.top = 0;
+              svgStyle.overflow = 'hidden';
+              var parentNode = img.parentNode;
+              parentNode.style.position = 'relative';
+              // Add canvas before img element
+              parentNode.insertBefore(canvas, img);
+            }
+          }
+        }
+      });
+    </script>
+  </head>
+  <body>
+    <div style="width: 100vw; height: 30vw; max-width: 1000px; max-height: 300px; margin: 0 auto; overflow: auto;">
+      <div class="ifu-example-view">
+        <style>
+
+          body {
+            margin: 0;
+            font-family: "Roboto", sans-serif;
+          }
+
+          .ifu-example-view {
+            height: 100%;
+            display: flex;
+            align-items: center;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+          }
+
+          .ifu-example-view-content {
+            flex: 1 0 100%;
+            min-width: 0;
+          }
+
+          .hint-text  {
+            text-align: center;
+            color:#a8a8a8;
+            font-weight: 500;
+            font-size: 20px;
+          }
+
+          @media (max-width: 600px) {
+            .hint-text {
+              font-size: 16px;
+            }
+          }
+
+          @media (max-width: 400px) {
+            .hint-text {
+              font-size: 14px;
+            }
+          }
+
+          /* ifu-code-source-css */
+          /* icon colors */
+
+          .icon-button:hover .color-1 { color: #4DBBE8; }
+          .icon-button:hover .color-2 { color: #A8FFEA; }
+          .icon-button:hover .color-3 { color: #ffffff; }
+
+          .icon-button:active .color-1 { color: #ff8a9c; }
+          .icon-button:active .color-2 { color: #ffffdb; }
+          .icon-button:active .color-3 { color: #FEF1EE; }
+
+          .icon-button:disabled .color-1 { color: #e0e0e0; }
+          .icon-button:disabled .color-2 { color: #ffffff; }
+          .icon-button:disabled .color-3 { color: #ffffff; }
+
+          /* layout */
+          
+          .icon-array {
+            display: flex;
+            justify-content: center;
+            margin: 0 4%;
+            text-align: center; /* Fallback for old browsers */
+          }
+
+          .icon-box {
+            width: 160px;
+            margin: 0 1%;
+            display: inline-block; /* Fallback for old browsers */
+            position: relative;
+            cursor: pointer;
+          }
+
+          .svg-icon {
+            width: 100%;
+            height: auto;
+          }
+
+          svg [color] {
+            transition: color 800ms ease;
+          }
+
+          svg, svg * {
+            pointer-events: none;
+          }
+
+          .icon-button {
+            background: none;
+            border: none;
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+          }
+
+          .icon-button:focus {
+            outline:0;
+          }
+          /* ifu-code-source-css */
+        </style>
+        <div class="ifu-example-view-content">
+          <div class="hint-text">Press&nbsp;and&nbsp;click any&nbsp;of&nbsp;the&nbsp;buttons</div>
+          <!-- ifu-code-source-html -->
+          <div class="icon-array" ontouchstart="">
+            <div class="icon-box" id="icon1" onclick="toggleDisabled(event)">
+              <button class="icon-button" onclick="toggleDisabled(event)">
+                <img class="svg-icon" src="battery_charge.svg" alt="standby" onload="SVGInject(this)" />
+              </button>
+            </div>
+            <div class="icon-box" id="icon2" onclick="toggleDisabled(event)">
+              <button class="icon-button" onclick="toggleDisabled(event)">
+                <img class="svg-icon" src="bell.svg" alt="standby" onload="SVGInject(this)" />
+              </button>
+            </div>
+            <div class="icon-box" id="icon3" onclick="toggleDisabled(event)">
+              <button class="icon-button" onclick="toggleDisabled(event)">
+                <img class="svg-icon" src="music.svg" alt="standby" onload="SVGInject(this)" />
+              </button>
+            </div>
+            <div class="icon-box" id="icon4" onclick="toggleDisabled(event)">
+              <button class="icon-button" onclick="toggleDisabled(event)">
+                <img class="svg-icon" src="fan.svg" alt="standby" onload="SVGInject(this)" />
+              </button>
+            </div>
+            <div class="icon-box" id="icon1" onclick="toggleDisabled(event)">
+              <button class="icon-button" onclick="toggleDisabled(event)">
+                <img class="svg-icon" src="sun.svg" alt="standby" onload="SVGInject(this)" />
+              </button>
+            </div>
+          </div>
+          <!-- ifu-code-source-html -->
+        </div>
+      </div>
+    </div>
+    <script>
+      /* ifu-code-source-js */
+      var toggleDisabled = function(e) {
+         var icon = e.target.tagName.toLowerCase() == 'button' ? e.target : e.target.querySelector('button');
+         if (icon.getAttribute("disabled")) {
+           icon.removeAttribute("disabled");
+           icon.style['pointer-events'] = 'all';
+         } else {
+           icon.setAttribute("disabled", true);
+           icon.style['pointer-events'] = 'none';
+         }
+         e.stopPropagation();
+       }
+       /* ifu-code-source-js */
+    </script>
+  </body>
+</html>

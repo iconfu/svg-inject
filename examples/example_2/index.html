@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Icon Group Coloring Example</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <script src="../js/svg-inject.min.js"></script>
+    <script>
+      SVGInject.setOptions({
+        beforeInject: function (img, svg) {
+          if (/Trident|MSIE/.test(window.navigator.userAgent)) {
+            // responsive SVGs (width: 100%; height: auto;) are not correctly positioned in Internet Explorer.
+            // Solve this issue by wrapping the SVG in a div. The SVG is prepended by a canvas element to the SVG.
+            var viewBoxVals = (svg.getAttribute('viewBox') || '').split(/[\s,]+/);
+            var width = parseInt(viewBoxVals[2]);
+            var height = parseInt(viewBoxVals[3]);
+            if (width > 0 && height > 0) {
+              // Create canvas using aspect ratio from viewBox
+              var canvas = document.createElement('canvas');
+              // Use Euclidean algorithm to find the greatest common divisor of width and height in
+              // order to create the smallest canvas possible with the SVG's width/height ratio.
+              var whGcd = function gcd(a, b) { return b ? gcd(b, a % b) : a; }(width, height);
+              canvas.height = height / whGcd;
+              canvas.width = width / whGcd;
+              canvas.setAttribute('style', 'display:block; width:100%; height:auto; visibility:hidden;');
+              // Adjust style of SVG and its parent to make SVG fill the space reserved by canvas
+              // Also set overflow: hidden to work around another layout bug in IE 11.
+              var svgStyle = svg.style;
+              svgStyle.position = 'absolute';
+              svgStyle.top = 0;
+              svgStyle.overflow = 'hidden';
+              var parentNode = img.parentNode;
+              parentNode.style.position = 'relative';
+              // Add canvas before img element
+              parentNode.insertBefore(canvas, img);
+            }
+          }
+        }
+      });
+    </script>
+  </head>
+  <body>
+    <div style="width: 100vw; height: 30vw; max-width: 1000px; max-height: 300px; margin: 0 auto; overflow: auto;">
+      <div class="ifu-example-view">
+        <style>
+
+          body {
+            margin: 0;
+            background: #fff;
+            font-family: "Roboto", sans-serif;
+          }
+
+          .ifu-example-view {
+            height: 100%;
+            display: flex;
+            align-items: stretch;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+          }
+
+          .ifu-example-view-content {
+            flex: 1 0 100%;
+            min-width: 0;
+          }
+
+          /* ifu-code-source-css */
+
+          /* icon colors */
+          .green-company .color-1 { color: #4CAF50; }
+          .green-company .color-2 { color: #AED581; }
+
+          .blue-company .color-1 { color: #03A9F4; }
+          .blue-company .color-2 { color: #80DEEA; }
+
+          /* background colors */
+          .green-company {
+            background-color: #6BCF6D;
+          }
+
+          .green-company .ci-example-header {
+            background-color: #4CAF50;
+          }
+
+          .blue-company {
+            background-color: #59C3EF;
+          }
+
+          .blue-company .ci-example-header {
+            background-color: #03A9F4;
+          }
+
+
+          /* layout */
+
+          .ci-examples {
+            display: flex;
+            height: 100%;
+            align-items: stretch;
+            text-align: center; /* Fallback for old browsers */
+            white-space: nowrap; /* Fallback for old browsers */
+          }
+
+          .ci-example {
+            width: 50%;
+            padding: 0 3vw;
+            display: flex;
+            align-items: center;
+          }
+
+          .ci-example-card {
+            width: 100%;
+            overflow: hidden;
+            display: inline-block; /* Fallback for old browsers */
+            background: #ffffff;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+          }
+
+          .ci-example-header {
+            padding: 0.5em 0;
+            font-size: 16px;
+            font-weight: 500;
+            box-shadow: 0 1px 5px 0 rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.12);
+            color: rgba(255, 255, 255, 0.9);
+          }
+
+          .info-grid {
+            padding: 4% 6%;
+            text-align: center; /* Fallback for old browsers */
+            white-space: nowrap; /* Fallback for old browsers */
+            color: #666;
+            font-size: 14px;
+          }
+
+          .info-row {
+            display: flex;
+          }
+
+          .info-item {
+            display: flex;
+            text-align: left;
+            align-items: center;
+            width: 50%;
+            margin: 0.3em 0;
+          }
+
+          .icon-box {
+            width: 2.2em;
+            min-width: 18px;
+            height: 2.2em;
+            margin-right: 1em;
+            box-sizing: content-box;
+            display: inline-block; /* Fallback for old browsers */
+          }
+
+          .svg-icon {
+            width: 100%;
+            height: auto;
+          }
+
+          @media (max-width: 640px) {
+            .ci-example-header {
+              font-size: 14px;
+            }
+
+            .info-grid {
+              font-size: 12px;
+            }
+          }
+
+          @media (max-width: 560px) {
+            .ci-example-header {
+              font-size: 12px;
+              padding: 0.3em 0;
+            }
+
+            .info-grid {
+              font-size: 10px;
+            }
+          }
+
+          @media (max-width: 480px) {
+            .ci-example {
+              padding: 0 2vw;
+            }
+
+            .ci-example-header {
+              font-size: 11px;
+            }
+
+            .info-grid {
+              font-size: 8px;
+              padding: 3% 4%;
+            }
+
+            .icon-box {
+              width: 2.2em;
+              height: 2.2em;
+              margin-right: 0.5em;
+            }
+
+            .info-item {
+              margin: 0.1em 0;
+            }
+
+          }
+          /* ifu-code-source-css */
+        </style>
+
+        <div class="ifu-example-view-content">
+          <!-- ifu-code-source-html -->
+          <div class="ci-examples">
+            <div class="green-company ci-example" >
+            <div class="ci-example-card">
+              <div class="ci-example-header">
+                Green Company
+              </div>
+              <div class="ci-example-content">
+                <div class="info-grid">
+                  <div class="info-row">
+                    <div class="info-item">
+                      <div class="icon-box">
+                        <img class="svg-icon" title="Team" src="users.svg" onload="SVGInject(this)"/>
+                      </div>
+                      <span>Team</span>
+                    </div>
+                    <div class="info-item">
+                      <div class="icon-box">
+                        <img class="svg-icon" title="Certifications" src="wax_seal.svg" onload="SVGInject(this)"/>
+                      </div>
+                      <span>Certifications</span>
+                    </div>
+                  </div>
+                  <div class="info-row">
+                    <div class="info-item">
+                      <div class="icon-box">
+                        <img class="svg-icon" title="Mission" src="target.svg" onload="SVGInject(this)"/>
+                      </div>
+                      <span>Mission</span>
+                    </div>
+                    <div class="info-item">
+                      <div class="icon-box">
+                        <img class="svg-icon" title="Locations" src="location_pin.svg" onload="SVGInject(this)"/>
+                      </div>
+                      <span>Locations</span>
+                    </div>
+                  </div>
+                  <div class="info-row">
+                    <div class="info-item">
+                      <div class="icon-box">
+                        <img class="svg-icon" title="Ecology" src="leaf.svg" onload="SVGInject(this)"/>
+                      </div>
+                      <span>Ecology</span>
+                    </div>
+                    <div class="info-item">
+                      <div class="icon-box">
+                        <img class="svg-icon" title="Contact" src="user_telephone.svg" onload="SVGInject(this)"/>
+                      </div>
+                      <span>Contact</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            </div>
+            <div class="blue-company ci-example" >
+              <div class="ci-example-card">
+                <div class="ci-example-header">
+                  Blue Company
+                </div>
+                <div class="ci-example-content">
+                  <div class="info-grid">
+                    <div class="info-row">
+                      <div class="info-item">
+                        <div class="icon-box">
+                          <img class="svg-icon" title="Team" src="users.svg" onload="SVGInject(this)"/>
+                        </div>
+                        <span>Team</span>
+                      </div>
+                      <div class="info-item">
+                        <div class="icon-box">
+                          <img class="svg-icon" title="Certifications" src="wax_seal.svg" onload="SVGInject(this)"/>
+                        </div>
+                        <span>Certifications</span>
+                      </div>
+                    </div>
+                    <div class="info-row">
+                      <div class="info-item">
+                        <div class="icon-box">
+                          <img class="svg-icon" title="Mission" src="target.svg" onload="SVGInject(this)"/>
+                        </div>
+                        <span>Mission</span>
+                      </div>
+                      <div class="info-item">
+                        <div class="icon-box">
+                          <img class="svg-icon" title="Locations" src="location_pin.svg" onload="SVGInject(this)"/>
+                        </div>
+                        <span>Locations</span>
+                      </div>
+                    </div>
+                    <div class="info-row">
+                      <div class="info-item">
+                        <div class="icon-box">
+                          <img class="svg-icon" title="Ecology" src="leaf.svg" onload="SVGInject(this)"/>
+                        </div>
+                        <span>Ecology</span>
+                      </div>
+                      <div class="info-item">
+                        <div class="icon-box">
+                          <img class="svg-icon" title="Contact" src="user_telephone.svg" onload="SVGInject(this)"/>
+                        </div>
+                        <span>Contact</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- ifu-code-source-html -->
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

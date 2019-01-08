@@ -1,0 +1,67 @@
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0,0,1024,1024">
+	<!-- Color names: color-1, color-2 -->
+	<desc>workplace icon - Licensed under Iconfu Standard License v1.0 (https://www.iconfu.com/iconfu_standard_license) - Incors GmbH</desc>
+	<defs>
+		<linearGradient x1="51.2" y1="481.28" x2="972.8" y2="481.28" id="color-ON7sW8Ri" gradientUnits="userSpaceOnUse">
+			<stop offset="0.5" stop-color="#000000"/>
+			<stop offset="0.5" stop-color="#ffffff"/>
+		</linearGradient>
+		<filter id="filter-6CQsq9AS" color-interpolation-filters="sRGB">
+			<feColorMatrix values="0.17 0.72 0.11 0 -0.1 0.64 0.28 0.08 0 -0.1 0.20 0.23 0.57 0 -0.1 0 0 0 1 0"/>
+			<feColorMatrix values="-0.65039 1.77384 -0.12345 0 0 1.60663 -0.345 -0.26163 0 0 -0.42008 -0.48319 1.90327 0 0 0 0 0 1 0"/>
+		</filter>
+		<filter id="filter-fFkJp3W8" x="-13%" y="-6%" width="142%" height="138%" color-interpolation-filters="sRGB">
+			<feColorMatrix values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 0.13 0" in="SourceGraphic"/>
+			<feOffset dy="20"/>
+			<feGaussianBlur stdDeviation="11" result="blur0"/>
+			<feColorMatrix values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 0.2 0" in="SourceGraphic"/>
+			<feOffset dy="30"/>
+			<feGaussianBlur stdDeviation="20" result="blur1"/>
+			<feMerge>
+				<feMergeNode in="blur0"/>
+				<feMergeNode in="blur1"/>
+			</feMerge>
+		</filter>
+		<mask id="mask-bIfIFHdK">
+			<path d="M372.61,608h38.02c13.96,0 25.34,-11.39 25.34,-25.34v-25.34h-126.72c-27.9,0 -50.69,-22.77 -50.69,-50.69v-304.13c0,-27.92 22.77,-50.69 50.69,-50.69h405.5c27.92,0 50.69,22.79 50.69,50.69v304.13c0,27.9 -22.79,50.69 -50.69,50.69h-126.72v25.34c0,13.96 11.39,25.34 25.34,25.34h38.02c6.98,0 12.67,5.69 12.67,12.67v12.67h-304.13v-12.67c0,-6.98 5.69,-12.67 12.67,-12.67zM309.25,202.5v304.13h405.5v-304.13zM304.9,658.69h414.2c13.96,0 25.97,4.97 35.85,14.84l79.1,79.11c4.93,4.93 7.42,10.94 7.42,17.92v14.85c0,13.96 -11.39,25.34 -25.34,25.34h-608.26c-13.96,0 -25.34,-11.39 -25.34,-25.34v-14.85c0,-6.98 2.49,-12.98 7.42,-17.92l79.1,-79.11c9.88,-9.87 21.88,-14.84 35.85,-14.84zM664.06,734.72h-304.13c-7,0 -12.67,5.68 -12.67,12.67c0,7 5.67,12.67 12.67,12.67h304.13c7,0 12.67,-5.67 12.67,-12.67c0,-6.99 -5.67,-12.67 -12.67,-12.67zM714.75,684.03h-76.03c-7,0 -12.67,5.68 -12.67,12.67c0,7 5.67,12.67 12.67,12.67h76.03c7,0 12.67,-5.67 12.67,-12.67c0,-7 -5.67,-12.67 -12.67,-12.67zM359.94,684.03h-50.69c-7,0 -12.67,5.67 -12.67,12.67c0,7 5.67,12.67 12.67,12.67h50.69c7,0 12.67,-5.67 12.67,-12.67c0,-7 -5.67,-12.67 -12.67,-12.67zM309.25,734.72h-50.69c-7,0 -12.67,5.68 -12.67,12.67c0,7 5.67,12.67 12.67,12.67h50.69c7,0 12.67,-5.67 12.67,-12.67c0,-6.99 -5.67,-12.67 -12.67,-12.67zM765.44,734.72h-50.69c-7,0 -12.67,5.68 -12.67,12.67c0,7 5.67,12.67 12.67,12.67h50.69c7,0 12.67,-5.67 12.67,-12.67c0,-6.99 -5.67,-12.67 -12.67,-12.67zM435.97,684.03h-25.34c-7,0 -12.67,5.67 -12.67,12.67c0,7 5.67,12.67 12.67,12.67h25.34c7,0 12.67,-5.67 12.67,-12.67c0,-7 -5.67,-12.67 -12.67,-12.67zM512,684.03h-25.34c-7,0 -12.67,5.68 -12.67,12.67c0,7 5.67,12.67 12.67,12.67h25.34c7,0 12.67,-5.67 12.67,-12.67c0,-7 -5.67,-12.67 -12.67,-12.67zM588.03,684.03h-25.34c-7,0 -12.67,5.68 -12.67,12.67c0,7 5.67,12.67 12.67,12.67h25.34c7,0 12.67,-5.67 12.67,-12.67c0,-7 -5.67,-12.67 -12.67,-12.67z" fill="#ffffff"/>
+		</mask>
+		<mask id="mask-jKInSBRR">
+			<rect fill="url(#color-ON7sW8Ri)" x="182.53" y="151.81" width="658.94" height="658.94"/>
+		</mask>
+		<mask id="mask-Lli2AaG3">
+			<path d="M203.26,506.62v-304.13c0,-58.46 47.53,-105.98 105.98,-105.98h405.5c58.47,0 105.98,47.55 105.98,105.98v304.13c0,46.84 -30.54,86.68 -72.76,100.65c17.22,4.8 32.87,13.97 46.05,27.14l79.12,79.13c15.3,15.3 23.61,35.37 23.61,57.01v14.85c0,44.49 -36.15,80.64 -80.64,80.64h-608.26c-44.49,0 -80.64,-36.15 -80.64,-80.64v-14.85c0,-21.64 8.31,-41.71 23.62,-57.02l79.12,-79.13c13.18,-13.17 28.83,-22.34 46.05,-27.14c-42.21,-13.97 -72.75,-53.79 -72.75,-100.65z" fill="#ffffff"/>
+		</mask>
+		<mask id="mask-y9nPezuK">
+			<rect fill="url(#color-ON7sW8Ri)" x="127.23" y="96.51" width="769.54" height="769.54"/>
+		</mask>
+	</defs>
+	<g fill="none" fill-rule="nonzero" style="mix-blend-mode: normal">
+		<path d="M203.26,506.62v-304.13c0,-58.46 47.53,-105.98 105.98,-105.98h405.5c58.47,0 105.98,47.55 105.98,105.98v304.13c0,46.84 -30.54,86.68 -72.76,100.65c17.22,4.8 32.87,13.97 46.05,27.14l79.12,79.13c15.3,15.3 23.61,35.37 23.61,57.01v14.85c0,44.49 -36.15,80.64 -80.64,80.64h-608.26c-44.49,0 -80.64,-36.15 -80.64,-80.64v-14.85c0,-21.64 8.31,-41.71 23.62,-57.02l79.12,-79.13c13.18,-13.17 28.83,-22.34 46.05,-27.14c-42.21,-13.97 -72.75,-53.79 -72.75,-100.65z" fill="#000000" fill-opacity="1" filter="url(#filter-fFkJp3W8)"/>
+		<g mask="url(#mask-Lli2AaG3)">
+			<g color="#ffffff" class="color-2">
+				<rect x="127.23" y="96.51" width="769.54" height="769.54" fill="currentColor"/>
+			</g>
+			<g color="#ffffff" class="color-2" mask="url(#mask-y9nPezuK)">
+				<defs>
+					<pattern id="pattern-VWRsBuqu" x="4" y="4" width="64" height="64" patternUnits="userSpaceOnUse">
+						<rect filter="url(#filter-6CQsq9AS)" fill="currentColor" x="0" y="0" width="72" height="72"/>
+					</pattern>
+				</defs>
+				<rect x="127.23" y="96.51" width="769.54" height="769.54" fill="url(#pattern-VWRsBuqu)"/>
+			</g>
+		</g>
+		<g mask="url(#mask-bIfIFHdK)">
+			<g color="currentColor" class="color-1">
+				<rect x="182.53" y="151.81" width="658.94" height="658.94" fill="currentColor"/>
+			</g>
+			<g color="currentColor" class="color-1" mask="url(#mask-jKInSBRR)">
+				<defs>
+					<pattern id="pattern-zgWDqg07" x="4" y="4" width="64" height="64" patternUnits="userSpaceOnUse">
+						<rect filter="url(#filter-6CQsq9AS)" fill="currentColor" x="0" y="0" width="72" height="72"/>
+					</pattern>
+				</defs>
+				<rect x="182.53" y="151.81" width="658.94" height="658.94" fill="url(#pattern-zgWDqg07)"/>
+			</g>
+		</g>
+	</g>
+</svg>
