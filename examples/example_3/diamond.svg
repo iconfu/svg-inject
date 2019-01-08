@@ -1,0 +1,69 @@
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0,0,1024,1024">
+	<!-- Color names: color-1, color-2, color-3 -->
+	<desc>diamond icon - Licensed under Iconfu Standard License v1.0 (https://www.iconfu.com/iconfu_standard_license) - Incors GmbH</desc>
+	<defs>
+		<clipPath id="clip-ginj0up6">
+			<path d="M256.28,88.28h511.44l207.92,264.63l-463.64,612l-463.64,-612zM106.11,370.76l368.32,486.19l-151.92,-486.19zM553.98,851.12l363.91,-480.36h-213.8zM359.42,370.76l153.87,492.37l153.86,-492.37zM273.37,123.59l-166.45,211.86h216.93l90.8,-211.86zM750.63,123.59h-139.18l90.8,211.86h214.83zM573.14,123.59h-120.16l-90.8,211.86h301.76z"/>
+		</clipPath>
+		<radialGradient cx="0" cy="0" r="1448.15" id="color-hSXBfiKm" gradientUnits="userSpaceOnUse">
+			<stop offset="0.08" stop-color="#000000"/>
+			<stop offset="1" stop-color="#ffffff"/>
+		</radialGradient>
+		<linearGradient x1="0" y1="1024" x2="1024" y2="0" id="color-ymLUvmzx" gradientUnits="userSpaceOnUse">
+			<stop offset="0.2" stop-color="#000000"/>
+			<stop offset="0.8" stop-color="#ffffff"/>
+		</linearGradient>
+		<radialGradient cx="0" cy="0" r="1448.15" id="color-Zbj2DfHs" gradientUnits="userSpaceOnUse">
+			<stop offset="0.08" stop-color="#ffffff"/>
+			<stop offset="1" stop-color="#000000"/>
+		</radialGradient>
+		<filter id="filter-itMESj8V" color-interpolation-filters="sRGB">
+			<feOffset/>
+		</filter>
+		<filter id="filter-PV1zfyZ5" x="0%" y="0%" width="100%" height="100%" color-interpolation-filters="sRGB">
+			<feColorMatrix values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 0.05 0" in="SourceGraphic"/>
+			<feOffset dy="20"/>
+			<feGaussianBlur stdDeviation="11" result="blur0"/>
+			<feColorMatrix values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 0.07 0" in="SourceGraphic"/>
+			<feOffset dy="30"/>
+			<feGaussianBlur stdDeviation="20" result="blur1"/>
+			<feMerge>
+				<feMergeNode in="blur0"/>
+				<feMergeNode in="blur1"/>
+			</feMerge>
+		</filter>
+		<mask id="mask-GIt80hxT">
+			<rect fill="url(#color-hSXBfiKm)" x="48.36" y="88.28" width="927.28" height="876.63"/>
+		</mask>
+		<mask id="mask-HbCbv2F6">
+			<path d="M256.28,88.28h511.44l207.92,264.63l-463.64,612l-463.64,-612zM106.11,370.76l368.32,486.19l-151.92,-486.19zM553.98,851.12l363.91,-480.36h-213.8zM359.42,370.76l153.87,492.37l153.86,-492.37zM273.37,123.59l-166.45,211.86h216.93l90.8,-211.86zM750.63,123.59h-139.18l90.8,211.86h214.83zM573.14,123.59h-120.16l-90.8,211.86h301.76z" fill="#ffffff"/>
+		</mask>
+		<mask id="mask-UKEBzQoc">
+			<path d="M256.28,88.28h511.44l207.92,264.63l-463.64,612l-463.64,-612zM106.11,370.76l368.32,486.19l-151.92,-486.19zM553.98,851.12l363.91,-480.36h-213.8zM359.42,370.76l153.87,492.37l153.86,-492.37zM273.37,123.59l-166.45,211.86h216.93l90.8,-211.86zM750.63,123.59h-139.18l90.8,211.86h214.83zM573.14,123.59h-120.16l-90.8,211.86h301.76z" fill="url(#color-Zbj2DfHs)"/>
+		</mask>
+		<mask id="mask-VfxFVNMR">
+			<rect fill="url(#color-ymLUvmzx)" x="48.36" y="88.28" width="927.28" height="876.63"/>
+		</mask>
+	</defs>
+	<g fill="none" fill-rule="nonzero" style="mix-blend-mode: normal">
+		<g mask="url(#mask-HbCbv2F6)">
+			<g color="#00aeff" class="color-2">
+				<rect x="48.36" y="88.28" width="927.28" height="876.63" fill="currentColor"/>
+			</g>
+			<g color="#a800ff" class="color-3" mask="url(#mask-VfxFVNMR)">
+				<rect x="48.36" y="88.28" width="927.28" height="876.63" fill="currentColor"/>
+			</g>
+		</g>
+		<g filter="url(#filter-itMESj8V)" mask="url(#mask-UKEBzQoc)">
+			<g color="#48f1cf" class="color-1">
+				<rect x="48.36" y="88.28" width="927.28" height="876.63" fill="currentColor"/>
+			</g>
+			<g color="#00aeff" class="color-2" mask="url(#mask-GIt80hxT)">
+				<rect x="48.36" y="88.28" width="927.28" height="876.63" fill="currentColor"/>
+			</g>
+		</g>
+		<g clip-path="url(#clip-ginj0up6)">
+			<path d="M-44.64,1007.91v-1062.63h1113.28v1062.63zM48.36,352.91l463.64,612l463.64,-612l-207.92,-264.63h-511.44zM322.51,370.76l151.92,486.19l-368.32,-486.19zM704.09,370.76h213.8l-363.91,480.36zM667.15,370.76l-153.86,492.37l-153.87,-492.37zM414.65,123.59l-90.8,211.86h-216.93l166.45,-211.86zM917.08,335.45h-214.83l-90.8,-211.86h139.18zM663.94,335.45h-301.76l90.8,-211.86h120.16z" fill="#000000" fill-opacity="1" filter="url(#filter-PV1zfyZ5)"/>
+		</g>
+	</g>
+</svg>

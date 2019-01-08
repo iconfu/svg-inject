@@ -1,0 +1,10 @@
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0,0,1024,1024">
+	<!-- Color names: color-1, color-2 -->
+	<desc>location_pin icon - Licensed under Iconfu Standard License v1.0 (https://www.iconfu.com/iconfu_standard_license) - Incors GmbH</desc>
+	<g fill="none" fill-rule="nonzero" style="mix-blend-mode: normal">
+		<path d="M512,191c106.59,0 193,86.41 193,193c0,106.59 -86.41,193 -193,193c-106.59,0 -193,-86.41 -193,-193c0,-106.59 86.41,-193 193,-193z" visibility="hidden"/>
+		<g color="#1b8f00" class="color-1">
+			<path d="M512,64c176.73,0 320,143.27 320,320c0,96.22 -42.47,182.52 -109.69,241.19c-52.7,45.99 -90.01,94.22 -121.29,156.78l-89.02,178.03l-89.02,-178.03c-31.28,-62.56 -68.59,-110.79 -121.29,-156.78c-67.22,-58.67 -109.69,-144.97 -109.69,-241.19c0,-176.73 143.27,-320 320,-320zM512,192c-106.04,0 -192,85.96 -192,192c0,106.04 85.96,192 192,192c106.04,0 192,-85.96 192,-192c0,-106.04 -85.96,-192 -192,-192z" fill="currentColor"/>
+		</g>
+	</g>
+</svg>

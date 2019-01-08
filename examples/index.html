@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+
+    <title>CSS COlorizable Icons Examples</title>
+    <meta name="viewport" content="width=device-width">
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Mono:100,100i,300,300i,400,400i,500,500i,700,700i%7CRoboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i%7CRoboto+Condensed" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu+Mono" rel="stylesheet">
+    <link rel="stylesheet" href="css/androidstudio.css">
+    <link rel="stylesheet" href="css/svg_inject_example.css">
+    <link rel="stylesheet" href="css/svg_inject_examples.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="js/highlight.pack.js"></script>
+    <script src="js/svg_inject_example.js"></script>
+    <script src="js/svg-inject.min.js"></script>
+  </head>
+  <body>
+    <div id="ifu-svg-inject-examples">
+
+      <h2>Coloring Individual Icons</h2>
+      <p>When displaying the same colorizable SVG multiple times, each time a different set of colors can be applied with CSS. Below, the same "hipster" SVG is displayed four times, with different colors for skin, hair, glasses and shirt. The shading is done automatically by the SVG.</p>
+      <p>Each of the icons has a unique id, so a CSS id selector can be used to apply the specific colors for each icon.</p>
+
+      <div class="ifu--svg-inject-example" id="example1">
+        <div class="ifu-example-main ifu-show-html">
+          <div class="ifu-example-code">
+            <div class="ifu-code-menu">
+              <div class="ifu-code-tabs">
+                <button class="ifu-button ifu-button-code ifu-button-html">HTML</button>
+                <button class="ifu-button ifu-button-code ifu-button-css">CSS</button>
+                <button class="ifu-button ifu-button-code ifu-button-js">JS</button>
+              </div>
+              <button class="ifu-button ifu-code-toggle" onclick="IfuSvgInjectExample.toggleCode(this)" autocomplete="off">Code</button>
+            </div>
+            <div class="ifu-code-content"></div>
+          </div>
+          <div class="ifu-iframe-container ifu-ratio-2x1">
+            <iframe src="example_1/index.html">
+              <p><%= example_name %>></p>
+            </iframe>
+          </div>
+        </div>
+      </div>
+
+      <h2>Coloring Groups of Icons</h2>
+      <p>Groups of icons can share the same color scheme, and a group of icons can be displayed multiple times with different color schemes. Below, both company info cards show the same set of colorizable SVGs. A CSS color scheme to match the
+      corporate identity is applied on each side.</p>
+      <p>For coloring groups of icons a CSS class selector is used. This way each icon with class <code>green-company</code> has a different color scheme than
+      an icon with class <code>blue-company</code></p>
+
+      <div class="ifu--svg-inject-example" id="example2">
+        <div class="ifu-example-main ifu-show-html">
+          <div class="ifu-example-code">
+            <div class="ifu-code-menu">
+              <div class="ifu-code-tabs">
+                <button class="ifu-button ifu-button-code ifu-button-html">HTML</button>
+                <button class="ifu-button ifu-button-code ifu-button-css">CSS</button>
+                <button class="ifu-button ifu-button-code ifu-button-js">JS</button>
+              </div>
+              <button class="ifu-button ifu-code-toggle" onclick="IfuSvgInjectExample.toggleCode(this)" autocomplete="off">Code</button>
+            </div>
+            <div class="ifu-code-content"></div>
+          </div>
+          <div class="ifu-iframe-container ifu-ratio-2x1">
+            <iframe src="example_2/index.html">
+              <p><%= example_name %>></p>
+            </iframe>
+          </div>
+        </div>
+      </div>
+
+      <h2>Dynamic Color Changing</h2>
+      <p>Colors can be changed dynamically while the icons are displayed. Click on the toggle button below to switch between light and dark mode. The color scheme of the icons will change depending on the selected mode.</p>
+      <p>The gradient on the icons is defined by three color values. If the switch is toggled, the class <code>dark-mode</code> is set to the documents's body.
+      This will activate a "dark-mode" CSS rule which overrides the default color with a dark mode color.</p>
+
+      <div class="ifu--svg-inject-example" id="example3">
+        <div class="ifu-example-main ifu-show-html">
+          <div class="ifu-example-code">
+            <div class="ifu-code-menu">
+              <div class="ifu-code-tabs">
+                <button class="ifu-button ifu-button-code ifu-button-html">HTML</button>
+                <button class="ifu-button ifu-button-code ifu-button-css">CSS</button>
+                <button class="ifu-button ifu-button-code ifu-button-js">JS</button>
+              </div>
+              <button class="ifu-button ifu-code-toggle" onclick="IfuSvgInjectExample.toggleCode(this)" autocomplete="off">Code</button>
+            </div>
+            <div class="ifu-code-content"></div>
+          </div>
+          <div class="ifu-iframe-container ifu-ratio-2x1">
+            <iframe src="example_3/index.html">
+              <p><%= example_name %>></p>
+            </iframe>
+          </div>
+        </div>
+      </div>
+
+      <h2>Mouse Interaction and Dynamic Color Changing</h2>
+      <p>In this example we use a button state for changing icon colors. Move the mouse over the icons and press and click on them to trigger the color changes.</p>
+      <p>The SVG is placed on a button, so we can use the buttons's pseudo class selectors (<code>:hover</code>, <code>:active</code>, and <code>:disabled</code>) to specify different colors.</p>
+
+      <div class="ifu--svg-inject-example" id="example4">
+        <div class="ifu-example-main ifu-show-html">
+          <div class="ifu-example-code">
+            <div class="ifu-code-menu">
+              <div class="ifu-code-tabs">
+                <button class="ifu-button ifu-button-code ifu-button-html">HTML</button>
+                <button class="ifu-button ifu-button-code ifu-button-css">CSS</button>
+                <button class="ifu-button ifu-button-code ifu-button-js">JS</button>
+              </div>
+              <button class="ifu-button ifu-code-toggle" onclick="IfuSvgInjectExample.toggleCode(this)" autocomplete="off">Code</button>
+            </div>
+            <div class="ifu-code-content"></div>
+          </div>
+          <div class="ifu-iframe-container ifu-ratio-2x1">
+            <iframe src="example_4/index.html">
+              <p><%= example_name %>></p>
+            </iframe>
+          </div>
+        </div>
+      </div>
+
+      <h2>Text Color as Icon Color</h2>
+      <p>When exporting icons as CSS styleable SVGs, you can optionally set the icons' main color as the "free color". For this color the value of current CSS text color will be used.</p>
+      <p>Clicking on a color swatch below will set the <code>color</code> attribute of the icons array to the background color of the color swatch. The icons will inherit the color and change accordingly.</p>
+
+      <div class="ifu--svg-inject-example" id="example5">
+        <div class="ifu-example-main ifu-show-html">
+          <div class="ifu-example-code">
+            <div class="ifu-code-menu">
+              <div class="ifu-code-tabs">
+                <button class="ifu-button ifu-button-code ifu-button-html">HTML</button>
+                <button class="ifu-button ifu-button-code ifu-button-css">CSS</button>
+                <button class="ifu-button ifu-button-code ifu-button-js">JS</button>
+              </div>
+              <button class="ifu-button ifu-code-toggle" onclick="IfuSvgInjectExample.toggleCode(this)" autocomplete="off">Code</button>
+            </div>
+            <div class="ifu-code-content"></div>
+          </div>
+          <div class="ifu-iframe-container ifu-ratio-2x1">
+            <iframe src="example_5/index.html">
+              <p><%= example_name %>></p>
+            </iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      IfuSvgInjectExample.setCode($('#example1'), 'example_1/index.html');
+      IfuSvgInjectExample.setCode($('#example2'), 'example_2/index.html');
+      IfuSvgInjectExample.setCode($('#example3'), 'example_3/index.html');
+      IfuSvgInjectExample.setCode($('#example4'), 'example_4/index.html');
+      IfuSvgInjectExample.setCode($('#example5'), 'example_5/index.html');
+    </script>
+  </body>
+</html>

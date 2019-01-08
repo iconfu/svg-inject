@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Free Color Icon Coloring Example</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <script src="../js/svg-inject.min.js"></script>
+    <script src="../js/svg-inject-ie-responsive.js"></script>
+  </head>
+  <body>
+    <div style="width: 100vw; height: 30vw; max-width: 1000px; max-height: 300px; margin: 0 auto; overflow: auto;">
+      <div class="ifu-example-view">
+        <style>
+
+          body {
+            margin: 0;
+            background: #fff;
+            font-family: "Roboto", sans-serif;
+          }
+
+          .ifu-example-view {
+            height: 100%;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+          }
+
+          .ifu-example-view-content {
+            flex: 1 0 100%;
+            text-align: center;
+            min-width: 0;
+          }
+
+          /* ifu-code-source-css */
+          /* icons */
+
+          .icon-array {
+            display: flex;
+            margin: 0 2%;
+            justify-content: center;
+            text-align: center; /* Fallback for old browsers */
+            white-space: nowrap;  /* Fallback for old browsers */
+          }
+
+          .icon-box {
+            width: 100px;
+            margin: 0 1%;
+            display: inline-block; /* Fallback for old browsers */
+          }
+
+          .svg-icon {
+            width: 100%;
+            height: auto;
+          }
+
+          svg, svg * {
+            pointer-events: none;
+          }
+
+          svg [color] {
+            transition: color 300ms;
+          }
+
+          /* color swatches */
+
+          .color-swatch-array {
+            margin: 1% 0;
+            display: flex;
+            justify-content: center;
+            text-align: center; /* Fallback for old browsers */
+            white-space: nowrap;  /* Fallback for old browsers */
+          }
+
+          .color-swatch {
+            width: 4.4vw;
+            height: 4.4vw;
+            max-height: 34px;
+            max-width: 34px;
+            margin: 0.2vw;
+            cursor: pointer;
+            border-radius: 50%;
+            border: 2px solid white;
+            transition: box-shadow 300ms;
+            display: inline-block; /* Fallback for old browsers */
+          }
+
+          .selected-color-swatch {
+            box-shadow: 0 3px 5px rgba(0, 0, 0, 0.5);
+          }
+
+          .color-label {
+            position: absolute;
+            font-size: 18px;
+            white-space: nowrap;
+            transition: color 300ms, left 100ms ease, transform 500ms, opacity 500ms;
+            transform: scale(1);
+            text-shadow: 1px 1px 0 #fff, -1px 1px 0 #fff, 1px -1px 0 #fff, -1px -1px 0 #fff,
+              0px 1px 0 #fff, 0px -1px 0 #fff, -1px 0px 0 #fff, 1px 0px 0 #fff,
+              2px 2px 0 #fff, -2px 2px 0 #fff, 2px -2px 0 #fff, -2px -2px 0 #fff,
+              0px 2px 0 #fff, 0px -2px 0 #fff, -2px 0px 0 #fff, 2px 0px 0 #fff,
+              1px 2px 0 #fff, -1px 2px 0 #fff, 1px -2px 0 #fff, -1px -2px 0 #fff,
+              2px 1px 0 #fff, -2px 1px 0 #fff, 2px -1px 0 #fff, -2px -1px 0 #fff,
+              0 2px 8px #000, 0 2px 4px #000;
+          }
+
+          @media (max-width: 1000px) {
+            .color-label {
+              font-size: 16px ;
+            }
+          }
+
+          @media (max-width: 500px) {
+            .color-label {
+              opacity: 0;
+              transform: scale(0);
+            }
+          }
+
+          /* ifu-code-source-css */
+        </style>
+
+        <script>
+          /* ifu-code-source-js */
+          function selectColorSwatch(colorSwatch) {
+            var selectedColorSwatch = document.getElementsByClassName('selected-color-swatch')[0];
+            if (selectedColorSwatch != colorSwatch) {
+              if (selectedColorSwatch) {
+                selectedColorSwatch.classList.remove('selected-color-swatch');
+              }
+              colorSwatch.classList.add('selected-color-swatch');
+              // set 'color' attribute of icon array to background color of new selected color swatch
+              document.body.style.color = colorSwatch.style.backgroundColor;
+              // adjust position of color label
+              var colorLabel = document.getElementsByClassName('color-label')[0];
+              colorLabel.innerHTML = colorSwatch.style.backgroundColor;
+              colorLabel.style.left = Math.round((colorSwatch.offsetLeft + (colorSwatch.offsetWidth - colorLabel.offsetWidth) / 2) / colorSwatch.parentElement.offsetWidth * 100) + '%';
+            }
+          }
+
+          // select first color swatch when ready
+          window.onload = function() {
+            selectColorSwatch(document.getElementsByClassName('color-swatch')[0]);
+          }
+          /* ifu-code-source-js */
+        </script>
+        <div class="ifu-example-view-content">
+          <!-- ifu-code-source-html -->
+          <div class="icon-array">
+            <div class="icon-box">
+              <img class="svg-icon" src="environment.svg" alt="environment" onload="SVGInject(this)"/>
+            </div>
+            <div class="icon-box">
+              <img class="svg-icon" src="gearwheel.svg" alt="gearwheel" onload="SVGInject(this)"/>
+            </div>
+            <div class="icon-box">
+              <img class="svg-icon" src="joystick.svg" alt="joystick" onload="SVGInject(this)"/>
+            </div>
+            <div class="icon-box">
+              <img class="svg-icon" src="leaf.svg" alt="leaf" onload="SVGInject(this)"/>
+            </div>
+            <div class="icon-box">
+              <img class="svg-icon" src="workplace.svg" alt="workplace" onload="SVGInject(this)"/>
+            </div>
+            <div class="icon-box">
+              <img class="svg-icon" src="yinyang.svg" alt="yinyang" onload="SVGInject(this)"/>
+            </div>
+          </div>
+          <div style="display: inline-block; position: relative;">
+            <div class="color-swatch-array">
+              <div class="color-swatch" style="background-color: #D81B60;" onclick="selectColorSwatch(this);"></div>
+              <div class="color-swatch" style="background-color: #8E24AA;" onclick="selectColorSwatch(this);"></div>
+              <div class="color-swatch" style="background-color: #5E35B1;" onclick="selectColorSwatch(this);"></div>
+              <div class="color-swatch" style="background-color: #3949AB;" onclick="selectColorSwatch(this);"></div>
+              <div class="color-swatch" style="background-color: #1E88E5;" onclick="selectColorSwatch(this);"></div>
+              <div class="color-swatch" style="background-color: #039BE5;" onclick="selectColorSwatch(this);"></div>
+              <div class="color-swatch" style="background-color: #00ACC1;" onclick="selectColorSwatch(this);"></div>
+              <div class="color-swatch" style="background-color: #00897B;" onclick="selectColorSwatch(this);"></div>
+              <div class="color-swatch" style="background-color: #43A047;" onclick="selectColorSwatch(this);"></div>
+              <div class="color-swatch" style="background-color: #7CB342;" onclick="selectColorSwatch(this);"></div>
+              <div class="color-swatch" style="background-color: #C0CA33;" onclick="selectColorSwatch(this);"></div>
+              <div class="color-swatch" style="background-color: #FDD835;" onclick="selectColorSwatch(this);"></div>
+              <div class="color-swatch" style="background-color: #FFB300;" onclick="selectColorSwatch(this);"></div>
+              <div class="color-swatch" style="background-color: #FB8C00;" onclick="selectColorSwatch(this);"></div>
+              <div class="color-swatch" style="background-color: #F4511E;" onclick="selectColorSwatch(this);"></div>
+              <div class="color-swatch" style="background-color: #E53935;" onclick="selectColorSwatch(this);"></div>
+            </div>
+            <div class="color-label"></div>
+          </div>
+        </div>
+          <!-- ifu-code-source-html -->
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

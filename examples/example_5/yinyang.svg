@@ -1,0 +1,72 @@
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0,0,1024,1024">
+	<!-- Color names: color-1, color-2 -->
+	<desc>yinyang icon - Licensed under Iconfu Standard License v1.0 (https://www.iconfu.com/iconfu_standard_license) - Incors GmbH</desc>
+	<defs>
+		<clipPath id="clip-OxMDKGnG">
+			<path d="M8.89,28.17h1006.22v995.83h-1006.22z"/>
+		</clipPath>
+		<linearGradient x1="51.2" y1="481.28" x2="972.8" y2="481.28" id="color-OHlgZs2m" gradientUnits="userSpaceOnUse">
+			<stop offset="0.5" stop-color="#000000"/>
+			<stop offset="0.5" stop-color="#ffffff"/>
+		</linearGradient>
+		<filter id="filter-Ji4yDXos" x="-12%" y="-6%" width="136%" height="133%" color-interpolation-filters="sRGB">
+			<feColorMatrix values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 0.13 0" in="SourceGraphic"/>
+			<feOffset dy="20"/>
+			<feGaussianBlur stdDeviation="11" result="blur0"/>
+			<feColorMatrix values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 0.2 0" in="SourceGraphic"/>
+			<feOffset dy="30"/>
+			<feGaussianBlur stdDeviation="20" result="blur1"/>
+			<feMerge>
+				<feMergeNode in="blur0"/>
+				<feMergeNode in="blur1"/>
+			</feMerge>
+		</filter>
+		<filter id="filter-qNScccMC" color-interpolation-filters="sRGB">
+			<feColorMatrix values="0.17 0.72 0.11 0 -0.1 0.64 0.28 0.08 0 -0.1 0.20 0.23 0.57 0 -0.1 0 0 0 1 0"/>
+			<feColorMatrix values="-0.65039 1.77384 -0.12345 0 0 1.60663 -0.345 -0.26163 0 0 -0.42008 -0.48319 1.90327 0 0 0 0 0 1 0"/>
+		</filter>
+		<mask id="mask-5SHR2RQQ">
+			<path d="M512,71.17c226.5,0 410.11,183.62 410.11,410.11c0,226.5 -183.62,410.11 -410.11,410.11c-226.5,0 -410.11,-183.62 -410.11,-410.11c0,-226.5 183.62,-410.11 410.11,-410.11z" fill="#ffffff"/>
+		</mask>
+		<mask id="mask-g3JxRO2z">
+			<rect fill="url(#color-OHlgZs2m)" x="157.18" y="126.46" width="709.63" height="709.63"/>
+		</mask>
+		<mask id="mask-MwOht63h">
+			<path d="M512,126.46c195.96,0 354.82,158.86 354.82,354.82c0,195.96 -158.86,354.82 -354.82,354.82c-195.96,0 -354.82,-158.86 -354.82,-354.82c0,-195.96 158.86,-354.82 354.82,-354.82zM508.04,785.36c-82.15,-2.11 -148.1,-69.36 -148.1,-152.02c0,-83.98 68.08,-152.06 152.06,-152.06c83.98,0 152.06,-68.08 152.06,-152.06c0,-83.98 -68.08,-152.06 -152.06,-152.06c-167.97,0 -304.13,136.83 -304.13,304.13c0,167.3 134.03,301.96 300.17,304.08zM512,253.18c41.99,0 76.03,34.04 76.03,76.03c0,41.99 -34.04,76.03 -76.03,76.03c-41.99,0 -76.03,-34.04 -76.03,-76.03c0,-41.99 34.04,-76.03 76.03,-76.03zM512,557.31c-41.99,0 -76.03,34.04 -76.03,76.03c0,41.99 34.04,76.03 76.03,76.03c41.99,0 76.03,-34.04 76.03,-76.03c0,-41.99 -34.04,-76.03 -76.03,-76.03z" fill="#ffffff"/>
+		</mask>
+		<mask id="mask-QRrbwjWO">
+			<rect fill="url(#color-OHlgZs2m)" x="101.89" y="71.17" width="820.22" height="820.22"/>
+		</mask>
+	</defs>
+	<g fill="none" fill-rule="nonzero" style="mix-blend-mode: normal">
+		<g clip-path="url(#clip-OxMDKGnG)">
+			<path d="M512,71.17c226.5,0 410.11,183.62 410.11,410.11c0,226.5 -183.62,410.11 -410.11,410.11c-226.5,0 -410.11,-183.62 -410.11,-410.11c0,-226.5 183.62,-410.11 410.11,-410.11z" fill="#000000" fill-opacity="1" filter="url(#filter-Ji4yDXos)"/>
+		</g>
+		<g mask="url(#mask-5SHR2RQQ)">
+			<g color="#ffffff" class="color-2">
+				<rect x="101.89" y="71.17" width="820.22" height="820.22" fill="currentColor"/>
+			</g>
+			<g color="#ffffff" class="color-2" mask="url(#mask-QRrbwjWO)">
+				<defs>
+					<pattern id="pattern-GwejW4wh" x="4" y="4" width="64" height="64" patternUnits="userSpaceOnUse">
+						<rect filter="url(#filter-qNScccMC)" fill="currentColor" x="0" y="0" width="72" height="72"/>
+					</pattern>
+				</defs>
+				<rect x="101.89" y="71.17" width="820.22" height="820.22" fill="url(#pattern-GwejW4wh)"/>
+			</g>
+		</g>
+		<g mask="url(#mask-MwOht63h)">
+			<g color="currentColor" class="color-1">
+				<rect x="157.18" y="126.46" width="709.63" height="709.63" fill="currentColor"/>
+			</g>
+			<g color="currentColor" class="color-1" mask="url(#mask-g3JxRO2z)">
+				<defs>
+					<pattern id="pattern-n4YueZvo" x="4" y="4" width="64" height="64" patternUnits="userSpaceOnUse">
+						<rect filter="url(#filter-qNScccMC)" fill="currentColor" x="0" y="0" width="72" height="72"/>
+					</pattern>
+				</defs>
+				<rect x="157.18" y="126.46" width="709.63" height="709.63" fill="url(#pattern-n4YueZvo)"/>
+			</g>
+		</g>
+	</g>
+</svg>

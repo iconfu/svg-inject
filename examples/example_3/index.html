@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Dynamic Icon Coloring Example</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <script src="../js/svg-inject.min.js"></script>
+    <script>
+      SVGInject.setOptions({
+        beforeInject: function (img, svg) {
+          if (/Trident|MSIE/.test(window.navigator.userAgent)) {
+            // responsive SVGs (width: 100%; height: auto;) are not correctly positioned in Internet Explorer.
+            // Solve this issue by wrapping the SVG in a div. The SVG is prepended by a canvas element to the SVG.
+            var viewBoxVals = (svg.getAttribute('viewBox') || '').split(/[\s,]+/);
+            var width = parseInt(viewBoxVals[2]);
+            var height = parseInt(viewBoxVals[3]);
+            if (width > 0 && height > 0) {
+              // Create canvas using aspect ratio from viewBox
+              var canvas = document.createElement('canvas');
+              // Use Euclidean algorithm to find the greatest common divisor of width and height in
+              // order to create the smallest canvas possible with the SVG's width/height ratio.
+              var whGcd = function gcd(a, b) { return b ? gcd(b, a % b) : a; }(width, height);
+              canvas.height = height / whGcd;
+              canvas.width = width / whGcd;
+              canvas.setAttribute('style', 'display:block; width:100%; height:auto; visibility:hidden;');
+              // Adjust style of SVG and its parent to make SVG fill the space reserved by canvas
+              // Also set overflow: hidden to work around another layout bug in IE 11.
+              var svgStyle = svg.style;
+              svgStyle.position = 'absolute';
+              svgStyle.top = 0;
+              svgStyle.overflow = 'hidden';
+              var parentNode = img.parentNode;
+              parentNode.style.position = 'relative';
+              // Add canvas before img element
+              parentNode.insertBefore(canvas, img);
+            }
+          }
+        }
+      });
+    </script>
+  </head>
+  <body>
+    <div style="width: 100vw; height: 30vw; max-width: 1000px; max-height: 300px; margin: 0 auto; overflow: auto;">
+      <div class="ifu-example-view">
+        <style>
+
+          body {
+            margin: 0;
+            font-family: "Roboto", sans-serif;
+          }
+
+          .ifu-example-view {
+            height: 100%;
+            display: flex;
+            align-items: center;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+          }
+
+          .ifu-example-view-content {
+            flex: 1 0 100%;
+            min-width: 0;
+          }
+
+          /* ifu-code-source-css */
+          /* icon colors */
+
+          .color-1 { color: #26d5b2; }
+          .color-2 { color: #11a4e7; }
+          .color-3 { color: #b100a6; }
+
+          .dark-mode .color-1 { color: #fdffb9; }
+          .dark-mode .color-2 { color: #ff871d; }
+          .dark-mode .color-3 { color: #ff4cca; }
+
+          /* layout */
+
+          svg [color]   {
+            transition: color 300ms;
+          }
+
+          .svg-icon {
+            width: 100%;
+            height: auto;
+          }
+
+          .icon-box {
+            width: 84px;
+            margin: 0 1.5%;
+            display: inline-block; /* Fallback for old browsers */
+          }
+
+          body {
+            color: #666;
+            background: #fff;
+            transition: background-color 300ms;
+          }
+
+          body.dark-mode {
+            color: #aaa;
+            background-color: #333;
+          }
+
+          .icon-array {
+            display: flex;
+            justify-content: center;
+            text-align: center; /* Fallback for old browsers */
+            margin: 0 4%;
+          }
+
+          .toggle-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding-bottom: 4%;
+            text-align: center;
+            font-size: 18px;
+          }
+
+          .toggle-container>div {
+            margin: 0 1%;
+          }
+
+          /* toggle button */
+
+          .ifu-toggle-input {
+            display: none;
+          }
+
+          .ifu-toggle {
+            font-size: 0;
+            width: 100px;
+            height: 50px;
+            display: inline-block;
+            position: relative;
+            color: white;
+            background: #ccc;
+            border-radius: 25%/50%;
+            transition: background-color 300ms, color 300ms;
+            cursor: pointer;
+          }
+
+          .ifu-toggle:after {
+            position: absolute;
+            content: '';
+            top: 10%;
+            left: 5%;
+            width: 40%;
+            height: 80%;
+            background: currentColor;
+            border-radius: 50%;
+            box-shadow: 0 2px 7px rgba(0, 0, 0, 0.2);
+            transition: left 300ms ease;
+          }
+
+          .ifu-toggle-input:checked+.ifu-toggle:after {
+            left: 55%;
+          }
+
+          .dark-mode .ifu-toggle {
+            background: #444;
+            color: #888;
+          }
+
+          @media (max-width: 600px) {
+            .ifu-toggle {
+              width: 80px;
+              height: 40px;
+            }
+
+            .toggle-container {
+              font-size: 14px;
+            }
+          }
+
+          @media (max-width: 400px) {
+            .ifu-toggle {
+              width: 50px;
+              height: 25px;
+            }
+
+            .toggle-container {
+              font-size: 12px;
+            }
+          }
+          /* ifu-code-source-css */
+        </style>
+        <script>
+          /* ifu-code-source-js */
+          function toggleClick(toggle) {
+            document.body.classList[toggle.checked ? 'add' : 'remove']('dark-mode');
+          }
+          /* ifu-code-source-js */
+        </script>
+        <div class="ifu-example-view-content">
+          <!-- ifu-code-source-html -->
+          <div class="toggle-container">
+            <div>Light Mode</div>
+            <div>
+              <input id="toggle-dark-mode" class="ifu-toggle-input" onclick="toggleClick(this)" type="checkbox" autocomplete="off"/>
+              <label for="toggle-dark-mode" class="ifu-toggle"></label>
+            </div>
+            <div>Dark Mode</div>
+          </div>
+          <div class="icon-array">
+            <div class="icon-box">
+              <img class="svg-icon" src="compass.svg" onload="SVGInject(this)" />
+            </div>
+            <div class="icon-box">
+              <img class="svg-icon" src="brain.svg" onload="SVGInject(this)" />
+            </div>
+            <div class="icon-box">
+              <img class="svg-icon" src="cloud_download.svg" onload="SVGInject(this)" />
+            </div>
+            <div class="icon-box">
+              <img class="svg-icon" src="cube_molecule_isometric.svg" onload="SVGInject(this)" />
+            </div>
+            <div class="icon-box">
+              <img class="svg-icon" src="diamond.svg" onload="SVGInject(this)" />
+            </div>
+            <div class="icon-box">
+              <img class="svg-icon" src="stopwatch_elapsed.svg" onload="SVGInject(this)" />
+            </div>
+            <div class="icon-box">
+              <img class="svg-icon" src="gauge.svg" onload="SVGInject(this)" />
+            </div>
+            <div class="icon-box">
+              <img class="svg-icon" src="gearwheel.svg" onload="SVGInject(this)" />
+            </div>
+          </div>
+          <!-- ifu-code-source-html -->
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
