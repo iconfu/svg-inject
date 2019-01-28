@@ -224,7 +224,7 @@ If you dynamically insert new `<img>` elements you need to call `SVGInject()` on
 
 ## Fallback for old browsers
 
-If the browser does not support SVG, this simple fallback solution replaces the `src` attribute with an alternative image URL.
+If the browser does not support SVG (IE8 and IE7), this simple fallback solution replaces the `src` attribute with an alternative image URL.
 
 ```html
 < img src="image.svg" onload="SVGInject(this)" onerror="SVGInject.err(this, 'image.png')" />
@@ -347,7 +347,7 @@ This example shows how to use SVGInject directly from Javascript without the `on
 
 Full support for all modern browsers, and IE9+ ([full list](https://caniuse.com/#feat=svg))
 
-Support for IE8 and IE7 with optional [PNG fallback method](#fallback-for-no-svg-support-ie--8)
+Support for IE8 and IE7 with optional [PNG fallback method](https://github.com/iconfu/svg-inject/wiki/Fallback-solutions#fallback-for-no-svg-support-ie-78)
 
 
 ## License
