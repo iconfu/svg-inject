@@ -227,7 +227,7 @@ If you dynamically insert new `<img>` elements you need to call `SVGInject()` on
 If the browser does not support SVG (IE8 and IE7), this simple fallback solution replaces the `src` attribute with an alternative image URL.
 
 ```html
-< img src="image.svg" onload="SVGInject(this)" onerror="SVGInject.err(this, 'image.png')" />
+<img src="image.svg" onload="SVGInject(this)" onerror="SVGInject.err(this, 'image.png')" />
 ```
 
 More detailed information on implementing fallback solutions for old browsers can be found on our [Fallback solutions WIki page](../../wiki/Fallback-solutions).
