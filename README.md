@@ -347,7 +347,7 @@ This example shows how to use SVGInject directly from Javascript without the `on
 
 Full support for all modern browsers, and IE9+ ([full list](https://caniuse.com/#feat=svg))
 
-Support for IE8 and IE7 with optional [PNG fallback method](#fallback-for-no-svg-support-ie--8)
+Support for IE8 and IE7 with optional [PNG fallback method](wiki/Fallback-solutions#fallback-for-no-svg-support-ie-78)
 
 
 ## License
