@@ -194,15 +194,15 @@
       // Regular expression for functional notations of an IRI references. This will find occurences in the form
       // url(#anyId) or url("#anyId") (for Internet Explorer)
       var funcIriRegex = /url\("?#([a-zA-Z][\w:.-]*)"?\)/g;
-      // Run through all elements of the SVG and replace IDs in references. It seems that getElementsByTagName('*')
-      // performs faster than querySelectorAll('*') in this case.
-      var allElements = svgElem[_GET_ELEMENTS_BY_TAG_NAME_]('*');
-      var element;
+      // Run through all elements of the SVG and replace IDs in references. 
+      // To get all descending elements, getElementsByTagName('*') seems to perform faster than querySelectorAll('*'). 
+      // Since svgElem.getElementsByTagName('*') does not return the svg element itself, we have to handle it separately.      
+      var descElements = svgElem[_GET_ELEMENTS_BY_TAG_NAME_]('*');
+      var element = svgElem;
       var propertyName;
       var value;
       var newValue;
-      for (i = 0; i < allElements[_LENGTH_]; i++) {
-        element = allElements[i];
+      for (i = -1; element != null;) {
         if (element.localName == _STYLE_) {
           value = element.textContent;
           newValue = value && value.replace(funcIriRegex, 'url(#$1' + idSuffix + ')');
@@ -220,10 +220,11 @@
             }
           }
         }
+        element = descElements[++i];        
       }
     }
 
-    // return boolean if SVG element has been changed
+    // return true if SVG element has changed
     return changed;
   }
 
