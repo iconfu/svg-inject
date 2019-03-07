@@ -47,7 +47,8 @@
     marker: ['marker', 'marker-end', 'marker-mid', 'marker-start'],
     mask: NULL,
     pattern: ['fill', 'stroke'],
-    radialGradient: ['fill', 'stroke']
+    radialGradient: ['fill', 'stroke'],
+    path: NULL
   };
   var INJECTED = 1;
   var FAIL = 2;
@@ -219,6 +220,13 @@
               element[_SET_ATTRIBUTE_](propertyName, newValue);
             }
           }
+
+          ['xlink:href', 'href'].forEach(function(refAttrName) {
+            var iri = element[_GET_ATTRIBUTE_](refAttrName);
+            if (/^\s*#/.test(iri) && iri.indexOf(idSuffix) < 0) {
+              element[_SET_ATTRIBUTE_](refAttrName, iri.trim() + idSuffix); 
+            }
+          });
         }
         element = descElements[++i];        
       }
