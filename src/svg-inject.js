@@ -145,7 +145,8 @@
   // incremented with each injection. References to the IDs are adjusted accordingly.
   // We assume tha all IDs within the injected SVG are unique, therefore the same suffix can be used for all IDs of one
   // injected SVG.
-  function makeIdsUnique(svgElem) {
+  // If the onlyReferenced argument is set to true, only those IDs will be made unique that are referenced from within the SVG
+  function makeIdsUnique(svgElem, onlyReferenced) {
     var idSuffix = ID_SUFFIX + uniqueIdCounter++;
     // Regular expression for functional notations of an IRI references. This will find occurences in the form
     // url(#anyId) or url("#anyId") (for Internet Explorer) and capture the referenced ID
@@ -156,7 +157,7 @@
     var idElem;
     // An object containing referenced IDs  as keys is used if only referenced IDs should be uniquified.
     // If this object does not exist, all IDs will be uniquified.
-    var referencedIds;
+    var referencedIds = onlyReferenced ? [] : NULL;
     var tagName;
     var iriTagNames = {};
     var iriProperties = [];
@@ -165,7 +166,7 @@
 
     if (idElements[_LENGTH_]) {
       // Make all IDs unique by adding the ID suffix and collect all encountered tag names
-      // that are IRI referenceable from properities.
+      // that are IRI referenceable from properities.     
       for (i = 0; i < idElements[_LENGTH_]; i++) {
         tagName = idElements[i].localName; // Use non-namespaced tag name
         // Make ID unique if tag name is IRI referenceable
@@ -195,7 +196,7 @@
       var propertyName;
       var value;
       var newValue;
-      for (i = -1; element != null;) {
+      for (i = -1; element != NULL;) {
         if (element.localName == _STYLE_) {
           // If element is a style element, replace IDs in all occurences of "url(#anyId)" in text content
           value = element.textContent;
