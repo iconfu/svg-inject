@@ -180,7 +180,7 @@ Additionally, after loading the SVG, the value of the `src` attribute of the `<i
 | ------------- | ---- | ------- | ----------- |
 | useCache | boolean | `true` | If set to `true` the SVG will be cached using the absolute URL. The cache only persists for the lifetime of the page. Without caching images with the same absolute URL will trigger a new XMLHttpRequest but browser caching will still apply. |
 | copyAttributes | boolean | `true` | If set to `true` [attributes will be copied](#how-are-attributes-handled) from the `img` to the injected `svg` element. You may implement your own method for copying attributes in the `beforeInject` options hook. |
-| makeIdsUnique | boolean | `true` | If set to `true` all IDs of elements in the SVG are made unique by appending the string "--inject-X", where X is a running number which increases with each injection. This is done to avoid duplicate IDs in the DOM. |
+| makeIdsUnique | boolean/String | `true` | If set to `true` all IDs of elements in the SVG are made unique by appending the string "--inject-X", where X is a running number which increases with each injection. This is done to avoid duplicate IDs in the DOM. If set to `'onlyReferenced'`, only IDs referenced from inside the SVG will be made unique. If set to `false`, no IDs will be made unique.|
 | beforeLoad | function(img) | `undefined` | Hook before SVG is loaded. The `img` element is passed as a parameter. If the hook returns a string it is used as the URL instead of the `img` element's `src` attribute. |
 | afterLoad | function(svg,&nbsp;svgString) | `undefined` | Hook after SVG is loaded. The loaded `svg` element and `svgString` string are passed as a parameters. If caching is active this hook will only get called once for injected SVGs with the same absolute path. Changes to the `svg` element in this hook will be applied to all injected SVGs with the same absolute path. It's also possible to return an new SVG string or SVG element which will then be used for later injections. |
 | beforeInject | function(img,&nbsp;svg) | `undefined` | Hook directly before the SVG is injected. The `img` and `svg` elements are passed as parameters. The hook is called for every injected SVG. If an [Element](https://developer.mozilla.org/de/docs/Web/API/Element) is returned it gets injected instead of applying the default SVG injection. |
@@ -347,7 +347,7 @@ This example shows how to use SVGInject directly from Javascript without the `on
 
 Full support for all modern browsers, and IE9+ ([full list](https://caniuse.com/#feat=svg))
 
-Support for IE8 and IE7 with optional [PNG fallback method](https://github.com/iconfu/svg-inject/wiki/Fallback-solutions#fallback-for-no-svg-support-ie-78)
+Support for legacy browsers with optional [PNG fallback method](https://github.com/iconfu/svg-inject/wiki/Fallback-solutions#fallback-for-no-svg-support-ie-78)
 
 
 ## License
