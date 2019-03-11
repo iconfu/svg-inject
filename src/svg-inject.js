@@ -1,5 +1,5 @@
 /**
- * SVGInject - Version 1.2.2
+ * SVGInject - Version 1.2.3
  * A tiny, intuitive, robust, caching solution for injecting SVG files inline into the DOM.
  *
  * https://github.com/iconfu/svg-inject
@@ -166,7 +166,7 @@
 
     if (idElements[_LENGTH_]) {
       // Make all IDs unique by adding the ID suffix and collect all encountered tag names
-      // that are IRI referenceable from properities.     
+      // that are IRI referenceable from properities.
       for (i = 0; i < idElements[_LENGTH_]; i++) {
         tagName = idElements[i].localName; // Use non-namespaced tag name
         // Make ID unique if tag name is IRI referenceable
