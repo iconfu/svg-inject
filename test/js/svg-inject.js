@@ -520,8 +520,7 @@
           var absUrl = getAbsoluteUrl(src);
           var useCacheOption = options.useCache;
           var makeIdsUniqueOption = options.makeIdsUnique;
-          var makeOnlyReferencedIdsUnique = makeIdsUniqueOption === 'onlyReferenced';
-
+          
           var setSvgLoadCacheValue = function(val) {
             if (useCacheOption) {
               svgLoadCache[absUrl].forEach(function(svgLoad) {
@@ -550,7 +549,7 @@
                     // IDs for the SVG string have not been made unique before. This may happen if previous
                     // injection of a cached SVG have been run with the option makedIdsUnique set to false
                     svgElem = buildSvgElement(svgString, false);
-                    hasUniqueIds = makeIdsUnique(svgElem, makeOnlyReferencedIdsUnique);
+                    hasUniqueIds = makeIdsUnique(svgElem, false);
 
                     loadValue[0] = hasUniqueIds;
                     loadValue[2] = hasUniqueIds && svgElemToSvgString(svgElem);
@@ -607,7 +606,7 @@
             if (svgElem instanceof SVGElement) {
               var hasUniqueIds = NULL;
               if (makeIdsUniqueOption) {
-                hasUniqueIds = makeIdsUnique(svgElem, makeOnlyReferencedIdsUnique);
+                hasUniqueIds = makeIdsUnique(svgElem, false);
               }
 
               if (useCacheOption) {

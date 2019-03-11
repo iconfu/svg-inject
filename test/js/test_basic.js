@@ -12,7 +12,7 @@ runTests([
         success();
       }
     };
-    
+
     SVGInject.create('SVGInject1', {
       beforeInject: function(img, svg) {
         testSequence('beforeInject');
@@ -40,8 +40,8 @@ runTests([
       },
       afterLoad: function(svg) {
         testSequence('afterLoad');
-      } 
-    });  
+      }
+    });
   },
 
   // Test 2
@@ -60,7 +60,7 @@ runTests([
         success();
       }
     };
-    
+
     SVGInject.create('SVGInject2', {
       beforeInject: function(img, svg) {
         testSequence('beforeInject');
@@ -68,7 +68,7 @@ runTests([
       afterInject: function(img, svg) {
         testSequence('afterInject');
       }
-    });  
+    });
   },
 
   // Test 3
@@ -84,7 +84,7 @@ runTests([
       afterInject: function(img, svg) {
         for (var key in includeAttributes) {
           var val = includeAttributes[key];
-          
+
           if (!svg.hasAttribute(key) || svg.getAttribute(key) !== val) {
             fail();
             return;
@@ -107,7 +107,7 @@ runTests([
 
         success();
       }
-    });  
+    });
   },
 
   // Test 4
@@ -135,7 +135,7 @@ runTests([
         }
         success();
       }
-    }); 
+    });
   },
 
   // Test 5
@@ -174,7 +174,7 @@ runTests([
 
     domReady(function(event) {
       SVGInject5(document.getElementsByClassName('test-5'));
-    }); 
+    });
   },
 
   // Test 6
@@ -214,7 +214,7 @@ runTests([
 
     domReady(function(event) {
       SVGInject7(document.getElementsByClassName('test-7'));
-    }); 
+    });
   },
 
   // Test 8
@@ -238,7 +238,7 @@ runTests([
 
     domReady(function(event) {
       SVGInject8(document.getElementsByClassName('test-8'));
-    }); 
+    });
   },
 
   // Test 9
@@ -300,7 +300,7 @@ runTests([
           svgs.push(svg);
         }
         testSequence('afterLoad');
-      } 
+      }
     });
 
     domReady(function() {
@@ -444,7 +444,7 @@ runTests([
     var hookComplete = function() {
       isEqualElseFail(++hookCompleteCount, hookCompleteNum, success);
     };
-  
+
 
     var testGroup = function(groupName) {
       var promise = SVGInject18(document.querySelectorAll('#test-18 .' + groupName), {
@@ -493,7 +493,7 @@ runTests([
       var testContainer = document.querySelector('#test-19 .test');
 
       var insertImgs = function() {
-        
+
         testContainer.insertAdjacentHTML(
           'beforeend',
           '<div><img src="imgs/test1.svg" onload="SVGInject19(this)" onerror="SVGInject19.err(this)" class="inject-success"></div>' +
@@ -524,6 +524,32 @@ runTests([
 
       insertImgs();
     });
-  }
-      
+  },
+
+  // Test 20
+  function() {
+    var count = 0;
+
+    SVGInject.create('SVGInject20', {
+      afterInject: function(src, svg) {
+        if (src.getAttribute('id') == 'svg20-1') {
+          // makeIdsUnique: false
+          if (!svg.getElementById('circle1') || !svg.getElementById('circle2')) {
+            fail();
+            return;
+          }
+        } else if (src.getAttribute('id') == 'svg20-2') {
+          // makeIdsUnique: true
+          if (svg.getElementById('circle1') || svg.getElementById('circle2')) {
+            fail();
+            return;
+          }
+        }
+        if (++count == 2) {
+          success();
+        }
+      }
+    });
+  },
+
 ]);
