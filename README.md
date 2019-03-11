@@ -36,7 +36,7 @@ An SVG can only be properly styled with CSS and accessed with Javascript on elem
 
 ## How to install SVGInject?
 
-### Manually 
+### Manually
 
 Include the SVGInject Javascript file in the `<head>` element of the HTML document, or anywhere before the first usage of SVGInject
 
@@ -48,9 +48,9 @@ Include the SVGInject Javascript file in the `<head>` element of the HTML docume
 </head>
 ```
 
-Download plain version (v1.2.2): [svg-inject.js](https://raw.githubusercontent.com/iconfu/svg-inject/v1.2.2/dist/svg-inject.js)
+Download plain version (v1.2.3): [svg-inject.js](https://raw.githubusercontent.com/iconfu/svg-inject/v1.2.3/dist/svg-inject.js)
 
-Download minified version (v1.2.2): [svg-inject.min.js](https://raw.githubusercontent.com/iconfu/svg-inject/v1.2.2/dist/svg-inject.min.js)
+Download minified version (v1.2.3): [svg-inject.min.js](https://raw.githubusercontent.com/iconfu/svg-inject/v1.2.3/dist/svg-inject.min.js)
 
 ### npm
 
@@ -115,7 +115,7 @@ For most use cases this approach is recommended and provides nice [advantages](#
 
 * **Wide browser support**: Works on all browsers supporting SVG. Yes, this includes Internet Explorer 9 and higher! ([full list](https://caniuse.com/#feat=svg))
 
-* **Fallback without Javascript**: If Javascript is not available the SVG will still show. It's just not styleable with CSS. 
+* **Fallback without Javascript**: If Javascript is not available the SVG will still show. It's just not styleable with CSS.
 
 * **Fallback if image source is not available**: Behaves like a normal `<img>` element if file not found or not available.
 
@@ -127,7 +127,7 @@ For most use cases this approach is recommended and provides nice [advantages](#
 The recommended way to trigger injection is to call `SVGInject(this)` inside the `onload` attribute:
 
 ```html
-<img ... onload="SVGInject(this)" /> 
+<img ... onload="SVGInject(this)" />
 ```
 
 This provides additional advantages:
@@ -163,7 +163,7 @@ All attributes are copied from the `<img>` element to the injected `<svg>` eleme
 
 You can disable the previously described attribute handling by setting the `copyAttributes` option to `false`. You may also implement your own attribute handling in the `beforeInject` options hook.
 
-Additionally, after loading the SVG, the value of the `src` attribute of the `<img>` element is transformed to an absolute URL and inserted as a `data-inject-url` attribute. 
+Additionally, after loading the SVG, the value of the `src` attribute of the `<img>` element is transformed to an absolute URL and inserted as a `data-inject-url` attribute.
 
 ## API
 
@@ -278,7 +278,7 @@ This example shows how to use SVGInject with multiple options.
         var div = document.createElement('div');
         div.appendChild(svg);
         return div;
-      }, 
+      },
       afterInject: function(img, svg) {
         // set opacity
         svg.style.opacity = 1;
