@@ -238,6 +238,18 @@
     <div class="test"></div>
   </div>
 
+  <h3>Test 20</h3>
+  <!-- Test correct ID unification for <use> elements and 'onlyReferenced' value for makeIdsUnique option. -->
+  <p>Must display circles in red, green, blue and yellow color</p>
+  <div id="test-18">
+    <div class="test">
+      <div><img src="imgs/test20-1.svg" onload="SVGInject(this, {makeIdsUnique: 'onlyReferenced'})" /></div>
+      <div><img src="imgs/test20-2.svg" onload="SVGInject(this, {makeIdsUnique: false})" /></div>
+      <div><img src="imgs/test20-3.svg" onload="SVGInject(this, {makeIdsUnique: true})" /></div>
+      <div><img src="imgs/test20-4.svg" onload="SVGInject(this, {makeIdsUnique: true})" /></div>      
+    </div>
+  </div>
+
   <script src="./js/xhr-check.js"></script>
 </body>
 </html>
