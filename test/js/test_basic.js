@@ -524,6 +524,32 @@ runTests([
 
       insertImgs();
     });
-  }
+  },
+
+  // Test 20
+  function() {
+    var count = 0;
+
+    SVGInject.create('SVGInject20', {
+      afterInject: function(src, svg) {
+        if (src.getAttribute('id') == 'svg20-1') {
+          // makeIdsUnique: false
+          if (!svg.getElementById('circle1') || !svg.getElementById('circle2')) {
+            fail();
+            return;
+          }
+        } else if (src.getAttribute('id') == 'svg20-2') {
+          // makeIdsUnique: true
+          if (svg.getElementById('circle1') || svg.getElementById('circle2')) {
+            fail();
+            return;
+          }
+        }
+        if (++count == 2) {
+          success();
+        }
+      }
+    });
+  },
 
 ]);
