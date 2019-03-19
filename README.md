@@ -324,7 +324,7 @@ This example shows how to use SVGInject directly from Javascript without the `on
     });
 
     document.addEventListener('DOMContentLoaded', function() {
-      // inject all image elements with class name `injectable`
+      // inject all img elements with class name `injectable`
       SVGInject(document.querySelectorAll('img.injectable'), {
         onAllFinish: function() {
           // the SVG injection has finished for all three images
