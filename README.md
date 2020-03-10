@@ -99,7 +99,7 @@ For most use cases this approach is recommended and provides nice [advantages](#
 
   <script src="svg-inject.min.js"></script>
   <script>
-    SVGInject(document.querySelector("img.injectable"));
+    SVGInject(document.querySelectorAll("img.injectable"));
   </script>
 </body>
 </html>
