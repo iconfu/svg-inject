@@ -121,7 +121,6 @@ For most use cases this approach is recommended and provides nice [advantages](#
 
 * **Prevention of ID conflicts**: IDs in the SVG are made unique before injection to prevent ID conflicts in the DOM.
 
-
 ## What are additional advantages when using `onload`?
 
 The recommended way to trigger injection is to call `SVGInject(this)` inside the `onload` attribute:
@@ -142,6 +141,7 @@ This provides additional advantages:
 
 * **Standard-conform**: The `onload` event handler on `<img>` elements has long been supported by all browsers and is officially part of the W3C specification since [HTML5.0](https://www.w3.org/TR/html50/webappapis.html#event-handler-attributes).
 
+* **Great load performance**: Browers load the SVG right when the `<img>` element is parsed in the DOM. After the `onload` event the SVG is available from the browser cache in the subsequent XHR request and therefor each SVG is only loaded once.
 
 If you do not want to use the `onload` attribute but prefer to inject SVGs directly from Javascript, you can find more information [here](#how-to-use-svginject-directly-from-javascript).
 
