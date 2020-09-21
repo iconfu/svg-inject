@@ -146,8 +146,10 @@
   // We assume tha all IDs within the injected SVG are unique, therefore the same suffix can be used for all IDs of one
   // injected SVG.
   // If the onlyReferenced argument is set to true, only those IDs will be made unique that are referenced from within the SVG
-  function makeIdsUnique(svgElem, onlyReferenced) {
-    var idSuffix = ID_SUFFIX + uniqueIdCounter++;
+  function makeIdsUnique(svgElem, options, onlyReferenced) {
+    var idSuffix = "";
+    if (options.choosenName) idSuffix = options.choosenName;
+    else idSuffix = ID_SUFFIX + uniqueIdCounter++;
     // Regular expression for functional notations of an IRI references. This will find occurences in the form
     // url(#anyId) or url("#anyId") (for Internet Explorer) and capture the referenced ID
     var funcIriRegex = /url\("?#([a-zA-Z][\w:.-]*)"?\)/g;
@@ -257,7 +259,8 @@
 
   // For cached SVGs the IDs are made unique by simply replacing the already inserted unique IDs with a
   // higher ID counter. This is much more performant than a call to makeIdsUnique().
-  function makeIdsUniqueCached(svgString) {
+  function makeIdsUniqueCached(svgString, options) {
+    if (options.choosenName) return svgString.replace(ID_SUFFIX_REGEX, options.choosenName);
     return svgString.replace(ID_SUFFIX_REGEX, ID_SUFFIX + uniqueIdCounter++);
   }
 
@@ -520,7 +523,7 @@
           var absUrl = getAbsoluteUrl(src);
           var useCacheOption = options.useCache;
           var makeIdsUniqueOption = options.makeIdsUnique;
-          
+
           var setSvgLoadCacheValue = function(val) {
             if (useCacheOption) {
               svgLoadCache[absUrl].forEach(function(svgLoad) {
@@ -549,13 +552,13 @@
                     // IDs for the SVG string have not been made unique before. This may happen if previous
                     // injection of a cached SVG have been run with the option makedIdsUnique set to false
                     svgElem = buildSvgElement(svgString, false);
-                    hasUniqueIds = makeIdsUnique(svgElem, false);
+                    hasUniqueIds = makeIdsUnique(svgElem, options, false);
 
                     loadValue[0] = hasUniqueIds;
                     loadValue[2] = hasUniqueIds && svgElemToSvgString(svgElem);
                   } else if (hasUniqueIds) {
                     // Make IDs unique for already cached SVGs with better performance
-                    svgString = makeIdsUniqueCached(uniqueIdsSvgString);
+                    svgString = makeIdsUniqueCached(uniqueIdsSvgString, options);
                   }
                 }
 
@@ -606,7 +609,7 @@
             if (svgElem instanceof SVGElement) {
               var hasUniqueIds = NULL;
               if (makeIdsUniqueOption) {
-                hasUniqueIds = makeIdsUnique(svgElem, false);
+                hasUniqueIds = makeIdsUnique(svgElem, options, false);
               }
 
               if (useCacheOption) {
