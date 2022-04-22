@@ -151,6 +151,8 @@
     // Regular expression for functional notations of an IRI references. This will find occurences in the form
     // url(#anyId) or url("#anyId") (for Internet Explorer) and capture the referenced ID
     var funcIriRegex = /url\("?#([a-zA-Z][\w:.-]*)"?\)/g;
+    // Regex for style #id notation
+    var idRegex = /#(-?[_a-zA-Z]+[_a-zA-Z0-9-]*)/g;
     // Get all elements with an ID. The SVG spec recommends to put referenced elements inside <defs> elements, but
     // this is not a requirement, therefore we have to search for IDs in the whole SVG.
     var idElements = svgElem.querySelectorAll('[id]');
@@ -200,11 +202,11 @@
         if (element.localName == _STYLE_) {
           // If element is a style element, replace IDs in all occurences of "url(#anyId)" in text content
           value = element.textContent;
-          newValue = value && value.replace(funcIriRegex, function(match, id) {
+          newValue = value && value.replace(idRegex, function(match, id) {
             if (referencedIds) {
               referencedIds[id] = 1;
             }
-            return 'url(#' + id + idSuffix + ')';
+            return "#" + id + idSuffix;
           });
           if (newValue !== value) {
             element.textContent = newValue;
