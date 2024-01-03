@@ -19,6 +19,9 @@
     "gulp-uglify": "^3.0.0",
     "pump": "^3.0.0"
   },
+  "overrides": {
+    "graceful-fs": "^4.2.11"
+  },
   "bugs": {
     "url": "https://github.com/iconfu/svg-inject/issues"
   },
