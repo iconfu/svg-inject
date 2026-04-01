@@ -66,10 +66,8 @@
   <h1>SVGInject <span>v2 Examples</span></h1>
   <p class="intro">Everything below is impossible with a regular <code>&lt;img&gt;</code> tag. SVGInject replaces the image with an inline <code>&lt;svg&gt;</code>, giving CSS and JavaScript full access to the SVG internals.</p>
   <div id="file-warning" style="display:none; padding: 20px 24px; background: #ffeaa7; color: #2d3436; border-radius: 12px; margin-bottom: 32px; font-size: 15px; line-height: 1.6;">
-    <strong style="font-size: 17px;">This page won't work from the file system.</strong><br>
-    SVG injection requires HTTP. Open a terminal in the project root and run:<br>
-    <code style="display: inline-block; margin-top: 8px; padding: 6px 12px; background: #fdcb6e; font-size: 14px;">npx serve .</code><br>
-    <span style="margin-top: 6px; display: inline-block;">Then open <strong>http://localhost:3000/examples/</strong></span>
+    <strong style="font-size: 17px;">This page must be opened via a web server.</strong><br>
+    Browsers block SVG loading from the local file system. Please serve this folder over HTTP — any local web server will do.
   </div>
   <script>
     if (location.protocol === 'file:') {
