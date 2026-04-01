@@ -10,7 +10,7 @@ Hey, sorry this took forever — life got in the way.
 
 v2 is now fully written in TypeScript, so type definitions ship with the package (`svg-inject.d.ts`). No more `@types` needed. Just `import { SVGInject } from '@iconfu/svg-inject'` and you get full types out of the box.
 
-Available on the `v2-typescript-rewrite` branch.
+This is available in v2.0.0.
 
 ---
 
