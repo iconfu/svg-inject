@@ -350,12 +350,8 @@ var SVGInjectModule = (() => {
   function createSVGInject(globalName, options, _assignToWindow = true) {
     let defaultOptions = mergeOptions({ ...DEFAULT_OPTIONS }, options);
     const svgLoadCache = /* @__PURE__ */ new Map();
-    let styleInjected = false;
-    function ensureStyleTag() {
-      if (!styleInjected && defaultOptions.injectStyleTag) {
-        addStyleToHead('img[onload^="' + globalName + '("]{visibility:hidden;}');
-        styleInjected = true;
-      }
+    if (defaultOptions.injectStyleTag && typeof document !== "undefined") {
+      addStyleToHead('img[onload^="' + globalName + '("]{visibility:hidden;}');
     }
     function fail(imgElem, status, opts) {
       imgElem[__SVGINJECT] = FAIL;
@@ -406,7 +402,6 @@ var SVGInjectModule = (() => {
         fail(imgElem, SVG_NOT_SUPPORTED, opts);
         return;
       }
-      ensureStyleTag();
       const beforeLoad = opts.beforeLoad;
       const src = beforeLoad && beforeLoad(imgElem) || imgElem.getAttribute("src");
       if (src === null || src === void 0) {

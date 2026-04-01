@@ -91,13 +91,11 @@ function errorMessage(msg: string): void {
 export function createSVGInject(globalName: string, options?: SVGInjectOptions, _assignToWindow = true): SVGInjectFunction {
   let defaultOptions = mergeOptions({ ...DEFAULT_OPTIONS }, options);
   const svgLoadCache = new Map<string, CacheEntry>();
-  let styleInjected = false;
 
-  function ensureStyleTag(): void {
-    if (!styleInjected && defaultOptions.injectStyleTag) {
-      addStyleToHead('img[onload^="' + globalName + '("]{visibility:hidden;}');
-      styleInjected = true;
-    }
+  // Inject style tag immediately to prevent unstyled image flash.
+  // Must happen at script load time, before any <img> onload fires.
+  if (defaultOptions.injectStyleTag && typeof document !== 'undefined') {
+    addStyleToHead('img[onload^="' + globalName + '("]{visibility:hidden;}');
   }
 
   function fail(imgElem: HTMLImageElement, status: FailStatus, opts: SVGInjectOptions): void {
@@ -166,7 +164,7 @@ export function createSVGInject(globalName: string, options?: SVGInjectOptions, 
       return;
     }
 
-    ensureStyleTag();
+
 
     const beforeLoad = opts.beforeLoad;
     const src = (beforeLoad && beforeLoad(imgElem)) || imgElem.getAttribute('src');
