@@ -26,14 +26,46 @@
     .medium { width: 80px; height: 80px; }
     .large { width: 120px; height: 120px; }
 
-    .hoverable { transition: color 0.2s; cursor: pointer; }
-    .hoverable:hover { color: crimson; }
+    /* --- Mouse interactions --- */
+
+    .hover-color { color: #333; transition: color 0.2s; cursor: pointer; }
+    .hover-color:hover { color: crimson; }
+
+    .hover-scale { transition: transform 0.2s; cursor: pointer; }
+    .hover-scale:hover { transform: scale(1.2); }
+
+    .hover-glow { transition: filter 0.3s; cursor: pointer; }
+    .hover-glow:hover { filter: drop-shadow(0 0 8px rgba(255, 100, 50, 0.7)); }
+
+    .hover-rotate { transition: transform 0.3s; cursor: pointer; }
+    .hover-rotate:hover { transform: rotate(15deg); }
+
+    .hover-fade { opacity: 0.4; transition: opacity 0.2s; cursor: pointer; }
+    .hover-fade:hover { opacity: 1; }
+
+    .hover-combo { color: teal; transition: all 0.3s; cursor: pointer; }
+    .hover-combo:hover { color: coral; transform: scale(1.15) rotate(-5deg); filter: drop-shadow(0 4px 6px rgba(0,0,0,0.2)); }
+
+    /* --- Effects --- */
 
     .spin { animation: spin 3s linear infinite; }
     @keyframes spin { to { transform: rotate(360deg); } }
 
-    .grayscale { filter: grayscale(1); }
-    .grayscale:hover { filter: none; transition: filter 0.3s; }
+    .pulse { animation: pulse 1.5s ease-in-out infinite; }
+    @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+
+    .bounce { animation: bounce 1s ease infinite; }
+    @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+
+    .grayscale { filter: grayscale(1); transition: filter 0.3s; cursor: pointer; }
+    .grayscale:hover { filter: none; }
+
+    .blur { filter: blur(2px); transition: filter 0.3s; cursor: pointer; }
+    .blur:hover { filter: none; }
+
+    .shadow { filter: drop-shadow(3px 3px 4px rgba(0,0,0,0.3)); }
+
+    /* --- Dark mode --- */
 
     .dark-section { background: #1a1a2e; padding: 24px; border-radius: 8px; }
     .dark-section svg { color: #e0e0e0; }
@@ -78,34 +110,31 @@
     </div>
   </div>
 
-  <!-- 4. Hover effects -->
-  <h2>Hover effects</h2>
+  <!-- 4. Mouse interactions -->
+  <h2>Mouse interactions</h2>
   <div class="example">
-    <p>CSS <code>:hover</code> works on injected SVGs. Try hovering these icons.</p>
+    <p>CSS <code>:hover</code> works on injected SVGs — color, scale, glow, rotation, opacity. Try them all.</p>
     <div class="icons">
-      <img src="svgs/businesspeople.svg" class="medium hoverable" onload="SVGInject(this)">
-      <img src="svgs/angel.svg" class="medium hoverable" onload="SVGInject(this)">
-      <img src="svgs/apple.svg" class="medium hoverable" onload="SVGInject(this)">
+      <img src="svgs/businesspeople.svg" class="medium hover-color" title="Color change" onload="SVGInject(this)">
+      <img src="svgs/angel.svg" class="medium hover-scale" title="Scale up" onload="SVGInject(this)">
+      <img src="svgs/apple.svg" class="medium hover-glow" title="Glow" onload="SVGInject(this)">
+      <img src="svgs/businesspeople.svg" class="medium hover-rotate" title="Rotate" onload="SVGInject(this)">
+      <img src="svgs/angel.svg" class="medium hover-fade" title="Fade in" onload="SVGInject(this)">
+      <img src="svgs/apple.svg" class="medium hover-combo" title="Combined" onload="SVGInject(this)">
     </div>
   </div>
 
-  <!-- 5. CSS animations -->
-  <h2>CSS animations</h2>
+  <!-- 5. Effects -->
+  <h2>Effects</h2>
   <div class="example">
-    <p>CSS animations and transforms work directly on injected SVGs.</p>
+    <p>CSS animations, filters, and transforms — all pure CSS, no JavaScript needed.</p>
     <div class="icons">
-      <img src="svgs/apple.svg" class="medium spin" onload="SVGInject(this)">
-    </div>
-  </div>
-
-  <!-- 6. CSS filters -->
-  <h2>CSS filters</h2>
-  <div class="example">
-    <p>Apply CSS filters like <code>grayscale</code>. Hover to see the original colors.</p>
-    <div class="icons">
-      <img src="svgs/businesspeople.svg" class="medium grayscale" onload="SVGInject(this)">
-      <img src="svgs/angel.svg" class="medium grayscale" onload="SVGInject(this)">
-      <img src="svgs/apple.svg" class="medium grayscale" onload="SVGInject(this)">
+      <img src="svgs/apple.svg" class="medium spin" title="Spin" onload="SVGInject(this)">
+      <img src="svgs/angel.svg" class="medium pulse" title="Pulse" onload="SVGInject(this)">
+      <img src="svgs/businesspeople.svg" class="medium bounce" title="Bounce" onload="SVGInject(this)">
+      <img src="svgs/apple.svg" class="medium grayscale" title="Grayscale (hover to reveal)" onload="SVGInject(this)">
+      <img src="svgs/angel.svg" class="medium blur" title="Blur (hover to reveal)" onload="SVGInject(this)">
+      <img src="svgs/businesspeople.svg" class="medium shadow" title="Drop shadow" onload="SVGInject(this)">
     </div>
   </div>
 
