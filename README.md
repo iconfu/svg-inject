@@ -93,38 +93,47 @@ document.addEventListener('DOMContentLoaded', () => {
 
 This approach avoids inline `onload` attributes, which is better for strict [Content Security Policy](#security) setups.
 
-### React
+### Build your own wrapper
 
+SVGInject is framework-agnostic. Wrap it in a tiny component for your framework — it's just one line of logic:
+
+**React:**
 ```jsx
 import { SVGInject } from '@iconfu/svg-inject';
 
-function Icon({ src, alt }) {
-  return <img src={src} alt={alt} onLoad={(e) => SVGInject(e.currentTarget)} />;
+function SvgImg({ src, ...props }) {
+  return <img src={src} {...props} onLoad={(e) => SVGInject(e.currentTarget)} />;
 }
+
+// <SvgImg src="icon.svg" className="icon" alt="Settings" />
 ```
 
-### Vue
-
+**Vue:**
 ```vue
+<!-- SvgImg.vue -->
 <template>
-  <img :src="src" @load="inject" />
+  <img :src="src" v-bind="$attrs" @load="(e) => SVGInject(e.currentTarget)" />
 </template>
 
 <script setup>
 import { SVGInject } from '@iconfu/svg-inject';
-const inject = (e) => SVGInject(e.currentTarget);
+defineProps(['src']);
 </script>
+
+<!-- <SvgImg src="icon.svg" class="icon" alt="Settings" /> -->
 ```
 
-### Svelte
-
+**Svelte:**
 ```svelte
+<!-- SvgImg.svelte -->
 <script>
   import { SVGInject } from '@iconfu/svg-inject';
+  let { src, ...rest } = $props();
 </script>
 
-<!-- Svelte 5 syntax. For Svelte 4, use on:load instead of onload -->
-<img src="icon.svg" onload={(e) => SVGInject(e.currentTarget)} />
+<img {src} {...rest} onload={(e) => SVGInject(e.currentTarget)} />
+
+<!-- <SvgImg src="icon.svg" class="icon" alt="Settings" /> -->
 ```
 
 
