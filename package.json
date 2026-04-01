@@ -17,7 +17,7 @@
     "dist"
   ],
   "scripts": {
-    "build": "tsup",
+    "build": "tsup && cp dist/svg-inject.iife.js dist/svg-inject.min.js",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:browser": "npx playwright test",
