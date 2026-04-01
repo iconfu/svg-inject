@@ -5,11 +5,16 @@ var runTests = function(testFuncs, testNum) {
 
   window.fail = function() {
     failed = true;
-    var testInfo = 'Test ' + currentTest;
-    console.error('FAILED: ' + testInfo, new Error());
+    var err = new Error();
+    var stack = err.stack || '';
+    // Find the test_basic.js line that called fail()
+    var match = stack.match(/test_basic\.js[:\s]+(\d+)/);
+    var line = match ? 'test_basic.js line ' + match[1] : '';
+    var msg = (line || 'unknown location') + ' (check browser console for full stack)';
+    console.error('TEST FAILED at ' + msg, err);
     var el = document.getElementById('failed');
     el.style.display = 'block';
-    el.innerHTML += '<div style="color:#c00;font-size:14px;margin-top:8px">' + testInfo + ' failed</div>';
+    el.innerHTML += '<div style="color:#c00;font-size:13px;margin:4px 0;font-family:monospace">' + msg + '</div>';
     document.getElementById('success').style.display = 'none';
     document.getElementById('running').style.display = 'none';
   };
