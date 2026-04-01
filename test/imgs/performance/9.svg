@@ -1,0 +1,97 @@
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0,0,1024,1024">
+	<!-- Color names: color-1, color-2, color-3 -->
+	<desc>users icon - Licensed under Iconfu Standard License v1.0 (https://www.iconfu.com/iconfu_standard_license) - Incors GmbH</desc>
+	<defs>
+		<linearGradient x1="216.4" y1="0" x2="807.6" y2="1024" id="color-0PmCWPTO" gradientUnits="userSpaceOnUse">
+			<stop offset="0.14" stop-color="#000000"/>
+			<stop offset="0.14" stop-color="#2b2b2b"/>
+			<stop offset="0.29" stop-color="#2b2b2b"/>
+			<stop offset="0.29" stop-color="#555555"/>
+			<stop offset="0.43" stop-color="#555555"/>
+			<stop offset="0.43" stop-color="#808080"/>
+			<stop offset="0.57" stop-color="#808080"/>
+			<stop offset="0.57" stop-color="#aaaaaa"/>
+			<stop offset="0.71" stop-color="#aaaaaa"/>
+			<stop offset="0.71" stop-color="#d5d5d5"/>
+			<stop offset="0.86" stop-color="#d5d5d5"/>
+			<stop offset="0.86" stop-color="#ffffff"/>
+		</linearGradient>
+		<linearGradient x1="807.6" y1="0" x2="216.4" y2="1024" id="color-1PgAexSD" gradientUnits="userSpaceOnUse">
+			<stop offset="0.14" stop-color="#666666"/>
+			<stop offset="0.14" stop-color="#6a6a6a"/>
+			<stop offset="0.29" stop-color="#6a6a6a"/>
+			<stop offset="0.29" stop-color="#6f6f6f"/>
+			<stop offset="0.43" stop-color="#6f6f6f"/>
+			<stop offset="0.43" stop-color="#737373"/>
+			<stop offset="0.57" stop-color="#737373"/>
+			<stop offset="0.57" stop-color="#777777"/>
+			<stop offset="0.71" stop-color="#777777"/>
+			<stop offset="0.71" stop-color="#7b7b7b"/>
+			<stop offset="0.86" stop-color="#7b7b7b"/>
+			<stop offset="0.86" stop-color="#808080"/>
+		</linearGradient>
+		<linearGradient x1="807.6" y1="0" x2="216.4" y2="1024" id="color-gbKtwqiT" gradientUnits="userSpaceOnUse">
+			<stop offset="0.14" stop-color="#000000"/>
+			<stop offset="0.14" stop-color="#2b2b2b"/>
+			<stop offset="0.29" stop-color="#2b2b2b"/>
+			<stop offset="0.29" stop-color="#555555"/>
+			<stop offset="0.43" stop-color="#555555"/>
+			<stop offset="0.43" stop-color="#808080"/>
+			<stop offset="0.57" stop-color="#808080"/>
+			<stop offset="0.57" stop-color="#aaaaaa"/>
+			<stop offset="0.71" stop-color="#aaaaaa"/>
+			<stop offset="0.71" stop-color="#d5d5d5"/>
+			<stop offset="0.86" stop-color="#d5d5d5"/>
+			<stop offset="0.86" stop-color="#ffffff"/>
+		</linearGradient>
+		<filter id="filter-jVUA5LdZ" x="-9%" y="-5%" width="140%" height="146%" color-interpolation-filters="sRGB">
+			<feColorMatrix values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 0.07 0" in="SourceGraphic"/>
+			<feOffset dy="13.33"/>
+			<feGaussianBlur stdDeviation="7.33" result="blur0"/>
+			<feColorMatrix values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 0.1 0" in="SourceGraphic"/>
+			<feOffset dy="20"/>
+			<feGaussianBlur stdDeviation="13.33" result="blur1"/>
+			<feMerge>
+				<feMergeNode in="blur0"/>
+				<feMergeNode in="blur1"/>
+			</feMerge>
+		</filter>
+		<filter id="filter-oKuYEEMn" color-interpolation-filters="sRGB">
+			<feOffset/>
+		</filter>
+		<mask id="mask-1fDcH2pM">
+			<path d="M854.11,1024h-684.21c-93.83,0 -169.89,-76.06 -169.89,-169.89v-684.21c0,-93.83 76.06,-169.89 169.89,-169.89h684.21c93.83,0 169.89,76.06 169.89,169.89v684.21c0,93.83 -76.06,169.89 -169.89,169.89z" fill="#ffffff"/>
+		</mask>
+		<mask id="mask-fIFWgQqp">
+			<rect fill="url(#color-gbKtwqiT)" x="0" y="0" width="1024" height="1024"/>
+		</mask>
+		<mask id="mask-GkCnjYz4">
+			<path d="M854.11,1024h-684.21c-93.83,0 -169.89,-76.06 -169.89,-169.89v-684.21c0,-93.83 76.06,-169.89 169.89,-169.89h684.21c93.83,0 169.89,76.06 169.89,169.89v684.21c0,93.83 -76.06,169.89 -169.89,169.89z" fill="url(#color-1PgAexSD)"/>
+		</mask>
+		<mask id="mask-ld38KDcT">
+			<rect fill="url(#color-0PmCWPTO)" x="0" y="0" width="1024" height="1024"/>
+		</mask>
+	</defs>
+	<g fill="none" fill-rule="nonzero" style="mix-blend-mode: normal">
+		<g mask="url(#mask-1fDcH2pM)">
+			<g color="#38ffad" class="color-1">
+				<rect x="0" y="0" width="1024" height="1024" fill="currentColor"/>
+			</g>
+			<g color="#008b80" class="color-2" mask="url(#mask-ld38KDcT)">
+				<rect x="0" y="0" width="1024" height="1024" fill="currentColor"/>
+			</g>
+		</g>
+		<g filter="url(#filter-oKuYEEMn)" mask="url(#mask-GkCnjYz4)">
+			<g color="#38ffad" class="color-1">
+				<rect x="0" y="0" width="1024" height="1024" fill="currentColor"/>
+			</g>
+			<g color="#008b80" class="color-2" mask="url(#mask-fIFWgQqp)">
+				<rect x="0" y="0" width="1024" height="1024" fill="currentColor"/>
+			</g>
+		</g>
+		<path d="M635.2,803.2c-3.14,0 -6.33,-0.02 -9.54,-0.06c-43.49,32.95 -146.71,44.86 -225.66,44.86c-102.67,0 -246.4,-20.15 -246.4,-80.51c0,-126.91 78.27,-148.27 132.21,-185.84c7.49,15.97 24.3,27.19 40.2,34.21c22.57,9.95 49.39,14.79 73.99,14.79c8.04,0 16.31,-0.52 24.6,-1.56c17.07,-2.15 34.2,-6.53 49.39,-13.23c15.9,-7.01 32.72,-18.23 40.2,-34.21c-6.33,-4.41 -12.26,-8.97 -17.73,-14c10.29,-6.18 20.4,-12.18 29.74,-18.69c7.14,15.25 23.19,25.96 38.37,32.65c21.54,9.5 47.14,14.12 70.62,14.12c0,0 0.01,0 0.02,0c23.47,0 49.07,-4.63 70.61,-14.12c15.19,-6.7 31.23,-17.41 38.38,-32.65c51.49,35.87 126.2,56.25 126.2,177.39c0,57.62 -137.2,76.85 -235.2,76.85zM492.62,563.95c-0.13,21.19 -46.16,41.02 -92.62,41.02c-46.38,0 -92.33,-19.76 -92.62,-40.92l-0.24,-50.05c-37.58,-39.51 -64.07,-99.16 -64.07,-158.81c0.01,-82.13 39.23,-164.27 156.93,-164.27c51.83,0 88.45,15.93 113.19,40.78c22.93,-33.09 61.66,-55.71 122.01,-55.71c112.34,0 149.79,78.4 149.79,156.8c0,56.93 -25.28,113.87 -61.15,151.59l-0.21,47.98c-0.53,20.12 -44.29,38.86 -88.43,38.86c-44.14,0 -87.9,-18.74 -88.43,-38.86l-0.21,-47.98c-6.18,-6.5 -12.05,-13.57 -17.52,-21.11c-10.05,18.96 -22.36,36.2 -36.18,50.73z" fill="#000000" fill-opacity="1" filter="url(#filter-jVUA5LdZ)"/>
+		<g color="#ffffff" class="color-3">
+			<path d="M635.2,803.2c-3.14,0 -6.33,-0.02 -9.54,-0.06c-43.49,32.95 -146.71,44.86 -225.66,44.86c-102.67,0 -246.4,-20.15 -246.4,-80.51c0,-126.91 78.27,-148.27 132.21,-185.84c7.49,15.97 24.3,27.19 40.2,34.21c22.57,9.95 49.39,14.79 73.99,14.79c8.04,0 16.31,-0.52 24.6,-1.56c17.07,-2.15 34.2,-6.53 49.39,-13.23c15.9,-7.01 32.72,-18.23 40.2,-34.21c-6.33,-4.41 -12.26,-8.97 -17.73,-14c10.29,-6.18 20.4,-12.18 29.74,-18.69c7.14,15.25 23.19,25.96 38.37,32.65c21.54,9.5 47.14,14.12 70.62,14.12c0,0 0.01,0 0.02,0c23.47,0 49.07,-4.63 70.61,-14.12c15.19,-6.7 31.23,-17.41 38.38,-32.65c51.49,35.87 126.2,56.25 126.2,177.39c0,57.62 -137.2,76.85 -235.2,76.85zM492.62,563.95c-0.13,21.19 -46.16,41.02 -92.62,41.02c-46.38,0 -92.33,-19.76 -92.62,-40.92l-0.24,-50.05c-37.58,-39.51 -64.07,-99.16 -64.07,-158.81c0.01,-82.13 39.23,-164.27 156.93,-164.27c51.83,0 88.45,15.93 113.19,40.78c22.93,-33.09 61.66,-55.71 122.01,-55.71c112.34,0 149.79,78.4 149.79,156.8c0,56.93 -25.28,113.87 -61.15,151.59l-0.21,47.98c-0.53,20.12 -44.29,38.86 -88.43,38.86c-44.14,0 -87.9,-18.74 -88.43,-38.86l-0.21,-47.98c-6.18,-6.5 -12.05,-13.57 -17.52,-21.11c-10.05,18.96 -22.36,36.2 -36.18,50.73z" fill="currentColor" fill-opacity="1"/>
+		</g>
+	</g>
+</svg>

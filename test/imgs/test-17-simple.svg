@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" filter="url(#emptyFilter)" width="1024px" height="1024px" version="1.1" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd"
+viewBox="0 0 102400 102400"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+ <defs>
+  <filter id="emptyFilter">
+   <feOffset/>
+  </filter>
+  <linearGradient id="gradient1" gradientUnits="userSpaceOnUse" x1="304.668" y1="-315.742" x2="102095" y2="102716">
+   <stop offset="0.5" style="stop-color:#FFFF00"/>
+   <stop offset="0.5" style="stop-color:#FF0000"/>
+  </linearGradient>
+ </defs>
+ <circle fill="url(#gradient1)" cx="51200" cy="51200" r="40000"/>
+ <circle cx="51200" cy="51200" r="20000" fill="currentColor"/>
+</svg>

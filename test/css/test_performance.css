@@ -1,0 +1,69 @@
+#performance-tests {
+  margin: 20px 20px;
+}
+
+#header {
+  position: relative;
+  background: #f5f5f5;
+}
+
+.running #tools {
+  visibility: hidden;
+}
+
+#running {
+  position: absolute;
+  align-items: center;
+  justify-content: center;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: none;
+}
+
+#render-container {
+  position: relative;
+}
+
+#render-container > img, #render-container > svg {
+  margin: 20px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: #fff;
+}
+
+#render-container > img {
+  visibility: hidden;
+}
+
+.running #running {
+  display: flex;
+}
+
+#results svg, #results svg {
+  width: 128px !important;
+  height: 128px !important;
+}
+
+.result {
+  float: left;
+  margin: 0 20px 20px 0;
+  padding: 20px;
+  background: #f5f5f5;
+}
+
+.stats {
+  padding: 10px 0 0;
+  text-align: center;
+}
+
+#tools {
+  padding: 20px;
+  margin: 0 0 20px;
+}
+
+.tool {
+  margin: 10px 0;
+}

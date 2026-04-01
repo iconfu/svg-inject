@@ -1,0 +1,78 @@
+#failed, #success, #running {
+  font-size: 50px;
+}
+#failed {
+  display: none;
+  color: red;
+}
+
+#success {
+  display: none;
+  color: green;
+}
+
+#running {
+  color: orange;
+}
+
+img, svg, .test > div {
+  width: 128px;
+  height: 128px;
+}
+
+.inject-success .color-1 {
+  color: #ff0000;
+}
+
+.inject-success .color-2 {
+  color: #00ff00;
+}
+
+.inject-success .color-3 {
+  color: #0000ff;
+}
+
+.inject-success .color-4 {
+  color: #ffff00;
+}
+
+.inject-fail .color-1,
+.inject-fail .color-2,
+.inject-fail .color-3,
+.inject-fail .color-4 {
+  color: #000000;
+}
+
+.inject-hide {
+  position: absolute;
+  left: -10000px;
+  z-index: -1;
+}
+
+.test::after {
+  content: '';
+  display: block;
+  clear: both;
+}
+
+.test > div {
+  float: left;
+  margin: 10px;
+  background: #f0f0f0;
+}
+
+.background_1::before {
+  content: '';
+  display: block;
+  width: 128px;
+  height: 128px;
+  background: url(../imgs/test1.png);
+}
+
+.background_1 > img {
+  display: none;
+}  
+
+h3 {
+  clear: both;
+}

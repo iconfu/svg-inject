@@ -1,0 +1,18 @@
+#test-9 img.prevent-image-flash {
+  visibility: hidden;
+}
+
+#test-9 svg.prevent-image-flash {
+  visibility: hidden;
+}
+
+#test-13-1 .stop1 { stop-color: red; }
+#test-13-1 .stop2 { stop-color: red; }
+#test-13-2 .stop1 { stop-color: green; }
+#test-13-2 .stop2 { stop-color: green; }
+#test-13-3 .stop1 { stop-color: blue; }
+#test-13-3 .stop2 { stop-color: blue; }
+#test-13-4 .stop1 { stop-color: yellow; }
+#test-13-4 .stop2 { stop-color: yellow; }
+
+#test-17 .test { color: #fff; }

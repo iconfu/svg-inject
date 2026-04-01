@@ -1,0 +1,53 @@
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0,0,1024,1024">
+	<!-- Color names: color-1, color-2, color-3, color-4 -->
+	<desc>users icon - Licensed under Iconfu Standard License v1.0 (https://www.iconfu.com/iconfu_standard_license) - Incors GmbH</desc>
+	<defs>
+		<clipPath id="clip-0lGE4jEz">
+			<path d="M20.28,70.28h983.44v953.72h-983.44z"/>
+		</clipPath>
+		<filter id="filter-iNu9nhQL" filterUnits="objectBoundingBox" x="-12%" y="-6%" width="138%" height="139%" color-interpolation-filters="sRGB">
+			<feColorMatrix values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 0.2 0" in="SourceGraphic"/>
+			<feOffset dy="20"/>
+			<feGaussianBlur stdDeviation="11" result="blur0"/>
+			<feColorMatrix values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 0.3 0" in="SourceGraphic"/>
+			<feOffset dy="30"/>
+			<feGaussianBlur stdDeviation="20" result="blur1"/>
+			<feMerge>
+				<feMergeNode in="blur0"/>
+				<feMergeNode in="blur1"/>
+			</feMerge>
+		</filter>
+		<mask id="mask-V2oA1GSV" x="20.28" y="70.28" width="983.44" height="983.44" fill="#fff" maskUnits="userSpaceOnUse">
+			<path d="M910.72,630.88c0,57.7 -136.7,80.48 -227.84,80.48c-34.2,0 -74.82,-3.21 -112.23,-10.26c-3.76,-6.54 -8.01,-12.9 -12.83,-19.05c-19.57,-24.95 -46.26,-44.16 -71.79,-62.83c33.73,-35.54 54.45,-83.51 54.45,-136.41c0,-9.49 -0.68,-18.81 -1.97,-27.94c6.62,-4.96 13.63,-10.07 21,-15.48c33.94,26.66 76.79,42.58 123.37,42.58c46.58,0 89.44,-15.91 123.37,-42.58c68.09,49.96 104.44,73.95 104.47,191.48zM682.88,113.28c94.38,0 170.88,76.18 170.88,170.17c0,93.98 -76.5,170.16 -170.88,170.16c-94.38,0 -170.88,-76.18 -170.88,-170.16c0,-93.98 76.5,-170.17 170.88,-170.17zM568.96,830.24c0,57.7 -136.7,80.48 -227.84,80.48c-91.14,0 -227.84,-22.78 -227.84,-80.41c0,-117.48 36.46,-141.63 104.47,-191.55c33.94,26.66 76.79,42.58 123.37,42.58c46.58,0 89.44,-15.91 123.37,-42.58c68.09,49.96 104.44,73.95 104.47,191.48zM341.12,312.64c94.38,0 170.88,76.18 170.88,170.17c0,93.98 -76.5,170.16 -170.88,170.16c-94.38,0 -170.88,-76.18 -170.88,-170.16c0,-93.98 76.5,-170.17 170.88,-170.17z"/>
+		</mask>
+	</defs>
+	<g fill="none" fill-rule="nonzero" style="mix-blend-mode: normal">
+		<g clip-path="url(#clip-0lGE4jEz)">
+			<g fill="#000000" fill-opacity="1" filter="url(#filter-iNu9nhQL)">
+				<rect mask="url(#mask-V2oA1GSV)" x="20.28" y="70.28" width="983.44" height="983.44"/>
+			</g>
+		</g>
+		<g>
+			<g color="#ffa726" class="color-2">
+				<g style="color:var(--color-2)">
+					<path d="M910.72,630.88c0,57.7 -136.7,80.48 -227.84,80.48c-34.2,0 -74.82,-3.21 -112.23,-10.26c-3.76,-6.54 -8.01,-12.9 -12.83,-19.05c-19.57,-24.95 -46.26,-44.16 -71.79,-62.83c33.73,-35.54 54.45,-83.51 54.45,-136.41c0,-9.49 -0.68,-18.81 -1.97,-27.94c6.62,-4.96 13.63,-10.07 21,-15.48c33.94,26.66 76.79,42.58 123.37,42.58c46.58,0 89.44,-15.91 123.37,-42.58c68.09,49.96 104.44,73.95 104.47,191.48z" fill="currentColor"/>
+				</g>
+			</g>
+			<g color="#78909c" class="color-4">
+				<g style="color:var(--color-4)">
+					<path d="M682.88,113.28c94.38,0 170.88,76.18 170.88,170.17c0,93.98 -76.5,170.16 -170.88,170.16c-94.38,0 -170.88,-76.18 -170.88,-170.16c0,-93.98 76.5,-170.17 170.88,-170.17z" fill="currentColor"/>
+				</g>
+			</g>
+			<g color="#546e7a" class="color-1">
+				<g style="color:var(--color-1)">
+					<path d="M568.96,830.24c0,57.7 -136.7,80.48 -227.84,80.48c-91.14,0 -227.84,-22.78 -227.84,-80.41c0,-117.48 36.46,-141.63 104.47,-191.55c33.94,26.66 76.79,42.58 123.37,42.58c46.58,0 89.44,-15.91 123.37,-42.58c68.09,49.96 104.44,73.95 104.47,191.48z" fill="currentColor"/>
+				</g>
+			</g>
+			<g color="#78909c" class="color-4">
+				<g style="color:var(--color-4)">
+					<path d="M341.12,312.64c94.38,0 170.88,76.18 170.88,170.17c0,93.98 -76.5,170.16 -170.88,170.16c-94.38,0 -170.88,-76.18 -170.88,-170.16c0,-93.98 76.5,-170.17 170.88,-170.17z" fill="currentColor"/>
+				</g>
+			</g>
+		</g>
+	</g>
+</svg>

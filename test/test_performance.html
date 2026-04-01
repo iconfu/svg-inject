@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>SVGInject Test Performance</title>
+
+  <link rel="stylesheet" type="text/css" href="css/test_helper.css" />
+  <link rel="stylesheet" type="text/css" href="css/test_performance.css" />
+
+  <script src="js/svg-inject.js"></script>
+  <script src="js/test_helper.js"></script>
+  <script src="js/test_performance.js"></script>
+</head>
+<body id="performance-tests">
+  <h1>Performance Tests</h1>
+
+  <p>Tests measure performance for an SVG to get injected. The result shows the best performance out of n repetitions.</p>
+  <div id="header">
+    <div id="tools">
+      <div class="tool">
+        Sample Size <input type="number" id="sample-size" name="sample size" min="1" max="1000" value="100" /> (1-1000)
+      </div>
+      <div class="tool">
+        Repetitions <input type="number" id="repetitions" name="repetitions" min="1" max="50" value="10" /> (1-50)
+      </div>
+      <div class="tool">
+        SVG Size <input type="number" id="svg-size" name="svg size" min="16" max="4096" value="128" /> (16-4096)
+      </div>
+      <fieldset class="tool">
+        <legend>Cache Level</legend>
+        <div>
+          <input type="radio" id="cache-full" name="cache-level" value="cacheFull" checked />
+          <label for="cache-full">Full Caching</label>
+        </div>
+
+        <div>
+          <input type="radio" id="cache-disable-svg-inject" name="cache-level" value="cacheDisableSVGInject" />
+          <label for="cache-disable-svg-inject">Disable SVGInject Caching</label>
+        </div>
+
+        <div>
+          <input type="radio" id="cache-disable-browser" name="cache-level" value="cacheDisableBrowser" />
+          <label for="cache-disable-browser">Disable Browser Caching (each SVG is loaded as a unique image)</label>
+        </div>
+      </fieldset>
+      <div class="tool">
+        <input type="checkbox" id="use-onload-attribute" checked>
+        <label for="use-onload-attribute">Use onload attribute for injection</label>
+      </div>
+      <div class="tool">
+        <button type="button" onclick="run()">run performance tests</button>
+      </div>
+    </div>
+    <div id="running">
+      <div>running tests</div>
+    </div>
+  </div>
+  <div style="display: flex;">
+    <div style="flex: 1 0 0; padding: 0 10px; border-right: 1px solid #eee;">
+      <div id="results"></div>
+    </div>
+    <div style="flex: 1 0 0; padding: 0 0 0 10px;">
+      <div id="render-container"></div>
+    </div>
+  </div>
+  <div id="build" style="display: none;"></div>
+
+  <script src="./js/xhr-check.js"></script>
+</body>
+</html>

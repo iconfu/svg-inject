@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <title>SVGInject Test Fallback</title>
+
+  <link rel="stylesheet" type="text/css" href="css/test_helper.css">
+
+  <script src="js/svg-inject.min.js"></script>
+  <script src="js/test_helper.js"></script>
+  <script src="js/test_fallback.js"></script>
+</head>
+<body>
+  <h2 style="color: red; text-align: center;">These tests are only for testing fallbacks in NOT EMULATED IE7 and IE8 and do not succeed in other browsers</h1>
+
+  <div id="failed">FAILED</div>
+  <div id="success">SUCCESS</div>
+  <div id="running">RUNNING</div>
+
+  <p>All Images must be visible inside the grey boxes and look like the reference images.</p>
+  
+  <h3>Reference Images</h3>
+  <div class="test">
+    <div><img src="imgs/test1.png" /></div>
+    <div><img src="imgs/test2.png" /></div>
+    <div><img src="imgs/test3.png" /></div>
+  </div>
+
+  <h3>Test 1</h3>
+  <div class="test">
+    <!-- Test 1: onload fallback -->
+    <div><img src="imgs/test1.svg" onload="SVGInject1(this)" onerror="SVGInject1.err(this, 'imgs/test1.png')" /></div>
+    <div><img src="imgs/test2.svg" onload="SVGInject1(this)" onerror="SVGInject1.err(this, 'imgs/test2.png')" /></div>
+    <div><img src="imgs/test3.svg" onload="SVGInject1(this)" onerror="SVGInject1.err(this, 'imgs/test3.png')" /></div>
+    <div><img src="imgs/test1.svg" onload="SVGInject1(this)" onerror="SVGInject1.err(this, 'imgs/test1.png')" /></div>
+    <div><img src="imgs/test2.svg" onload="SVGInject1(this)" onerror="SVGInject1.err(this, 'imgs/test2.png')" /></div>
+    <div><img src="imgs/test3.svg" onload="SVGInject1(this)" onerror="SVGInject1.err(this, 'imgs/test3.png')" /></div>
+    <div><img src="imgs/test1.svg" onload="SVGInject1(this)" onerror="SVGInject1.err(this, 'imgs/test1.png')" /></div>
+    <div><img src="imgs/test2.svg" onload="SVGInject1(this)" onerror="SVGInject1.err(this, 'imgs/test2.png')" /></div>
+    <div><img src="imgs/test3.svg" onload="SVGInject1(this)" onerror="SVGInject1.err(this, 'imgs/test3.png')" /></div>
+  </div>
+
+  <h3>Test 2</h3>
+  <div class="test">
+    <!-- Test 1: onload fallback -->
+    <div><img src="imgs/test1.svg" onload="SVGInject2(this)" onerror="SVGInject2.err(this)" /></div>
+    <div><img src="imgs/test2.svg" onload="SVGInject2(this)" onerror="SVGInject2.err(this)" /></div>
+    <div><img src="imgs/test3.svg" onload="SVGInject2(this)" onerror="SVGInject2.err(this)" /></div>
+    <div><img src="imgs/test1.svg" onload="SVGInject2(this)" onerror="SVGInject2.err(this)" /></div>
+    <div><img src="imgs/test2.svg" onload="SVGInject2(this)" onerror="SVGInject2.err(this)" /></div>
+    <div><img src="imgs/test3.svg" onload="SVGInject2(this)" onerror="SVGInject2.err(this)" /></div>
+    <div><img src="imgs/test1.svg" onload="SVGInject2(this)" onerror="SVGInject2.err(this)" /></div>
+    <div><img src="imgs/test2.svg" onload="SVGInject2(this)" onerror="SVGInject2.err(this)" /></div>
+    <div><img src="imgs/test3.svg" onload="SVGInject2(this)" onerror="SVGInject2.err(this)" /></div>
+  </div>
+
+  <h3>Test 3</h3>
+  <div class="test" id="test-3">
+    <!-- Test 1: onload fallback -->
+    <div><img src="imgs/test1.svg" /></div>
+    <div><img src="imgs/test2.svg" /></div>
+    <div><img src="imgs/test3.svg" /></div>
+    <div><img src="imgs/test1.svg" /></div>
+    <div><img src="imgs/test2.svg" /></div>
+    <div><img src="imgs/test3.svg" /></div>
+    <div><img src="imgs/test1.svg" /></div>
+    <div><img src="imgs/test2.svg" /></div>
+    <div><img src="imgs/test3.svg" /></div>
+  </div>
+
+  <h3>Test 4</h3>
+  <!-- test all browser no javasript fallback solution -->
+  <div class="test" id="test-4">
+    <div><img src="imgs/test1.png" srcset="imgs/test1.svg" onload="SVGInject4(this)" class="inject-success" /></div>
+    <div><img src="imgs/test1.png" srcset="imgs/test1.svg" onload="SVGInject4(this)" class="inject-success" /></div>
+    <div><img src="imgs/test2.png" srcset="imgs/test2.svg" onload="SVGInject4(this)" class="inject-success" /></div>
+    <div><img src="imgs/test2.png" srcset="imgs/test2.svg" onload="SVGInject4(this)" class="inject-success" /></div>
+    <div><img src="imgs/test3.png" srcset="imgs/test3.svg" onload="SVGInject4(this)" class="inject-success" /></div>
+    <div><img src="imgs/test3.png" srcset="imgs/test3.svg" onload="SVGInject4(this)" class="inject-success" /></div>
+  </div>
+</body>
+</html>

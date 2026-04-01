@@ -1,0 +1,105 @@
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0,0,1024,1024">
+	<!-- Color names: color-1, color-2, color-3, color-4, color-5, effect-color-1 -->
+	<desc>users icon - Licensed under Iconfu Standard License v1.0 (https://www.iconfu.com/iconfu_standard_license) - Incors GmbH</desc>
+	<defs>
+		<clipPath id="clip-HYdvc8z6">
+			<path d="M0,1024v-980.33h1024v980.33z"/>
+		</clipPath>
+		<filter id="filter-H1ldp0JD" color-interpolation-filters="sRGB" x="0%" y="0%" width="100%" height="100%">
+			<feColorMatrix values="0.17 0.72 0.11 0 -0.1 0.64 0.28 0.08 0 -0.1 0.20 0.23 0.57 0 -0.1 0 0 0 1 0"/>
+			<feColorMatrix values="-0.65039 1.77384 -0.12345 0 0 1.60663 -0.345 -0.26163 0 0 -0.42008 -0.48319 1.90327 0 0 0 0 0 1 0"/>
+		</filter>
+		<filter id="filter-Lzd1CvqK" color-interpolation-filters="sRGB" x="0%" y="0%" width="100%" height="100%">
+			<feColorMatrix values="0.17 0.72 0.11 0 -0.07 0.64 0.28 0.08 0 -0.07 0.20 0.23 0.57 0 -0.07 0 0 0 1 0"/>
+			<feColorMatrix values="-0.65039 1.77384 -0.12345 0 0 1.60663 -0.345 -0.26163 0 0 -0.42008 -0.48319 1.90327 0 0 0 0 0 1 0"/>
+		</filter>
+		<filter id="filter-yyKlubNT" x="-7%" y="-7%" width="127%" height="134%" color-interpolation-filters="sRGB">
+			<feColorMatrix values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 0.17 0" in="SourceGraphic"/>
+			<feOffset dx="14.14" dy="14.14"/>
+			<feGaussianBlur stdDeviation="11" result="blur0"/>
+			<feColorMatrix values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 0.25 0" in="SourceGraphic"/>
+			<feOffset dx="21.21" dy="21.21"/>
+			<feGaussianBlur stdDeviation="20" result="blur1"/>
+			<feMerge>
+				<feMergeNode in="blur0"/>
+				<feMergeNode in="blur1"/>
+			</feMerge>
+		</filter>
+	</defs>
+	<g fill="none" fill-rule="nonzero" style="mix-blend-mode: normal">
+		<g clip-path="url(#clip-HYdvc8z6)">
+			<path d="M386.72,972.8c-75.02,0 -335.52,-7.67 -335.52,-149.96c0,-178.75 123.62,-223.26 171.88,-255.89l-0.02,-5.12c-42.92,-53.45 -71.77,-126.01 -71.77,-200.16c0.01,-111.33 58.56,-243.65 235.44,-243.65c45.82,0 85.98,9.26 119.76,26.97c36.98,-28.12 85.18,-43.67 143.33,-43.67c170.9,0 227.46,128.14 227.46,235.3c0,71.1 -27.51,140.61 -68.5,192l-0.01,2.51c46.41,30.73 164.05,74.83 164.05,245.7c0,134.99 -238.03,145.34 -316.13,145.85c-70.86,40.27 -191.1,50.13 -269.95,50.13z" fill="#000000" fill-opacity="1" filter="url(#filter-yyKlubNT)"/>
+		</g>
+		<g color="#ffffff" class="effect-color-1">
+			<path d="M386.72,972.8c-75.02,0 -335.52,-7.67 -335.52,-149.96c0,-178.75 123.62,-223.26 171.88,-255.89l-0.02,-5.12c-42.92,-53.45 -71.77,-126.01 -71.77,-200.16c0.01,-111.33 58.56,-243.65 235.44,-243.65c45.82,0 85.98,9.26 119.76,26.97c36.98,-28.12 85.18,-43.67 143.33,-43.67c170.9,0 227.46,128.14 227.46,235.3c0,71.1 -27.51,140.61 -68.5,192l-0.01,2.51c46.41,30.73 164.05,74.83 164.05,245.7c0,134.99 -238.03,145.34 -316.13,145.85c-70.86,40.27 -191.1,50.13 -269.95,50.13z" fill="currentColor" fill-opacity="1"/>
+		</g>
+		<g>
+			<g color="#bfde14" class="color-2">
+				<path d="M649.81,862.78c-109.62,0 -263.09,-21.51 -263.09,-85.97c0,-135.51 83.57,-158.31 141.17,-198.43c7.99,17.05 25.94,29.03 42.92,36.53c24.1,10.63 52.74,15.79 79,15.79c26.26,0 54.9,-5.18 79,-15.79c16.99,-7.49 34.94,-19.47 42.93,-36.53c57.6,40.12 141.16,62.92 141.16,198.43c0,64.46 -153.47,85.97 -263.09,85.97z" fill="currentColor"/>
+			</g>
+			<g color="#bfde14" class="color-2">
+				<pattern id="pattern-CtYIEWZn" patternUnits="userSpaceOnUse" x="1" y="1" width="62" height="62">
+					<rect filter="url(#filter-Lzd1CvqK)" fill="currentColor" x="0" y="0" width="64" height="64"/>
+				</pattern>
+				<path d="M771.74,578.39c57.6,40.12 141.16,62.92 141.16,198.43c0,64.46 -153.47,85.97 -263.09,85.97v-232.07c26.26,0 54.9,-5.18 79,-15.79c16.99,-7.49 34.94,-19.47 42.93,-36.53z" fill="url(#pattern-CtYIEWZn)"/>
+			</g>
+			<g color="#f4f4f4" class="color-5">
+				<pattern id="pattern-oBUGI0tQ" patternUnits="userSpaceOnUse" x="1" y="1" width="62" height="62">
+					<rect filter="url(#filter-H1ldp0JD)" fill="currentColor" x="0" y="0" width="64" height="64"/>
+				</pattern>
+				<path d="M649.81,630.71c-49.6,0 -98.7,-21.27 -98.79,-43.9l-0.41,-93.13c66.14,0 132.27,0 198.41,0l-0.41,93.13c-0.09,22.63 -49.19,43.9 -98.79,43.9z" fill="url(#pattern-oBUGI0tQ)"/>
+			</g>
+			<g color="#f4f4f4" class="color-5">
+				<path d="M649.81,630.71c-26.26,0 -54.9,-5.17 -79,-15.79c-16.98,-7.49 -34.94,-19.47 -42.92,-36.53c8.36,-5.83 16.07,-11.91 23,-18.86c0.14,22.62 49.31,43.78 98.92,43.78c49.6,0 98.78,-21.16 98.92,-43.78c6.94,6.96 14.64,13.03 23.01,18.86c-7.99,17.05 -25.94,29.03 -42.93,36.53c-24.1,10.62 -52.74,15.79 -79,15.79z" fill="currentColor"/>
+			</g>
+			<g color="#f4f4f4" class="color-5">
+				<pattern id="pattern-UsEKVmed" patternUnits="userSpaceOnUse" x="1" y="1" width="62" height="62">
+					<rect filter="url(#filter-Lzd1CvqK)" fill="currentColor" x="0" y="0" width="64" height="64"/>
+				</pattern>
+				<path d="M748.72,559.53c6.94,6.96 14.64,13.03 23.01,18.86c-7.99,17.05 -25.94,29.03 -42.93,36.53c-24.1,10.62 -52.74,15.79 -79,15.79v-27.41c49.6,0 98.78,-21.16 98.92,-43.78z" fill="url(#pattern-UsEKVmed)"/>
+			</g>
+			<g color="#f4f4f4" class="color-5">
+				<path d="M649.81,161.22c125.66,0 167.55,87.7 167.55,175.39c0,109.62 -83.78,219.24 -167.55,219.24c-83.77,0 -167.55,-109.62 -167.55,-219.24c0.01,-87.7 41.89,-175.39 167.55,-175.39z" fill="currentColor"/>
+			</g>
+			<g color="#f4f4f4" class="color-5">
+				<pattern id="pattern-quaSRrju" patternUnits="userSpaceOnUse" x="1" y="1" width="62" height="62">
+					<rect filter="url(#filter-Lzd1CvqK)" fill="currentColor" x="0" y="0" width="64" height="64"/>
+				</pattern>
+				<path d="M649.81,161.22c125.66,0 167.55,87.7 167.55,175.39c0,109.62 -83.78,219.24 -167.55,219.24z" fill="url(#pattern-quaSRrju)"/>
+			</g>
+			<g color="#00b0f0" class="color-1">
+				<path d="M386.72,912.9c-114.84,0 -275.62,-22.53 -275.62,-90.06c0,-141.96 87.55,-165.85 147.89,-207.88c8.38,17.87 27.18,30.42 44.97,38.27c25.25,11.13 55.25,16.54 82.76,16.54c27.51,0 57.51,-5.41 82.76,-16.54c17.79,-7.85 36.6,-20.4 44.97,-38.27c60.34,42.03 147.89,65.92 147.89,207.88c0,67.53 -160.77,90.06 -275.62,90.06z" fill="currentColor"/>
+			</g>
+			<g color="#00b0f0" class="color-1">
+				<pattern id="pattern-XUvdwV9b" patternUnits="userSpaceOnUse" x="1" y="1" width="62" height="62">
+					<rect filter="url(#filter-Lzd1CvqK)" fill="currentColor" x="0" y="0" width="64" height="64"/>
+				</pattern>
+				<path d="M514.45,614.96c60.34,42.03 147.89,65.92 147.89,207.88c0,67.53 -160.77,90.06 -275.62,90.06v-243.13c27.51,0 57.51,-5.41 82.76,-16.54c17.79,-7.85 36.6,-20.4 44.97,-38.27z" fill="url(#pattern-XUvdwV9b)"/>
+			</g>
+			<g color="#f4f4f4" class="color-5">
+				<pattern id="pattern-5fXKu95n" patternUnits="userSpaceOnUse" x="1" y="1" width="62" height="62">
+					<rect filter="url(#filter-H1ldp0JD)" fill="currentColor" x="0" y="0" width="64" height="64"/>
+				</pattern>
+				<path d="M386.72,662.34c-51.97,0 -103.39,-22.28 -103.5,-45.99l-0.43,-90.13c69.29,0 138.57,0 207.86,0l-0.44,90.13c-0.11,23.7 -51.53,45.99 -103.5,45.99z" fill="url(#pattern-5fXKu95n)"/>
+			</g>
+			<g color="#f4f4f4" class="color-5">
+				<path d="M386.72,669.77c-27.51,0 -57.51,-5.41 -82.76,-16.54c-17.79,-7.85 -36.59,-20.4 -44.97,-38.27c8.77,-6.11 16.87,-12.5 24.13,-19.79c0.15,23.71 51.63,45.88 103.6,45.88c51.97,0 103.45,-22.18 103.6,-45.88c7.27,7.29 15.36,13.68 24.13,19.79c-8.37,17.87 -27.18,30.42 -44.97,38.27c-25.25,11.13 -55.25,16.54 -82.76,16.54z" fill="currentColor"/>
+			</g>
+			<g color="#f4f4f4" class="color-5">
+				<pattern id="pattern-hU4UNwis" patternUnits="userSpaceOnUse" x="1" y="1" width="62" height="62">
+					<rect filter="url(#filter-Lzd1CvqK)" fill="currentColor" x="0" y="0" width="64" height="64"/>
+				</pattern>
+				<path d="M490.32,595.17c7.27,7.29 15.36,13.68 24.13,19.79c-8.37,17.87 -27.18,30.42 -44.97,38.27c-25.25,11.13 -55.25,16.54 -82.76,16.54v-28.71c51.97,0 103.45,-22.18 103.6,-45.88z" fill="url(#pattern-hU4UNwis)"/>
+			</g>
+			<g color="#f4f4f4" class="color-5">
+				<path d="M386.72,177.92c131.65,0 175.53,91.88 175.53,183.75c0,114.84 -87.77,229.68 -175.53,229.68c-87.77,0 -175.53,-114.83 -175.53,-229.68c0.01,-91.87 43.89,-183.75 175.53,-183.75z" fill="currentColor"/>
+			</g>
+			<g color="#f4f4f4" class="color-5">
+				<pattern id="pattern-mduXzKfm" patternUnits="userSpaceOnUse" x="1" y="1" width="62" height="62">
+					<rect filter="url(#filter-Lzd1CvqK)" fill="currentColor" x="0" y="0" width="64" height="64"/>
+				</pattern>
+				<path d="M386.72,177.92c131.65,0 175.53,91.88 175.53,183.75c0,114.84 -87.77,229.68 -175.53,229.68z" fill="url(#pattern-mduXzKfm)"/>
+			</g>
+		</g>
+	</g>
+</svg>

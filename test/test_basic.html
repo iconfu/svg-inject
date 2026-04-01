@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>SVGInject Test Basic</title>
+
+  <link rel="stylesheet" type="text/css" href="css/test_helper.css" />
+  <link rel="stylesheet" type="text/css" href="css/test_basic.css" />
+
+  <script src="js/svg-inject.js"></script>
+  <script src="js/test_helper.js"></script>
+  <script src="js/test_basic.js"></script>
+</head>
+<body>
+  <div id="failed">FAILED</div>
+  <div id="success">SUCCESS</div>
+  <div id="running">RUNNING</div>
+
+  <p>All Images must be visible inside the grey boxes and look like the reference images.</p>
+
+  <h3>Reference Images</h3>
+  <div class="test">
+    <div><img src="imgs/test1.png" /></div>
+    <div><img src="imgs/test2.png" /></div>
+    <div><img src="imgs/test3.png" /></div>
+  </div>
+
+  <h3>Test 1</h3>
+  <div class="test">
+    <!-- Test 1: multiple same images test -->
+    <div><img src="imgs/test1.svg" onload="SVGInject1(this)" class="inject-success" id="test_1_1" /></div>
+    <div><img src="imgs/test1.svg" onload="SVGInject1(this)" class="inject-success" id="test_1_2" /></div>
+    <div><img src="imgs/test1.svg" onload="SVGInject1(this)" class="inject-success" id="test_1_3" /></div>
+  </div>
+
+  <h3>Test 2</h3>
+  <div class="test">
+    <!-- Test 2: multiple different images test -->
+    <div><img src="imgs/test1.svg" onload="SVGInject2(this)" class="inject-success" id="test_2_1" /></div>
+    <div><img src="imgs/test2.svg" onload="SVGInject2(this)" class="inject-success" id="test_2_2" /></div>
+    <div><img src="imgs/test3.svg" onload="SVGInject2(this)" class="inject-success" id="test_2_3" /></div>
+    <div><img src="imgs/test1.svg" onload="SVGInject2(this)" class="inject-success" id="test_2_4" /></div>
+    <div><img src="imgs/test2.svg" onload="SVGInject2(this)" class="inject-success" id="test_2_5" /></div>
+    <div><img src="imgs/test3.svg" onload="SVGInject2(this)" class="inject-success" id="test_2_6" /></div>
+    <div><img src="imgs/test1.svg" onload="SVGInject2(this)" class="inject-success" id="test_2_7" /></div>
+    <div><img src="imgs/test2.svg" onload="SVGInject2(this)" class="inject-success" id="test_2_8" /></div>
+    <div><img src="imgs/test3.svg" onload="SVGInject2(this)" class="inject-success" id="test_2_9" /></div>
+  </div>
+
+  <h3>Test 3</h3>
+  <div class="test">
+    <!-- Test 3: copy attribute test -->
+    <div><img src="imgs/test1.svg" onload="SVGInject3(this)" id="test_3_id" alt="businesspeople" title="businesspeople" class="inject-success" data-test="test" /></div>
+  </div>
+
+  <h3>Test 4</h3>
+  <div class="test">
+    <!-- Test 4: custom copy attribute test -->
+    <div><img src="imgs/test1.svg" onload="SVGInject4(this)" id="test_4_id" alt="businesspeople" title="businesspeople" class="inject-success" data-test="test" /></div>
+  </div>
+
+  <h3>Test 5</h3>
+  <div class="test">
+    <!-- Test 5: directly call Javascript -->
+    <div><img src="imgs/test1.svg" class="test-5 inject-success" /></div>
+    <div><img src="imgs/test2.svg" class="test-5 inject-success" /></div>
+    <div><img src="imgs/test3.svg" class="test-5 inject-success" /></div>
+    <div><img src="imgs/test1.svg" class="test-5 inject-success" /></div>
+    <div><img src="imgs/test2.svg" class="test-5 inject-success" /></div>
+    <div><img src="imgs/test3.svg" class="test-5 inject-success" /></div>
+    <div><img src="imgs/test1.svg" class="test-5 inject-success" /></div>
+    <div><img src="imgs/test2.svg" class="test-5 inject-success" /></div>
+    <div><img src="imgs/test3.svg" class="test-5 inject-success" /></div>
+  </div>
+
+  <h3>Test 6</h3>
+  <div class="test">
+    <!-- load fail with onload attribute -->
+    <div><img src="imgs/fail.svg" class="inject-fail" onload="SVGInject6(this)" onerror="SVGInject6.err(this)" /></div>
+    <div><img src="imgs/fail2.svg" class="inject-fail" onload="SVGInject6(this)" onerror="SVGInject6.err(this)" /></div>
+    <div><img src="imgs/fail.svg" class="inject-fail" onload="SVGInject6(this)" onerror="SVGInject6.err(this)" /></div>
+    <div><img src="imgs/fail2.svg" class="inject-fail" onload="SVGInject6(this)" onerror="SVGInject6.err(this)" /></div>
+    <div><img src="imgs/fail.svg" class="inject-fail" onload="SVGInject6(this)" onerror="SVGInject6.err(this)" /></div>
+    <div><img src="imgs/fail2.svg" class="inject-fail" onload="SVGInject6(this)" onerror="SVGInject6.err(this)" /></div>
+    <div><img src="" class="inject-fail" onload="SVGInject6(this)" onerror="SVGInject6.err(this)" /></div>
+    <div class="background_1"><img class="inject-fail" onload="SVGInject6(this)" onerror="SVGInject6.err(this)" /></div>
+  </div>
+
+  <h3>Test 7</h3>
+  <div class="test">
+    <!-- load fail with pure js -->
+    <div><img src="imgs/fail.svg" class="test-7 inject-fail" /></div>
+    <div><img src="imgs/fail2.svg" class="test-7 inject-fail" /></div>
+    <div><img src="imgs/fail.svg" class="test-7 inject-fail" /></div>
+    <div><img src="imgs/fail2.svg" class="test-7 inject-fail" /></div>
+    <div><img src="imgs/fail.svg" class="test-7 inject-fail" /></div>
+    <div><img src="imgs/fail2.svg" class="test-7 inject-fail" /></div>
+    <div><img src="" class="test-7 inject-fail" /></div>
+    <div class="background_1"><img class="test-7 inject-fail" /></div>
+  </div>
+
+  <h3>Test 8</h3>
+  <p>For this test the text "text visible" must be visible in each box</p>
+  <div class="test">
+    <!-- load fail with showing alt text -->
+    <div><img src="imgs/fail.svg" onload="SVGInject8(this)" onerror="SVGInject8.err(this)" alt="text visible" /></div>
+    <div><img src="imgs/fail.svg" alt="text visible" class="test-8" /></div>
+    <div><img src="imgs/fail2.svg" onload="SVGInject8(this)" onerror="SVGInject8.err(this)" alt="text visible" /></div>
+    <div><img src="imgs/fail3.svg" alt="text visible" class="test-8"  /></div>
+    <div><img src="imgs/fail.svg" onload="SVGInject8(this)" onerror="SVGInject8.err(this)" alt="text visible" /></div>
+    <div><img src="imgs/fail.svg" alt="text visible" class="test-8" /></div>
+    <div><img src="imgs/fail2.svg" onload="SVGInject8(this)" onerror="SVGInject8.err(this)" alt="text visible" /></div>
+    <div><img src="imgs/fail3.svg" alt="text visible" class="test-8" /></div>
+    <div><img src="imgs/fail.svg" onload="SVGInject8(this)" onerror="SVGInject8.err(this)" alt="text visible" /></div>
+    <div><img src="imgs/fail.svg" alt="text visible" class="test-8" /></div>
+    <div><img src="imgs/fail2.svg" onload="SVGInject8(this)" onerror="SVGInject8.err(this)" alt="text visible" /></div>
+    <div><img src="imgs/fail3.svg" alt="text visible" class="test-8" /></div>
+  </div>
+
+  <h3>Test 9</h3>
+  <!-- test example how to use SVGInject directly from Javascript without the `onload` attribute -->
+  <div class="test" id="test-9">
+    <div><img src="imgs/test1.svg" class="prevent-image-flash inject-success" /></div>
+    <div><img src="imgs/test2.svg" class="prevent-image-flash inject-success" /></div>
+  </div>
+
+  <h3>Test 10</h3>
+  <!-- test with caching disabled -->
+  <div class="test" id="test-10">
+    <div><img src="imgs/test1.svg" onload="SVGInject10(this)" class="inject-success" /></div>
+    <div><img src="imgs/test1.svg" onload="SVGInject10(this)" class="inject-success" /></div>
+    <div><img src="imgs/test2.svg" onload="SVGInject10(this)" class="inject-success" /></div>
+    <div><img src="imgs/test2.svg" onload="SVGInject10(this)" class="inject-success" /></div>
+    <div><img src="imgs/test1.svg" class="test-10 inject-success" /></div>
+    <div><img src="imgs/test1.svg" class="test-10 inject-success" /></div>
+    <div><img src="imgs/test2.svg" class="test-10 inject-success" /></div>
+    <div><img src="imgs/test2.svg" class="test-10 inject-success" /></div>
+  </div>
+
+  <h3>Test 11</h3>
+  <!-- test if existing title is replaced correctly -->
+  <div class="test" id="test-11">
+    <div><img src="imgs/test3.svg" onload="SVGInject11(this)" class="inject-success" title="New Test Title" /></div>
+  </div>
+
+  <h3>Test 12</h3>
+  <!-- test changes to SVG in afterLoad hook -->
+  <div class="test" id="test-12">
+    <div><img src="imgs/test1.svg" onload="SVGInject12(this)" class="inject-success" /></div>
+    <div><img src="imgs/test1.svg" onload="SVGInject12(this)" class="inject-success" /></div>
+    <div><img src="imgs/test2.svg" onload="SVGInject12(this)" class="inject-success" /></div>
+    <div><img src="imgs/test2.svg" onload="SVGInject12(this)" class="inject-success" /></div>
+    <div><img src="imgs/test3.svg" onload="SVGInject12(this)" class="inject-success" /></div>
+    <div><img src="imgs/test3.svg" onload="SVGInject12(this)" class="inject-success" /></div>
+  </div>
+
+  <h3>Test 13</h3>
+  <!-- test of makeIdsUnique funtionality -->
+
+  <div id="test-13">
+    <p>Must display circles in red, green, blue and yellow color</p>
+    <div class="test">
+      <div><img id="test-13-1" src="imgs/test-make-unique-ids.svg" onload="SVGInject13(this)" class="inject-success" /></div>
+      <div><img id="test-13-2" src="imgs/test-make-unique-ids.svg" onload="SVGInject13(this)" class="inject-success" /></div>
+      <div><img id="test-13-3" src="imgs/test-make-unique-ids.svg" onload="SVGInject13(this)" class="inject-success" /></div>
+      <div><img id="test-13-4" src="imgs/test-make-unique-ids.svg" onload="SVGInject13(this)" class="inject-success" /></div>
+    </div>
+    <p>Must display circles in only one color</p>
+    <div class="test">
+      <div><img id="test-13-1" src="imgs/test-make-unique-ids.svg" onload="SVGInject13(this, { makeIdsUnique: false })" class="inject-success" /></div>
+      <div><img id="test-13-2" src="imgs/test-make-unique-ids.svg" onload="SVGInject13(this, { makeIdsUnique: false })" class="inject-success" /></div>
+      <div><img id="test-13-3" src="imgs/test-make-unique-ids.svg" onload="SVGInject13(this, { makeIdsUnique: false })" class="inject-success" /></div>
+      <div><img id="test-13-4" src="imgs/test-make-unique-ids.svg" onload="SVGInject13(this, { makeIdsUnique: false })" class="inject-success" /></div>
+    </div>
+  </div>
+
+  <h3>Test 14</h3>
+  <!-- test beforeLoad hook -->
+  <div class="test" id="test-14">
+    <div><img data-src="imgs/test1.svg" class="inject-success" /></div>
+    <div><img data-src="imgs/test1.svg" class="inject-success" /></div>
+    <div><img data-src="imgs/test2.svg" class="inject-success" /></div>
+    <div><img data-src="imgs/test2.svg" class="inject-success" /></div>
+    <div><img data-src="imgs/test3.svg" class="inject-success" /></div>
+    <div><img data-src="imgs/test3.svg" class="inject-success" /></div>
+  </div>
+
+  <h3>Test 15</h3>
+  <!-- test all browser no javasript fallback solution -->
+  <div class="test" id="test-15">
+    <div><img src="imgs/test1.png" srcset="imgs/test1.svg" onload="SVGInject15(this)" class="inject-success" /></div>
+    <div><img src="imgs/test1.png" srcset="imgs/test1.svg" onload="SVGInject15(this)" class="inject-success" /></div>
+    <div><img src="imgs/test2.png" srcset="imgs/test2.svg" onload="SVGInject15(this)" class="inject-success" /></div>
+    <div><img src="imgs/test2.png" srcset="imgs/test2.svg" onload="SVGInject15(this)" class="inject-success" /></div>
+    <div><img src="imgs/test3.png" srcset="imgs/test3.svg" onload="SVGInject15(this)" class="inject-success" /></div>
+    <div><img src="imgs/test3.png" srcset="imgs/test3.svg" onload="SVGInject15(this)" class="inject-success" /></div>
+  </div>
+
+  <h3>Test 16</h3>
+  <!-- test malformed SVGs -->
+  <div class="test" id="test-16">
+    <div><img src="imgs/malformed1.svg" class="inject-fail inject" /></div>
+    <div><img src="imgs/malformed1.svg" class="inject-fail inject" /></div>
+  </div>
+
+  <h3>Test 17</h3>
+  <!-- Test Id References -->
+  <div id="test-17">
+    <p>Must display the exact same image as the first reference image</p>
+    <p>Note: On Safari the yellow part is missing in the last SVG, because Safari does not support href links yet.</p>
+    <div class="test">
+      <div><img src="imgs/test-17.png" class="icon"/></div>
+      <div><img src="imgs/test-17-simple.svg" onload="SVGInject17(this)" /></div>
+      <div><img src="imgs/test-17-corel.svg" onload="SVGInject17(this)" /></div>
+      <div><img src="imgs/test-17-inkscape.svg" onload="SVGInject17(this)" /></div>
+      <div><img src="imgs/test-17-custom.svg" onload="SVGInject17(this)" /></div>
+    </div>
+  </div>
+
+  <h3>Test 18</h3>
+  <!-- Test Promise and onAllFinish -->
+  <div id="test-18">
+    <div class="test">
+      <div><img src="imgs/test1.svg" class="inject-success all group-1 group-2" /></div>
+      <div><img src="imgs/test1.svg" class="inject-success all group-2" /></div>
+      <div><img src="imgs/test2.svg" class="inject-success all group-1 group-2" /></div>
+      <div><img src="imgs/test2.svg" class="inject-success all group-2 group-3" /></div>
+      <div><img src="imgs/test3.svg" class="inject-success all group-1 group-3" /></div>
+      <div><img src="imgs/test3.svg" class="inject-success all group-3" /></div>
+      <div><img src="imgs/malformed1.svg" class="inject-fail inject all group-1 group-3" /></div>
+      <div><img src="imgs/malformed1.svg" class="inject-fail inject all group-3" /></div>
+    </div>
+  </div>
+
+  <h3>Test 19</h3>
+  <!-- Test Dynamic insertion of images -->
+  <div id="test-19">
+    <div class="test"></div>
+  </div>
+
+  <h3>Test 20</h3>
+  <!-- Test correct ID unification for <use> elements and 'onlyReferenced' value for makeIdsUnique option. -->
+  <div id="test-20">
+    <p>Must display two red circles</p>
+    <div class="test">
+      <div><img src="imgs/test20.svg" id="svg20-1" onload="SVGInject20(this, {makeIdsUnique: false})" /></div>
+      <div><img src="imgs/test20.svg" id="svg20-2" onload="SVGInject20(this, {makeIdsUnique: true})" /></div>
+    </div>
+  </div>
+
+  <script src="./js/xhr-check.js"></script>
+</body>
+</html>

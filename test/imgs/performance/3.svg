@@ -1,0 +1,82 @@
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0,0,1024,1024">
+	<!-- Color names: color-1, color-2, color-3, color-4, color-5 -->
+	<desc>users icon - Licensed under Iconfu Standard License v1.0 (https://www.iconfu.com/iconfu_standard_license) - Incors GmbH</desc>
+	<defs>
+		<filter id="filter-LIHszAQz" color-interpolation-filters="sRGB" x="0%" y="0%" width="100%" height="100%">
+			<feColorMatrix values="0.17 0.72 0.11 0 -0.07 0.64 0.28 0.08 0 -0.07 0.20 0.23 0.57 0 -0.07 0 0 0 1 0"/>
+			<feColorMatrix values="-0.65039 1.77384 -0.12345 0 0 1.60663 -0.345 -0.26163 0 0 -0.42008 -0.48319 1.90327 0 0 0 0 0 1 0"/>
+		</filter>
+		<filter id="filter-YQBSaKPz" color-interpolation-filters="sRGB" x="0%" y="0%" width="100%" height="100%">
+			<feColorMatrix values="0.17 0.72 0.11 0 -0.1 0.64 0.28 0.08 0 -0.1 0.20 0.23 0.57 0 -0.1 0 0 0 1 0"/>
+			<feColorMatrix values="-0.65039 1.77384 -0.12345 0 0 1.60663 -0.345 -0.26163 0 0 -0.42008 -0.48319 1.90327 0 0 0 0 0 1 0"/>
+		</filter>
+	</defs>
+	<g fill="none" fill-rule="nonzero" style="mix-blend-mode: normal">
+		<g color="#bfde14" class="color-2">
+			<path d="M688,960c-140,0 -336,-27.47 -336,-109.79c0,-173.06 106.73,-202.18 180.29,-253.42c10.2,21.78 33.13,37.08 54.82,46.65c30.78,13.57 67.35,20.17 100.89,20.17c33.54,0 70.11,-6.61 100.89,-20.17c21.7,-9.57 44.62,-24.87 54.83,-46.65c73.56,51.24 180.28,80.36 180.28,253.42c0,82.32 -196,109.79 -336,109.79z" fill="currentColor"/>
+		</g>
+		<g color="#bfde14" class="color-2">
+			<pattern id="pattern-fPKh1raA" patternUnits="userSpaceOnUse" x="1" y="1" width="62" height="62">
+				<rect filter="url(#filter-LIHszAQz)" fill="currentColor" x="0" y="0" width="64" height="64"/>
+			</pattern>
+			<path d="M843.72,596.79c73.56,51.24 180.28,80.36 180.28,253.42c0,82.32 -196,109.79 -336,109.79v-296.39c33.54,0 70.11,-6.61 100.89,-20.17c21.7,-9.57 44.62,-24.87 54.83,-46.65z" fill="url(#pattern-fPKh1raA)"/>
+		</g>
+		<g color="#f4f4f4" class="color-5">
+			<pattern id="pattern-NNlbi6BA" patternUnits="userSpaceOnUse" x="1" y="1" width="62" height="62">
+				<rect filter="url(#filter-YQBSaKPz)" fill="currentColor" x="0" y="0" width="64" height="64"/>
+			</pattern>
+			<path d="M688,663.61c-63.35,0 -126.05,-27.17 -126.17,-56.07l-0.53,-118.94c84.47,0 168.93,0 253.4,0l-0.53,118.94c-0.12,28.9 -62.82,56.07 -126.17,56.07z" fill="url(#pattern-NNlbi6BA)"/>
+		</g>
+		<g color="#f4f4f4" class="color-5">
+			<path d="M688,663.61c-33.54,0 -70.11,-6.6 -100.89,-20.17c-21.69,-9.57 -44.62,-24.87 -54.82,-46.65c10.68,-7.45 20.52,-15.21 29.38,-24.09c0.18,28.89 62.98,55.91 126.33,55.91c63.35,0 126.15,-27.02 126.33,-55.91c8.86,8.89 18.7,16.64 29.39,24.09c-10.21,21.78 -33.13,37.08 -54.83,46.65c-30.78,13.56 -67.35,20.17 -100.89,20.17z" fill="currentColor"/>
+		</g>
+		<g color="#f4f4f4" class="color-5">
+			<pattern id="pattern-7e7DoGZj" patternUnits="userSpaceOnUse" x="1" y="1" width="62" height="62">
+				<rect filter="url(#filter-LIHszAQz)" fill="currentColor" x="0" y="0" width="64" height="64"/>
+			</pattern>
+			<path d="M814.33,572.7c8.86,8.89 18.7,16.64 29.39,24.09c-10.21,21.78 -33.13,37.08 -54.83,46.65c-30.78,13.56 -67.35,20.17 -100.89,20.17v-35c63.35,0 126.15,-27.02 126.33,-55.91z" fill="url(#pattern-7e7DoGZj)"/>
+		</g>
+		<g color="#f4f4f4" class="color-5">
+			<path d="M688,64c160.49,0 213.99,112 213.99,224c0,140 -107,280 -213.99,280c-106.99,0 -213.99,-140 -213.99,-280c0.01,-112 53.5,-224 213.99,-224z" fill="currentColor"/>
+		</g>
+		<g color="#f4f4f4" class="color-5">
+			<pattern id="pattern-WdGejSUR" patternUnits="userSpaceOnUse" x="1" y="1" width="62" height="62">
+				<rect filter="url(#filter-LIHszAQz)" fill="currentColor" x="0" y="0" width="64" height="64"/>
+			</pattern>
+			<path d="M688,64c160.49,0 213.99,112 213.99,224c0,140 -107,280 -213.99,280z" fill="url(#pattern-WdGejSUR)"/>
+		</g>
+		<g color="#00b0f0" class="color-1">
+			<path d="M352,1024c-146.67,0 -352,-28.78 -352,-115.02c0,-181.3 111.81,-211.81 188.87,-265.49c10.7,22.82 34.71,38.85 57.43,48.87c32.25,14.22 70.56,21.13 105.7,21.13c35.14,0 73.45,-6.91 105.7,-21.13c22.72,-10.02 46.74,-26.05 57.43,-48.87c77.06,53.68 188.87,84.19 188.87,265.49c0,86.24 -205.33,115.02 -352,115.02z" fill="currentColor"/>
+		</g>
+		<g color="#00b0f0" class="color-1">
+			<pattern id="pattern-1cfABgC7" patternUnits="userSpaceOnUse" x="1" y="1" width="62" height="62">
+				<rect filter="url(#filter-LIHszAQz)" fill="currentColor" x="0" y="0" width="64" height="64"/>
+			</pattern>
+			<path d="M515.13,643.49c77.06,53.68 188.87,84.19 188.87,265.49c0,86.24 -205.33,115.02 -352,115.02v-310.51c35.14,0 73.45,-6.91 105.7,-21.13c22.72,-10.02 46.74,-26.05 57.43,-48.87z" fill="url(#pattern-1cfABgC7)"/>
+		</g>
+		<g color="#f4f4f4" class="color-5">
+			<pattern id="pattern-i1fVN3vp" patternUnits="userSpaceOnUse" x="1" y="1" width="62" height="62">
+				<rect filter="url(#filter-YQBSaKPz)" fill="currentColor" x="0" y="0" width="64" height="64"/>
+			</pattern>
+			<path d="M352,704c-66.37,0 -132.04,-28.46 -132.18,-58.73l-0.55,-115.11c88.49,0 176.97,0 265.47,0l-0.56,115.11c-0.14,30.27 -65.81,58.73 -132.18,58.73z" fill="url(#pattern-i1fVN3vp)"/>
+		</g>
+		<g color="#f4f4f4" class="color-5">
+			<path d="M352,713.49c-35.14,0 -73.45,-6.91 -105.7,-21.13c-22.72,-10.02 -46.73,-26.05 -57.43,-48.87c11.2,-7.8 21.54,-15.96 30.82,-25.27c0.19,30.28 65.94,58.6 132.31,58.6c66.37,0 132.12,-28.33 132.31,-58.6c9.28,9.31 19.62,17.47 30.82,25.27c-10.69,22.82 -34.71,38.85 -57.43,48.87c-32.25,14.22 -70.56,21.13 -105.7,21.13z" fill="currentColor"/>
+		</g>
+		<g color="#f4f4f4" class="color-5">
+			<pattern id="pattern-wsFKMb1H" patternUnits="userSpaceOnUse" x="1" y="1" width="62" height="62">
+				<rect filter="url(#filter-LIHszAQz)" fill="currentColor" x="0" y="0" width="64" height="64"/>
+			</pattern>
+			<path d="M484.31,618.22c9.28,9.31 19.62,17.47 30.82,25.27c-10.69,22.82 -34.71,38.85 -57.43,48.87c-32.25,14.22 -70.56,21.13 -105.7,21.13v-36.67c66.37,0 132.12,-28.33 132.31,-58.6z" fill="url(#pattern-wsFKMb1H)"/>
+		</g>
+		<g color="#f4f4f4" class="color-5">
+			<path d="M352,85.33c168.13,0 224.18,117.34 224.18,234.67c0,146.67 -112.09,293.33 -224.18,293.33c-112.09,0 -224.18,-146.66 -224.18,-293.33c0.01,-117.33 56.05,-234.67 224.18,-234.67z" fill="currentColor"/>
+		</g>
+		<g color="#f4f4f4" class="color-5">
+			<pattern id="pattern-fyaD69w7" patternUnits="userSpaceOnUse" x="1" y="1" width="62" height="62">
+				<rect filter="url(#filter-LIHszAQz)" fill="currentColor" x="0" y="0" width="64" height="64"/>
+			</pattern>
+			<path d="M352,85.33c168.13,0 224.18,117.34 224.18,234.67c0,146.67 -112.09,293.33 -224.18,293.33z" fill="url(#pattern-fyaD69w7)"/>
+		</g>
+	</g>
+</svg>
