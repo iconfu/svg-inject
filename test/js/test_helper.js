@@ -1,13 +1,17 @@
 var runTests = function(testFuncs, testNum) {
   var failed = false;
   var successCount = 0;
+  var currentTest = 0;
 
   window.fail = function() {
     failed = true;
+    var testInfo = 'Test ' + currentTest;
+    console.error('FAILED: ' + testInfo, new Error());
+    var el = document.getElementById('failed');
+    el.style.display = 'block';
+    el.innerHTML += '<div style="color:#c00;font-size:14px;margin-top:8px">' + testInfo + ' failed</div>';
     document.getElementById('success').style.display = 'none';
-    document.getElementById('failed').style.display = 'block';
     document.getElementById('running').style.display = 'none';
-    console.error(new Error());
   };
 
   window.failCallback = function() {
@@ -44,8 +48,9 @@ var runTests = function(testFuncs, testNum) {
   };
 
   for (var i = 0; i < testFuncs.length; ++i) {
+    currentTest = i + 1;
     if (typeof testNum !== 'undefined') {
-      // testing only one test 
+      // testing only one test
       if (i === testNum) {
         testFuncs[i]();
       } else {
