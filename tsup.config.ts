@@ -8,6 +8,7 @@ export default defineConfig([
     outDir: 'dist',
     clean: true,
     minify: true,
+    sourcemap: true,
     outExtension: () => ({ js: '.js' }),
   },
   // CJS for require() + TypeScript .d.ts
@@ -17,6 +18,7 @@ export default defineConfig([
     outDir: 'dist',
     dts: true,
     minify: true,
+    sourcemap: true,
     outExtension: () => ({ js: '.cjs' }),
   },
   // IIFE minified — svg-inject.min.js (v1 compatible)
@@ -26,6 +28,7 @@ export default defineConfig([
     globalName: 'SVGInjectModule',
     outDir: 'dist',
     minify: true,
+    sourcemap: true,
     outExtension: () => ({ js: '.js' }),
     footer: {
       js: 'if(typeof window!=="undefined"&&SVGInjectModule&&SVGInjectModule.SVGInject){window.SVGInject=SVGInjectModule.SVGInject;}',
