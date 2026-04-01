@@ -292,7 +292,7 @@ var SVGInjectModule = (() => {
     copyAttributes: true,
     makeIdsUnique: true,
     sanitize: false,
-    injectStyleTag: false
+    injectStyleTag: true
   };
   var domParser = null;
   var xmlSerializer = null;

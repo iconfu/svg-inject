@@ -212,7 +212,7 @@ Error handler for `onerror` on `<img>` elements. Optionally sets a fallback `src
 | `copyAttributes` | `boolean` | `true` | Copy attributes from `<img>` to `<svg>` |
 | `makeIdsUnique` | `boolean` | `true` | Append `--inject-N` suffix to all IDs to prevent collisions |
 | `sanitize` | `boolean` | `false` | Strip `<script>`, `<foreignObject>`, event handlers, and dangerous URIs before injection |
-| `injectStyleTag` | `boolean` | `false` | Inject a `<style>` tag to hide images before injection (requires `style-src 'unsafe-inline'` in CSP) |
+| `injectStyleTag` | `boolean` | `true` | Inject a `<style>` tag to hide images before injection, preventing unstyled image flash. Set to `false` if you have a strict CSP |
 | `beforeLoad` | `(img) => string \| void` | | Hook before loading. Return a string to override the URL |
 | `afterLoad` | `(svg, svgString) => string \| SVGSVGElement \| void` | | Hook after loading. Modify the SVG or return a new one. Called once per URL when caching is enabled |
 | `beforeInject` | `(img, svg) => Element \| void` | | Hook before injection. Return an element to inject instead |
@@ -223,18 +223,17 @@ Error handler for `onerror` on `<img>` elements. Optionally sets a fallback `src
 
 ## Unstyled image flash
 
-When using `onload`, the browser may briefly show the raw `<img>` before injection replaces it. Two ways to prevent this:
+When using `onload`, the browser may briefly show the raw `<img>` before injection replaces it. SVGInject prevents this by default — it injects a CSS rule that hides injectable images until injection is complete.
 
-**Option A** -- Add a CSS rule (recommended):
+This requires `style-src 'unsafe-inline'` in your Content Security Policy. If you have a strict CSP, disable it and add the rule to your own stylesheet instead:
+
+```js
+SVGInject.setOptions({ injectStyleTag: false });
+```
+
 ```css
 img[onload^="SVGInject("] { visibility: hidden; }
 ```
-
-**Option B** -- Let SVGInject inject the rule for you:
-```js
-SVGInject.setOptions({ injectStyleTag: true });
-```
-Note: this requires `style-src 'unsafe-inline'` in your Content Security Policy.
 
 
 ## Error handling
@@ -272,7 +271,6 @@ v2 is API-compatible with v1. Breaking changes:
 
 | Change | Migration |
 |--------|-----------|
-| `injectStyleTag` defaults to `false` | Set to `true` or add the CSS rule to your stylesheet |
 | IE9-11 no longer supported | Stay on v1.x for IE |
 | Decorative images handled correctly | `alt=""` now sets `role="none"` + `aria-hidden="true"` |
 | `alt` converted to `aria-label` | Accessibility improvement |

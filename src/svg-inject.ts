@@ -16,7 +16,7 @@ const DEFAULT_OPTIONS: Required<Pick<SVGInjectOptions, 'useCache' | 'copyAttribu
   copyAttributes: true,
   makeIdsUnique: true,
   sanitize: false,
-  injectStyleTag: false,
+  injectStyleTag: true,
 };
 
 // Lazy-initialized at call time (SSR-safe)
