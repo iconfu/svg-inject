@@ -6,6 +6,8 @@
 
 SVGInject replaces `<img>` elements with inline `<svg>` so you can target every path, circle, and group with CSS — colors, animations, hover effects, dark mode, all of it. One line of code, works everywhere.
 
+![SVG Injection](https://github.com/iconfu/svg-inject/raw/master/resources/svg-injection.png)
+
 ```html
 <img src="icon.svg" onload="SVGInject(this)" />
 ```
