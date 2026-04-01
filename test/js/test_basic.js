@@ -152,10 +152,12 @@ runTests([
     var totalExpected = 9; // 9 images
 
     var checkDone = function() {
+      console.log('Test 5: afterLoad=' + afterLoadCount + ' beforeInject=' + beforeInjectCount + ' afterInject=' + afterInjectCount);
       if (afterInjectCount === totalExpected) {
         if (afterLoadCount === 3 && beforeInjectCount === 9 && afterInjectCount === 9) {
           success();
         } else {
+          console.error('Test 5 COUNTS WRONG: afterLoad=' + afterLoadCount + ' (expected 3), beforeInject=' + beforeInjectCount + ' (expected 9), afterInject=' + afterInjectCount + ' (expected 9)');
           fail();
         }
       }
