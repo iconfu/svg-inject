@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>SVGInject Browser Tests</title>
+  <style>
+    body { font-family: sans-serif; padding: 20px; }
+    .test-section { margin: 20px 0; padding: 10px; border: 1px solid #ccc; }
+    .test-section h3 { margin-top: 0; }
+    img, svg { display: inline-block; margin: 5px; }
+  </style>
+  <script src="../../dist/svg-inject.iife.js"></script>
+</head>
+<body>
+  <h1>SVGInject v2 Browser Tests</h1>
+
+  <!-- Test 1: Basic onload injection -->
+  <div class="test-section" id="test-onload">
+    <h3>Test 1: onload injection</h3>
+    <img src="fixtures/simple.svg" onload="SVGInject(this)" onerror="SVGInject.err(this)">
+  </div>
+
+  <!-- Test 2: Multiple injections with caching -->
+  <div class="test-section" id="test-cache">
+    <h3>Test 2: Cached injection (3 same SVGs)</h3>
+    <img src="fixtures/simple.svg" onload="SVGInject(this)" onerror="SVGInject.err(this)">
+    <img src="fixtures/simple.svg" onload="SVGInject(this)" onerror="SVGInject.err(this)">
+    <img src="fixtures/simple.svg" onload="SVGInject(this)" onerror="SVGInject.err(this)">
+  </div>
+
+  <!-- Test 3: ID uniquification -->
+  <div class="test-section" id="test-ids">
+    <h3>Test 3: Unique IDs (2 SVGs with same IDs)</h3>
+    <img src="fixtures/with-ids.svg" onload="SVGInject(this)" onerror="SVGInject.err(this)">
+    <img src="fixtures/with-ids.svg" onload="SVGInject(this)" onerror="SVGInject.err(this)">
+  </div>
+
+  <!-- Test 4: Attributes (class, data-*, title, alt) -->
+  <div class="test-section" id="test-attrs">
+    <h3>Test 4: Attribute copying</h3>
+    <img src="fixtures/simple.svg" class="my-icon" data-testid="icon1" title="My Icon" alt="A circle icon"
+         onload="SVGInject(this)" onerror="SVGInject.err(this)">
+  </div>
+
+  <!-- Test 5: Error handling — 404 -->
+  <div class="test-section" id="test-error">
+    <h3>Test 5: Error handling (404)</h3>
+    <img src="fixtures/nonexistent.svg" onload="SVGInject(this)" onerror="SVGInject.err(this, 'fixtures/simple.svg')">
+  </div>
+
+  <!-- Test 6: ARIA attributes -->
+  <div class="test-section" id="test-aria">
+    <h3>Test 6: ARIA ID references</h3>
+    <img src="fixtures/with-aria.svg" onload="SVGInject(this)" onerror="SVGInject.err(this)">
+  </div>
+
+  <!-- Test 7: JS-driven injection (no onload) -->
+  <div class="test-section" id="test-js">
+    <h3>Test 7: JS-driven injection</h3>
+    <img src="fixtures/simple.svg" class="js-inject">
+    <img src="fixtures/second.svg" class="js-inject">
+  </div>
+
+  <!-- Test 8: Dynamic insertion -->
+  <div class="test-section" id="test-dynamic">
+    <h3>Test 8: Dynamic insertion</h3>
+    <!-- filled by JS -->
+  </div>
+
+  <!-- Test 9: CSS currentColor styling -->
+  <div class="test-section" id="test-style" style="color: coral;">
+    <h3>Test 9: CSS currentColor</h3>
+    <img src="fixtures/simple.svg" onload="SVGInject(this)" onerror="SVGInject.err(this)">
+  </div>
+
+  <!-- Test 10: viewBox case mapping -->
+  <div class="test-section" id="test-viewbox">
+    <h3>Test 10: viewBox case mapping</h3>
+    <img src="fixtures/simple.svg" viewbox="0 0 50 50" onload="SVGInject(this)" onerror="SVGInject.err(this)">
+  </div>
+
+  <!-- Test 11: Sanitization — malicious SVG (JS-driven to isolate timing) -->
+  <div class="test-section" id="test-sanitize">
+    <h3>Test 11: Sanitization</h3>
+    <img src="fixtures/malicious.svg" class="sanitize-test">
+  </div>
+
+  <script>
+    // Test 7: JS-driven injection after DOM ready
+    document.addEventListener('DOMContentLoaded', function() {
+      SVGInject(document.querySelectorAll('#test-js .js-inject'));
+    });
+
+    // Test 8: Dynamic insertion
+    document.addEventListener('DOMContentLoaded', function() {
+      var container = document.getElementById('test-dynamic');
+      container.insertAdjacentHTML('beforeend',
+        '<img src="fixtures/simple.svg" onload="SVGInject(this)" onerror="SVGInject.err(this)">' +
+        '<img src="fixtures/second.svg" onload="SVGInject(this)" onerror="SVGInject.err(this)">'
+      );
+    });
+  </script>
+</body>
+</html>

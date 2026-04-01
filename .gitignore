@@ -62,3 +62,10 @@ typings/
 
 # .DS_Store on MAC
 .DS_Store
+
+# Build output
+dist/
+
+# Playwright
+test-results/
+playwright-report/

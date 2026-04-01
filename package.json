@@ -1,23 +1,52 @@
 {
   "name": "@iconfu/svg-inject",
-  "version": "1.2.3",
-  "description": "simple bulletproof svg injector",
-  "main": "dist/svg-inject.js",
+  "version": "2.0.0",
+  "description": "A tiny, intuitive, robust, caching solution for injecting SVG files inline into the DOM.",
+  "main": "dist/svg-inject.cjs",
+  "module": "dist/svg-inject.mjs",
+  "types": "dist/svg-inject.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/svg-inject.d.ts",
+      "import": "./dist/svg-inject.mjs",
+      "require": "./dist/svg-inject.cjs"
+    }
+  },
+  "sideEffects": false,
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:browser": "npx playwright test",
+    "test:all": "vitest run && npx playwright test",
+    "prepublishOnly": "npm run build"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/iconfu/svg-inject.git"
   },
+  "author": "INCORS GmbH (https://www.incors.com)",
   "keywords": [
     "svg",
     "inject",
-    "inline"
+    "inline",
+    "inline-svg",
+    "svg-inject",
+    "svg-loader",
+    "accessibility",
+    "typescript"
   ],
   "license": "MIT",
   "devDependencies": {
-    "gulp": "^3.9.1",
-    "gulp-rename": "^1.3.0",
-    "gulp-uglify": "^3.0.0",
-    "pump": "^3.0.0"
+    "@playwright/test": "^1.59.0",
+    "jsdom": "^26.1.0",
+    "serve": "^14.2.6",
+    "tsup": "^8.4.0",
+    "typescript": "^5.8.0",
+    "vitest": "^3.1.0"
   },
   "bugs": {
     "url": "https://github.com/iconfu/svg-inject/issues"
