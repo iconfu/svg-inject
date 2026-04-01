@@ -20,35 +20,42 @@
     .item span { font-size: 12px; color: #888; text-align: center; }
     .large { width: 96px; height: 96px; }
 
-    /* --- 1. Change color --- */
+    /* --- Colors --- */
     .color-coral { color: coral; }
     .color-teal { color: teal; }
     .color-indigo { color: indigo; }
+    .color-steelblue { color: steelblue; }
+    .color-tomato { color: tomato; }
+    .color-gold { color: goldenrod; }
+    .color-orchid { color: orchid; }
 
-    /* --- 2. Change color on hover --- */
+    /* --- Hover --- */
     .hover-color { color: #aaa; transition: color 0.2s; cursor: pointer; }
     .hover-color:hover { color: crimson; }
 
     .hover-color-2 { color: steelblue; transition: color 0.2s; cursor: pointer; }
     .hover-color-2:hover { color: coral; }
 
-    /* --- 3. Style inner elements --- */
-    .hide-desc desc { display: none; }
+    .hover-color-3 { color: teal; transition: color 0.2s; cursor: pointer; }
+    .hover-color-3:hover { color: orchid; }
+
+    /* --- Style inner elements --- */
     .recolor-stops stop:first-child { stop-color: teal !important; }
     .recolor-stops stop:last-child { stop-color: coral !important; }
 
-    /* --- 4. Dark mode --- */
+    /* --- Dark mode --- */
     .dark { background: #1a1a2e; padding: 24px; border-radius: 8px; }
     .dark p { color: #aaa; }
     .dark span { color: #666; }
     .dark svg { color: #e0e0e0; }
 
-    /* --- 5. CSS variables --- */
+    /* --- CSS variables --- */
     .vars-red { --icon-fill: tomato; }
     .vars-blue { --icon-fill: steelblue; }
     .vars-green { --icon-fill: mediumseagreen; }
+    .vars-orchid { --icon-fill: orchid; }
 
-    /* --- 6. Click inner elements --- */
+    /* --- Click inner elements --- */
     .clickable path { cursor: pointer; transition: fill 0.15s; }
   </style>
 </head>
@@ -62,7 +69,7 @@
   <!-- 1. Change fill color with CSS -->
   <h2>Change fill color with CSS</h2>
   <div class="section">
-    <p>A normal <code>&lt;img&gt;</code> ignores the CSS <code>color</code> property. An inline SVG using <code>fill="currentColor"</code> inherits it. Same SVG file, three different colors.</p>
+    <p>A normal <code>&lt;img&gt;</code> ignores the CSS <code>color</code> property. An inline SVG using <code>fill="currentColor"</code> inherits it. Same SVG file, different CSS class.</p>
     <div class="row">
       <div class="item">
         <img src="svgs/heart.svg" class="large color-coral" onload="SVGInject(this)">
@@ -76,8 +83,24 @@
         <img src="svgs/heart.svg" class="large color-indigo" onload="SVGInject(this)">
         <span>color: indigo</span>
       </div>
+      <div class="item">
+        <img src="svgs/star.svg" class="large color-gold" onload="SVGInject(this)">
+        <span>color: goldenrod</span>
+      </div>
+      <div class="item">
+        <img src="svgs/star.svg" class="large color-steelblue" onload="SVGInject(this)">
+        <span>color: steelblue</span>
+      </div>
+      <div class="item">
+        <img src="svgs/bolt.svg" class="large color-tomato" onload="SVGInject(this)">
+        <span>color: tomato</span>
+      </div>
+      <div class="item">
+        <img src="svgs/bolt.svg" class="large color-orchid" onload="SVGInject(this)">
+        <span>color: orchid</span>
+      </div>
     </div>
-    <p class="note">With <code>&lt;img&gt;</code>, you'd need three separate image files for this.</p>
+    <p class="note">With <code>&lt;img&gt;</code>, you'd need a separate image file for each color.</p>
   </div>
 
 
@@ -97,6 +120,10 @@
       <div class="item">
         <img src="svgs/bolt.svg" class="large hover-color-2" onload="SVGInject(this)">
         <span>steelblue &#8594; coral</span>
+      </div>
+      <div class="item">
+        <img src="svgs/heart.svg" class="large hover-color-3" onload="SVGInject(this)">
+        <span>teal &#8594; orchid</span>
       </div>
     </div>
   </div>
@@ -137,6 +164,18 @@
         <img src="svgs/bolt.svg" class="large" onload="SVGInject(this)">
         <span>bolt</span>
       </div>
+      <div class="item">
+        <img src="svgs/businesspeople.svg" class="large" onload="SVGInject(this)">
+        <span>businesspeople</span>
+      </div>
+      <div class="item">
+        <img src="svgs/angel.svg" class="large" onload="SVGInject(this)">
+        <span>angel</span>
+      </div>
+      <div class="item">
+        <img src="svgs/apple.svg" class="large" onload="SVGInject(this)">
+        <span>apple</span>
+      </div>
     </div>
   </div>
 
@@ -151,12 +190,16 @@
         <span>--icon-fill: tomato</span>
       </div>
       <div class="item vars-blue">
-        <img src="svgs/heart.svg" class="large" style="fill: var(--icon-fill)" onload="SVGInject(this)">
+        <img src="svgs/star.svg" class="large" style="fill: var(--icon-fill)" onload="SVGInject(this)">
         <span>--icon-fill: steelblue</span>
       </div>
       <div class="item vars-green">
-        <img src="svgs/heart.svg" class="large" style="fill: var(--icon-fill)" onload="SVGInject(this)">
+        <img src="svgs/bolt.svg" class="large" style="fill: var(--icon-fill)" onload="SVGInject(this)">
         <span>--icon-fill: mediumseagreen</span>
+      </div>
+      <div class="item vars-orchid">
+        <img src="svgs/heart.svg" class="large" style="fill: var(--icon-fill)" onload="SVGInject(this)">
+        <span>--icon-fill: orchid</span>
       </div>
     </div>
   </div>
@@ -167,6 +210,18 @@
   <div class="section">
     <p>Click any icon below. JavaScript changes the <code>fill</code> of the clicked <code>&lt;path&gt;</code> to a random color. With <code>&lt;img&gt;</code>, you can only click the entire image — you can't interact with elements inside it.</p>
     <div class="row">
+      <div class="item">
+        <img src="svgs/businesspeople.svg" class="large clickable" onload="SVGInject(this)">
+        <span>click to recolor</span>
+      </div>
+      <div class="item">
+        <img src="svgs/angel.svg" class="large clickable" onload="SVGInject(this)">
+        <span>click to recolor</span>
+      </div>
+      <div class="item">
+        <img src="svgs/apple.svg" class="large clickable" onload="SVGInject(this)">
+        <span>click to recolor</span>
+      </div>
       <div class="item">
         <img src="svgs/heart.svg" class="large clickable" onload="SVGInject(this)">
         <span>click to recolor</span>
@@ -210,11 +265,19 @@
     <p>SVGInject reads the <code>alt</code> attribute from the <code>&lt;img&gt;</code> and sets the correct ARIA roles on the injected SVG. Inspect the DOM to see the attributes.</p>
     <div class="row">
       <div class="item">
-        <img src="svgs/heart.svg" alt="Favorite" class="large color-coral" onload="SVGInject(this)">
-        <span>alt="Favorite"<br>&#8594; role="img" aria-label</span>
+        <img src="svgs/businesspeople.svg" alt="Team of business people" class="large" onload="SVGInject(this)">
+        <span>alt="Team of business people"<br>&#8594; role="img" aria-label</span>
       </div>
       <div class="item">
-        <img src="svgs/star.svg" alt="" class="large color-teal" onload="SVGInject(this)">
+        <img src="svgs/angel.svg" alt="Angel icon" class="large" onload="SVGInject(this)">
+        <span>alt="Angel icon"<br>&#8594; role="img" aria-label</span>
+      </div>
+      <div class="item">
+        <img src="svgs/apple.svg" alt="" class="large" onload="SVGInject(this)">
+        <span>alt="" (decorative)<br>&#8594; role="none" aria-hidden</span>
+      </div>
+      <div class="item">
+        <img src="svgs/heart.svg" alt="" class="large color-coral" onload="SVGInject(this)">
         <span>alt="" (decorative)<br>&#8594; role="none" aria-hidden</span>
       </div>
     </div>
@@ -222,11 +285,10 @@
 
 
   <script>
-    // Click-to-recolor handler
     document.addEventListener('click', function(e) {
-      var path = e.target.closest('.clickable path');
+      var path = e.target.closest('.clickable path, .clickable circle, .clickable rect, .clickable g');
       if (path) {
-        var colors = ['#e74c3c','#3498db','#2ecc71','#f39c12','#9b59b6','#1abc9c','#e67e22','#e84393'];
+        var colors = ['#e74c3c','#3498db','#2ecc71','#f39c12','#9b59b6','#1abc9c','#e67e22','#e84393','#546e7a','#ffa726'];
         path.setAttribute('fill', colors[Math.floor(Math.random() * colors.length)]);
       }
     });
