@@ -27,12 +27,27 @@ var runTests = function(testFuncs, testNum) {
     };
   };
 
+  var passedTests = {};
   window.success = function() {
-    if (!failed && ++successCount == (typeof testNum !== 'undefined' ? 1 : testFuncs.length)) {
+    // Use stack to find which test called success
+    var err = new Error();
+    var match = (err.stack || '').match(/test_basic\.js[:\s]+(\d+)/);
+    var line = match ? match[1] : '?';
+    successCount++;
+    passedTests[line] = true;
+    console.log('PASSED (line ' + line + ') — ' + successCount + '/' + testFuncs.length + ' tests done');
+    if (!failed && successCount == (typeof testNum !== 'undefined' ? 1 : testFuncs.length)) {
       document.getElementById('success').style.display = 'block';
       document.getElementById('running').style.display = 'none';
     }
   };
+
+  // After 10 seconds, report which tests haven't passed
+  setTimeout(function() {
+    if (!failed && successCount < testFuncs.length) {
+      console.warn('TIMEOUT: ' + successCount + '/' + testFuncs.length + ' tests passed. Missing tests never called success().');
+    }
+  }, 10000);
 
   window.testNotInjected = function(id) {
 
