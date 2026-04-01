@@ -201,20 +201,24 @@ describe('SVGInject', () => {
     expect(document.body.querySelector('svg')).not.toBeNull();
   });
 
-  it('does not inject <style> tag by default (CSP-safe) (#57)', async () => {
-    const img = createImg('http://localhost/test.svg');
+  it('injects <style> tag by default to prevent unstyled flash', async () => {
     const inject = createSVGInject('SVGInject');
-    await inject(img);
-    expect(document.head.querySelector('style')).toBeNull();
-  });
-
-  it('injects <style> tag when injectStyleTag is true (#57)', async () => {
-    const inject = createSVGInject('TestInject', { injectStyleTag: true });
     const img = createImg('http://localhost/test.svg');
     await inject(img);
     const style = document.head.querySelector('style');
     expect(style).not.toBeNull();
-    expect(style!.textContent).toContain('TestInject');
+    expect(style!.textContent).toContain('SVGInject');
+  });
+
+  it('no <style> tag when injectStyleTag is false (#57)', async () => {
+    const inject = createSVGInject('TestInject', { injectStyleTag: false });
+    const img = createImg('http://localhost/test.svg');
+    await inject(img);
+    // Only the default instance style should exist, not TestInject's
+    const styles = document.head.querySelectorAll('style');
+    for (let i = 0; i < styles.length; i++) {
+      expect(styles[i].textContent).not.toContain('TestInject');
+    }
   });
 
   it('cache isolation — makeIdsUnique true then false (#54)', async () => {

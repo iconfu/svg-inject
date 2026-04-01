@@ -50,7 +50,9 @@ function buildSvgElement(svgStr: string, verify: boolean): Element | null {
   if (verify && svgDoc.getElementsByTagName('parsererror').length) {
     return null;
   }
-  return document.importNode(svgDoc.documentElement, true);
+  // adoptNode moves the node into the current document, preserving ID registration
+  // for getElementById. importNode can lose ID registration in some browsers.
+  return document.adoptNode(svgDoc.documentElement);
 }
 
 async function loadSvg(url: string): Promise<string> {

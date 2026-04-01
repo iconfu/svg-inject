@@ -320,7 +320,7 @@ var SVGInjectModule = (() => {
     if (verify && svgDoc.getElementsByTagName("parsererror").length) {
       return null;
     }
-    return document.importNode(svgDoc.documentElement, true);
+    return document.adoptNode(svgDoc.documentElement);
   }
   async function loadSvg(url) {
     const response = await fetch(url);
