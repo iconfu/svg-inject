@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>SVGInject Examples</title>
+  <script src="../dist/svg-inject.min.js"></script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; color: #333; max-width: 900px; margin: 0 auto; padding: 40px 20px; }
+    h1 { margin-bottom: 8px; }
+    h1 span { font-weight: normal; font-size: 0.5em; color: #999; }
+    p.intro { color: #666; margin-bottom: 40px; }
+    h2 { margin-top: 40px; margin-bottom: 16px; border-bottom: 1px solid #eee; padding-bottom: 8px; }
+    .example { margin: 20px 0; padding: 24px; background: #f9f9f9; border-radius: 8px; }
+    .example p { margin-bottom: 12px; color: #555; font-size: 14px; }
+    .icons { display: flex; gap: 20px; align-items: center; flex-wrap: wrap; }
+    code { background: #eee; padding: 2px 6px; border-radius: 3px; font-size: 13px; }
+
+    /* --- Styling examples --- */
+
+    .color-coral { color: coral; }
+    .color-teal { color: teal; }
+    .color-indigo { color: indigo; }
+
+    .small { width: 48px; height: 48px; }
+    .medium { width: 80px; height: 80px; }
+    .large { width: 120px; height: 120px; }
+
+    .hoverable { transition: color 0.2s; cursor: pointer; }
+    .hoverable:hover { color: crimson; }
+
+    .spin { animation: spin 3s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .grayscale { filter: grayscale(1); }
+    .grayscale:hover { filter: none; transition: filter 0.3s; }
+
+    .dark-section { background: #1a1a2e; padding: 24px; border-radius: 8px; }
+    .dark-section svg { color: #e0e0e0; }
+    .dark-section p { color: #aaa; }
+  </style>
+</head>
+<body>
+
+  <h1>SVGInject <span>v2 Examples</span></h1>
+  <p class="intro">All icons below are loaded as <code>&lt;img&gt;</code> elements and injected inline with <code>SVGInject</code>. View source to see how it works.</p>
+
+  <!-- 1. Basic injection -->
+  <h2>Basic injection</h2>
+  <div class="example">
+    <p>Just add <code>onload="SVGInject(this)"</code> to any <code>&lt;img&gt;</code>.</p>
+    <div class="icons">
+      <img src="svgs/businesspeople.svg" width="100" height="100" onload="SVGInject(this)">
+      <img src="svgs/angel.svg" width="100" height="100" onload="SVGInject(this)">
+      <img src="svgs/apple.svg" width="100" height="100" onload="SVGInject(this)">
+    </div>
+  </div>
+
+  <!-- 2. CSS currentColor -->
+  <h2>CSS currentColor</h2>
+  <div class="example">
+    <p>SVGs using <code>currentColor</code> inherit the CSS <code>color</code> property.</p>
+    <div class="icons">
+      <img src="svgs/businesspeople.svg" class="medium color-coral" onload="SVGInject(this)">
+      <img src="svgs/businesspeople.svg" class="medium color-teal" onload="SVGInject(this)">
+      <img src="svgs/businesspeople.svg" class="medium color-indigo" onload="SVGInject(this)">
+    </div>
+  </div>
+
+  <!-- 3. Sizes -->
+  <h2>Different sizes</h2>
+  <div class="example">
+    <p>Control size with CSS classes — the SVG scales naturally via <code>viewBox</code>.</p>
+    <div class="icons">
+      <img src="svgs/angel.svg" class="small" onload="SVGInject(this)">
+      <img src="svgs/angel.svg" class="medium" onload="SVGInject(this)">
+      <img src="svgs/angel.svg" class="large" onload="SVGInject(this)">
+    </div>
+  </div>
+
+  <!-- 4. Hover effects -->
+  <h2>Hover effects</h2>
+  <div class="example">
+    <p>CSS <code>:hover</code> works on injected SVGs. Try hovering these icons.</p>
+    <div class="icons">
+      <img src="svgs/businesspeople.svg" class="medium hoverable" onload="SVGInject(this)">
+      <img src="svgs/angel.svg" class="medium hoverable" onload="SVGInject(this)">
+      <img src="svgs/apple.svg" class="medium hoverable" onload="SVGInject(this)">
+    </div>
+  </div>
+
+  <!-- 5. CSS animations -->
+  <h2>CSS animations</h2>
+  <div class="example">
+    <p>CSS animations and transforms work directly on injected SVGs.</p>
+    <div class="icons">
+      <img src="svgs/apple.svg" class="medium spin" onload="SVGInject(this)">
+    </div>
+  </div>
+
+  <!-- 6. CSS filters -->
+  <h2>CSS filters</h2>
+  <div class="example">
+    <p>Apply CSS filters like <code>grayscale</code>. Hover to see the original colors.</p>
+    <div class="icons">
+      <img src="svgs/businesspeople.svg" class="medium grayscale" onload="SVGInject(this)">
+      <img src="svgs/angel.svg" class="medium grayscale" onload="SVGInject(this)">
+      <img src="svgs/apple.svg" class="medium grayscale" onload="SVGInject(this)">
+    </div>
+  </div>
+
+  <!-- 7. Dark mode -->
+  <h2>Dark mode</h2>
+  <div class="example dark-section">
+    <p>Set <code>color</code> on a dark container — <code>currentColor</code> does the rest.</p>
+    <div class="icons">
+      <img src="svgs/businesspeople.svg" class="medium" onload="SVGInject(this)">
+      <img src="svgs/angel.svg" class="medium" onload="SVGInject(this)">
+      <img src="svgs/apple.svg" class="medium" onload="SVGInject(this)">
+    </div>
+  </div>
+
+  <!-- 8. ID uniqueness -->
+  <h2>ID uniqueness</h2>
+  <div class="example">
+    <p>Same SVG with gradient IDs injected three times — no conflicts, each renders correctly.</p>
+    <div class="icons">
+      <img src="svgs/gradient-circle.svg" class="medium" onload="SVGInject(this)">
+      <img src="svgs/gradient-circle.svg" class="medium" onload="SVGInject(this)">
+      <img src="svgs/gradient-circle.svg" class="medium" onload="SVGInject(this)">
+    </div>
+  </div>
+
+  <!-- 9. Accessibility -->
+  <h2>Accessibility</h2>
+  <div class="example">
+    <p>Meaningful image with <code>alt</code> — gets <code>role="img"</code> and <code>aria-label</code>. Decorative image with <code>alt=""</code> — gets <code>aria-hidden</code>. Inspect the DOM to verify.</p>
+    <div class="icons">
+      <img src="svgs/businesspeople.svg" alt="Team of business people" class="medium" onload="SVGInject(this)">
+      <img src="svgs/apple.svg" alt="" class="medium" onload="SVGInject(this)">
+    </div>
+  </div>
+
+  <!-- 10. JS-driven injection -->
+  <h2>JS-driven injection (no onload)</h2>
+  <div class="example">
+    <p>These images have no <code>onload</code> — they're injected from JavaScript after DOM ready.</p>
+    <div class="icons">
+      <img src="svgs/businesspeople.svg" class="medium js-inject">
+      <img src="svgs/angel.svg" class="medium js-inject">
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      SVGInject(document.querySelectorAll('.js-inject'));
+    });
+  </script>
+
+</body>
+</html>
