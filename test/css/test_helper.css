@@ -82,10 +82,11 @@ img, svg {
 
 /* --- Color overrides for injected SVGs --- */
 
-.inject-success .color-1 { color: #6366f1; }
-.inject-success .color-2 { color: #f97316; }
-.inject-success .color-3 { color: #14b8a6; }
-.inject-success .color-4 { color: #f43f5e; }
+/* Original icon colors — natural skin, hair, clothing tones */
+.inject-success .color-1 { color: #546e7a; }
+.inject-success .color-2 { color: #ffa726; }
+.inject-success .color-3 { color: #fb8c00; }
+.inject-success .color-4 { color: #78909c; }
 
 .inject-fail .color-1,
 .inject-fail .color-2,
