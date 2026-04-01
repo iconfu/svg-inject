@@ -14,7 +14,7 @@ SVGInject replaces `<img>` elements with inline `<svg>` so you can target every 
 
 That's it. The `<img>` becomes an inline `<svg>` you can style freely.
 
-Developed and maintained by [INCORS](https://www.incors.com), the creators of [iconfu.com](https://www.iconfu.com).
+Developed and maintained by [INCORS](https://www.incors.com).
 
 
 ## Quick start
