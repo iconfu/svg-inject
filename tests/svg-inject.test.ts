@@ -342,14 +342,23 @@ describe('SVGInject', () => {
     expect(svg.querySelector('rect')!.hasAttribute('onclick')).toBe(true);
   });
 
-  it('sanitize: true (default) strips script and event handlers', async () => {
+  it('sanitize: true strips script and event handlers', async () => {
     const img = createImg('http://localhost/test-script.svg');
     const inject = createSVGInject('SVGInject');
-    await inject(img);
+    await inject(img, { sanitize: true });
     const svg = document.body.querySelector('svg')!;
     expect(svg.querySelector('script')).toBeNull();
     expect(svg.querySelector('rect')!.hasAttribute('onclick')).toBe(false);
     expect(svg.querySelector('rect')!.getAttribute('width')).toBe('10');
+  });
+
+  it('default (no sanitize) preserves all SVG content', async () => {
+    const img = createImg('http://localhost/test-script.svg');
+    const inject = createSVGInject('SVGInject');
+    await inject(img);
+    const svg = document.body.querySelector('svg')!;
+    expect(svg.querySelector('script')).not.toBeNull();
+    expect(svg.querySelector('rect')!.hasAttribute('onclick')).toBe(true);
   });
 });
 

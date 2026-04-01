@@ -291,7 +291,7 @@ var SVGInjectModule = (() => {
     useCache: true,
     copyAttributes: true,
     makeIdsUnique: true,
-    sanitize: true,
+    sanitize: false,
     injectStyleTag: false
   };
   var domParser = null;

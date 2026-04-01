@@ -15,7 +15,7 @@ const DEFAULT_OPTIONS: Required<Pick<SVGInjectOptions, 'useCache' | 'copyAttribu
   useCache: true,
   copyAttributes: true,
   makeIdsUnique: true,
-  sanitize: true,
+  sanitize: false,
   injectStyleTag: false,
 };
 

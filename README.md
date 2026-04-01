@@ -163,7 +163,7 @@ Each SVG URL is fetched once and cached for the page lifetime. Subsequent inject
 
 ### Built-in sanitization
 
-SVGInject strips `<script>` elements, `<foreignObject>`, `on*` event handler attributes, and `javascript:`/`data:` URIs before injection. Enabled by default. See [Security](#security) for details.
+SVGInject can strip `<script>` elements, `<foreignObject>`, `on*` event handler attributes, and `javascript:`/`data:` URIs before injection. Enable with `sanitize: true`. See [Security](#security) for details.
 
 ### SSR-safe
 
@@ -211,7 +211,7 @@ Error handler for `onerror` on `<img>` elements. Optionally sets a fallback `src
 | `useCache` | `boolean` | `true` | Cache SVG content per URL for the page lifetime |
 | `copyAttributes` | `boolean` | `true` | Copy attributes from `<img>` to `<svg>` |
 | `makeIdsUnique` | `boolean` | `true` | Append `--inject-N` suffix to all IDs to prevent collisions |
-| `sanitize` | `boolean` | `true` | Strip dangerous elements and attributes from SVGs before injection |
+| `sanitize` | `boolean` | `false` | Strip `<script>`, `<foreignObject>`, event handlers, and dangerous URIs before injection |
 | `injectStyleTag` | `boolean` | `false` | Inject a `<style>` tag to hide images before injection (requires `style-src 'unsafe-inline'` in CSP) |
 | `beforeLoad` | `(img) => string \| void` | | Hook before loading. Return a string to override the URL |
 | `afterLoad` | `(svg, svgString) => string \| SVGSVGElement \| void` | | Hook after loading. Modify the SVG or return a new one. Called once per URL when caching is enabled |
@@ -258,11 +258,10 @@ SVGInject.setOptions({
 
 ## Security
 
-SVG files can contain scripts. SVGInject includes built-in protections:
+SVG files can contain scripts. SVGInject includes built-in protections you can opt into:
 
-- **Sanitization is on by default.** `<script>`, `<foreignObject>`, `on*` event handlers, and `javascript:`/`data:` URIs are stripped before injection. This catches the most common XSS vectors.
-- **For untrusted SVGs** (user uploads, third-party URLs), add [DOMPurify](https://github.com/cure53/DOMPurify) in the `afterLoad` hook for comprehensive protection.
-- **To disable sanitization** (if your SVGs intentionally use scripts or event handlers): `SVGInject.setOptions({ sanitize: false })` globally, or `SVGInject(img, { sanitize: false })` per call.
+- **Built-in sanitization.** Enable with `SVGInject.setOptions({ sanitize: true })` or per call with `SVGInject(img, { sanitize: true })`. This strips `<script>`, `<foreignObject>`, `on*` event handlers, and `javascript:`/`data:` URIs before injection, catching the most common XSS vectors.
+- **For untrusted SVGs** (user uploads, third-party URLs), consider adding [DOMPurify](https://github.com/cure53/DOMPurify) in the `afterLoad` hook for comprehensive protection.
 - **Same-origin policy applies.** SVGs are loaded with `fetch()`. Cross-origin SVGs require [CORS headers](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) on the server.
 - **CSP note.** The `onload="..."` attribute requires `script-src 'unsafe-inline'` (or a nonce/hash). If you use a strict CSP, call SVGInject from JavaScript instead. See [Usage > From JavaScript](#from-javascript).
 
@@ -273,7 +272,6 @@ v2 is API-compatible with v1. Breaking changes:
 
 | Change | Migration |
 |--------|-----------|
-| `sanitize` defaults to `true` | If your SVGs use `<script>` or event handlers, set `sanitize: false` |
 | `injectStyleTag` defaults to `false` | Set to `true` or add the CSS rule to your stylesheet |
 | IE9-11 no longer supported | Stay on v1.x for IE |
 | Decorative images handled correctly | `alt=""` now sets `role="none"` + `aria-hidden="true"` |
