@@ -6,13 +6,13 @@
   visibility: hidden;
 }
 
-#test-13-1 .stop1 { stop-color: #e74c3c; }
-#test-13-1 .stop2 { stop-color: #e74c3c; }
-#test-13-2 .stop1 { stop-color: #27ae60; }
-#test-13-2 .stop2 { stop-color: #27ae60; }
-#test-13-3 .stop1 { stop-color: #2980b9; }
-#test-13-3 .stop2 { stop-color: #2980b9; }
-#test-13-4 .stop1 { stop-color: #f39c12; }
-#test-13-4 .stop2 { stop-color: #f39c12; }
+#test-13-1 .stop1 { stop-color: red; }
+#test-13-1 .stop2 { stop-color: red; }
+#test-13-2 .stop1 { stop-color: green; }
+#test-13-2 .stop2 { stop-color: green; }
+#test-13-3 .stop1 { stop-color: blue; }
+#test-13-3 .stop2 { stop-color: blue; }
+#test-13-4 .stop1 { stop-color: yellow; }
+#test-13-4 .stop2 { stop-color: yellow; }
 
 #test-17 .test { color: #fff; }

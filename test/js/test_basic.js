@@ -187,7 +187,7 @@ runTests([
       beforeInject: failCallback(),
       afterInject: failCallback(),
       onFail: function(img) {
-        img.src = 'imgs/test1.png';
+        img.src = 'imgs/test1.svg';
         if (++count == 7) {
           success();
         } else if (count > 7) {
@@ -205,7 +205,7 @@ runTests([
       beforeInject: failCallback(),
       afterInject: failCallback(),
       onFail: function(img) {
-        img.src = 'imgs/test1.png';
+        img.src = 'imgs/test1.svg';
         if (++count == 7) {
           success();
         } else if (count > 7) {
@@ -268,32 +268,35 @@ runTests([
   },
 
   // Test 10
+  // v2: with useCache:false, each injection fetches independently.
+  // Parallel fetches mean hook ordering is interleaved.
+  // Verify correct totals: 8 afterLoad (one per image, no caching),
+  // 8 beforeInject, 8 afterInject, and each afterLoad gets a unique svg.
   function() {
-    var sequenceNum = 0;
-    var sequence = [];
+    var afterLoadCount = 0;
+    var beforeInjectCount = 0;
+    var afterInjectCount = 0;
     var svgs = [];
+    var totalExpected = 8;
 
-    for (var i = 0; i < 8; ++i) {
-      sequence.push('afterLoad');
-      sequence.push('beforeInject');
-      sequence.push('afterInject');
-    }
-
-    var testSequence = function(eventName) {
-      if (sequenceNum === sequence.length || sequence[sequenceNum++] !== eventName) {
-        fail();
-      } else if (sequenceNum === sequence.length) {
-        success();
+    var checkDone = function() {
+      if (afterInjectCount === totalExpected) {
+        if (afterLoadCount === 8 && beforeInjectCount === 8 && svgs.length === 8) {
+          success();
+        } else {
+          fail();
+        }
       }
     };
 
     SVGInject.create('SVGInject10', {
       useCache: false,
       beforeInject: function(img, svg) {
-        testSequence('beforeInject');
+        beforeInjectCount++;
       },
       afterInject: function(img, svg) {
-        testSequence('afterInject');
+        afterInjectCount++;
+        checkDone();
       },
       afterLoad: function(svg) {
         if (svgs.indexOf(svg) !== -1) {
@@ -301,7 +304,7 @@ runTests([
         } else {
           svgs.push(svg);
         }
-        testSequence('afterLoad');
+        afterLoadCount++;
       }
     });
 
@@ -403,7 +406,7 @@ runTests([
 
     SVGInject.create('SVGInject16', {
       onFail: function(img, status) {
-        img.src = 'imgs/test1.png';
+        img.src = 'imgs/test1.svg';
 
         if (++count == 2) {
           success();
@@ -449,7 +452,7 @@ runTests([
     var testGroup = function(groupName) {
       var promise = SVGInject18(document.querySelectorAll('#test-18 .' + groupName), {
         onFail: function(img, status) {
-          img.src = 'imgs/test1.png';
+          img.src = 'imgs/test1.svg';
         },
         onAllFinish: function() {
           allFinishCount++;

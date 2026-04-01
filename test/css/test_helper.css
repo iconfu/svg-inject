@@ -82,7 +82,7 @@ img, svg {
 
 /* --- Color overrides for injected SVGs --- */
 
-/* Original icon colors — natural skin, hair, clothing tones */
+/* Natural tones — clothing, skin, hair, face */
 .inject-success .color-1 { color: #546e7a; }
 .inject-success .color-2 { color: #ffa726; }
 .inject-success .color-3 { color: #fb8c00; }
@@ -106,7 +106,8 @@ img, svg {
   display: block;
   width: 128px;
   height: 128px;
-  background: url(../imgs/test1.png);
+  background: url(../imgs/test1.svg);
+  background-size: contain;
 }
 
 .background_1 > img {
