@@ -9,104 +9,59 @@
     body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; color: #333; max-width: 900px; margin: 0 auto; padding: 40px 20px; }
     h1 { margin-bottom: 8px; }
     h1 span { font-weight: normal; font-size: 0.5em; color: #999; }
-    p.intro { color: #666; margin-bottom: 40px; }
+    p.intro { color: #666; margin-bottom: 40px; line-height: 1.6; }
     h2 { margin-top: 48px; margin-bottom: 16px; border-bottom: 1px solid #eee; padding-bottom: 8px; }
     .section { margin: 20px 0; padding: 24px; background: #f9f9f9; border-radius: 8px; }
     .section p { margin-bottom: 16px; color: #555; font-size: 14px; line-height: 1.5; }
+    .section p.note { margin-top: 12px; margin-bottom: 0; font-style: italic; color: #888; font-size: 13px; }
     code { background: #eee; padding: 2px 6px; border-radius: 3px; font-size: 13px; }
-
     .row { display: flex; gap: 32px; align-items: flex-end; flex-wrap: wrap; margin-top: 12px; }
     .item { display: flex; flex-direction: column; align-items: center; gap: 8px; }
-    .item span { font-size: 12px; color: #888; }
-
-    .small { width: 48px; height: 48px; }
-    .medium { width: 64px; height: 64px; }
+    .item span { font-size: 12px; color: #888; text-align: center; }
     .large { width: 96px; height: 96px; }
 
-    /* --- Colors --- */
+    /* --- 1. Change color --- */
     .color-coral { color: coral; }
     .color-teal { color: teal; }
     .color-indigo { color: indigo; }
-    .color-tomato { color: tomato; }
-    .color-steelblue { color: steelblue; }
-    .color-gold { color: goldenrod; }
 
-    /* --- Hover --- */
-    .hover-color { color: #555; transition: color 0.2s; cursor: pointer; }
+    /* --- 2. Change color on hover --- */
+    .hover-color { color: #aaa; transition: color 0.2s; cursor: pointer; }
     .hover-color:hover { color: crimson; }
 
-    .hover-scale { transition: transform 0.2s; cursor: pointer; }
-    .hover-scale:hover { transform: scale(1.3); }
+    .hover-color-2 { color: steelblue; transition: color 0.2s; cursor: pointer; }
+    .hover-color-2:hover { color: coral; }
 
-    .hover-glow { transition: filter 0.3s; cursor: pointer; }
-    .hover-glow:hover { filter: drop-shadow(0 0 10px rgba(255, 100, 50, 0.8)); }
+    /* --- 3. Style inner elements --- */
+    .hide-desc desc { display: none; }
+    .recolor-stops stop:first-child { stop-color: teal !important; }
+    .recolor-stops stop:last-child { stop-color: coral !important; }
 
-    .hover-rotate { transition: transform 0.3s; cursor: pointer; }
-    .hover-rotate:hover { transform: rotate(20deg); }
-
-    .hover-fade { opacity: 0.3; transition: opacity 0.2s; cursor: pointer; }
-    .hover-fade:hover { opacity: 1; }
-
-    .hover-combo { color: teal; transition: all 0.3s; cursor: pointer; }
-    .hover-combo:hover { color: coral; transform: scale(1.2) rotate(-8deg); filter: drop-shadow(0 4px 8px rgba(0,0,0,0.25)); }
-
-    /* --- Animations --- */
-    .spin { animation: spin 2s linear infinite; }
-    @keyframes spin { to { transform: rotate(360deg); } }
-
-    .pulse { animation: pulse 1.5s ease-in-out infinite; }
-    @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
-
-    .bounce { animation: bounce 0.8s ease infinite; }
-    @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
-
-    /* --- Filters --- */
-    .grayscale { filter: grayscale(1); transition: filter 0.3s; cursor: pointer; }
-    .grayscale:hover { filter: none; }
-
-    .blur-effect { filter: blur(2px); transition: filter 0.3s; cursor: pointer; }
-    .blur-effect:hover { filter: none; }
-
-    .shadow { filter: drop-shadow(4px 4px 5px rgba(0,0,0,0.35)); }
-
-    /* --- Dark mode --- */
+    /* --- 4. Dark mode --- */
     .dark { background: #1a1a2e; padding: 24px; border-radius: 8px; }
-    .dark svg { color: #e0e0e0; }
     .dark p { color: #aaa; }
-    .dark span { color: #777; }
+    .dark span { color: #666; }
+    .dark svg { color: #e0e0e0; }
+
+    /* --- 5. CSS variables --- */
+    .vars-red { --icon-fill: tomato; }
+    .vars-blue { --icon-fill: steelblue; }
+    .vars-green { --icon-fill: mediumseagreen; }
+
+    /* --- 6. Click inner elements --- */
+    .clickable path { cursor: pointer; transition: fill 0.15s; }
   </style>
 </head>
 <body>
 
   <h1>SVGInject <span>v2 Examples</span></h1>
-  <p class="intro">Every icon below starts as a normal <code>&lt;img&gt;</code> and gets replaced with inline <code>&lt;svg&gt;</code> by SVGInject. Once inline, you can style them with pure CSS. View source to see the code.</p>
+  <p class="intro">Everything below is impossible with a regular <code>&lt;img&gt;</code> tag. These examples only work because SVGInject replaces the <code>&lt;img&gt;</code> with an inline <code>&lt;svg&gt;</code>, giving CSS and JavaScript full access to the SVG internals.</p>
 
 
-  <!-- 1. Basic -->
-  <h2>Basic injection</h2>
+  <!-- 1. Change fill color with CSS -->
+  <h2>Change fill color with CSS</h2>
   <div class="section">
-    <p>Add <code>onload="SVGInject(this)"</code> to any <code>&lt;img&gt;</code>. The image becomes an inline SVG.</p>
-    <div class="row">
-      <div class="item">
-        <img src="svgs/businesspeople.svg" class="large" onload="SVGInject(this)">
-        <span>businesspeople.svg</span>
-      </div>
-      <div class="item">
-        <img src="svgs/angel.svg" class="large" onload="SVGInject(this)">
-        <span>angel.svg</span>
-      </div>
-      <div class="item">
-        <img src="svgs/apple.svg" class="large" onload="SVGInject(this)">
-        <span>apple.svg</span>
-      </div>
-    </div>
-  </div>
-
-
-  <!-- 2. Colors -->
-  <h2>Change color with CSS</h2>
-  <div class="section">
-    <p>If the SVG uses <code>fill="currentColor"</code>, you can change its color with the CSS <code>color</code> property. Same SVG file, different CSS class.</p>
+    <p>A normal <code>&lt;img&gt;</code> ignores the CSS <code>color</code> property. An inline SVG using <code>fill="currentColor"</code> inherits it. Same SVG file, three different colors.</p>
     <div class="row">
       <div class="item">
         <img src="svgs/heart.svg" class="large color-coral" onload="SVGInject(this)">
@@ -120,122 +75,54 @@
         <img src="svgs/heart.svg" class="large color-indigo" onload="SVGInject(this)">
         <span>color: indigo</span>
       </div>
-      <div class="item">
-        <img src="svgs/star.svg" class="large color-tomato" onload="SVGInject(this)">
-        <span>color: tomato</span>
-      </div>
-      <div class="item">
-        <img src="svgs/star.svg" class="large color-steelblue" onload="SVGInject(this)">
-        <span>color: steelblue</span>
-      </div>
-      <div class="item">
-        <img src="svgs/star.svg" class="large color-gold" onload="SVGInject(this)">
-        <span>color: goldenrod</span>
-      </div>
     </div>
+    <p class="note">With <code>&lt;img&gt;</code>, you'd need three separate image files for this.</p>
   </div>
 
 
-  <!-- 3. Sizes -->
-  <h2>Control size with CSS</h2>
+  <!-- 2. Change color on hover -->
+  <h2>Change color on hover</h2>
   <div class="section">
-    <p>Set <code>width</code> and <code>height</code> via CSS. The SVG scales smoothly because it has a <code>viewBox</code>.</p>
-    <div class="row">
-      <div class="item">
-        <img src="svgs/bolt.svg" class="small color-gold" onload="SVGInject(this)">
-        <span>48 x 48</span>
-      </div>
-      <div class="item">
-        <img src="svgs/bolt.svg" class="medium color-gold" onload="SVGInject(this)">
-        <span>64 x 64</span>
-      </div>
-      <div class="item">
-        <img src="svgs/bolt.svg" class="large color-gold" onload="SVGInject(this)">
-        <span>96 x 96</span>
-      </div>
-    </div>
-  </div>
-
-
-  <!-- 4. Hover -->
-  <h2>Hover interactions</h2>
-  <div class="section">
-    <p>CSS <code>:hover</code> works on injected SVGs. Move your mouse over each icon.</p>
+    <p>CSS <code>:hover</code> can change the fill color of an inline SVG. Impossible with <code>&lt;img&gt;</code> — you can scale or rotate an image on hover, but you can't change its colors.</p>
     <div class="row">
       <div class="item">
         <img src="svgs/heart.svg" class="large hover-color" onload="SVGInject(this)">
-        <span>color change</span>
+        <span>gray &#8594; crimson</span>
       </div>
       <div class="item">
-        <img src="svgs/star.svg" class="large hover-scale color-gold" onload="SVGInject(this)">
-        <span>scale up</span>
+        <img src="svgs/star.svg" class="large hover-color" onload="SVGInject(this)">
+        <span>gray &#8594; crimson</span>
       </div>
       <div class="item">
-        <img src="svgs/bolt.svg" class="large hover-glow color-tomato" onload="SVGInject(this)">
-        <span>glow</span>
-      </div>
-      <div class="item">
-        <img src="svgs/heart.svg" class="large hover-rotate color-coral" onload="SVGInject(this)">
-        <span>rotate</span>
-      </div>
-      <div class="item">
-        <img src="svgs/star.svg" class="large hover-fade color-steelblue" onload="SVGInject(this)">
-        <span>fade in</span>
-      </div>
-      <div class="item">
-        <img src="svgs/bolt.svg" class="large hover-combo" onload="SVGInject(this)">
-        <span>all combined</span>
+        <img src="svgs/bolt.svg" class="large hover-color-2" onload="SVGInject(this)">
+        <span>steelblue &#8594; coral</span>
       </div>
     </div>
   </div>
 
 
-  <!-- 5. Animations -->
-  <h2>CSS animations</h2>
+  <!-- 3. Style inner elements -->
+  <h2>Style inner SVG elements</h2>
   <div class="section">
-    <p>Standard CSS animations and keyframes — no JavaScript needed.</p>
+    <p>Target specific elements inside the SVG with CSS selectors. Here we restyle the gradient <code>&lt;stop&gt;</code> colors — something completely impossible with <code>&lt;img&gt;</code>.</p>
     <div class="row">
       <div class="item">
-        <img src="svgs/star.svg" class="large spin color-gold" onload="SVGInject(this)">
-        <span>spin</span>
+        <img src="svgs/gradient-circle.svg" class="large" onload="SVGInject(this)">
+        <span>original gradient</span>
       </div>
       <div class="item">
-        <img src="svgs/heart.svg" class="large pulse color-coral" onload="SVGInject(this)">
-        <span>pulse</span>
-      </div>
-      <div class="item">
-        <img src="svgs/bolt.svg" class="large bounce color-tomato" onload="SVGInject(this)">
-        <span>bounce</span>
+        <img src="svgs/gradient-circle.svg" class="large recolor-stops" onload="SVGInject(this)">
+        <span>CSS-restyled stops</span>
       </div>
     </div>
+    <p class="note">CSS: <code>.recolor-stops stop:first-child { stop-color: teal; }</code></p>
   </div>
 
 
-  <!-- 6. Filters -->
-  <h2>CSS filters</h2>
-  <div class="section">
-    <p>Apply CSS filters to injected SVGs. Hover the first two to remove the filter.</p>
-    <div class="row">
-      <div class="item">
-        <img src="svgs/businesspeople.svg" class="large grayscale" onload="SVGInject(this)">
-        <span>grayscale (hover)</span>
-      </div>
-      <div class="item">
-        <img src="svgs/angel.svg" class="large blur-effect" onload="SVGInject(this)">
-        <span>blur (hover)</span>
-      </div>
-      <div class="item">
-        <img src="svgs/apple.svg" class="large shadow" onload="SVGInject(this)">
-        <span>drop-shadow</span>
-      </div>
-    </div>
-  </div>
-
-
-  <!-- 7. Dark mode -->
-  <h2>Dark mode</h2>
+  <!-- 4. Dark mode -->
+  <h2>Dark mode with currentColor</h2>
   <div class="section dark">
-    <p>Set <code>color</code> on a dark container. Icons using <code>currentColor</code> adapt automatically.</p>
+    <p>Set <code>color: #e0e0e0</code> on a dark container. Every SVG using <code>currentColor</code> adapts instantly. With <code>&lt;img&gt;</code>, you'd need separate dark-mode icon files.</p>
     <div class="row">
       <div class="item">
         <img src="svgs/heart.svg" class="large" onload="SVGInject(this)">
@@ -253,63 +140,94 @@
   </div>
 
 
-  <!-- 8. ID uniqueness -->
-  <h2>ID uniqueness</h2>
+  <!-- 5. CSS custom properties -->
+  <h2>CSS custom properties (variables)</h2>
   <div class="section">
-    <p>This SVG uses a <code>&lt;linearGradient&gt;</code> with <code>id="grad1"</code>. Injected three times — SVGInject makes each ID unique so all three render correctly. Without this, only the first would show the gradient.</p>
+    <p>SVGs can reference CSS variables like <code>fill: var(--icon-fill)</code>. Different CSS classes set different variable values. Completely impossible with <code>&lt;img&gt;</code>.</p>
     <div class="row">
-      <div class="item">
-        <img src="svgs/gradient-circle.svg" class="large" onload="SVGInject(this)">
-        <span>grad1--inject-1</span>
+      <div class="item vars-red">
+        <img src="svgs/heart.svg" class="large" style="fill: var(--icon-fill)" onload="SVGInject(this)">
+        <span>--icon-fill: tomato</span>
       </div>
-      <div class="item">
-        <img src="svgs/gradient-circle.svg" class="large" onload="SVGInject(this)">
-        <span>grad1--inject-2</span>
+      <div class="item vars-blue">
+        <img src="svgs/heart.svg" class="large" style="fill: var(--icon-fill)" onload="SVGInject(this)">
+        <span>--icon-fill: steelblue</span>
       </div>
-      <div class="item">
-        <img src="svgs/gradient-circle.svg" class="large" onload="SVGInject(this)">
-        <span>grad1--inject-3</span>
+      <div class="item vars-green">
+        <img src="svgs/heart.svg" class="large" style="fill: var(--icon-fill)" onload="SVGInject(this)">
+        <span>--icon-fill: mediumseagreen</span>
       </div>
     </div>
   </div>
 
 
-  <!-- 9. Accessibility -->
-  <h2>Accessibility</h2>
+  <!-- 6. Click events on inner elements -->
+  <h2>JavaScript events on inner elements</h2>
   <div class="section">
-    <p>SVGInject sets ARIA attributes automatically. Inspect the DOM to verify.</p>
+    <p>Click any icon below. JavaScript changes the <code>fill</code> of the clicked <code>&lt;path&gt;</code> to a random color. With <code>&lt;img&gt;</code>, you can only click the entire image — you can't interact with elements inside it.</p>
     <div class="row">
       <div class="item">
-        <img src="svgs/heart.svg" alt="Favorite icon" class="large color-coral" onload="SVGInject(this)">
-        <span>alt="Favorite icon"<br>&#8594; role="img" aria-label="..."</span>
+        <img src="svgs/heart.svg" class="large clickable" onload="SVGInject(this)">
+        <span>click to recolor</span>
       </div>
       <div class="item">
-        <img src="svgs/star.svg" alt="" class="large color-gold" onload="SVGInject(this)">
-        <span>alt="" (decorative)<br>&#8594; role="none" aria-hidden="true"</span>
+        <img src="svgs/star.svg" class="large clickable" onload="SVGInject(this)">
+        <span>click to recolor</span>
+      </div>
+      <div class="item">
+        <img src="svgs/bolt.svg" class="large clickable" onload="SVGInject(this)">
+        <span>click to recolor</span>
       </div>
     </div>
   </div>
 
 
-  <!-- 10. JS-driven -->
-  <h2>JavaScript-driven injection</h2>
+  <!-- 7. ID uniqueness -->
+  <h2>ID conflict prevention</h2>
   <div class="section">
-    <p>No <code>onload</code> attribute needed. Call <code>SVGInject()</code> from JavaScript on any <code>&lt;img&gt;</code> element or NodeList.</p>
+    <p>This SVG uses a <code>&lt;linearGradient id="grad1"&gt;</code>. Injected three times without SVGInject's ID uniquification, only the first would show the gradient — the other two would reference the wrong ID. SVGInject appends unique suffixes so all three render correctly.</p>
     <div class="row">
       <div class="item">
-        <img src="svgs/heart.svg" class="large color-teal js-inject">
-        <span>injected via JS</span>
+        <img src="svgs/gradient-circle.svg" class="large" onload="SVGInject(this)">
+        <span>--inject-1</span>
       </div>
       <div class="item">
-        <img src="svgs/bolt.svg" class="large color-indigo js-inject">
-        <span>injected via JS</span>
+        <img src="svgs/gradient-circle.svg" class="large" onload="SVGInject(this)">
+        <span>--inject-2</span>
+      </div>
+      <div class="item">
+        <img src="svgs/gradient-circle.svg" class="large" onload="SVGInject(this)">
+        <span>--inject-3</span>
       </div>
     </div>
   </div>
+
+
+  <!-- 8. Accessibility -->
+  <h2>Automatic accessibility</h2>
+  <div class="section">
+    <p>SVGInject reads the <code>alt</code> attribute from the <code>&lt;img&gt;</code> and sets the correct ARIA roles on the injected SVG. Inspect the DOM to see the attributes.</p>
+    <div class="row">
+      <div class="item">
+        <img src="svgs/heart.svg" alt="Favorite" class="large color-coral" onload="SVGInject(this)">
+        <span>alt="Favorite"<br>&#8594; role="img" aria-label</span>
+      </div>
+      <div class="item">
+        <img src="svgs/star.svg" alt="" class="large color-teal" onload="SVGInject(this)">
+        <span>alt="" (decorative)<br>&#8594; role="none" aria-hidden</span>
+      </div>
+    </div>
+  </div>
+
 
   <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      SVGInject(document.querySelectorAll('.js-inject'));
+    // Click-to-recolor handler
+    document.addEventListener('click', function(e) {
+      var path = e.target.closest('.clickable path');
+      if (path) {
+        var colors = ['#e74c3c','#3498db','#2ecc71','#f39c12','#9b59b6','#1abc9c','#e67e22','#e84393'];
+        path.setAttribute('fill', colors[Math.floor(Math.random() * colors.length)]);
+      }
     });
   </script>
 
