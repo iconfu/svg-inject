@@ -1,40 +1,91 @@
-#failed, #success, #running {
-  font-size: 50px;
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  color: #333;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 24px;
 }
+
+/* --- Status banner --- */
+
+#failed, #success, #running {
+  font-size: 18px;
+  font-weight: 600;
+  padding: 12px 20px;
+  border-radius: 6px;
+  margin-bottom: 24px;
+}
+
 #failed {
   display: none;
-  color: red;
+  background: #fef2f2;
+  color: #dc2626;
+  border: 1px solid #fca5a5;
 }
 
 #success {
   display: none;
-  color: green;
+  background: #f0fdf4;
+  color: #16a34a;
+  border: 1px solid #86efac;
 }
 
 #running {
-  color: orange;
+  background: #fffbeb;
+  color: #d97706;
+  border: 1px solid #fcd34d;
 }
 
-img, svg, .test > div {
+/* --- Test sections --- */
+
+h3 {
+  font-size: 14px;
+  font-weight: 600;
+  color: #666;
+  margin-top: 24px;
+  margin-bottom: 8px;
+}
+
+p {
+  font-size: 13px;
+  color: #888;
+  margin-bottom: 8px;
+}
+
+.test {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 12px;
+  background: #fafafa;
+  border: 1px solid #eee;
+  border-radius: 6px;
+  margin-bottom: 4px;
+}
+
+.test > div {
+  width: 128px;
+  height: 128px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f0f0f0;
+  border-radius: 4px;
+}
+
+img, svg {
   width: 128px;
   height: 128px;
 }
 
-.inject-success .color-1 {
-  color: #ff0000;
-}
+/* --- Color overrides for injected SVGs --- */
 
-.inject-success .color-2 {
-  color: #00ff00;
-}
-
-.inject-success .color-3 {
-  color: #0000ff;
-}
-
-.inject-success .color-4 {
-  color: #ffff00;
-}
+.inject-success .color-1 { color: #ff0000; }
+.inject-success .color-2 { color: #00ff00; }
+.inject-success .color-3 { color: #0000ff; }
+.inject-success .color-4 { color: #ffff00; }
 
 .inject-fail .color-1,
 .inject-fail .color-2,
@@ -49,18 +100,6 @@ img, svg, .test > div {
   z-index: -1;
 }
 
-.test::after {
-  content: '';
-  display: block;
-  clear: both;
-}
-
-.test > div {
-  float: left;
-  margin: 10px;
-  background: #f0f0f0;
-}
-
 .background_1::before {
   content: '';
   display: block;
@@ -71,8 +110,4 @@ img, svg, .test > div {
 
 .background_1 > img {
   display: none;
-}  
-
-h3 {
-  clear: both;
 }
