@@ -245,7 +245,7 @@ test('malicious SVG is sanitized — no script execution', async ({ page }) => {
   const xss = await page.evaluate(async () => {
     delete (window as any).__xss;
     const img = document.querySelector('#test-sanitize .sanitize-test') as HTMLImageElement;
-    await (window as any).SVGInject(img);
+    await (window as any).SVGInject(img, { sanitize: true });
     return (window as any).__xss;
   });
   expect(xss).toBeUndefined();
@@ -255,7 +255,7 @@ test('malicious SVG — script, foreignObject, event handlers removed', async ({
   // Ensure injection has happened (from the previous test or trigger it)
   await page.evaluate(async () => {
     const img = document.querySelector('#test-sanitize .sanitize-test') as HTMLImageElement;
-    if (img) await (window as any).SVGInject(img);
+    if (img) await (window as any).SVGInject(img, { sanitize: true });
   });
   await page.waitForSelector('#test-sanitize svg', { timeout: 5000 });
   const result = await page.evaluate(() => {
