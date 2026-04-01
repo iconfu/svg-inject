@@ -2,7 +2,7 @@
 
 # SVGInject
 
-**Style your SVGs with CSS. No build step. No framework lock-in. Under 3.5 KB.**
+**Style your SVGs with CSS. No build step. No framework lock-in. Under 4 KB.**
 
 SVGInject replaces `<img>` elements with inline `<svg>` so you can target every path, circle, and group with CSS — colors, animations, hover effects, dark mode, all of it. One line of code, works everywhere.
 
@@ -41,7 +41,7 @@ The injected SVG inherits the `class` from the `<img>`, so your CSS rules apply 
 
 |  | SVGInject | svgr | react-inlinesvg | vue-inline-svg |
 |--|-----------|------|-----------------|----------------|
-| Bundle size | **3.4 KB** | varies | 8 KB | 3 KB |
+| Bundle size | **~4 KB** | varies | 8 KB | 3 KB |
 | Dependencies | **0** | babel, etc. | 1 | 1 |
 | Works without a build step | **yes** | no | no | no |
 | Framework-agnostic | **yes** | React only | React only | Vue only |
@@ -68,7 +68,7 @@ import { SVGInject } from '@iconfu/svg-inject';
 
 **Without a bundler** (plain HTML, WordPress, CMS):
 ```html
-<script src="https://unpkg.com/@iconfu/svg-inject@2/dist/svg-inject.iife.js"></script>
+<script src="https://unpkg.com/@iconfu/svg-inject@2/dist/svg-inject.min.js"></script>
 ```
 
 
@@ -132,7 +132,7 @@ const inject = (e) => SVGInject(e.currentTarget);
 
 ### Tiny and dependency-free
 
-Under 3.5 KB gzipped. Zero runtime dependencies. Tree-shakeable ESM. Ships with full TypeScript definitions.
+Under 4 KB gzipped. Zero runtime dependencies. Tree-shakeable ESM. Ships with full TypeScript definitions.
 
 ### Accessible by default
 

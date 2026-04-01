@@ -3,12 +3,12 @@
   "version": "2.0.0",
   "description": "A tiny, intuitive, robust, caching solution for injecting SVG files inline into the DOM.",
   "main": "dist/svg-inject.cjs",
-  "module": "dist/svg-inject.mjs",
+  "module": "dist/svg-inject.esm.js",
   "types": "dist/svg-inject.d.ts",
   "exports": {
     ".": {
       "types": "./dist/svg-inject.d.ts",
-      "import": "./dist/svg-inject.mjs",
+      "import": "./dist/svg-inject.esm.js",
       "require": "./dist/svg-inject.cjs"
     }
   },
@@ -17,7 +17,7 @@
     "dist"
   ],
   "scripts": {
-    "build": "tsup && cp dist/svg-inject.iife.js dist/svg-inject.min.js",
+    "build": "tsup",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:browser": "npx playwright test",
