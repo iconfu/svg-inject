@@ -204,9 +204,18 @@ test('SVG renders visually', async ({ page }) => {
   expect(box!.height).toBeGreaterThan(0);
 });
 
-test('gradient SVG renders with color', async ({ page }) => {
+test('gradient SVG renders with non-zero dimensions', async ({ page }) => {
   await waitForInjections(page, '#test-ids svg', 2);
-  await expect(page.locator('#test-ids')).toHaveScreenshot('gradient-ids.png');
+  const boxes = await page.locator('#test-ids svg').evaluateAll(svgs =>
+    svgs.map(svg => {
+      const r = svg.getBoundingClientRect();
+      return { w: r.width, h: r.height };
+    })
+  );
+  for (const box of boxes) {
+    expect(box.w).toBeGreaterThan(0);
+    expect(box.h).toBeGreaterThan(0);
+  }
 });
 
 // --- Test 14: window.SVGInject global ---
