@@ -2,104 +2,75 @@
 
 # SVGInject
 
-**Style your SVGs with CSS. No build step. No framework lock-in. Under 4 KB.**
+**Style your SVGs with CSS. No build step. No framework lock-in. ~3.5 KB gzipped.**
 
-SVGInject replaces `<img>` elements with inline `<svg>` so you can target every path, circle, and group with CSS — colors, animations, hover effects, dark mode, all of it. One line of code, works everywhere.
+SVGInject replaces `<img>` elements with inline `<svg>` so you can target every path, circle, and group with CSS - colors, animations, hover effects, dark mode, all of it. One line of code, works everywhere.
 
 ![SVG Injection](https://github.com/iconfu/svg-inject/raw/master/resources/svg-injection.png)
 
-```html
-<img src="icon.svg" onload="SVGInject(this)" />
-```
+### Just add `onload="SVGInject(this)"` to your `<img>` tags.
 
-That's it. The `<img>` becomes an inline `<svg>` you can style freely.
-
-Developed and maintained by [INCORS](https://www.incors.com).
-
-> **Using v1?** v2 is a drop-in upgrade — same API, no code changes needed. You get bug fixes, better accessibility, and a full test suite. Only downside: no more IE support. [See what changed](#migrating-from-v1).
+> **Using v1?** v2 is a drop-in upgrade - same API, no code changes needed. You get bug fixes, better accessibility, and a full test suite. Only downside: no more IE support. [See what changed](#migrating-from-v1).
 
 
 ## Quick start
 
-**Script tag:**
+**Vanilla** - [download](https://unpkg.com/@iconfu/svg-inject@2/dist/svg-inject.min.js) or copy the file:
 ```html
-<script src="dist/svg-inject.min.js"></script>
-
-<img src="icon.svg" onload="SVGInject(this)" />
+<script src="svg-inject.min.js"></script>
 ```
 
-**npm:**
+**npm** - versioned, update with `npm update`:
 ```bash
 npm install @iconfu/svg-inject
 ```
+```html
+<script src="node_modules/@iconfu/svg-inject/dist/svg-inject.min.js"></script>
+```
+
+**Bundler** - import and expose globally:
 ```js
 import { SVGInject } from '@iconfu/svg-inject';
+window.SVGInject = SVGInject;
 ```
 
-The `<img>` is replaced with an inline `<svg>`. You can now style it with CSS, target inner elements, change colors — whatever you need.
-
-
-## When to use SVGInject
-
-SVGInject works best when you don't have a build step — or don't want one for your SVGs:
-
-- **WordPress, CMS, static sites** — add a `<script>` tag, done
-- **Server-rendered pages** — PHP, Rails, Django, any backend template
-- **Dynamic / third-party content** — HTML injected at runtime, CMS editors, widgets
-- **Prototyping** — style SVGs with CSS without setting up tooling
-- **Multi-framework projects** — one solution across jQuery, React, vanilla, whatever
-
-SVGInject is a runtime library. It loads and injects SVGs in the browser. No build step, no bundler, no Node.js required.
-
-**What about React, Vue, Svelte?**
-SVGInject works great in frameworks too — see the [one-line setup](#frameworks) for Vue, Svelte, and React below. For styling static SVGs with CSS, it's simpler and lighter than framework-specific packages. If you need loading states, error boundaries, or dynamic `src` changes, look at tools like [react-inlinesvg](https://github.com/gilbarbara/react-inlinesvg).
-
-
-## Install
-
-```bash
-npm install @iconfu/svg-inject
-```
-
-**With a bundler** (React, Vue, Svelte, Angular, Next.js, Nuxt, SvelteKit, etc.):
-```js
-import { SVGInject } from '@iconfu/svg-inject';
-```
-
-**Without a bundler** (plain HTML, WordPress, CMS):
+**Then in your HTML:**
 ```html
-<script src="https://unpkg.com/@iconfu/svg-inject@2/dist/svg-inject.min.js"></script>
-```
-
-
-## Usage
-
-### Vanilla HTML
-
-```html
-<script src="dist/svg-inject.min.js"></script>
-
 <img src="icon.svg" onload="SVGInject(this)" />
+<!-- The SVG gets injected and is styleable! -->
 ```
 
-Works with dynamically inserted content too. Any `<img>` with this `onload` gets injected automatically, even if added to the page later.
-
-### From JavaScript
-
+**Without `onload`** - inject from JavaScript instead (better for strict [CSP](#security)):
 ```js
-// Inject all matching images after the DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
   SVGInject(document.querySelectorAll('img.injectable'));
 });
 ```
 
-This approach avoids inline `onload` attributes, which is better for strict [Content Security Policy](#security) setups.
+**React, Vue, or Svelte?** See [Frameworks](#frameworks).
 
-### Frameworks
 
-Register once, use everywhere — each framework has an idiomatic pattern:
+## Who is it for
 
-**Vue** — custom directive:
+SVGInject works best when you don't have a build step - or don't want one for your SVGs:
+
+- **WordPress, CMS, static sites** - add a `<script>` tag, done
+- **Server-rendered pages** - PHP, Rails, Django, any backend template
+- **Dynamic / third-party content** - HTML injected at runtime, CMS editors, widgets
+- **Prototyping** - style SVGs with CSS without setting up tooling
+- **Multi-framework projects** - one solution across jQuery, React, vanilla, whatever
+
+SVGInject is a runtime library. It loads and injects SVGs in the browser. No build step, no bundler, no Node.js required.
+
+**What about React, Vue, Svelte?**
+SVGInject works great in frameworks too - see [Frameworks](#frameworks) for idiomatic setup patterns. For styling static SVGs with CSS, it's simpler and lighter than framework-specific packages. If you need loading states, error boundaries, or dynamic `src` changes, look at tools like [react-inlinesvg](https://github.com/gilbarbara/react-inlinesvg).
+
+
+## Frameworks
+
+We don't ship framework-specific packages. SVGInject is one function - here's how to wire it up:
+
+**Vue** - custom directive:
 ```js
 // main.js
 import { SVGInject } from '@iconfu/svg-inject';
@@ -111,7 +82,7 @@ app.directive('svg-inject', {
 <img src="icon.svg" v-svg-inject />
 ```
 
-**Svelte** — action:
+**Svelte** - action:
 ```svelte
 <script>
   import { SVGInject } from '@iconfu/svg-inject';
@@ -121,7 +92,7 @@ app.directive('svg-inject', {
 <img src="icon.svg" use:svgInject />
 ```
 
-**React** — handler:
+**React** - handler:
 ```jsx
 import { SVGInject } from '@iconfu/svg-inject';
 const svgInject = (e) => SVGInject(e.currentTarget);
@@ -134,15 +105,15 @@ const svgInject = (e) => SVGInject(e.currentTarget);
 
 ### Tiny and dependency-free
 
-Under 4 KB gzipped. Zero runtime dependencies. Tree-shakeable ESM. Ships with full TypeScript definitions.
+~3.5 KB gzipped. Zero runtime dependencies. Tree-shakeable ESM. Ships with full TypeScript definitions.
 
 ### Accessible by default
 
 SVGInject automatically sets the right ARIA attributes based on your `<img>`:
 
-- **`alt="descriptive text"`** -- sets `role="img"` and `aria-label` on the SVG
-- **`alt=""`** (decorative) -- sets `role="none"` and `aria-hidden="true"`
-- **`title` attribute** -- becomes a `<title>` child element inside the SVG
+- **`alt="descriptive text"`** - sets `role="img"` and `aria-label` on the SVG
+- **`alt=""`** (decorative) - sets `role="none"` and `aria-hidden="true"`
+- **`title` attribute** - becomes a `<title>` child element inside the SVG
 - **ARIA ID references** (`aria-labelledby`, `aria-describedby`, etc.) are updated when IDs are made unique
 
 ```html
@@ -169,7 +140,7 @@ SVGInject can strip `<script>` elements, `<foreignObject>`, `on*` event handler 
 
 ### SSR-safe
 
-Safe to `import` in Node.js, Next.js, Nuxt, SvelteKit, and any server-side environment. All DOM access is deferred to function call time — no top-level `window` or `document` references.
+Safe to `import` in Node.js, Next.js, Nuxt, SvelteKit, and any server-side environment. All DOM access is deferred to function call time - no top-level `window` or `document` references.
 
 ### Attribute handling
 
@@ -225,7 +196,7 @@ Error handler for `onerror` on `<img>` elements. Optionally sets a fallback `src
 
 ## Unstyled image flash
 
-When using `onload`, the browser may briefly show the raw `<img>` before injection replaces it. SVGInject prevents this by default — it injects a CSS rule that hides injectable images until injection is complete.
+When using `onload`, the browser may briefly show the raw `<img>` before injection replaces it. SVGInject prevents this by default - it injects a CSS rule that hides injectable images until injection is complete.
 
 This requires `style-src 'unsafe-inline'` in your Content Security Policy. If you have a strict CSP, disable it and add the rule to your own stylesheet instead:
 
@@ -264,7 +235,7 @@ SVG files can contain scripts. SVGInject includes built-in protections you can o
 - **Built-in sanitization.** Enable with `SVGInject.setOptions({ sanitize: true })` or per call with `SVGInject(img, { sanitize: true })`. This strips `<script>`, `<foreignObject>`, `on*` event handlers, and `javascript:`/`data:` URIs before injection, catching the most common XSS vectors.
 - **For untrusted SVGs** (user uploads, third-party URLs), consider adding [DOMPurify](https://github.com/cure53/DOMPurify) in the `afterLoad` hook for comprehensive protection.
 - **Same-origin policy applies.** SVGs are loaded with `fetch()`. Cross-origin SVGs require [CORS headers](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) on the server.
-- **CSP note.** The `onload="..."` attribute requires `script-src 'unsafe-inline'` (or a nonce/hash). If you use a strict CSP, call SVGInject from JavaScript instead. See [Usage > From JavaScript](#from-javascript).
+- **CSP note.** The `onload="..."` attribute requires `script-src 'unsafe-inline'` (or a nonce/hash). If you use a strict CSP, call SVGInject from JavaScript instead (see [Quick start](#quick-start)).
 
 
 ## Migrating from v1
@@ -281,9 +252,9 @@ v2 is API-compatible with v1. Breaking changes:
 
 ## Browser support
 
-Chrome, Firefox, Safari, Edge -- all modern versions.
+Chrome, Firefox, Safari, Edge - all modern versions.
 
 
 ## License
 
-[MIT](https://github.com/iconfu/svg-inject/blob/master/LICENSE)
+[MIT](https://github.com/iconfu/svg-inject/blob/master/LICENSE) - Developed and maintained by [INCORS](https://www.incors.com).
