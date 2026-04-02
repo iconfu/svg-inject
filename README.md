@@ -39,22 +39,20 @@ npm install @iconfu/svg-inject
 The injected SVG inherits the `class` from the `<img>`, so your CSS rules apply instantly.
 
 
-## Why SVGInject?
+## When to use SVGInject
 
-|  | SVGInject | svgr | react-inlinesvg | vue-inline-svg |
-|--|-----------|------|-----------------|----------------|
-| Bundle size | **~4 KB** | varies | 8 KB | 3 KB |
-| Dependencies | **0** | babel, etc. | 1 | 1 |
-| Works without a build step | **yes** | no | no | no |
-| Framework-agnostic | **yes** | React only | React only | Vue only |
-| Works with CMS / dynamic HTML | **yes** | no | no | no |
-| TypeScript types | **built-in** | built-in | built-in | community |
-| Built-in sanitization | **yes** | n/a (build time) | no | no |
-| Accessible (ARIA, role) | **automatic** | manual | manual | manual |
+SVGInject works best when you don't have a build step — or don't want one for your SVGs:
 
-SVGInject is the right choice when you want to **style SVGs with CSS without changing your build pipeline** — especially for multi-framework projects, CMS-driven content, or plain HTML sites.
+- **WordPress, CMS, static sites** — add a `<script>` tag, done
+- **Server-rendered pages** — PHP, Rails, Django, any backend template
+- **Dynamic / third-party content** — HTML injected at runtime, CMS editors, widgets
+- **Prototyping** — style SVGs with CSS without setting up tooling
+- **Multi-framework projects** — one solution across jQuery, React, vanilla, whatever
 
-If your project is 100% React and you want compile-time SVG-to-component conversion, [svgr](https://react-svgr.com/) is a great alternative.
+SVGInject is a runtime library. It loads and injects SVGs in the browser. No build step, no bundler, no Node.js required.
+
+**What about React, Vue, Svelte?**
+SVGInject works in frameworks too (see [examples below](#frameworks)), but if your project is fully React or Vue, consider framework-native tools like [svgr](https://react-svgr.com/) or [react-inlinesvg](https://github.com/gilbarbara/react-inlinesvg) — they integrate deeper with the component lifecycle (loading states, cleanup, re-rendering).
 
 
 ## Install
