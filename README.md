@@ -97,7 +97,7 @@ This approach avoids inline `onload` attributes, which is better for strict [Con
 
 ### Build your own wrapper
 
-SVGInject is framework-agnostic. Wrap it in a tiny component for your framework — it's just one line of logic:
+We intentionally don't ship framework-specific packages. SVGInject is one function — wrapping it in a component is 5 lines, and you control it. No extra dependency, no version conflicts, no magic.
 
 **React:**
 ```jsx
