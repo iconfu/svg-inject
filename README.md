@@ -62,13 +62,11 @@ SVGInject works best when you don't have a build step - or don't want one for yo
 
 SVGInject is a runtime library. It loads and injects SVGs in the browser. No build step, no bundler, no Node.js required.
 
-**What about React, Vue, Svelte?**
-SVGInject works great in frameworks too - see [Frameworks](#frameworks) for idiomatic setup patterns. For styling static SVGs with CSS, it's simpler and lighter than framework-specific packages. If you need loading states, error boundaries, or dynamic `src` changes, look at tools like [react-inlinesvg](https://github.com/gilbarbara/react-inlinesvg) - or build your own on top of SVGInject's [API](#api).
-
-
 ## Frameworks
 
-We don't ship framework-specific packages. SVGInject is one function - here's how to wire it up:
+SVGInject is simpler and lighter than framework-specific packages for styling static SVGs with CSS. We don't ship framework packages - SVGInject is one function, here's how to wire it up.
+
+If you need loading states, error boundaries, or dynamic `src` changes, look at tools like [react-inlinesvg](https://github.com/gilbarbara/react-inlinesvg) - or build your own on top of SVGInject's [API](#api).
 
 **React** - handler:
 ```jsx
