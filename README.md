@@ -21,17 +21,22 @@ Developed and maintained by [INCORS](https://www.incors.com).
 
 ## Quick start
 
+**Script tag:**
 ```html
 <script src="dist/svg-inject.min.js"></script>
 
 <img src="icon.svg" onload="SVGInject(this)" />
 ```
 
-The `<img>` is replaced with an inline `<svg>`. You can now style it with CSS, target inner elements, change colors — whatever you need. Install via npm or download the file:
-
+**npm:**
 ```bash
 npm install @iconfu/svg-inject
 ```
+```js
+import { SVGInject } from '@iconfu/svg-inject';
+```
+
+The `<img>` is replaced with an inline `<svg>`. You can now style it with CSS, target inner elements, change colors — whatever you need.
 
 
 ## When to use SVGInject
