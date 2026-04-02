@@ -21,25 +21,18 @@ Developed and maintained by [INCORS](https://www.incors.com).
 
 ## Quick start
 
-A complete working page:
-
 ```html
-<!DOCTYPE html>
-<html>
-<head>
-  <script src="dist/svg-inject.min.js"></script>
-  <style>
-    .icon { color: coral; }
-    .icon:hover { color: teal; }
-  </style>
-</head>
-<body>
-  <img src="icon.svg" class="icon" onload="SVGInject(this)" />
-</body>
-</html>
+<script src="dist/svg-inject.min.js"></script>
+
+<img src="icon.svg" class="icon" onload="SVGInject(this)" />
+
+<style>
+  .icon { color: teal; }
+  .icon .accent { fill: coral; }
+</style>
 ```
 
-That's it. The SVG is now inline and styled with CSS. Install via npm or download the file:
+The SVG is now inline — style it with CSS, target inner elements, change colors on hover. Install via npm or download the file:
 
 ```bash
 npm install @iconfu/svg-inject
