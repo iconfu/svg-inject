@@ -16,6 +16,8 @@ That's it. The `<img>` becomes an inline `<svg>` you can style freely.
 
 Developed and maintained by [INCORS](https://www.incors.com).
 
+> **Using v1?** v2 is a drop-in upgrade — same API, no code changes needed. You get bug fixes, better accessibility, and a full test suite. Only downside: no more IE support. [See what changed](#migrating-from-v1).
+
 
 ## Quick start
 
