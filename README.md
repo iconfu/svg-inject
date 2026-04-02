@@ -95,45 +95,36 @@ This approach avoids inline `onload` attributes, which is better for strict [Con
 
 ### Frameworks
 
-We intentionally don't ship framework-specific packages. SVGInject is one function — wrapping it in a component is 5 lines, and you have full control. No extra dependency, no version conflicts.
+Register once, use everywhere — each framework has an idiomatic pattern:
 
-**React:**
-```jsx
+**Vue** — custom directive:
+```js
+// main.js
 import { SVGInject } from '@iconfu/svg-inject';
-
-function SvgImg({ src, ...props }) {
-  return <img src={src} {...props} onLoad={(e) => SVGInject(e.currentTarget)} />;
-}
-
-// <SvgImg src="icon.svg" className="icon" alt="Settings" />
+app.directive('svg-inject', {
+  mounted(el) { el.onload = () => SVGInject(el); }
+});
 ```
-
-**Vue:**
 ```vue
-<!-- SvgImg.vue -->
-<template>
-  <img :src="src" v-bind="$attrs" @load="(e) => SVGInject(e.currentTarget)" />
-</template>
-
-<script setup>
-import { SVGInject } from '@iconfu/svg-inject';
-defineProps(['src']);
-</script>
-
-<!-- <SvgImg src="icon.svg" class="icon" alt="Settings" /> -->
+<img src="icon.svg" v-svg-inject />
 ```
 
-**Svelte:**
+**Svelte** — action:
 ```svelte
-<!-- SvgImg.svelte -->
 <script>
   import { SVGInject } from '@iconfu/svg-inject';
-  let { src, ...rest } = $props();
+  function svgInject(node) { node.onload = () => SVGInject(node); }
 </script>
 
-<img {src} {...rest} onload={(e) => SVGInject(e.currentTarget)} />
+<img src="icon.svg" use:svgInject />
+```
 
-<!-- <SvgImg src="icon.svg" class="icon" alt="Settings" /> -->
+**React** — handler:
+```jsx
+import { SVGInject } from '@iconfu/svg-inject';
+const onSvgLoad = (e) => SVGInject(e.currentTarget);
+
+<img src="icon.svg" onLoad={onSvgLoad} />
 ```
 
 
