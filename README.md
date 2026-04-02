@@ -122,9 +122,9 @@ app.directive('svg-inject', {
 **React** — handler:
 ```jsx
 import { SVGInject } from '@iconfu/svg-inject';
-const onSvgLoad = (e) => SVGInject(e.currentTarget);
+const svgInject = (e) => SVGInject(e.currentTarget);
 
-<img src="icon.svg" onLoad={onSvgLoad} />
+<img src="icon.svg" onLoad={svgInject} />
 ```
 
 
