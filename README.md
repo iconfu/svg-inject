@@ -70,6 +70,14 @@ SVGInject works great in frameworks too - see [Frameworks](#frameworks) for idio
 
 We don't ship framework-specific packages. SVGInject is one function - here's how to wire it up:
 
+**React** - handler:
+```jsx
+import { SVGInject } from '@iconfu/svg-inject';
+const svgInject = (e) => SVGInject(e.currentTarget);
+
+<img src="icon.svg" onLoad={svgInject} />
+```
+
 **Vue** - custom directive:
 ```js
 // main.js
@@ -90,14 +98,6 @@ app.directive('svg-inject', {
 </script>
 
 <img src="icon.svg" use:svgInject />
-```
-
-**React** - handler:
-```jsx
-import { SVGInject } from '@iconfu/svg-inject';
-const svgInject = (e) => SVGInject(e.currentTarget);
-
-<img src="icon.svg" onLoad={svgInject} />
 ```
 
 
