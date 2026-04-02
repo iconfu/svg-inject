@@ -21,22 +21,29 @@ Developed and maintained by [INCORS](https://www.incors.com).
 
 ## Quick start
 
+A complete working page:
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="dist/svg-inject.min.js"></script>
+  <style>
+    .icon { color: coral; }
+    .icon:hover { color: teal; }
+  </style>
+</head>
+<body>
+  <img src="icon.svg" class="icon" onload="SVGInject(this)" />
+</body>
+</html>
+```
+
+That's it. The SVG is now inline and styled with CSS. Install via npm or download the file:
+
 ```bash
 npm install @iconfu/svg-inject
 ```
-
-```html
-<img src="icon.svg" class="icon" onload="SVGInject(this)" />
-
-<style>
-  .icon { color: coral; }               /* currentColor works */
-  .icon:hover { color: teal; }          /* hover works */
-  .icon circle { fill: gold; }          /* target inner elements */
-  .icon .logo-text { display: none; }   /* hide parts */
-</style>
-```
-
-The injected SVG inherits the `class` from the `<img>`, so your CSS rules apply instantly.
 
 
 ## When to use SVGInject
