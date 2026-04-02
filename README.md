@@ -77,6 +77,8 @@ import { SVGInject } from '@iconfu/svg-inject';
 ### Vanilla HTML
 
 ```html
+<script src="dist/svg-inject.min.js"></script>
+
 <img src="icon.svg" onload="SVGInject(this)" />
 ```
 
