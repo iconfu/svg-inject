@@ -95,7 +95,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 This approach avoids inline `onload` attributes, which is better for strict [Content Security Policy](#security) setups.
 
-### Build your own wrapper
+### Frameworks
 
 We intentionally don't ship framework-specific packages. SVGInject is one function — wrapping it in a component is 5 lines, and you have full control. No extra dependency, no version conflicts.
 
