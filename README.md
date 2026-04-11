@@ -1,4 +1,4 @@
-[![npm version](https://img.shields.io/npm/v/@iconfu/svg-inject)](https://www.npmjs.com/package/@iconfu/svg-inject) [![CI](https://github.com/iconfu/svg-inject/actions/workflows/ci.yml/badge.svg)](https://github.com/iconfu/svg-inject/actions/workflows/ci.yml) [![bundle size](https://img.shields.io/bundlephobia/minzip/@iconfu/svg-inject)](https://bundlephobia.com/package/@iconfu/svg-inject)
+[![npm version](https://img.shields.io/npm/v/@iconfu/svg-inject)](https://www.npmjs.com/package/@iconfu/svg-inject) [![CI](https://github.com/iconfu/svg-inject/actions/workflows/ci.yml/badge.svg)](https://github.com/iconfu/svg-inject/actions/workflows/ci.yml) [![downloads](https://img.shields.io/npm/dw/@iconfu/svg-inject)](https://www.npmjs.com/package/@iconfu/svg-inject) [![bundle size](https://img.shields.io/badge/bundle%20size-3.5%20kB-brightgreen)](https://bundlephobia.com/package/@iconfu/svg-inject)
 
 # SVGInject
 
