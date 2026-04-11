@@ -8,12 +8,16 @@ SVGInject replaces `<img>` elements with inline `<svg>` so you can target every 
 
 ![SVG Injection](https://github.com/iconfu/svg-inject/raw/master/resources/svg-injection.png)
 
-### <img src="my.svg" `onload="SVGInject(this)"`  />
-
 > **Using v1?** v2 is a drop-in upgrade - same API, no code changes needed. You get bug fixes, better accessibility, and a full test suite. Only downside: no more IE support. [See what changed](#migrating-from-v1).
 
 
 ## Quick start
+
+### add `onload="SVGInject(this)"` to `<img>` tags
+
+```html
+<img src="icon.svg" onload="SVGInject(this)" />
+```
 
 **Vanilla** - [download](https://unpkg.com/@iconfu/svg-inject@2/dist/svg-inject.min.js) or copy the file:
 ```html
