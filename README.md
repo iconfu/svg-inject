@@ -8,7 +8,7 @@ SVGInject replaces `<img>` elements with inline `<svg>` so you can target every 
 
 ![SVG Injection](https://github.com/iconfu/svg-inject/raw/master/resources/svg-injection.png)
 
-### add `onload="SVGInject(this)"` to `<img>` tags
+### add `onload="SVGInject(this)"`
 
 ```html
 <img src="icon.svg" onload="SVGInject(this)" />
