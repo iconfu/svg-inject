@@ -12,6 +12,7 @@ SVGInject replaces `<img>` elements with inline `<svg>` so you can target every 
 
 ```html
 <img src="icon.svg" onload="SVGInject(this)" />
+<!-- The SVG gets injected and is styleable! -->
 ```
 
 > **Using v1?** v2 is a drop-in upgrade - same API, no code changes needed. You get bug fixes, better accessibility, and a full test suite. Only downside: no more IE support. [See what changed](#migrating-from-v1).
