@@ -13,11 +13,12 @@ SVGInject replaces `<img>` elements with inline `<svg>` so you can target every 
 
 ## Quick start
 
-### add `onload="SVGInject(this)"` to `<img>` tags
+### 1. add `onload="SVGInject(this)"` to `<img>` tags
 
 ```html
 <img src="icon.svg" onload="SVGInject(this)" />
 ```
+### 2. include SVGInject in your project
 
 **Vanilla** - [download](https://unpkg.com/@iconfu/svg-inject@2/dist/svg-inject.min.js) or copy the file:
 ```html
